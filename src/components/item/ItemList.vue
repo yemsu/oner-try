@@ -23,8 +23,8 @@ import ItemBox from '@/components/item/ItemBox.vue'
 export default {
   props: {
     items: {
-      type: Object,
-      default: () => {}
+      type: Array,
+      default: () => []
     },
     type: {
       type: String,

@@ -1,72 +1,53 @@
 <template>
-<search-container
-  :matchingData="{type: 'string', data: userNickNames}"
-  :defaultMatchingList="false"
-  :result="charactersParsed"
-  :paramKey="['nickname']"
-  category="닉네임(첫 검색 대소문자 구분)"
-  @onSearch="fnSearch"
-  @onRemoveSearchResult="removeSearchResult"
->
-  <template v-slot:bg>
-    <ItemCheckerBoard 
-      :showBg="!charactersParsed"
-      :items="heroes"
-    />
-  </template>
-  <template v-slot:result>
-    <div class="inner-size-basic">
-      <h2 class="title-page"><i class="icon-pirate">☠</i> {{ $route.params.nickname }}</h2>
-      <v-tab
-        :tabs="charactersParsed"
-      >
-        <template v-slot:tab="{ tab: {data, isActive} }">
-          <item-box
-            :item="data.hero"
-            :wanted-paper="true"
-            :size="isActive ? 'xbig' : 'big'"
-          ></item-box>
-        </template>
-        <template v-slot:content="{ activeTab }">
-          <div class="text-refer top">
-            <p>최근 세이브: {{ activeTab.saveDate }}</p>
-            <p class="align-right">
-              <span class="badge-text-wrap">
-                <span class="badge black line-gold" data-v-21f97cac="">숫자</span>
-                : 초월 수치
-              </span>
-            </p>
-          </div>
-          <div class="wrap-items-info">
-            <title-content 
-              v-for="(itemArea, i) in itemAreas" 
-              :key="`itemArea${i}`"
+  <div class="inner-size-basic">
+    <h2 class="title-page"><i class="icon-pirate">☠</i> {{ $route.params.nickname }}</h2>
+    <v-tab
+      v-if="charactersParsed"
+      :tabs="charactersParsed"
+    >
+      <template v-slot:tab="{ tab: {data, isActive} }">
+        <item-box
+          :item="data.hero"
+          :wanted-paper="true"
+          :size="isActive ? 'xbig' : 'big'"
+        ></item-box>
+      </template>
+      <template v-slot:content="{ activeTab }">
+        <div class="text-refer top">
+          <p>최근 세이브: {{ activeTab.saveDate }}</p>
+          <p class="align-right">
+            <span class="badge-text-wrap">
+              <span class="badge black line-gold" data-v-21f97cac="">숫자</span>
+              : 초월 수치
+            </span>
+          </p>
+        </div>
+        <div class="wrap-items-info">
+          <title-content 
+            v-for="(itemArea, i) in itemAreas" 
+            :key="`itemArea${i}`"
+            :title="itemArea.title"
+            :type="itemArea.type"
+          >
+            <item-list 
+              :items="activeTab[itemArea.type]"
               :title="itemArea.title"
               :type="itemArea.type"
-            >
-              <item-list 
-                :items="activeTab[itemArea.type]"
-                :title="itemArea.title"
-                :type="itemArea.type"
-                :columnNum="itemArea.columnNum"
-                :badgeDrop="false"
-                :badgeType="false"
-              />
-            </title-content>
-          </div>
-        </template>
-      </v-tab>
-    </div>
-  </template>
-</search-container>
+              :columnNum="itemArea.columnNum"
+              :badgeDrop="false"
+              :badgeType="false"
+            />
+          </title-content>
+        </div>
+      </template>
+    </v-tab>
+  </div>
 </template>
 
 <script>
-import ItemCheckerBoard from '@/components/item/ItemCheckerBoard.vue'
 import ItemList from '@/components/item/ItemList.vue'
 import TitleContent from '@/components/common/TitleContent.vue'
 import ItemBox from '@/components/item/ItemBox.vue'
-import SearchContainer from '@/components/search/SearchContainer.vue'
 import VTab from '@/components/common/VTab.vue'
 import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/item'
 import { deepClone, addCommaNumber } from '@/plugins'
@@ -75,10 +56,8 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'CharacterResult',
   components: {
-    SearchContainer,
     TitleContent,
     ItemBox,
-    ItemCheckerBoard,
     ItemList,
     VTab
   },
@@ -128,6 +107,9 @@ export default {
     if(this.gameUsers.length === 0) await this.$store.dispatch('GET_GAME_USERS')
     if(this.heroes.length === 0) await this.$store.dispatch('GET_HEROES')
     this.userNickNames = this.gameUsers.map(user => user.nickName)
+  },
+  mounted() {
+    this.fnSearch(this.$route.params.nickname)
   },
   methods: {
     async fnSearch(newNickName) {
