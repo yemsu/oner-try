@@ -1,32 +1,32 @@
 import axios from 'axios'
 
 const $axios = axios.create({
-  baseURL: 'https://onerapi.xyz'
+  baseURL: process.env.CONT_PATH + '/api'
 })
 
 export const getSailors = () => {
-  return $axios.get('/api/sailors')
+  return $axios.get('/sailors')
 }
 export const getEtcItems = () => {
-  return $axios.get('/api/etcItems')
+  return $axios.get('/etcItems')
 }
 export const getItems = () => {
-  return $axios.get('/api/items')
+  return $axios.get('/items')
 }
 export const getColleagues = () => {
-  return $axios.get(`/api/colleagues`)
+  return $axios.get(`/colleagues`)
 }
 export const getCharacters = (params) => {
-  return $axios.get(`/api/characterList`, { params })
+  return $axios.get(`/characterList`, { params })
 }
 export const getEquipments = (params) => {
-  return $axios.get(`/api/equipments`, { params })
+  return $axios.get(`/equipments`, { params })
 }
 export const getHeroes = (params) => {
-  return $axios.get(`/api/heroes`, { params })
+  return $axios.get(`/heroes`, { params })
 }
 export const getGameUsers = (params) => {
-  return $axios.get(`/api/gameUsers`, { params })
+  return $axios.get(`/gameUsers`, { params })
 }
 const catchError = error => {
   if (error.response) {
@@ -46,12 +46,12 @@ const catchError = error => {
   console.log('config', error.config);
 }
 export const postGameUser = (params) => {
-  return $axios.post(`/api/register/gameUser`, null, { params })
+  return $axios.post(`/register/gameUser`, null, { params })
   .then(res => res)
   .catch(catchError)
 }
 export const postItemName = (params) => {
-  return $axios.post(`/api/register/report`, null, { params })
+  return $axios.post(`/register/report`, null, { params })
   .then(res => res)
   .catch(catchError)
 }
@@ -59,5 +59,5 @@ export const postItemName = (params) => {
 
 // etc
 export const getServerStatus = () => {
-  return $axios.get(`/api/serverStatus`)
+  return $axios.get(`/serverStatus`)
 }

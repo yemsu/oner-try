@@ -7,8 +7,9 @@ export const imgSrc = (type, id) => {
   const imgName = type === 'ship' ? id : type[0] + id
   const path = `/static/image/${type}/${imgName}.png`
   // const url = process.env.NODE_ENV === 'production'
-  //   ? process.env['VUE_APP_CONTENTS_URL'] : ''
-  return process.env['VUE_APP_CONTENTS_URL']  + path
+  //   ? process.env['CONT_PATH'] : ''
+  console.log('process.env', process.env)
+  return process.env.CONT_PATH  + path
 }
 export const getOptionTitle = (key) => {
   const map = new Map([

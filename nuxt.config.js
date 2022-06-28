@@ -1,11 +1,21 @@
 export default {
+  env: {
+    APP_TITLE: 'ONER TRY',
+    CONT_PATH: 'https://onerapi.xyz',
+  },
+
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
   srcDir: 'src',
+
+  server: {
+    port: process.env.NODE_ENV === 'development' ? 8082 : 80
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'oner-try',
+    title: 'ONER TRY',
     htmlAttrs: {
       lang: 'en'
     },
