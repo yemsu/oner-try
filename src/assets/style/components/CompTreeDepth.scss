@@ -1,0 +1,121 @@
+
+@mixin treeLine($type) {
+  $border-style: 1px solid var(--border-dark-gray);
+  position: relative;
+  &:before {
+    display: block;
+    position: absolute;
+    right: -50%;
+    width: 100%;
+    height: 10px;
+    border-left: $border-style;
+    content: '';
+    @if $type == 'direct' {
+      top: -30px;
+      height: 30px;
+    }
+    @if $type == 'straight' {
+      top: -42px;
+      height: 48px;
+    }
+    @if $type == 'basic' {
+      width: 110%;
+      top: 0;
+      border-top: $border-style;
+    }
+    @if $type == 'last' {
+      right: 0;
+      left: calc(-50% + -1px);
+      border-left: none;              
+      border-right: $border-style;
+      border-top: none;
+    }
+  }
+}
+
+.area-depth {
+  @mixin mainItem {
+    min-width: 90px;
+    padding: 6px 8px 0;
+  }
+  &.depth-1 {
+    > .wrap-items {
+      position: relative;
+      display: flex;
+      > .item-main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        @include mainItem();
+        background-color: var(--color-white);
+        border-right: 1px solid var(--bg-light-point-100);
+      }
+    }
+    &:nth-child(n+2) {
+      margin-top: 1px;
+    }
+  }
+  :deep(.depth-2) {
+    > .wrap-items {
+      @include mainItem();
+      padding-bottom: 10px;
+    }
+    &.show-depth3 {
+      > .wrap-items {
+        &:last-child {
+          border-right: none;
+          padding-right: 100px;
+        }
+      }
+    }
+  }
+  &.depth-2 {
+    display: flex;
+    height: 100%;
+    > .wrap-items {
+      flex-shrink: 0;
+      border-right: 1px solid var(--color-white);
+      > .item-main {
+        display: flex;
+        justify-content: center;
+      }
+    }
+    :deep(.name) {
+      min-height: 2.4em;
+      line-height: 1.2;
+      .text {
+        position: relative;
+        z-index: 1;
+        background-color: var(--bg-light-point-100);
+      }
+    }
+  }
+  &.depth-3 {
+    display: flex;
+    justify-content: center;
+    @include treeLine('direct');
+    > .wrap-items {
+      padding: 4px 5px 0;
+      @include treeLine('basic');
+      &:last-child {
+        @include treeLine('last');
+      }
+    }
+  }
+  &.depth-4 {
+    padding: 10px 5px 0;
+    background-color: var(--color-white);
+    > .wrap-items {
+      &:first-child {
+        @include treeLine('straight');
+      }
+      // @include treeLine('straight');
+      :deep(.item) {
+        padding-top: 0;
+        .name .text {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}

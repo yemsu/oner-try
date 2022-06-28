@@ -1,0 +1,39 @@
+.box-search {
+  &.compact {
+    position: absolute;
+    z-index: 3;
+    top: 15px;
+    right: 0;
+    padding: 0;
+  }
+  .wrap-search {
+    position: relative;
+    width: 500px;
+    transition: width 0.3s;
+    &.side {
+      width: 300px;
+    }
+    &.compact {
+      width: 150px;
+    }
+    .items-match {
+      position: absolute;
+      z-index: 1;
+      width: 100%;
+      background-color: var(--color-white);
+      border: 1px solid var(--border-gray);
+      > .item-match {
+        > button {
+          width: 100%;
+          padding: 0 5px;
+          &.button-keyword {
+            padding: 10px 20px;
+          }
+        }
+        &:nth-child(n+2) {
+          border-top: 1px solid var(--border-light-gray)
+        }
+      }
+    }
+  }
+}

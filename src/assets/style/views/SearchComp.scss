@@ -1,0 +1,11 @@
+.wrap-total {
+  margin-bottom: 15px;
+  :deep(.list-item) {
+    &.sailors {
+      margin-bottom: 10px;
+      > li {
+        background-color: var(--bg-light-point-200);
+      }
+    }
+  }
+}
