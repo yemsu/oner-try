@@ -1,0 +1,40 @@
+$color-epic: orange;
+$color-rare: green;
+
+$color-point: rgb(87,75,198);
+$color-point-sub: #ee6b00;
+$color-point-200: #a7a3d1;
+$color-point-100: #a8a6bf;
+
+$color-neon: #5fee27;
+$color-gold: #cfa61f;
+$wanted-brown: #5a352d;
+
+$color-point-bright: #95aeff;
+$color-point-sub-bright: #ffa742;
+
+$basic-container-width: 1080px;
+
+// size
+$font-size-M-pc: 14px;
+$font-size-S-pc: 12px;
+$font-size-XS-pc: 11px;
+
+:root {
+  --color-black: #333;
+  --color-gray: #aaa;
+  --color-white: #fff;
+
+  --border-dark-200: #666;
+  --border-dark: #999;
+  --border-dark-gray: #aaa;
+  --border-gray: #ccc;
+  --border-light-gray: #eee;
+
+  --bg-dark: #333;
+  --bg-dark-gray: rgb(97, 98, 102);
+  --bg-gray: rgb(180, 181, 187);
+  --bg-light-gray: #eee;
+  --bg-light-point-200: rgb(230, 229, 238);
+  --bg-light-point-100: #f0eff5;
+}

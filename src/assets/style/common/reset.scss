@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  vertical-align: top;
+}
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
+}
+li, dt, dd {
+  list-style: none;
+}
+button {
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  color: var(--color-black);
+  text-align: left;
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+  color: var(--color-black);
+}
+input {
+  appearance: none;
+  border: none;
+}
