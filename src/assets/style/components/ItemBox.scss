@@ -147,16 +147,15 @@ $xbig-img-size: 90px;
       }
       ::v-deep {
         .item-box-info {
-
-        }
-        display: flex;
-        align-items: center;
-        height: 100%;
-        .name {
-          margin-left: 6px;
-        }
-        .badges {
-          @include badges-inner();
+          display: flex;
+          align-items: center;
+          height: 100%;
+          .name {
+            margin-left: 6px;
+          }
+          .badges {
+            @include badges-inner();
+          }
         }
       }      
       &.size {

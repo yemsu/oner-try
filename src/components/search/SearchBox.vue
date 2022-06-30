@@ -1,49 +1,47 @@
 <template>
   <div :class="['box-search', {'compact':size === 'side'}]">
-    <div class="inner">
-      <div :class="[
-        'wrap-search',
-        {'compact': size === 'side' && !isSearching},
-        {'side': size === 'side'}
-      ]">
-        <base-input
-          usage="search"
-          :size="size"
-          :category="category"
-          :value="inputValue"
-          :isCompactMode="size === 'side' && !isSearching"
-          :isActive="isSearching && !!matchingData.data"
-          @onUpdateInput="updateInput"
-          @onFocusInput="focusInput"
-          @onBlurInput="blurInput"
-          @onEnter="routerPush(matchDataSliced[0])"
-        />
+    <div :class="[
+      'wrap-search',
+      {'compact': size === 'side' && !isSearching},
+      {'side': size === 'side'}
+    ]">
+      <base-input
+        usage="search"
+        :size="size"
+        :category="category"
+        :value="inputValue"
+        :isCompactMode="size === 'side' && !isSearching"
+        :isActive="isSearching && !!matchingData.data"
+        @onUpdateInput="updateInput"
+        @onFocusInput="focusInput"
+        @onBlurInput="blurInput"
+        @onEnter="routerPush(matchDataSliced[0])"
+      />
+      <div
+        v-if="isSearching && matchingData.data"
+        class="items-match"
+      >
         <div
-          v-if="isSearching && matchingData.data"
-          class="items-match"
+          v-for="(data, i) in matchDataSliced"
+          :key="`matchingData${i}`"
+          class="item-match"
         >
-          <div
-            v-for="(data, i) in matchDataSliced"
-            :key="`matchingData${i}`"
-            class="item-match"
+          <item-box
+            v-if="isItem"
+            size="small"
+            type="list"
+            :item="data"
+            :showTooltip="false"
+          />
+          <button
+            v-else
+            :class="{'button-keyword': !isItem}"
+            @click="routerPush(data)"
           >
-            <!-- <item-box
-              v-if="isItem"
-              size="small"
-              type="list"
-              :item="data"
-              :showTooltip="false"
-            /> -->
-            <button
-              
-              :class="{'button-keyword': !isItem}"
-              @click="routerPush(data)"
-            >
-              <p>
-                {{ data }}
-              </p>
-            </button>
-          </div>
+            <p>
+              {{ data }}
+            </p>
+          </button>
         </div>
       </div>
     </div>
@@ -110,8 +108,9 @@ export default {
       const sliceNum = 5
       if(!this.defaultMatchingList && !this.inputValue) return []
       if(!this.inputValue) return data.slice(0, sliceNum)
-
-      const noBlank = target => target.replace(/ /g, '')
+      const noBlank = target => {
+        return target.replace(/ /g, '')
+      }
       const value = noBlank(this.inputValue)
       const dataFiltered = data.filter(dataItem =>  {
         const targetData = type === 'item' ? dataItem.name : dataItem
@@ -145,8 +144,9 @@ export default {
         Object.assign(acc, {[key]: checkValue})
         return acc
       }, {})
-      console.log('this.$route', this.$route, params)
-      this.$router.push(`/character/${value}`)
+      const path0 = '/' + this.$route.path.split('/')[0]
+      console.log('pathj-0', path0)
+      this.$router.push(`${path0}/${value}`)
     },
     routeparamsHandler(params) {
       params = params || this.$route.params
@@ -154,24 +154,32 @@ export default {
       const noparams = Object.keys(params).length === 0
       if(noparams) return false
 
-      const result = this.findResultByparams(params)
+      const result = this.findResultByParams(params)
       if(!result) {
         alert('잘못된 파라미터 값입니다.')
-        this.$router.push({
-          name: 'Search' + this.$route.name.split(' ')[0]
-        })
+      const path0 = '/' + this.$route.path.split('/')[0]
+        this.$router.push(path0)
         return false
       }
       this.onSearch(result)
     },
-    findResultByparams(params) {
+    pathMatchHandler(params) {
+      return params.pathMatch.split('/').reduce((acc, param, i) => {
+          Object.assign(acc, {[this.paramKey[i]]: param})
+          return acc
+        }, {})
+    },
+    findResultByParams(params) {
+      const isPathMatch = Object.keys(params[0] === 'pathMatch')
+      if(isPathMatch) params = pathMatchHandler(params)
+
       if(!params[this.paramKey[0]]) return false
-      
+      // 확인
       const result = this.matchingData.type === 'item'
         ? this.findMatchItem(params)[0]
         : params[this.paramKey[0]]
 
-      const checkNoError = this.checkErrorsFindResultByparams(params, result)
+      const checkNoError = this.checkErrorsFindResultByParams(params, result)
 
       return checkNoError && result
     },
@@ -185,13 +193,13 @@ export default {
 
       return result
     },
-    checkErrorsFindResultByparams(params, result) {
+    checkErrorsFindResultByParams(params, result) {
       if(this.matchingData.data !== 'item') return true
       if(!result) {
         alert('params에 해당하는 결과를 찾을 수 없습니다.', params)
         return false
       } else if(Array.isArray(result) && result.length > 1) {
-        console.error('SearchBox.vue -> findResultByparams(): result 배열의 갯수는 1개여야 합니다.', result)
+        console.error('SearchBox.vue -> findResultByParams(): result 배열의 갯수는 1개여야 합니다.', result)
         return false
       } else {
         return true
@@ -206,6 +214,7 @@ export default {
       }, 200);
     },
     updateInput(value) {
+      console.log('updateInput', value)
       this.inputValue = value
     },
     onRemoveSearchResult() {

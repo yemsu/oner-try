@@ -4,7 +4,7 @@
       v-for="(item, i) in items.filter(item => item.type !== 'etcItem')"
       :key="`bgItem${i}`"
       class="img-bg"
-      :style="i > 45 && i < 52 && 'opacity: 0;'"
+      :style="i > 48 && i < 56 && 'opacity: 0;'"
     >
       <div 
       :style="`background-image: url(${imgSrc(item)});`"></div>

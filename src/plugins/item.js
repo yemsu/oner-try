@@ -8,7 +8,6 @@ export const imgSrc = (type, id) => {
   const path = `/static/image/${type}/${imgName}.png`
   // const url = process.env.NODE_ENV === 'production'
   //   ? process.env['CONT_PATH'] : ''
-  console.log('process.env', process.env)
   return process.env.CONT_PATH  + path
 }
 export const getOptionTitle = (key) => {
