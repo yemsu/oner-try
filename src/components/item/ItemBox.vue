@@ -176,7 +176,7 @@ export default {
         console.log('this.reportingItemId', this.reportingItemId)
         return 
       }
-      this.$router.push(`/character/${type}/${id}`)
+      this.$router.push(`/composition/${type}/${id}`)
     },
     updateInput(value) {
       this.inputValue = value

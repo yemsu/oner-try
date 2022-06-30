@@ -1,4 +1,9 @@
 .box-search {
+  &:not(.compact) {
+    display: flex;
+    justify-content: center;
+    margin-top: 33vh;
+  }
   &.compact {
     position: absolute;
     z-index: 3;

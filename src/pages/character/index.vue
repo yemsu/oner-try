@@ -4,16 +4,14 @@
       :showBg="!charactersParsed"
       :items="heroes"
     />
-    <div class="area-search">
-      <search-box
-        category="닉네임(첫 검색 대소문자 구분)"
-        :matchingData="{type: 'string', data: userNickNames}"
-        :defaultMatchingList="false"
-        size="main"
-        :paramKey="['nickname']"
-        @onRemoveSearchResult="removeSearchResult"
-      />
-    </div>
+    <search-box
+      category="닉네임(첫 검색 대소문자 구분)"
+      :matchingData="{type: 'string', data: userNickNames}"
+      :defaultMatchingList="false"
+      size="main"
+      :paramKey="['nickname']"
+      @onRemoveSearchResult="removeSearchResult"
+    />
   </div>
 </template>
 
@@ -29,7 +27,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: '캐릭터 검색 해보세요'
+        content: '캐릭터가 궁금한 유저를 검색 해보세요'
       }
     ]
   },

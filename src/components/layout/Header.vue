@@ -19,7 +19,7 @@ header {
   display: flex;
   align-items: center;
   position: fixed;
-  z-index: 1;
+  z-index: 99;
   width: 100%;
   background-color: var(--bg-dark);
   padding: 0 10px;

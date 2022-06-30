@@ -1,10 +1,10 @@
 <template>
   <div v-if="showBg" class="area-bg">
     <div
-      v-for="(item, i) in items.filter(item => item.type !== 'etcItem')"
+      v-for="(item, i) in bgItems"
       :key="`bgItem${i}`"
       class="img-bg"
-      :style="i > 45 && i < 52 && 'opacity: 0;'"
+      :style="i > 48 && i < 56 && 'opacity: 0;'"
     >
       <div 
       :style="`background-image: url(${imgSrc(item)});`"></div>
@@ -24,6 +24,11 @@ export default {
     items: {
       type: Array,
       default: () => []
+    }
+  },
+  computed: {
+    bgItems() {
+      return this.items.filter(item => item.type !== 'etcItem').splice(0, 15 * 9)
     }
   },
   methods: {

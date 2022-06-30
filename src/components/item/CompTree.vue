@@ -7,14 +7,13 @@
           <base-button
             type="icon mode-wide"
             :toggleData="modeWide"
-            @click="modeWide = !modeWide"
+            @click="clickWideMode()"
             :title="modeWide ? '접기' : '펼치기'"
           /> 
         </div>
       </div>
       <div :class="`inner-size-${modeWide ? 'wide' : 'basic'}`">
         <div class="wrap-tree">
-          
           <comp-tree-depth
             :items="item.ingredients"
             :depthIndex="1"
@@ -97,9 +96,11 @@ export default {
       this.dataShowDepth3 = this.item.ingredients.map(item => item.ingredients && false)
     },
     toggleD3(e, i) {
-      const closeButton = e.target.closest('button') 
-      const isToggleButton = closeButton && closeButton.classList.value.includes('toggle')
-      if(!isToggleButton && closeButton) return 
+      const otherButton = e.target.closest('button') 
+      const isToggleButton = otherButton && otherButton.classList.value.includes('toggle')
+      console.log('toggleD3', isToggleButton , otherButton)
+      if(!isToggleButton && otherButton) return 
+      console.log('toggleD3 2', i, this.dataShowDepth3[i])
       this.dataShowDepth3[i] = !this.dataShowDepth3[i]
     },
     attrToggleD3(index) {
@@ -109,6 +110,10 @@ export default {
         arrow: isShow ? 'up' : 'down'
       }
       return data
+    },
+    clickWideMode() {
+      console.log('clickWideMode')
+      this.modeWide = !this.modeWide
     }
   }
 }
