@@ -18,6 +18,9 @@ $menu-padding-v: 10px;
 header {
   display: flex;
   align-items: center;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
   background-color: var(--bg-dark);
   padding: 0 10px;
   font-weight: 300;
@@ -34,7 +37,7 @@ header {
     a {
       padding: $menu-padding-v 10px;
       color: rgba(255, 255, 255, 0.8);
-      &.NuxtLink-active {
+      &.nuxt-link-active {
         color: #333;
         font-weight: 500;
         background-color: var(--bg-light-point-200);
