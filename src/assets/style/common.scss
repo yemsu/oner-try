@@ -28,6 +28,7 @@ i {
 
 // layout
 [class*=inner-size] {
+  position: relative;
   transition: width 0.5s;
   &.inner-size-basic {
     @include containerSize('basic');

@@ -79,8 +79,10 @@ export default {
     padding-bottom: 10px;
   }
 }
-:deep(.name) {
-  min-height: 2.4em;
-  line-height: 1.2;
+::v-deep {
+  .name {
+    min-height: 2.4em;
+    line-height: 1.2;
+  }
 }
 </style>

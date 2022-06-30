@@ -1,46 +1,58 @@
 <template>
-  <div class="inner-size-basic">
-    <h2 class="title-page"><i class="icon-pirate">☠</i> {{ $route.params.nickname }}</h2>
-    <v-tab
-      v-if="charactersParsed"
-      :tabs="charactersParsed"
-    >
-      <template v-slot:tab="{ tab: {data, isActive} }">
-        <item-box
-          :item="data.hero"
-          :wanted-paper="true"
-          :size="isActive ? 'xbig' : 'big'"
-        ></item-box>
-      </template>
-      <template v-slot:content="{ activeTab }">
-        <div class="text-refer top">
-          <p>최근 세이브: {{ activeTab.saveDate }}</p>
-          <p class="align-right">
-            <span class="badge-text-wrap">
-              <span class="badge black line-gold" data-v-21f97cac="">숫자</span>
-              : 초월 수치
-            </span>
-          </p>
-        </div>
-        <div class="wrap-items-info">
-          <title-content 
-            v-for="(itemArea, i) in itemAreas" 
-            :key="`itemArea${i}`"
-            :title="itemArea.title"
-            :type="itemArea.type"
-          >
-            <item-list 
-              :items="activeTab[itemArea.type]"
+  <div>
+    <div class="area-search inner-size-basic">
+      <search-box
+        category="닉네임(첫 검색 대소문자 구분)"
+        :matchingData="{type: 'string', data: userNickNames}"
+        :defaultMatchingList="false"
+        size="side"
+        :paramKey="['nickname']"
+        @onRemoveSearchResult="removeSearchResult"
+      />
+    </div>
+    <div class="inner-size-basic">
+      <h2 class="title-page"><i class="icon-pirate">☠</i> {{ $route.params.nickname }}</h2>
+      <v-tab
+        v-if="charactersParsed"
+        :tabs="charactersParsed"
+      >
+        <template v-slot:tab="{ tab: {data, isActive} }">
+          <item-box
+            :item="data.hero"
+            :wanted-paper="true"
+            :size="isActive ? 'xbig' : 'big'"
+          ></item-box>
+        </template>
+        <template v-slot:content="{ activeTab }">
+          <div class="text-refer top">
+            <p>최근 세이브: {{ activeTab.saveDate }}</p>
+            <p class="align-right">
+              <span class="badge-text-wrap">
+                <span class="badge black line-gold" data-v-21f97cac="">숫자</span>
+                : 초월 수치
+              </span>
+            </p>
+          </div>
+          <div class="wrap-items-info">
+            <title-content
+              v-for="(itemArea, i) in itemAreas"
+              :key="`itemArea${i}`"
               :title="itemArea.title"
               :type="itemArea.type"
-              :columnNum="itemArea.columnNum"
-              :badgeDrop="false"
-              :badgeType="false"
-            />
-          </title-content>
-        </div>
-      </template>
-    </v-tab>
+            >
+              <item-list
+                :items="activeTab[itemArea.type]"
+                :title="itemArea.title"
+                :type="itemArea.type"
+                :columnNum="itemArea.columnNum"
+                :badgeDrop="false"
+                :badgeType="false"
+              />
+            </title-content>
+          </div>
+        </template>
+      </v-tab>
+    </div>
   </div>
 </template>
 
@@ -121,9 +133,8 @@ export default {
 
       if(!this.characters) {
         alert('존재하지 않는 닉네임이거나, 보유 캐릭터가 없습니다.')
-        this.$router.push({
-          params: {}
-        })
+        console.log(this.$route)
+        this.$router.push('/character')
         return false
       }
 
@@ -184,5 +195,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/views/SearchCharacter.scss';
+@import '@/assets/style/pages/SearchCharacter.scss';
 </style>

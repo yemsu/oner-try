@@ -4,13 +4,12 @@
       :showBg="!charactersParsed"
       :items="heroes"
     />
-    <div :class="['area-search', {'inner-size-basic': charactersParsed}]">
+    <div class="area-search">
       <search-box
         category="닉네임(첫 검색 대소문자 구분)"
         :matchingData="{type: 'string', data: userNickNames}"
         :defaultMatchingList="false"
         size="main"
-        :hasResult="charactersParsed && true"
         :paramKey="['nickname']"
         @onRemoveSearchResult="removeSearchResult"
       />
@@ -21,12 +20,19 @@
 <script>
 import SearchBox from '@/components/search/SearchBox.vue'
 import ItemCheckerBoard from '@/components/item/ItemCheckerBoard.vue'
-import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/item'
-import { deepClone, addCommaNumber } from '@/plugins'
-import { postGameUser } from '@/plugins/https'
 import { mapGetters } from 'vuex';
 export default {
   name: 'SearchCharacter',
+  head: {
+    title: `${process.env.APP_TITLE} | 캐릭터`,
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content: '캐릭터 검색 해보세요'
+      }
+    ]
+  },
   components: {
     SearchBox,
     ItemCheckerBoard,
@@ -35,42 +41,13 @@ export default {
     return {
       charactersParsed: null,
       selectedChar: null,
-      userNickNames: [],
-      ships: [],
-      itemAreas: [
-        {
-          title: "장비",
-          type: "equipments",
-          columnNum: "2",
-        },
-        {
-          title: "선원",
-          type: "sailors",
-          columnNum: "2",
-        },
-        {
-          title: "동료",
-          type: "colleagues",
-          columnNum: "3",
-        },
-        {
-          title: "선박",
-          type: "ship",
-          columnNum: "1",
-        },
-      ]
+      userNickNames: []
     }
   },
   computed: {
     ...mapGetters({
-      characters: 'getCharacters',
       heroes: 'getHeroes',
-      equipments: 'getEquipments',
-      nickName: 'getNickName',
       gameUsers: 'getGameUsers',
-      sailors: 'getSailors',
-      colleagues: 'getColleagues',
-      items: 'getItems',
     })
   },
   async created() {
@@ -88,5 +65,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/views/SearchCharacter.scss';
+@import '@/assets/style/pages/character/index.scss';
 </style>

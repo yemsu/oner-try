@@ -1,17 +1,17 @@
 <template>
-  <div :class="['box-search', {'compact':hasResult}]">
+  <div :class="['box-search', {'compact':size === 'side'}]">
     <div class="inner">
       <div :class="[
         'wrap-search',
-        {'compact': hasResult && !isSearching},
-        {'side': hasResult}
+        {'compact': size === 'side' && !isSearching},
+        {'side': size === 'side'}
       ]">
         <base-input
           usage="search"
           :size="size"
           :category="category"
           :value="inputValue"
-          :isCompactMode="hasResult && !isSearching"
+          :isCompactMode="size === 'side' && !isSearching"
           :isActive="isSearching && !!matchingData.data"
           @onUpdateInput="updateInput"
           @onFocusInput="focusInput"
@@ -69,10 +69,6 @@ export default {
     mode: {
       type: String,
       default: () => ''
-    },
-    hasResult: {
-      type: Boolean,
-      default: () => false
     },
     defaultMatchingList: {
       type: Boolean,

@@ -8,10 +8,12 @@ $xbig-img-size: 90px;
 }
 @mixin setSize($img-size) {
   width: $img-size;
-  :deep(.item-box-info) {
-    .img-item {
-      width: 100%;
-      height: $img-size;
+  ::v-deep {
+    .item-box-info {
+      .img-item {
+        width: 100%;
+        height: $img-size;
+      }
     }
   }
   .item-blank {
@@ -20,13 +22,15 @@ $xbig-img-size: 90px;
 }
 @mixin setWantedPaper($img-size) {
   width: auto;
-  :deep(.item-box-info) {
-    .img-wanted,
-    .area-img {
-      width: $img-size;
-    }
-    .area-img {
-      margin: 0 auto;
+  ::v-deep {
+    .item-box-info {
+      .img-wanted,
+      .area-img {
+        width: $img-size;
+      }
+      .area-img {
+        margin: 0 auto;
+      }
     }
   }
 }
@@ -40,28 +44,30 @@ $xbig-img-size: 90px;
    .wrap-info {
     max-width: 100%;
   }
-  :deep(.item-box-info) {
-    display: block;
-    .area-img {
-      position: relative;
-      .img-item {
-        &.no-src,
-        &.no-id {
-          display: flex;
-          align-items: center;
-          word-break: keep-all;
-          color: var(--color-gray);
-          line-height: 1.2;
-          font-size: 12px;
-          @include blank();
-        }
-        &.no-id {
-          color: $color-point;
+  ::v-deep {
+    .item-box-info {
+      display: block;
+      .area-img {
+        position: relative;
+        .img-item {
+          &.no-src,
+          &.no-id {
+            display: flex;
+            align-items: center;
+            word-break: keep-all;
+            color: var(--color-gray);
+            line-height: 1.2;
+            font-size: 12px;
+            @include blank();
+          }
+          &.no-id {
+            color: $color-point;
+          }
         }
       }
-    }
-    .name {
-      word-break: keep-all;
+      .name {
+        word-break: keep-all;
+      }
     }
   }
   .item-blank {
@@ -70,40 +76,48 @@ $xbig-img-size: 90px;
   }
   &.type {
     &-basic {
-      :deep(.item-box-info) {
-        text-align: center;
-        .name {
-          width: 140%;
-          margin-top: $space;
-          margin-left: -20%;
-          font-size: $font-size-S-pc;
+      ::v-deep {
+        .item-box-info {
+          text-align: center;
+          .name {
+            width: 140%;
+            margin-top: $space;
+            margin-left: -20%;
+            font-size: $font-size-S-pc;
+          }
         }
       }
       &.size {
         &-small {
           $img-size: 40px;
           @include setSize($img-size);
-          :deep(.item-box-info) {
-            .badges {
-              width: 120%;
-              margin-left: -10%;
+          ::v-deep {
+            .item-box-info {
+              .badges {
+                width: 120%;
+                margin-left: -10%;
+              }
             }
           }
         }
         &-basic {
           $img-size: 55px;
           @include setSize($img-size);
-          :deep(.item-box-info) {
-            .badges {
-              @include badges-inner();
+          ::v-deep {
+            .item-box-info {
+              .badges {
+                @include badges-inner();
+              }
             }
           }       
         }
         &-big {
           @include setSize($big-img-size);
-          :deep(.item-box-info) {
-            .badges {
-              @include badges-inner();
+          ::v-deep {
+            .item-box-info {
+              .badges {
+                @include badges-inner();
+              }
             }
           }       
           &.wanted-paper {
@@ -112,9 +126,11 @@ $xbig-img-size: 90px;
         }
         &-xbig {
           @include setSize($xbig-img-size);
-          :deep(.item-box-info) {
-            .badges {
-              @include badges-inner();
+          ::v-deep {
+            .item-box-info {
+              .badges {
+                @include badges-inner();
+              }
             }
           }       
           &.wanted-paper {
@@ -129,7 +145,10 @@ $xbig-img-size: 90px;
       button.wrap-info {
         width: 100%;
       }
-      :deep(.item-box-info) {
+      ::v-deep {
+        .item-box-info {
+
+        }
         display: flex;
         align-items: center;
         height: 100%;
@@ -143,35 +162,41 @@ $xbig-img-size: 90px;
       &.size {
         &-xsmall {
           $img-size: 30px;
-          :deep(.item-box-info) {
-            .img-item { 
-              width: $img-size;
-              height: $img-size;
-            }
-            .name {
-              font-size: $font-size-S-pc;
+          ::v-deep {
+            .item-box-info {
+              .img-item { 
+                width: $img-size;
+                height: $img-size;
+              }
+              .name {
+                font-size: $font-size-S-pc;
+              }
             }
           }
         }
         &-small {
           $img-size: 35px;
-          :deep(.item-box-info) {
-            .img-item { 
-              width: $img-size;
-              height: $img-size;
+          ::v-deep {
+            .item-box-info {
+              .img-item { 
+                width: $img-size;
+                height: $img-size;
+              }
             }
           }
         }
         &-big {
           display: flex;
           padding: 15px 10px;
-          :deep(.item-box-info) {
-            .img-item { 
-              width: $big-img-size;
-              height: $big-img-size;
-            }
-            .name {
-              font-size: $font-size-S-pc + 8;
+          ::v-deep {
+            .item-box-info {
+              .img-item { 
+                width: $big-img-size;
+                height: $big-img-size;
+              }
+              .name {
+                font-size: $font-size-S-pc + 8;
+              }
             }
           }
           .area-detail {
@@ -188,18 +213,20 @@ $xbig-img-size: 90px;
   &.wanted-paper {
     background-color: #d7b993;
     border: 1px solid #333;
-    :deep(.item-box-info) {
-      .img-wanted {
-        width: 100%;
-        margin-bottom: 5px;
-      }
-      .area-img {
-        border: 1px solid $wanted-brown;
-      }
-      .bounty {
-        color: $wanted-brown;
-        font-weight: bold;
-        white-space: nowrap;
+    ::v-deep {
+      .item-box-info {
+        .img-wanted {
+          width: 100%;
+          margin-bottom: 5px;
+        }
+        .area-img {
+          border: 1px solid $wanted-brown;
+        }
+        .bounty {
+          color: $wanted-brown;
+          font-weight: bold;
+          white-space: nowrap;
+        }
       }
     }
   }
