@@ -195,5 +195,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/pages/SearchCharacter.scss';
+@import '@/assets/style/pages/character/result.scss';
 </style>
