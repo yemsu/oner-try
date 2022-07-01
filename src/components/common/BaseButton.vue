@@ -2,6 +2,7 @@
   <button
     :class="`btn ${type}`"
     :toggle="toggleData"
+    @click="clickHandler"
   >
     <slot></slot>
     <template v-if="type.includes('mode-wide')">
@@ -25,6 +26,11 @@ export default {
   },
   data() {
     return {
+    }
+  },
+  methods: {
+    clickHandler(e) {
+			this.$emit('click', e)
     }
   }
 }

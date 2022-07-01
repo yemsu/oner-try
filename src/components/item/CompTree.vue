@@ -33,7 +33,7 @@
                 >
                   <template v-slot="{ props: propsD2 }">
                     <comp-tree-depth
-                      v-if="propsD2.ingredients && dataShowDepth3[propsD1.index]"
+                      v-if="propsD2.ingredients && dataShowDepth3[`index${propsD1.index}`]"
                       :items="propsD2.ingredients"
                       :depthIndex="3"
                     >
@@ -84,12 +84,22 @@ export default {
   },
   data() {
     return {
-      dataShowDepth3: [],
+      dataShowDepth3: {
+        index0: false,
+        index1: false,
+        index2: false,
+        index3: false,
+        index4: false,
+        index5: false,
+      },
       modeWide: false
     }
   },
   mounted() {
-    this.setDataShowDepth3()
+    // nuxt로 바꾸고 되지않음. 우선 default로 false 6개 삽입해놓음
+    // Array가 아니라 obj여야 작동하고, 기본 데이터가 삽입되어 있어야 작동함
+    // 공부 더 하고 해결해보기.
+    // this.setDataShowDepth3()
   },
   methods: {
     setDataShowDepth3() {
@@ -98,13 +108,11 @@ export default {
     toggleD3(e, i) {
       const otherButton = e.target.closest('button') 
       const isToggleButton = otherButton && otherButton.classList.value.includes('toggle')
-      console.log('toggleD3', isToggleButton , otherButton)
       if(!isToggleButton && otherButton) return 
-      console.log('toggleD3 2', i, this.dataShowDepth3[i])
-      this.dataShowDepth3[i] = !this.dataShowDepth3[i]
+      this.dataShowDepth3[`index${i}`] = !this.dataShowDepth3[`index${i}`]
     },
-    attrToggleD3(index) {
-      const isShow = this.dataShowDepth3[index]
+    attrToggleD3(i) {
+      const isShow = this.dataShowDepth3[`index${i}`]
       const data = {
         title: `조합 ${isShow ? '간략' : '모두'} 보기`,
         arrow: isShow ? 'up' : 'down'
@@ -112,7 +120,6 @@ export default {
       return data
     },
     clickWideMode() {
-      console.log('clickWideMode')
       this.modeWide = !this.modeWide
     }
   }
