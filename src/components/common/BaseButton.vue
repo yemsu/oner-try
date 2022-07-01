@@ -5,7 +5,7 @@
     @click="clickHandler"
   >
     <slot></slot>
-    <template v-if="type.includes('mode-wide')">
+    <template v-show="type.includes('mode-wide')">
       <i :class="`icon-bar-arrow ${ toggleData ? 'right' : 'left' }`"></i>
       <i :class="`icon-bar-arrow ${ toggleData ? 'left' : 'right' }`"></i>
     </template>

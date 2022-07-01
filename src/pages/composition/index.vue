@@ -4,7 +4,7 @@
       :items="items"
     />
     <search-box
-      v-if="combinationItems.length !== 0"
+      v-show="combinationItems.length !== 0"
       category="조합 아이템"
       :matchingData="{type: 'item', data: combinationItems}"
       size="main"

@@ -1,6 +1,6 @@
 <template>
   <div class="wrap-search">
-    <h2 v-if="result" class="ir-hidden">{{ result.name }} 조합법</h2>
+    <h2 v-show="result" class="ir-hidden">{{ result.name }} 조합법</h2>
     <div :class="{'only-search-box': !result}">
       <!-- slot bg -->
       <slot name="bg"></slot>
@@ -17,7 +17,7 @@
         />
       </div>
     </div>
-    <div v-if="result" class="area-result">
+    <div v-show="result" class="area-result">
       <div class="wrap-result">
          <!-- slot result -->
         <slot name="result"></slot>

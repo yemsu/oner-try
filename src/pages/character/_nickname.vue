@@ -13,7 +13,7 @@
     <div class="inner-size-basic">
       <h2 class="title-page"><i class="icon-pirate">☠</i> {{ $route.params.nickname }}</h2>
       <v-tab
-        v-if="charactersParsed"
+        v-show="charactersParsed"
         :tabs="charactersParsed"
       >
         <template v-slot:tab="{ tab: {data, isActive} }">

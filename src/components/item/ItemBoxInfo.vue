@@ -1,6 +1,6 @@
 <template>
   <div class="item-box-info">
-    <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
+    <img v-show="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
     <div class="area-img">
       <img
         v-if="imgSrc"
@@ -14,29 +14,29 @@
       <p v-else class="img-item no-src">
         이미지 준비중
       </p>
-      <div v-if="!wantedPaper" class="badges">
-        <p v-if="badgeDrop && item.dropMonster" class="badge drop-monster">
+      <div v-show="!wantedPaper" class="badges">
+        <p v-show="badgeDrop && item.dropMonster" class="badge drop-monster">
           드랍
         </p>
         <p
-          v-if="isComp && badgeType"
+          v-show="isComp && badgeType"
           :class="`badge ${isRecruit ? 'recruit' : 'mix'}`"
         >
           {{ isRecruit ? '영입' : '조합'}}
         </p>
-        <p v-if="item.stack" class="badge black line-gold">
+        <p v-show="item.stack" class="badge black line-gold">
           {{ item.stack }}
         </p>
-        <p v-if="item.type && showType" :class="`badge type ${item.type}`">
+        <p v-show="item.type && showType" :class="`badge type ${item.type}`">
           {{ typeName(item.type) }}
         </p>
-        <p v-if="item.requiredNumber" class="badge black">
+        <p v-show="item.requiredNumber" class="badge black">
           {{ item.requiredNumber }}
         </p>
       </div>
     </div>
-    <p v-if="!wantedPaper" class="name"><span class="text">{{ item.name }}</span></p>
-    <p v-if="wantedPaper" class="bounty"><span class="text">$ {{ item.bounty || 0 }}</span></p>
+    <p v-show="!wantedPaper" class="name"><span class="text">{{ item.name }}</span></p>
+    <p v-show="wantedPaper" class="bounty"><span class="text">$ {{ item.bounty || 0 }}</span></p>
   </div>
 </template>
 

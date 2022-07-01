@@ -2,7 +2,7 @@
   <div>
     <div class="area-search inner-size-basic">
       <search-box
-        v-if="combinationItems.length !== 0"
+        v-show="combinationItems.length !== 0"
         category="조합 아이템"
         :items="items"
         :matchingData="{type: 'item', data: combinationItems}"
@@ -13,7 +13,7 @@
         @onRemoveSearchResult="removeSearchResult"
       />
     </div>
-    <template v-if="itemSelected">
+    <template v-show="itemSelected">
       <div class="inner-size-basic">
         <item-box
           :item="itemSelected"
@@ -30,7 +30,7 @@
             </span>
           </p>
         </div>
-        <title-content v-if="totalIngrdnts" title="Total" class="wrap-total area-item-list emph">
+        <title-content v-show="totalIngrdnts" title="Total" class="wrap-total area-item-list emph">
           <item-list
             :items="totalIngrdnts.sailors"
             type="sailors"
