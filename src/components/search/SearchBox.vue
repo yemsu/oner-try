@@ -18,7 +18,7 @@
         @onEnter="routerPush(matchDataSliced[0])"
       />
       <div
-        v-if="isSearching && matchingData.data"
+        v-show="isSearching && matchingData.data"
         class="items-match"
       >
         <div
