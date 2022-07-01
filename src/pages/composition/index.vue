@@ -1,7 +1,6 @@
 <template>
   <div class="wrap-search">
     <ItemCheckerBoard
-      :showBg="!itemSelected"
       :items="items"
     />
     <search-box
@@ -10,7 +9,6 @@
       :matchingData="{type: 'item', data: combinationItems}"
       size="main"
       :paramKey="['id', 'type']"
-      @onRemoveSearchResult="removeSearchResult"
     />
   </div>
 </template>
@@ -39,8 +37,6 @@ export default {
   data() {
     return {
       combinationItems: [],
-      itemSelected: null,
-      allIngrdnts: []
     }
   },
   computed: {
@@ -58,10 +54,6 @@ export default {
     console.log(this.$route)
   },
   methods: {
-    removeSearchResult() {
-      this.itemSelected = null
-      this.allIngrdnts = []
-    },
   }
 }
 </script>

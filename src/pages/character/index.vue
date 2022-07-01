@@ -1,7 +1,6 @@
 <template>
   <div class="wrap-search">
     <ItemCheckerBoard
-      :showBg="!charactersParsed"
       :items="heroes"
     />
     <search-box
@@ -10,7 +9,6 @@
       :defaultMatchingList="false"
       size="main"
       :paramKey="['nickname']"
-      @onRemoveSearchResult="removeSearchResult"
     />
   </div>
 </template>
@@ -37,8 +35,6 @@ export default {
   },
   data() {
     return {
-      charactersParsed: null,
-      selectedChar: null,
       userNickNames: []
     }
   },
@@ -54,10 +50,6 @@ export default {
     this.userNickNames = this.gameUsers.map(user => user.nickName)
   },
   methods: {
-    removeSearchResult() {
-      this.charactersParsed = null
-      this.selectedChar = null
-    },
   }
 }
 </script>
