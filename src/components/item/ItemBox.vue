@@ -34,28 +34,27 @@
       </div>
       
       <!-- tooltip -->
-      <div v-if="!noTooltip(item)" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
+      <div v-show="!noTooltip(item)" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
         <dl class="details">
-          <div v-if="item.dropMonster">
+          <div v-show="item.dropMonster">
             <dt class="color-drop">획득처</dt>
             <dd>{{ item.dropMonster }}</dd>
           </div>
-          <template v-if="item.option">
-            <div
-              v-for="(option, i) in item.option"
-              :key="`itemOption${i}`"
-            >
-              <dt class="color-option">{{ getOption(option, 'title') }}</dt>
-              <dd>+{{ Object.values(option)[0] }} {{ getOption(option, 'unit') }}</dd>
-            </div>
-          </template>
+          <div
+            v-show="item.option"
+            v-for="(option, i) in item.option"
+            :key="`itemOption${i}`"
+          >
+            <dt class="color-option">{{ getOption(option, 'title') }}</dt>
+            <dd>+{{ Object.values(option)[0] }} {{ getOption(option, 'unit') }}</dd>
+          </div>
         </dl>
-        <div v-if="!visibleDetail && isComp(item)" class="wrap-sub-text">
+        <div v-show="!visibleDetail && isComp(item)" class="wrap-sub-text">
           <p class="color-neon"><small>조합 보러가기 </small><i class="icon-arrow right small border-neon"></i></p>
         </div>
       </div>
       <div
-        v-if="isActiveReportPopup" 
+        v-show="isActiveReportPopup" 
         class="popup"
         style="position: absolute; bottom: 0; left: 0; z-index: 999; transform: translateY(50%);"
       >
