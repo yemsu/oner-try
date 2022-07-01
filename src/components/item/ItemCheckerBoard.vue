@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showBg" class="area-bg">
+  <div v-show="showBg" class="area-bg">
     <div
       v-for="(item, i) in bgItems"
       :key="`bgItem${i}`"
