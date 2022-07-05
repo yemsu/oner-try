@@ -144,12 +144,12 @@ export default {
           ? this.inputValue
           : typeof(value) === 'string'
             ? value : value[key]
-        Object.assign(acc, {[key]: checkValue})
+        acc += '/' + checkValue
         return acc
-      }, {})
+      }, '')
       const path0 = '/' + this.$route.path.split('/')[1]
-      // console.log('pathj-0', this.$route.path.split('/'))
-      this.$router.push(`${path0}/${value}`)
+
+      this.$router.push(`${path0}${params}`)
     },
     routeparamsHandler(params) {
       params = params || this.$route.params
