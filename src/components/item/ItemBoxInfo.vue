@@ -2,19 +2,20 @@
   <div class="item-box-info">
     <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
     <div class="area-img">
-      <img
-        v-if="imgSrc"
-        :src="imgSrc"
-        alt=""
-        class="img-item"
-      />
-      <p v-else-if="isNoDataItem && !roundImg" class="img-item blank no-id">
+      <div v-if="imgSrc" class="box-img">
+        <img
+          :src="imgSrc"
+          :alt="item.name"
+          class="img-item"
+        />
+      </div>
+      <p v-else-if="isNoDataItem && !roundImg" class="box-img blank no-id">
         아이템명 알려주기 click!
       </p>
-      <p v-else-if="!isNoDataItem" class="img-item blank no-src">
+      <p v-else-if="!isNoDataItem" class="box-img blank no-src">
         이미지 준비중
       </p>
-      <p v-else class="img-item blank">
+      <p v-else class="box-img blank">
         ???
       </p>
       <div v-if="!onlyImg" class="badges">

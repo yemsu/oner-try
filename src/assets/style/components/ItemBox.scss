@@ -11,10 +11,12 @@ $xbig-img-size: 90px;
   ::v-deep {
     .area-img {
       width: 100%;
-      height: $img-size;
-      .img-item {
-        width: 100%;
-        height: 100%;
+      .box-img {
+        height: $img-size;
+        .img-item {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
   }
@@ -43,15 +45,15 @@ $xbig-img-size: 90px;
 .item {
   padding: 6px;
   box-sizing: content-box;
-   .wrap-info {
-    max-width: 100%;
+  .wrap-info {
+    width: 100%;
   }
   ::v-deep {
     .item-box-info {
       display: block;
       .area-img {
         position: relative;
-        .img-item {
+        .box-img {
           &.blank {
             display: flex;
             align-items: center;
@@ -203,9 +205,6 @@ $xbig-img-size: 90px;
     &-list {
       height: 100%;
       box-sizing: border-box;
-      button.wrap-info {
-        width: 100%;
-      }
       ::v-deep {
         .item-box-info {
           display: flex;
