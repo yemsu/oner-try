@@ -1,3 +1,6 @@
+import { createVuexPersistedState } from "vue-persistedstate";
+import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList } from '@/utils/item'
+import { deepClone } from '@/utils'
 import {
   getItems,
   getSailors,
@@ -6,8 +9,37 @@ import {
   getEquipments,
   getHeroes,
   getGameUsers,
-  getColleagues } from '../plugins/https'
-
+  getColleagues,
+  getRanking } from '../plugins/https'
+  const dataSettedDefault = (rawData, type) => {
+    const _data = rawData[type]
+    const dataTypeArray = Array.isArray(_data) ? _data : [_data]
+    return dataTypeArray.map(data => getDefaultData(data))
+  }
+  const dataParser = (newData, type) => {
+    for(const data of newData) {
+      if(data?.option) {
+        data.option = parserStrData(data.option)
+      }
+      if(data?.gradeOption) {
+        data.gradeOption = parserStrData(data.gradeOption)
+      }
+    }
+  
+    const result = type.includes('colleague') 
+      ? fillDefaultList(newData, 3)
+      : type.includes('ship')
+        ? fillDefaultList(newData, 1)
+        : newData
+    return result
+  }
+  const dataParseHandler = (items, rawData, type) => {
+    const data1 = dataSettedDefault(rawData, type)
+    const data2 = fillDataAndInsertValue(items, data1.join(','), 'stack', true)
+    const data3 = dataParser(data2, type)
+  
+    return data3
+  }
 
 // Vue.use(Vuex)
 
@@ -21,6 +53,9 @@ export const state = () => ({
   heroes: [],
   colleagues: [],
   gameUsers: [],
+  ranking: [],
+  rankingInfiniteScroll: [],
+  rankingMain: [],
 })
 
 export const getters = {
@@ -50,6 +85,15 @@ export const getters = {
   },
   getGameUsers(state) {
     return state.gameUsers
+  },
+  getRanking(state) {
+    return state.ranking
+  },
+  getRankingInfiniteScroll(state) {
+    return state.rankingInfiniteScroll
+  },
+  getRankingMain(state) {
+    return state.rankingMain
   },
 }
 
@@ -83,7 +127,45 @@ export const mutations = {
   SET_GAME_USERS(state, {type, data}) {
     state[type] = data
   },
+  SET_RANKING(state, {type, data}) {
+    data.sort((a, b) => {
+      if(a.lv === b.lv) {
+        return a.bounty - b.bounty
+      }
+      return a.lv - b.lv
+    }).reverse()
+
+    state[type] = data
+  },
+  ADD_RANKING_DATA(state, {type, number}) {
+    const { [type]: data, ranking } = state
+    const thisData = deepClone(ranking).splice(data.length, number)
+    const newData = thisData.map(user => {
+      const sailors = user.sailors
+        ? dataParseHandler(state.items, user, 'sailors') 
+        : []
+      const colleagues = user.colleagues
+        ? dataParseHandler(state.items, user, 'colleagues')
+        : []
+      return Object.assign(user, { sailors, colleagues })
+    })
+
+    state[type] = data.concat(newData)
+  },
+  RESET_RANKING_DATA(state, {type, number}) {
+    const { [type]: data } = state
+
+    state[type] = data.splice(0, number)
+  },
 }
+
+export const plugins = [
+    createVuexPersistedState({
+      whiteList: ["items", "heroes", "etcItems", "colleagues", "equipments"],
+      key: 'vuexStore',
+      storage: window.sessionStorage,
+    })
+  ]
 
 const dataTyped = (data) => {
   const newData = data.map(item =>{
@@ -162,5 +244,14 @@ export const actions = {
         return data
       })
       .catch(error => console.log('GET_GAME_USERS', error))
+  },
+  GET_RANKING({ commit }, payload) {
+    return getRanking(payload)
+      .then(({data}) => {
+        // console.log('GET_GAME_USERS', data)
+        commit(`SET_RANKING`, {data, type: 'ranking'})
+        return data
+      })
+      .catch(error => console.log('GET_RANKING', error))
   }
 }

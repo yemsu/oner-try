@@ -1,17 +1,20 @@
-import { deepClone, getOnlyText, objArrKeys } from '@/plugins'
+import { deepClone, getOnlyText, objArrKeys } from '@/utils'
 export const findData = (dataList, key, checkValue) => {
   return dataList.find(data => getOnlyText(data[key]) === getOnlyText(checkValue))
 }
 export const imgSrc = (type, id) => {
   if(!type || !id) return ''
-  const imgName = type === 'ship' ? id : type[0] + id
+  const imgName = type === 'ship' || type === 'hero' ? id : type[0] + id
   const path = `/static/image/${type}/${imgName}.png`
   // const url = process.env.NODE_ENV === 'production'
-  //   ? process.env['CONT_PATH'] : ''
-  return process.env.CONT_PATH  + path
+  //   ? process.env['VUE_APP_CONTENTS_URL'] : ''
+  return process.env['VUE_APP_CONTENTS_URL']  + path
 }
 export const getOptionTitle = (key) => {
   const map = new Map([
+    ['str', '견문색'],
+    ['dex', '무장색'],
+    ['int', '패왕색'],
     ['ct', '치명타 확률'],
     ['ctD', '치명타 피해량'],
     ['dct', '파괴치명타 확률'],
@@ -40,7 +43,7 @@ export const parserStrData = (strData) => { // name: value, name: value ...
     return false
   }
   const checkSingle = !strData.includes(',')
-  const data = checkSingle ? [strData] : strData.split(',')
+  const data = checkSingle ? [strData] : strData.replace(/\[ | \]/, '').split(',')
   const objList = data.map(str => {
     const splitStr = str.split(':')
     const nameValue = getOnlyText(splitStr[0])
