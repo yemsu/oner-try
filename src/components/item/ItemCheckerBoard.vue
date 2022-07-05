@@ -4,7 +4,7 @@
       v-for="(item, i) in bgItems"
       :key="`bgItem${i}`"
       class="img-bg"
-      :style="i > 48 && i < 56 && 'opacity: 0;'"
+      :style="i > 44 && i < 53 && 'opacity: 0;'"
     >
       <div 
       :style="`background-image: url(${imgSrc(item)});`"></div>
@@ -33,8 +33,9 @@ export default {
   },
   methods: {
     imgSrc(item) {
-      const { type, id } = item
-      return imgSrc(type, id)
+      const { type, id, groupName } = item
+      const imgName = groupName || id
+      return imgSrc(type, imgName)
     }
   }
 }

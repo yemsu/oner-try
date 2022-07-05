@@ -1,7 +1,7 @@
 <template>
   <div class="wrap-search">
     <ItemCheckerBoard
-      :items="heroes"
+      :items="pureHeroes"
     />
     <search-box
       category="닉네임(첫 검색 대소문자 구분)"
@@ -27,24 +27,24 @@ export default {
       }
     ]
   },
-  data() {
+  async asyncData({ store }) {
+    const { gameUsers, heroes } = store.state
+    if(gameUsers.length === 0) await store.dispatch('GET_GAME_USERS')
+    if(heroes.length === 0) await store.dispatch('GET_HEROES')
+    const userNickNames = gameUsers.map(user => user.nickName)
     return {
-      userNickNames: []
+      userNickNames
     }
   },
   computed: {
     ...mapGetters({
       heroes: 'getHeroes',
       gameUsers: 'getGameUsers',
-    })
+    }),    
+    pureHeroes() {
+      return [...this.heroes].filter(hero => !hero.name.includes('(스킨)'))
+    }
   },
-  async created() {
-    if(this.gameUsers.length === 0) await this.$store.dispatch('GET_GAME_USERS')
-    if(this.heroes.length === 0) await this.$store.dispatch('GET_HEROES')
-    this.userNickNames = this.gameUsers.map(user => user.nickName)
-  },
-  methods: {
-  }
 }
 </script>
 

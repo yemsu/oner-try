@@ -39,7 +39,7 @@ i {
 }
 
 // ir
-.ir-hidden {
+caption, .ir-hidden {
   position: absolute;
   overflow: hidden;
   width: 1px;
@@ -68,6 +68,8 @@ i {
 .icon-arrow {
   position: relative;
   display: inline-block;
+  width: 10px;
+  height: 10px;
   &:before {
     position: absolute;
     display: block;
@@ -105,6 +107,11 @@ i {
   &.border-neon:before {
     border-color: $color-neon;
   }
+  &.color-point {
+    &:before {
+      border-color: $color-point;
+    }
+  }
 }
 .icon-bar-arrow {
   display: inline-block;
@@ -133,6 +140,12 @@ i {
   }
   & + .icon-bar-arrow {
     margin-left: 8px;
+  }
+}
+.wrap-icon-text {
+  line-height: 1;
+  [class*=icon-] {
+    margin-left: 5px;
   }
 }
 
@@ -208,7 +221,12 @@ i {
   margin-right: 160px;
   font-weight: bold;
   letter-spacing: 0.01em;
-  .icon-pirate {
+  .skull {
     font-size: 1.1em;
   }
+}
+
+// link
+.text-link {
+  color: $color-point;
 }

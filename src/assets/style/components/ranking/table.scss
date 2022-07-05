@@ -1,0 +1,108 @@
+.list-ranking {
+  width: 100%;
+  background-color: var(--color-white);
+  th {
+    vertical-align: middle;
+    padding: 8px 15px;
+    background-color: var(--bg-light-point-100);
+    font-size: $font-size-S-pc;
+    font-weight: normal;
+    color: var(--color-dark-gray);
+  }
+  td {
+    vertical-align: middle;
+    padding: 6px 10px;
+    text-align: center;
+  }
+  .item-ranking {
+    align-items: center;
+    border-bottom: 1px solid var(--border-light-gray);
+    &.tear-0 {
+      padding: 10px;
+      background-color: var(--color-black);
+      td {
+        color: var(--color-white);
+        > a {
+          color: var(--color-white);
+          font-size: 1.2em;
+        }
+      }
+      .number-rank {
+        font-weight: bold;
+        color: red;
+      }
+    }
+    &.tear-1 {
+      background-color: $color-point-200;
+    }
+    &.tear-2 {
+      background-color: $color-point-100;
+    }
+    .rank {
+      text-align: center;
+      padding-left: 2px;
+      padding-right: 2px;
+      .number-rank {
+        font-size: $font-size-S-pc;
+        color: var(--color-dark-gray);
+      }
+      .rank-title {
+        &.type-0 {
+          color: $color-rank1;
+          .skull {
+            font-weight: normal;
+            font-size: 2.6em;
+          }
+        }
+        &.type-1 {
+          color: $color-rank2;
+          .skull {
+            font-size: 2em;
+          }
+        }
+        &.type-2 {
+          color: $color-rank3;
+          .skull {
+            font-size: 1.4em;
+          }
+        }
+        .skull {
+          display: block;
+          font-weight: bold;
+          line-height: 1;
+        }
+      }
+    }
+    .thumb-hero {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      .crown {
+        position: absolute;
+        top: 26px;
+        left: 20px;
+        font-size: 0.9em;
+        transform: rotate(-30deg);
+      }
+      .money {
+        position: absolute;
+        bottom: 5px;
+        right: 20px;
+        transform: rotate(30deg);
+      }
+    }
+    .nickname {
+      a {
+        display: block;
+        width: 100%;
+      }
+    }
+    .bounty {
+
+    }
+    .list-items {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

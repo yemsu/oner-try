@@ -1,14 +1,22 @@
-$color-epic: orange;
-$color-rare: green;
+$color-legend: #70dbbb;
+$color-legend-sub: #eeeea0;
+$color-epic: #fd8329;
+$color-epic-sub: #ffe945;
+$color-rare: #aaff90;
+$color-normal: #f7efec;
 
 $color-point: rgb(87,75,198);
 $color-point-sub: #ee6b00;
-$color-point-200: #a7a3d1;
-$color-point-100: #a8a6bf;
+$color-point-200: #bebad4;
+$color-point-100: #d8d5e7;
 
 $color-neon: #5fee27;
 $color-gold: #cfa61f;
 $wanted-brown: #5a352d;
+
+$color-rank1: rgb(255, 60, 0);
+$color-rank2: rgb(105, 22, 173);
+$color-rank3: rgb(36, 61, 172);
 
 $color-point-bright: #95aeff;
 $color-point-sub-bright: #ffa742;
@@ -16,12 +24,19 @@ $color-point-sub-bright: #ffa742;
 $basic-container-width: 1080px;
 
 // size
+$font-size-title-B-pc: 30px;
+$font-size-title-M-pc: 25px;
+$font-size-title-S-pc: 20px;
+$font-size-title-XS-pc: 16px;
+$font-size-B-pc: 16px;
 $font-size-M-pc: 14px;
 $font-size-S-pc: 12px;
 $font-size-XS-pc: 11px;
 
 :root {
   --color-black: #333;
+  --color-dark-gray: #666;
+  --color-gray-100: #999;
   --color-gray: #aaa;
   --color-white: #fff;
 

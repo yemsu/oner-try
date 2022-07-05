@@ -58,17 +58,31 @@
 </template>
 
 <script>
+import VTab from '@/components/common/VTab.vue'
+import TitleContent from '@/components/common/TitleContent.vue'
 import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/item'
 import { deepClone, addCommaNumber } from '@/plugins'
 import { postGameUser } from '@/plugins/https'
 import { mapGetters } from 'vuex';
 export default {
   name: 'CharacterResult',
+  components: {
+    VTab,
+    TitleContent
+  },
+  async asyncData({ store }) {
+    const { gameUsers, heroes } = store.state
+    if(gameUsers.length === 0) await store.dispatch('GET_GAME_USERS')
+    if(heroes.length === 0) await store.dispatch('GET_HEROES')
+    const userNickNames = gameUsers.map(user => user.nickName)
+    return {
+      userNickNames
+    }
+  },
   data() {
     return {
       charactersParsed: null,
       selectedChar: null,
-      userNickNames: [],
       ships: [],
       itemAreas: [
         {
@@ -106,11 +120,6 @@ export default {
       items: 'getItems',
     })
   },
-  async created() {
-    if(this.gameUsers.length === 0) await this.$store.dispatch('GET_GAME_USERS')
-    if(this.heroes.length === 0) await this.$store.dispatch('GET_HEROES')
-    this.userNickNames = this.gameUsers.map(user => user.nickName)
-  },
   mounted() {
     this.fnSearch(this.$route.params.nickname)
   },
@@ -137,7 +146,7 @@ export default {
         if(checkDone) return character
 
         const heroData = findData(this.heroes, 'name', character.heroName)
-        const hero = heroData || {id: character.heroName}
+        const hero = deepClone(heroData) || {id: character.heroName}
         hero.bounty = addCommaNumber(character.bounty)
 
         const equipments = this.dataParser(character, 'equipments')

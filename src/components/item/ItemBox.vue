@@ -5,12 +5,13 @@
       item ? item.grade : '',
       `size-${size}`,
       `type-${type}`,
-      {'wanted-paper': wantedPaper}
+      {'wanted-paper': wantedPaper},
+      {'round': roundImg}
     ]">
     <template v-if="item">
       <div class="wrap-box">
         <button
-          v-if="isComp(item) || isNoDataItem(item)"
+          v-if="isComp(item) || (isNoDataItem(item) && !this.roundImg)"
           @click="clickItem(item)"
           :title="isNoDataItem(item) ? '클릭하여 아이템 이름을 알려주세요!' : ''"
           class="wrap-info"
@@ -21,6 +22,12 @@
             :wantedPaper="wantedPaper"
             :isNoDataItem="isNoDataItem(item)"
             :badgeDrop="badgeDrop"
+            :showType="showType"
+            :showName="showName"
+            :showBounty="showBounty"
+            :onlyImg="onlyImg"
+            :roundImg="roundImg"
+            :customBadge="customBadge"
           />
         </button>
         <item-box-info
@@ -30,6 +37,12 @@
           :wantedPaper="wantedPaper"
           :isNoDataItem="isNoDataItem(item)"
           :badgeDrop="badgeDrop"
+          :showType="showType"
+          :showName="showName"
+          :showBounty="showBounty"
+          :onlyImg="onlyImg"
+          :roundImg="roundImg"
+          :customBadge="customBadge"
         />
       </div>
       
@@ -116,10 +129,30 @@ export default {
       type: Boolean,
       default: () => false
     },
+    showBounty: {
+      type: Boolean,
+      default: () => true
+    },
+    showName: {
+      type: Boolean,
+      default: () => true
+    },
+    onlyImg: {
+      type: Boolean,
+      default: () => false
+    },
+    roundImg: {
+      type: Boolean,
+      default: () => false
+    },
     wantedPaper: {
       type: Boolean,
       default: () => false
-    }
+    },
+    customBadge: {
+      type: String,
+      default: () => ''
+    },
   },
   data() {
     return {
@@ -137,7 +170,6 @@ export default {
   },
   methods: {
     isNoDataItem(item) {
-      item.name === '비프스튜' && console.log(item, isOnlyNumber(item.name))
       return isOnlyNumber(item.name)
     },
     getOption(option, optionType) {
@@ -147,18 +179,6 @@ export default {
           return getOptionTitle(key);
         case 'unit':
           return getOptionUnit(key);      
-      }
-    },
-    typeName(type) {
-      switch (type) {
-        case 'sailor':
-          return '선원'
-        case 'colleague':
-          return '동료'
-        case 'etcItem':
-          return '기타'
-        default:
-          break;
       }
     },
     noTooltip(item) {

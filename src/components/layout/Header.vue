@@ -5,7 +5,7 @@
       <NuxtLink to="/character">캐릭터</NuxtLink>
       <NuxtLink to="/composition">조합법</NuxtLink>
       <NuxtLink to="/ranking">랭킹</NuxtLink>
-      <NuxtLink to="/build">빌드툴</NuxtLink>
+      <!-- <NuxtLink to="/build">빌드툴</NuxtLink> -->
       <!-- <NuxtLink to="/other">다른 메뉴</NuxtLink> -->
     </nav>
     <ul class="menu-util">

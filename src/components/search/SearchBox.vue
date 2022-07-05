@@ -1,9 +1,8 @@
 <template>
-  <div :class="['box-search', {'compact':size === 'side'}]">
+  <div :class="['box-search', {'compact':size === 'side'}, size]">
     <div :class="[
       'wrap-search',
-      {'compact': size === 'side' && !isSearching},
-      {'side': size === 'side'}
+      {'compact': size === 'side' && !isSearching}
     ]">
       <base-input
         usage="search"
@@ -79,7 +78,11 @@ export default {
     paramKey: {
       type: Array,
       default: () => []
-    }
+    },
+    resultPath: {
+      type: String,
+      default: () => '/'
+    },
   },
   data() {
     return {

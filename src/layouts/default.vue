@@ -1,23 +1,15 @@
 <template>
  <div id="app">
-    <header-comp />
+    <LayoutHeader />
     <div class="container">
       <nuxt />
     </div>
+    <LayoutFooter />
  </div>
 </template>
 
 <script>
-import Header from '@/components/layout/Header'
-
 export default {
-  components: {
-    HeaderComp: Header
-  },
-  data() {
-    return {
-    }
-  }
 }
 </script>
 

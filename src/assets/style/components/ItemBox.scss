@@ -9,10 +9,12 @@ $xbig-img-size: 90px;
 @mixin setSize($img-size) {
   width: $img-size;
   ::v-deep {
-    .item-box-info {
+    .area-img {
+      width: 100%;
+      height: $img-size;
       .img-item {
         width: 100%;
-        height: $img-size;
+        height: 100%;
       }
     }
   }
@@ -50,10 +52,10 @@ $xbig-img-size: 90px;
       .area-img {
         position: relative;
         .img-item {
-          &.no-src,
-          &.no-id {
+          &.blank {
             display: flex;
             align-items: center;
+            justify-content: center;
             word-break: keep-all;
             color: var(--color-gray);
             line-height: 1.2;
@@ -73,6 +75,55 @@ $xbig-img-size: 90px;
   .item-blank {
     height: 100%;
     @include blank();
+    background-color: transparent;
+  }
+  &.round {
+    &.legend {
+      :deep(.item-box-info) {
+        .area-img {
+          border: 2px solid $color-legend;
+          box-shadow: 0 0 10px $color-legend-sub;
+        }
+      }
+    }
+    &.epic {
+      :deep(.item-box-info) {
+        .area-img {
+          border: 2px solid $color-epic;
+          box-shadow: 0 0 5px $color-epic-sub;
+        }
+      }
+    }
+    &.rare {
+      :deep(.item-box-info) {
+        .area-img {
+          border: 2px solid $color-rare;
+        }
+      }
+    }
+    &.normal {
+      :deep(.item-box-info) {
+        .area-img {
+          border: 2px solid $color-normal;
+        }
+      }
+    }
+    :deep(.item-box-info) {
+      .area-img {
+        overflow: hidden;
+        border-radius: 100%;
+        border: 1px solid var(--color-white);
+        .img-item {
+          width: 150% !important;
+          height: 150% !important;
+          margin: -26% 0 0 -25%;
+          border-radius: 100%;
+        }
+      }
+    }
+    .item-blank {
+      border-radius: 100%;
+    }
   }
   &.type {
     &-basic {
