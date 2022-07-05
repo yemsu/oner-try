@@ -57,9 +57,17 @@
 
 <script>
 import rankingTable from '@/components/ranking/table.vue'
+import setMeta from '@/plugins/utils/meta';
 import { mapGetters, mapMutations } from 'vuex';
 
 export default {
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `메인`,
+      description: `캐릭터, 조합법을 검색 퀵메뉴와 랭킹 TOP 5를 확인할 수 있습니다.`,
+    })
+  },
   components: {
     rankingTable
   },

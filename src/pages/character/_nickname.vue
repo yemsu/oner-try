@@ -61,6 +61,7 @@
 import VTab from '@/components/common/VTab.vue'
 import TitleContent from '@/components/common/TitleContent.vue'
 import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
+import setMeta from '@/plugins/utils/meta';
 import { deepClone, addCommaNumber } from '@/plugins/utils'
 import { postGameUser } from '@/plugins/utils/https'
 import { mapGetters } from 'vuex';
@@ -70,13 +71,22 @@ export default {
     VTab,
     TitleContent
   },
-  async asyncData({ store }) {
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `${this.nickname}의 캐릭터`,
+      description: `${this.nickname}의 캐릭터 정보입니다.`,
+    })
+  },
+  async asyncData({ store, params }) {
     const { gameUsers, heroes } = store.state
     if(gameUsers.length === 0) await store.dispatch('GET_GAME_USERS')
     if(heroes.length === 0) await store.dispatch('GET_HEROES')
     const userNickNames = gameUsers.map(user => user.nickName)
+    const nickname = params.nickname
     return {
-      userNickNames
+      userNickNames,
+      nickname
     }
   },
   data() {

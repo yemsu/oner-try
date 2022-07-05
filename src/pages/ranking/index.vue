@@ -37,9 +37,17 @@
 
 <script>
 import rankingTable from '@/components/ranking/table.vue'
+import setMeta from '@/plugins/utils/meta';
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `랭킹`,
+      description: `캐릭터 랭킹을 확인할 수 있습니다. 해적왕은 누구일까요?`,
+    })
+  },
   components: {
     rankingTable
   },

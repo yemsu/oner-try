@@ -61,16 +61,34 @@
 import TitleContent from '@/components/common/TitleContent.vue'
 import CompTree from '@/components/item/CompTree.vue'
 import { parserStrData, fillDataAndInsertValue } from '@/plugins/utils/item'
+import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
 
 export default {
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `${this.itemName} 조합법`,
+      description: `${this.itemName}의 조합법 페이지 입니다.`,
+    })
+  },
   components: {
     TitleContent,
     CompTree
   },
+  async asyncData({ store, params }) {
+    const { items } = store.state
+    const { id, type } = params
+    if(items.length === 0) await store.dispatch('GET_ITEMS')
+    const combinationItems = await items.filter(item => item.ingredients)
+    const itemName = items.find(item => item.id === id && item.type === type).name
+    return {
+      combinationItems,
+      itemName
+    }
+  },
   data() {
     return {
-      combinationItems: [],
       itemSelected: null,
       allIngrdnts: []
     }
@@ -97,11 +115,6 @@ export default {
 
       return {sailors, etcItems}
     }
-  },
-  async created() {
-    if(this.items.length === 0) await this.$store.dispatch('GET_ITEMS')
-    const combinationItems = await this.items.filter(item => item.ingredients)
-    this.combinationItems = combinationItems
   },
   methods: {
     fnSearch(result) {

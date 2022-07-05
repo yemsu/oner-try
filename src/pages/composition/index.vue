@@ -14,19 +14,17 @@
 </template>
 
 <script>
+import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
 
 export default {
   name: 'SearchCharacter',
-  head: {
-    title: `${process.env.APP_TITLE} | 조합법`,
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content: '조합법이 궁금한 아이템을 검색 해보세요.'
-      }
-    ]
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `조합법`,
+      description: `조합법이 궁금한 아이템을 검색 해보세요.`,
+    })
   },
   data() {
     return {

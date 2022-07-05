@@ -6,7 +6,7 @@ import {
   getEquipments,
   getHeroes,
   getGameUsers,
-  getColleagues } from '../plugins/https'
+  getColleagues } from '@/plugins/utils/https'
 
 const dataTyped = (data) => {
   const newData = data.map(item =>{
