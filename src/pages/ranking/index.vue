@@ -78,7 +78,7 @@ export default {
       this.infiniteScroll(checker)
     })
   },
-  beforeUnmount() {
+  beforeDestroy() {
     this.resetRanking({type: 'rankingInfiniteScroll', number: 15})
   },
   methods: {
