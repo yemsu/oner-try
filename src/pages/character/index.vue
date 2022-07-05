@@ -1,6 +1,6 @@
 <template>
   <div class="wrap-search">
-    <ItemCheckerBoard
+    <item-checker-board
       :items="heroes"
     />
     <search-box
@@ -33,9 +33,14 @@ export default {
     SearchBox,
     ItemCheckerBoard,
   },
-  data() {
+  async asyncData({ store }) {
+    const { state } = store
+    if(state.gameUsers.length === 0) await store.dispatch('GET_GAME_USERS')
+    if(state.heroes.length === 0) await store.dispatch('GET_HEROES')
+    const userNickNames = state.gameUsers.map(user => user.nickName)
+
     return {
-      userNickNames: []
+      userNickNames
     }
   },
   computed: {
@@ -43,13 +48,6 @@ export default {
       heroes: 'getHeroes',
       gameUsers: 'getGameUsers',
     })
-  },
-  async created() {
-    if(this.gameUsers.length === 0) await this.$store.dispatch('GET_GAME_USERS')
-    if(this.heroes.length === 0) await this.$store.dispatch('GET_HEROES')
-    this.userNickNames = this.gameUsers.map(user => user.nickName)
-  },
-  methods: {
   }
 }
 </script>

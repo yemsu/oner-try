@@ -11,7 +11,7 @@
       />
     </div>
     <div class="inner-size-basic">
-      <h2 class="title-page"><i class="icon-pirate">☠</i> {{ $route.params.nickname }}</h2>
+      <h2 class="title-page"><i class="icon-pirate">☠</i> {{ params.nickname }}</h2>
       <v-tab
         v-if="charactersParsed"
         :tabs="charactersParsed"
@@ -73,11 +73,21 @@ export default {
     ItemList,
     VTab
   },
+  async asyncData({ store, params }) {
+    const { state } = store
+    if(state.gameUsers.length === 0) await store.dispatch('GET_GAME_USERS')
+    if(state.heroes.length === 0) await store.dispatch('GET_HEROES')
+    const userNickNames = state.gameUsers.map(user => user.nickName)
+
+    return {
+      userNickNames,
+      params
+    }
+  },
   data() {
     return {
       charactersParsed: null,
       selectedChar: null,
-      userNickNames: [],
       ships: [],
       itemAreas: [
         {
@@ -115,13 +125,8 @@ export default {
       items: 'getItems',
     })
   },
-  async created() {
-    if(this.gameUsers.length === 0) await this.$store.dispatch('GET_GAME_USERS')
-    if(this.heroes.length === 0) await this.$store.dispatch('GET_HEROES')
-    this.userNickNames = this.gameUsers.map(user => user.nickName)
-  },
   mounted() {
-    this.fnSearch(this.$route.params.nickname)
+    this.fnSearch(this.params.nickname)
   },
   methods: {
     async fnSearch(newNickName) {

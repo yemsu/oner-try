@@ -72,9 +72,16 @@ export default {
     ItemBox,
     CompTree
   },
+  async asyncData({ store }) {
+    const { state } = store
+    if(state.items.length === 0) await store.dispatch('GET_ITEMS')
+    const combinationItems = await state.items.filter(item => item.ingredients)
+    return {
+      combinationItems
+    }
+  },
   data() {
     return {
-      combinationItems: [],
       itemSelected: null,
       allIngrdnts: []
     }
@@ -101,11 +108,6 @@ export default {
 
       return {sailors, etcItems}
     }
-  },
-  async created() {
-    if(this.items.length === 0) await this.$store.dispatch('GET_ITEMS')
-    const combinationItems = await this.items.filter(item => item.ingredients)
-    this.combinationItems = combinationItems
   },
   methods: {
     fnSearch(result) {

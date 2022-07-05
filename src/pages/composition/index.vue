@@ -34,26 +34,18 @@ export default {
     SearchBox,
     ItemCheckerBoard,
   },
-  data() {
+  async asyncData({ store }) {
+    const { state } = store
+    if(state.items.length === 0) await store.dispatch('GET_ITEMS')
+    const combinationItems = await state.items.filter(item => item.ingredients)
     return {
-      combinationItems: [],
+      combinationItems
     }
   },
   computed: {
     ...mapGetters({
       items: 'getItems',
     }),
-  },
-  async created() {
-    if(this.items.length === 0) await this.$store.dispatch('GET_ITEMS')
-    const combinationItems = await this.items.filter(item => item.ingredients)
-    this.combinationItems = combinationItems
-    // console.log(this.items)
-  },
-  mounted() {
-    console.log(this.$route)
-  },
-  methods: {
   }
 }
 </script>
