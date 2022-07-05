@@ -4,6 +4,7 @@
       :items="pureHeroes"
     />
     <search-box
+      v-if="userNickNames.length !== 0"
       category="닉네임(첫 검색 대소문자 구분)"
       :matchingData="{type: 'string', data: userNickNames}"
       :defaultMatchingList="false"
@@ -27,9 +28,11 @@ export default {
   },
   async asyncData({ store }) {
     const { gameUsers, heroes } = store.state
-    if(gameUsers.length === 0) await store.dispatch('GET_GAME_USERS')
+    const gameUsersData = gameUsers.length === 0
+      ? await store.dispatch('GET_GAME_USERS')
+      : gameUsers
+    const userNickNames = gameUsersData.map(user => user.nickName)
     if(heroes.length === 0) await store.dispatch('GET_HEROES')
-    const userNickNames = gameUsers.map(user => user.nickName)
     return {
       userNickNames
     }
