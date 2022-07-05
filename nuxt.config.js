@@ -57,17 +57,24 @@ export default {
   },
 
   generate: {
-    routes: function () {
-      return axios.get(process.env.CONT_PATH + '/api/items')
-      .then((res) => {
-        return res.data.filter((item) => item.ingredients)
-          .map((item) => {
-            return {
-              route: `/composition/${item.type}/${item.id}`,
-              payload: item
-            }
-          })
-      })
+    routes: async () => {
+      const { data: items } = await axios.get('https://onerapi.xyz/api/items')
+      const { data: users } = await axios.get('https://onerapi.xyz/api/gameUsers')
+      const itemRoutes = items.filter((item) => item.ingredients)
+        .map((item) => {
+          return {
+            route: `/composition/${item.type}/${item.id}`,
+            payload: item
+          }
+        })
+      const characterRoutes = users
+        .map((user) => {
+          return {
+            route: `/character/${user.nickName}`,
+            payload: user
+          }
+        })
+      return characterRoutes.concat(itemRoutes) 
     }
  },
 }
