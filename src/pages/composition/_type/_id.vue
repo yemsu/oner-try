@@ -81,7 +81,8 @@ export default {
     const { id, type } = params
     if(items.length === 0) await store.dispatch('GET_ITEMS')
     const combinationItems = await items.filter(item => item.ingredients)
-    const itemName = items.find(item => item.id === id && item.type === type).name
+    const item = items.find(item => item.id === id && item.type === type)
+    const itemName = item && item.name
     return {
       combinationItems,
       itemName
