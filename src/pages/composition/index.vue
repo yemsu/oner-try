@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
 
@@ -28,12 +27,12 @@ export default {
   },
   async asyncData({ store }) {
     const { items } = store.state
-    const combinationItems = items => items.filter(item => item.ingredients)
     const itemsData = items.length === 0
       ? await store.dispatch('GET_ITEMS')
       : items
+    const combinationItems = itemsData.filter(item => item.ingredients)
     return {
-      combinationItems: combinationItems(itemsData)
+      combinationItems
     }
   },
   computed: {

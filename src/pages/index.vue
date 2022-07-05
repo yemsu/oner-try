@@ -23,7 +23,6 @@
         </div>
         <div class="area-contents">
           <search-box
-            v-if="combinationItems.length !== 0"
             category="조합 아이템"
             :matchingData="{type: 'item', data: combinationItems}"
             resultPath="/composition"
@@ -75,11 +74,17 @@ export default {
     const { gameUsers, heroes, items, ranking } = store.state
     // character
     if(gameUsers.length === 0) await store.dispatch('GET_GAME_USERS')
+    const gameUsersData = gameUsers.length === 0
+      ? await store.dispatch('GET_GAME_USERS')
+      : gameUsers
+    const userNickNames = gameUsersData.map(user => user.nickName)
     if(heroes.length === 0) await store.dispatch('GET_HEROES')
-    const userNickNames = gameUsers.map(user => user.nickName)
     // composition    
     if(items.length === 0) await store.dispatch('GET_ITEMS')
-    const combinationItems = await items.filter(item => item.ingredients)
+    const itemsData = items.length === 0
+      ? await store.dispatch('GET_ITEMS')
+      : items
+    const combinationItems = itemsData.filter(item => item.ingredients)
     // ranking
     if(ranking.length === 0) await store.dispatch('GET_RANKING')
     return {
