@@ -52,5 +52,20 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+
+  generate: {
+    routes: function () {
+      return axios.get(process.env.CONT_PATH + '/api/items')
+      .then((res) => {
+        return res.data.filter((item) => item.ingredients)
+          .map((item) => {
+            return {
+              route: `/composition/${item.type}/${item.id}`,
+              payload: item
+            }
+          })
+      })
+    }
+ },
 }
