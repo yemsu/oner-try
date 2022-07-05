@@ -1,4 +1,4 @@
-import { deepClone, getOnlyText, objArrKeys } from '@/plugins'
+import { deepClone, getOnlyText, objArrKeys } from '@/plugins/utils'
 export const findData = (dataList, key, checkValue) => {
   return dataList.find(data => getOnlyText(data[key]) === getOnlyText(checkValue))
 }

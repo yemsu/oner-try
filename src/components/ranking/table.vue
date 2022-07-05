@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { addCommaNumber } from '@/plugins'
+import { addCommaNumber } from '@/plugins/utils'
 import { mapGetters } from 'vuex'
 
 export default {

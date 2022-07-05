@@ -60,7 +60,7 @@
 <script>
 import TitleContent from '@/components/common/TitleContent.vue'
 import CompTree from '@/components/item/CompTree.vue'
-import { parserStrData, fillDataAndInsertValue } from '@/plugins/item'
+import { parserStrData, fillDataAndInsertValue } from '@/plugins/utils/item'
 import { mapGetters } from 'vuex';
 
 export default {

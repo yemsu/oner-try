@@ -87,9 +87,9 @@
 
 <script>
 import BaseInput from '@/components/common/BaseInput.vue'
-import { getOptionTitle, getOptionUnit } from '@/plugins/item'
-import { isOnlyNumber } from '@/plugins'
-import { postItemName } from '@/plugins/https'
+import { getOptionTitle, getOptionUnit } from '@/plugins/utils/item'
+import { isOnlyNumber } from '@/plugins/utils'
+import { postItemName } from '@/plugins/utils/https'
 import ItemBoxInfo from './ItemBoxInfo.vue'
 export default {
   components: {

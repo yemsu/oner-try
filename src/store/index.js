@@ -1,5 +1,5 @@
-import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList } from '@/plugins/item'
-import { deepClone } from '@/plugins'
+import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList } from '@/plugins/utils/item'
+import { deepClone } from '@/plugins/utils'
 import {
   getItems,
   getSailors,
@@ -9,7 +9,7 @@ import {
   getHeroes,
   getGameUsers,
   getColleagues,
-  getRanking } from '../plugins/https'
+  getRanking } from '@/plugins/utils/https'
   const dataSettedDefault = (rawData, type) => {
     const _data = rawData[type]
     const dataTypeArray = Array.isArray(_data) ? _data : [_data]

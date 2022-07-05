@@ -60,9 +60,9 @@
 <script>
 import VTab from '@/components/common/VTab.vue'
 import TitleContent from '@/components/common/TitleContent.vue'
-import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/item'
-import { deepClone, addCommaNumber } from '@/plugins'
-import { postGameUser } from '@/plugins/https'
+import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
+import { deepClone, addCommaNumber } from '@/plugins/utils'
+import { postGameUser } from '@/plugins/utils/https'
 import { mapGetters } from 'vuex';
 export default {
   name: 'CharacterResult',

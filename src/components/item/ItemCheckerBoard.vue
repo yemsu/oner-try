@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { imgSrc } from '@/plugins/item'
+import { imgSrc } from '@/plugins/utils/item'
 
 export default {
   props: {
