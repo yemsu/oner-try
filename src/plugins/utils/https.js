@@ -11,6 +11,7 @@ export const getEtcItems = () => {
   return $axios.get('/etcItems')
 }
 export const getItems = () => {
+  console.log('getItems')
   return $axios.get('/items')
   .catch(error => errorHandler('getItems', error))
 }

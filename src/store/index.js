@@ -168,7 +168,7 @@ export const actions = {
   GET_ITEMS({ commit }) {
     return getItems()
       .then(({data}) => {
-        // console.log('GET_SAILORS',data)
+        console.log('GET_ITEMS',data)
         commit(`SET_ITEMS`, {data: dataTyped(data), type: 'items'})
         return data
       })

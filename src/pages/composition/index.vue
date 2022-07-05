@@ -8,7 +8,7 @@
       category="조합 아이템"
       :matchingData="{type: 'item', data: combinationItems}"
       size="main"
-      :paramKey="['id', 'type']"
+      :paramKey="['type', 'id']"
     />
   </div>
 </template>
@@ -26,9 +26,19 @@ export default {
       description: `조합법이 궁금한 아이템을 검색 해보세요.`,
     })
   },
-  data() {
+  async asyncData({ store }) {
+    const { items } = store.state
+    console.log('item', items)
+    let getItems = null
+    if(items.length === 0) {
+      getItems = store.dispatch('GET_ITEMS')
+    }
+    // https://github.com/nuxt/nuxt.js/issues/1693
+    console.log('item2', items)
+    const combinationItems = await items.filter(item => item.ingredients)
     return {
-      combinationItems: [],
+      getItems,
+      combinationItems
     }
   },
   computed: {
@@ -36,17 +46,6 @@ export default {
       items: 'getItems',
     }),
   },
-  async created() {
-    if(this.items.length === 0) await this.$store.dispatch('GET_ITEMS')
-    const combinationItems = await this.items.filter(item => item.ingredients)
-    this.combinationItems = combinationItems
-    // console.log(this.items)
-  },
-  mounted() {
-    console.log(this.$route)
-  },
-  methods: {
-  }
 }
 </script>
 
