@@ -12,7 +12,7 @@
       />
     </div>
     <div class="inner-size-basic">
-      <h2 class="title-page"><i class="skull">☠</i> {{ $route.params.nickname }}</h2>
+      <h2 class="title-page"><i class="skull">☠</i> {{ nickname }}</h2>
       <v-tab
         v-if="charactersParsed"
         :tabs="charactersParsed"
@@ -132,7 +132,7 @@ export default {
     })
   },
   mounted() {
-    this.fnSearch(this.$route.params.nickname)
+    this.fnSearch(nickname)
   },
   methods: {
     async fnSearch(newNickName) {
