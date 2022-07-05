@@ -81,9 +81,11 @@ export default {
   },
   async asyncData({ store, params }) {
     const { gameUsers, heroes } = store.state
-    if(gameUsers.length === 0) await store.dispatch('GET_GAME_USERS')
+    const gameUsersData = gameUsers.length === 0
+      ? await store.dispatch('GET_GAME_USERS')
+      : gameUsers
+    const userNickNames = gameUsersData.map(user => user.nickName)
     if(heroes.length === 0) await store.dispatch('GET_HEROES')
-    const userNickNames = gameUsers.map(user => user.nickName)
     const nickname = params.nickname
     return {
       userNickNames,
@@ -132,7 +134,7 @@ export default {
     })
   },
   mounted() {
-    this.fnSearch(nickname)
+    this.fnSearch(this.nickname)
   },
   methods: {
     async fnSearch(newNickName) {
