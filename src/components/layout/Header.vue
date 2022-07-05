@@ -4,12 +4,14 @@
     <nav class="gnb">
       <NuxtLink to="/character">캐릭터</NuxtLink>
       <NuxtLink to="/composition">조합법</NuxtLink>
+      <NuxtLink to="/ranking">랭킹</NuxtLink>
+      <NuxtLink to="/build">빌드툴</NuxtLink>
       <!-- <NuxtLink to="/other">다른 메뉴</NuxtLink> -->
     </nav>
-    <!-- <ul class="menu-util">
-      <li><NuxtLink to="/login">로그인</NuxtLink></li>
-      <li><NuxtLink to="/join">회원가입</NuxtLink></li>
-    </ul> -->
+    <ul class="menu-util">
+      <li><a href="https://cafe.naver.com/onepiecerpg/595" target="_blank" title="새창">맵/확장팩 다운로드</a></li>
+      <!-- <li><router-link to="/join">회원가입</router-link></li> -->
+    </ul>
   </header>
 </template>
 

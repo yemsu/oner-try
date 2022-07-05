@@ -58,20 +58,10 @@
 </template>
 
 <script>
-import TitleContent from '@/components/common/TitleContent.vue'
-import ItemList from '@/components/item/ItemList.vue'
-import ItemBox from '@/components/item/ItemBox.vue'
-import CompTree from '@/components/item/CompTree.vue'
 import { parserStrData, fillDataAndInsertValue } from '@/plugins/item'
 import { mapGetters } from 'vuex';
 
 export default {
-  components: {
-    TitleContent,
-    ItemList,
-    ItemBox,
-    CompTree
-  },
   data() {
     return {
       combinationItems: [],

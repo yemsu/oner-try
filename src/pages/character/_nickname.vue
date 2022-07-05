@@ -11,7 +11,7 @@
       />
     </div>
     <div class="inner-size-basic">
-      <h2 class="title-page"><i class="icon-pirate">☠</i> {{ $route.params.nickname }}</h2>
+      <h2 class="title-page"><i class="skull">☠</i> {{ $route.params.nickname }}</h2>
       <v-tab
         v-if="charactersParsed"
         :tabs="charactersParsed"
@@ -21,6 +21,7 @@
             :item="data.hero"
             :wanted-paper="true"
             :size="isActive ? 'xbig' : 'big'"
+            :customBadge="`lv.${data.lv}`"
           ></item-box>
         </template>
         <template v-slot:content="{ activeTab }">
@@ -57,22 +58,12 @@
 </template>
 
 <script>
-import ItemList from '@/components/item/ItemList.vue'
-import TitleContent from '@/components/common/TitleContent.vue'
-import ItemBox from '@/components/item/ItemBox.vue'
-import VTab from '@/components/common/VTab.vue'
 import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/item'
 import { deepClone, addCommaNumber } from '@/plugins'
 import { postGameUser } from '@/plugins/https'
 import { mapGetters } from 'vuex';
 export default {
   name: 'CharacterResult',
-  components: {
-    TitleContent,
-    ItemBox,
-    ItemList,
-    VTab
-  },
   data() {
     return {
       charactersParsed: null,

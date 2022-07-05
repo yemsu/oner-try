@@ -1,4 +1,4 @@
-import { deepClone, getOnlyText, objArrKeys } from '@/utils'
+import { deepClone, getOnlyText, objArrKeys } from '@/plugins'
 export const findData = (dataList, key, checkValue) => {
   return dataList.find(data => getOnlyText(data[key]) === getOnlyText(checkValue))
 }
@@ -7,8 +7,8 @@ export const imgSrc = (type, id) => {
   const imgName = type === 'ship' || type === 'hero' ? id : type[0] + id
   const path = `/static/image/${type}/${imgName}.png`
   // const url = process.env.NODE_ENV === 'production'
-  //   ? process.env['VUE_APP_CONTENTS_URL'] : ''
-  return process.env['VUE_APP_CONTENTS_URL']  + path
+  //   ? process.env.CONT_PATH : ''
+  return process.env.CONT_PATH  + path
 }
 export const getOptionTitle = (key) => {
   const map = new Map([

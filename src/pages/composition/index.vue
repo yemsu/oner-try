@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import SearchBox from '@/components/search/SearchBox.vue'
-import ItemCheckerBoard from '@/components/item/ItemCheckerBoard.vue'
 import { mapGetters } from 'vuex';
 
 export default {
@@ -29,10 +27,6 @@ export default {
         content: '조합법이 궁금한 아이템을 검색 해보세요.'
       }
     ]
-  },
-  components: {
-    SearchBox,
-    ItemCheckerBoard,
   },
   data() {
     return {
