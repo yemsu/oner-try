@@ -17,7 +17,7 @@ export default {
   head: {
     title: 'ONER TRY',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'ko'
     },
     meta: [
       { charset: 'utf-8' },
