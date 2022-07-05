@@ -1,26 +1,23 @@
 ::v-deep {
   .wrap-tab {
-    .tabs {
-      align-items: flex-end;
-      .tab {
-        margin-right: 10px;
-        &:not(.active) {
-          > button {
-            opacity: 0.6;
-            &:hover {
-              opacity: 1;
-              transform: translateY(-10px);
-              box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
-              transition: 0.3s;
-            }
+    .tab {
+      margin-right: 10px;
+      &:not(.active) {
+        > button {
+          opacity: 0.6;
+          &:hover {
+            opacity: 1;
+            transform: translateY(-10px);
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
           }
         }
-        &.active {
-          border: 5px solid $wanted-brown;
-          box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-          > button {
-            opacity: 1;
-          }
+      }
+      &.active {
+        border: 5px solid $wanted-brown;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+        > button {
+          opacity: 1;
         }
       }
     }
