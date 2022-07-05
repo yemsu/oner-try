@@ -8,11 +8,12 @@
         </div>
         <div class="area-contents">
           <search-box
+            v-if="userNickNames.length !== 0"
             category="닉네임(첫 검색 대소문자 구분)"
             :matchingData="{type: 'string', data: userNickNames}"
             :defaultMatchingList="false"
             resultPath="/character"
-            :queryKey="['nickname']"
+            :paramKey="['nickname']"
           />
         </div>
       </section>
@@ -26,7 +27,7 @@
             category="조합 아이템"
             :matchingData="{type: 'item', data: combinationItems}"
             resultPath="/composition"
-            :queryKey="['id', 'type']"
+            :paramKey="['type', 'id']"
           />
         </div>
       </section>

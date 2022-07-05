@@ -147,9 +147,7 @@ export default {
         acc += '/' + checkValue
         return acc
       }, '')
-      const path0 = '/' + this.$route.path.split('/')[1]
-
-      this.$router.push(`${path0}${params}`)
+      this.$router.push(`${this.resultPath}${params}`)
     },
     routeparamsHandler(params) {
       params = params || this.$route.params
