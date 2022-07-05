@@ -79,9 +79,11 @@ export default {
   async asyncData({ store, params }) {
     const { items } = store.state
     const { id, type } = params
-    if(items.length === 0) await store.dispatch('GET_ITEMS')
-    const combinationItems = await items.filter(item => item.ingredients)
-    const item = items.find(item => item.id === id && item.type === type)
+    const itemsData = items.length === 0
+      ? await store.dispatch('GET_ITEMS')
+      : items
+    const combinationItems = await itemsData.filter(item => item.ingredients)
+    const item = itemsData.find(item => item.id === id && item.type === type)
     const itemName = item && item.name
     return {
       combinationItems,
