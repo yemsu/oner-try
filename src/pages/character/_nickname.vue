@@ -159,8 +159,8 @@ export default {
         if(checkDone) return character
 
         const heroData = findData(this.heroes, 'name', character.heroName)
-        const hero = deepClone(heroData) || {id: character.heroName}
-        hero.bounty = addCommaNumber(character.bounty)
+        const hero = heroData ? deepClone(heroData) : {id: character.heroName}
+        hero.bounty = addCommaNumber(character.bounty.trim())
 
         const equipments = this.dataParser(character, 'equipments')
         const sailors = this.dataParser(character, 'sailors')
