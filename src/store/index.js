@@ -1,6 +1,5 @@
-import { createVuexPersistedState } from "vue-persistedstate";
-import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList } from '@/utils/item'
-import { deepClone } from '@/utils'
+import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList } from '@/plugins/item'
+import { deepClone } from '@/plugins'
 import {
   getItems,
   getSailors,
@@ -158,15 +157,6 @@ export const mutations = {
     state[type] = data.splice(0, number)
   },
 }
-
-export const plugins = [
-    createVuexPersistedState({
-      whiteList: ["items", "heroes", "etcItems", "colleagues", "equipments"],
-      key: 'vuexStore',
-      storage: window.sessionStorage,
-    })
-  ]
-
 const dataTyped = (data) => {
   const newData = data.map(item =>{
     const type = item.type || 'etcItem'
