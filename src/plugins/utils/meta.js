@@ -18,7 +18,8 @@ const setMeta = (metaObj = {}) => {
   resultMeta.push({ hid: 'schema-url-value', itemprop: 'url', content: urlContent })
     
   // title
-  const titleContent = title ? title + ` | ${process.env.APP_TITLE}` : process.env.APP_TITLE
+  const defaultTitle = `${process.env.APP_TITLE} | Warcraft3 Onepiece RPG 정보 제공 사이트`
+  const titleContent = title ? title + ` | ${defaultTitle}` : defaultTitle
   resultMeta.push({ title: titleContent })
   resultMeta.push({ hid: 'og-title-value', property: 'og:title', content: titleContent })
   resultMeta.push({ hid: 'twitter-title-value', name: 'twitter:title', content: titleContent })
