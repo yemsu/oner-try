@@ -6,8 +6,14 @@ $xbig-img-size: 90px;
   right: 0;
   bottom: 0;
 }
-@mixin setSize($img-size) {
+@mixin setTypeBasicSize($img-size) {
   width: $img-size;
+  @include setTypeListSize($img-size);
+  .item-blank {
+    height: $img-size;
+  }
+}
+@mixin setTypeListSize($img-size) {
   ::v-deep {
     .area-img {
       .box-img {
@@ -155,7 +161,7 @@ $xbig-img-size: 90px;
       &.size {
         &-small {
           $img-size: 40px;
-          @include setSize($img-size);
+          @include setTypeBasicSize($img-size);
           ::v-deep {
             .item-box-info {
               .badges {
@@ -167,7 +173,7 @@ $xbig-img-size: 90px;
         }
         &-basic {
           $img-size: 55px;
-          @include setSize($img-size);
+          @include setTypeBasicSize($img-size);
           ::v-deep {
             .item-box-info {
               .badges {
@@ -177,7 +183,7 @@ $xbig-img-size: 90px;
           }       
         }
         &-big {
-          @include setSize($big-img-size);
+          @include setTypeBasicSize($big-img-size);
           ::v-deep {
             .item-box-info {
               .badges {
@@ -190,7 +196,7 @@ $xbig-img-size: 90px;
           }     
         }
         &-xbig {
-          @include setSize($xbig-img-size);
+          @include setTypeBasicSize($xbig-img-size);
           ::v-deep {
             .item-box-info {
               .badges {
@@ -223,7 +229,7 @@ $xbig-img-size: 90px;
       &.size {
         &-xsmall {
           $img-size: 30px;
-          @include setSize(30px);
+          @include setTypeListSize($img-size);
           ::v-deep {
             .item-box-info {
               .name {
@@ -234,24 +240,14 @@ $xbig-img-size: 90px;
         }
         &-small {
           $img-size: 35px;
-          ::v-deep {
-            .item-box-info {
-              .img-item { 
-                width: $img-size;
-                height: $img-size;
-              }
-            }
-          }
+          @include setTypeListSize($img-size);
         }
         &-big {
           display: flex;
           padding: 15px 10px;
+          @include setTypeListSize($big-img-size);
           ::v-deep {
             .item-box-info {
-              .img-item { 
-                width: $big-img-size;
-                height: $big-img-size;
-              }
               .name {
                 font-size: $font-size-S-pc + 8;
               }
