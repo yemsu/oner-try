@@ -7,6 +7,7 @@
       category="조합 아이템"
       :matchingData="{type: 'item', data: combinationItems}"
       size="main"
+      resultPath="/composition"
       :paramKey="['type', 'id']"
     />
   </div>

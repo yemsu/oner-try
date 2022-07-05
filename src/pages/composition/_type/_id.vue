@@ -8,6 +8,7 @@
         :matchingData="{type: 'item', data: combinationItems}"
         :result="itemSelected"
         size="side"
+        resultPath="/composition"
         :paramKey="['type', 'id']"
         @onSearch="fnSearch"
         @onRemoveSearchResult="removeSearchResult"

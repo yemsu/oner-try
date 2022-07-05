@@ -6,6 +6,7 @@
         :matchingData="{type: 'string', data: userNickNames}"
         :defaultMatchingList="false"
         size="side"
+        resultPath="/character"
         :paramKey="['nickname']"
         @onRemoveSearchResult="removeSearchResult"
       />

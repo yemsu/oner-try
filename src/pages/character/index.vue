@@ -9,6 +9,7 @@
       :matchingData="{type: 'string', data: userNickNames}"
       :defaultMatchingList="false"
       size="main"
+      resultPath="/character"
       :paramKey="['nickname']"
     />
   </div>
