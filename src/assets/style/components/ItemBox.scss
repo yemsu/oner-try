@@ -10,8 +10,9 @@ $xbig-img-size: 90px;
   width: $img-size;
   ::v-deep {
     .area-img {
-      width: 100%;
       .box-img {
+        overflow: hidden;
+        width: $img-size;
         height: $img-size;
         .img-item {
           width: 100%;
@@ -221,12 +222,9 @@ $xbig-img-size: 90px;
       &.size {
         &-xsmall {
           $img-size: 30px;
+          @include setSize(30px);
           ::v-deep {
             .item-box-info {
-              .img-item { 
-                width: $img-size;
-                height: $img-size;
-              }
               .name {
                 font-size: $font-size-S-pc;
               }
