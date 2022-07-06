@@ -230,3 +230,14 @@ caption, .ir-hidden {
 .text-link {
   color: $color-point;
 }
+
+// bar-notice
+.bar-notice {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 30px;
+  border: 1px solid $color-point;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: $color-point;
+  text-align: center;
+}
