@@ -64,7 +64,6 @@ import TitleContent from '@/components/common/TitleContent.vue'
 import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
 import setMeta from '@/plugins/utils/meta';
 import { deepClone, addCommaNumber } from '@/plugins/utils'
-import { postGameUser } from '@/plugins/utils/https'
 import { mapGetters } from 'vuex';
 export default {
   name: 'CharacterResult',
@@ -172,8 +171,6 @@ export default {
 
       this.charactersParsed = newChars
       // console.log('charactersParsed', this.charactersParsed)
-      // post 
-      postGameUser({ nickName: newNickName })
     },
     dataParser(character, type) {
       const data = () => {
