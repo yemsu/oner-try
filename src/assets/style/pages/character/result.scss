@@ -33,4 +33,10 @@
   display: flex;
   gap: 10px;
   min-height: 402px;
+  ::v-deep {
+    .item {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
 }

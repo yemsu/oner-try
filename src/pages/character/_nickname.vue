@@ -47,9 +47,15 @@
                 :title="itemArea.title"
                 :type="itemArea.type"
                 :columnNum="itemArea.columnNum"
-                :badgeDrop="false"
-                :badgeType="false"
-              />
+              >
+                <template v-slot="{ item }">
+                  <item-box
+                    :item="item"
+                    :badgeDrop="false"
+                    :badgeType="false"
+                  ></item-box> 
+                </template>
+              </item-list>
             </title-content>
           </div>
         </template>

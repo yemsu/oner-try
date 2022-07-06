@@ -34,20 +34,33 @@
         <title-content v-if="totalIngrdnts" title="Total" class="wrap-total area-item-list emph">
           <item-list
             :items="totalIngrdnts.sailors"
-            type="sailors"
-            itemBoxType="list"
-            itemBoxSize="xsmall"
-            :badgeDrop="false"
             columnNum="10"
-          />
+            size="xsmall"
+            class="sailors"
+          >
+            <template v-slot="{ item }">
+              <item-box
+                :item="item"
+                type="list"
+                size="xsmall"
+                :badgeDrop="false"
+              ></item-box> 
+            </template>
+          </item-list>
           <item-list
             :items="totalIngrdnts.etcItems"
-            type="etcItems"
-            itemBoxType="list"
-            itemBoxSize="xsmall"
-            :badgeDrop="false"
             columnNum="10"
-          />
+            size="xsmall"
+          >
+            <template v-slot="{ item }">
+              <item-box
+                :item="item"
+                type="list"
+                size="xsmall"
+                :badgeDrop="false"
+              ></item-box> 
+            </template>
+          </item-list>
         </title-content>
       </div>
       <comp-tree
