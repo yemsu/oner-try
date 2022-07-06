@@ -71,7 +71,7 @@ export default {
     rankingTable
   },
   async asyncData({ store }) {
-    const { gameUsers, heroes, items, ranking } = store.state
+    const { gameUsers, heroes, items } = store.state
     // character
     if(gameUsers.length === 0) await store.dispatch('GET_GAME_USERS')
     const gameUsersData = gameUsers.length === 0
@@ -85,8 +85,6 @@ export default {
       ? await store.dispatch('GET_ITEMS')
       : items
     const combinationItems = itemsData.filter(item => item.ingredients)
-    // ranking
-    if(ranking.length === 0) await store.dispatch('GET_RANKING')
     return {
       userNickNames,
       combinationItems
@@ -102,7 +100,9 @@ export default {
       ranking: 'getRanking',
     })
   },
-  created() {
+  async created() {
+    // ranking
+    if(this.ranking.length === 0) await this.$store.dispatch('GET_RANKING')
     if(this.rankingMain.length === 0) this.addRanking({type: 'rankingMain', number: 5})
   },
   methods: {

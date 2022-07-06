@@ -55,9 +55,8 @@ export default {
     rankingTable
   },
   async asyncData({ store }) {
-    const { items, ranking, heroes } = store.state
+    const { items, heroes } = store.state
     if(items.length === 0) await store.dispatch('GET_ITEMS')
-    if(ranking.length === 0) await store.dispatch('GET_RANKING')
     if(heroes.length === 0) await store.dispatch('GET_HEROES')
     const pureHeroes = heroes.filter(hero => !hero.name.includes('(스킨)'))
     return {
@@ -72,7 +71,8 @@ export default {
       heroes: 'getHeroes',
     })
   },
-  created() {
+  async created() {    
+    if(this.ranking.length === 0) await this.$store.dispatch('GET_RANKING')
     if(this.rankingInfiniteScroll.length === 0) this.addRanking({type: 'rankingInfiniteScroll', number: 15})
   },
   mounted() {
