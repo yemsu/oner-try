@@ -6,7 +6,6 @@ export default {
     BASE_URL: 'https://onertry.fun',
     CONT_PATH: 'https://onerapi.xyz',
   },
-
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
@@ -65,7 +64,12 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/sitemap'
   ],
+  
+  sitemap: {
+    hostname: 'https://onertry.fun',
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
