@@ -2,7 +2,7 @@ import VuexPersistence from 'vuex-persist'
 
 export default ({ store }) => {
   new VuexPersistence({
-    key:'test',
+    key:'onertryVuexStore',
     reducer: (state) => ({
       items: state.items,
       heroes: state.heroes,
