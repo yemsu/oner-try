@@ -1,17 +1,21 @@
 <template>
   <div>
-    <div class="area-search inner-size-basic">
-      <search-box
-        category="닉네임(첫 검색 대소문자 구분)"
-        :matchingData="{type: 'string', data: userNickNames}"
-        :defaultMatchingList="false"
-        size="side"
-        resultPath="/character"
-        :paramKey="['nickname']"
-        @onRemoveSearchResult="removeSearchResult"
-      />
+    <div class="top-bar">
+      <div class="inner-size-basic">
+        <div class="align-right">
+          <search-box
+            category="닉네임(첫 검색 대소문자 구분)"
+            :matchingData="{type: 'string', data: userNickNames}"
+            :defaultMatchingList="false"
+            size="side"
+            resultPath="/character"
+            :paramKey="['nickname']"
+            @onRemoveSearchResult="removeSearchResult"
+          />
+        </div>
+      </div>
     </div>
-    <div class="inner-size-basic">
+    <div class="inner-size-basic mrg-top-medium">
       <h2 class="title-page"><i class="skull">☠</i> {{ nickname }}</h2>
       <v-tab
         v-if="charactersParsed"
@@ -53,7 +57,7 @@
                     :item="item"
                     :badgeDrop="false"
                     :badgeType="false"
-                  ></item-box> 
+                  ></item-box>
                 </template>
               </item-list>
             </title-content>

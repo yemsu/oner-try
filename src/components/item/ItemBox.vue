@@ -23,6 +23,7 @@
             :isNoDataItem="isNoDataItem(item)"
             :badgeDrop="badgeDrop"
             :showType="showType"
+            :showComp="showComp"
             :showName="showName"
             :showBounty="showBounty"
             :onlyImg="onlyImg"
@@ -38,6 +39,7 @@
           :isNoDataItem="isNoDataItem(item)"
           :badgeDrop="badgeDrop"
           :showType="showType"
+          :showComp="showComp"
           :showName="showName"
           :showBounty="showBounty"
           :onlyImg="onlyImg"
@@ -113,10 +115,6 @@ export default {
       type: Boolean,
       default: () => true
     },
-    badgeType: {
-      type: Boolean,
-      default: () => true
-    },
     showTooltip: {
       type: Boolean,
       default: () => true
@@ -128,6 +126,10 @@ export default {
     showType: {
       type: Boolean,
       default: () => false
+    },
+    showComp: {
+      type: Boolean,
+      default: () => true
     },
     showBounty: {
       type: Boolean,

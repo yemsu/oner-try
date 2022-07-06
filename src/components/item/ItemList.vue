@@ -34,6 +34,7 @@ export default {
 
 <style lang="scss" scoped>
 .list-item {
+  display: flex;
   &.column-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -43,7 +44,6 @@ export default {
     grid-template-columns: repeat(3, 1fr);
   }
   &.column-10 {
-    display: flex;
     flex-wrap: wrap;
     > li {
       width: 100px;

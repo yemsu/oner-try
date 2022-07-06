@@ -27,6 +27,9 @@ i {
 }
 
 // layout
+.mrg-top-medium {
+  margin-top: 30px;
+}
 [class*=inner-size] {
   position: relative;
   transition: width 0.5s;
@@ -37,6 +40,19 @@ i {
     @include containerSize('wide');
   }
 }
+
+//  top bar
+.top-bar {
+  padding: 6px 0;
+  background-color: $color-point-400;
+  > [class*=inner] {
+    display: flex;
+    > .align-right {
+      margin-left: auto;
+    }
+  }
+}
+
 
 // ir
 caption, .ir-hidden {
@@ -218,7 +234,7 @@ caption, .ir-hidden {
   border-bottom: 1px solid #aaa;
   margin-bottom: 10px;
   padding-bottom: 2px;
-  margin-right: 160px;
+  // margin-right: 160px;
   font-weight: bold;
   letter-spacing: 0.01em;
   .skull {

@@ -1,28 +1,47 @@
 <template>
   <div>
-    <div class="area-search inner-size-basic">
-      <search-box
-        v-if="combinationItems.length !== 0"
-        category="조합 아이템"
-        :items="items"
-        :matchingData="{type: 'item', data: combinationItems}"
-        :result="itemSelected"
-        size="side"
-        resultPath="/composition"
-        :paramKey="['type', 'id']"
-        @onSearch="fnSearch"
-        @onRemoveSearchResult="removeSearchResult"
-      />
+    <div class="top-bar">
+      <div class="inner-size-basic">
+        <div class="align-right">
+        <search-box
+          v-if="compositionItems.length !== 0"
+          category="조합 아이템"
+          :items="items"
+          :matchingData="{type: 'item', data: compositionItems}"
+          :result="itemSelected"
+          size="side"
+          resultPath="/composition"
+          :paramKey="['type', 'id']"
+          @onSearch="fnSearch"
+        />
+        </div>
+      </div>
     </div>
     <template v-if="itemSelected">
-      <div class="inner-size-basic">
-        <item-box
-          :item="itemSelected"
-          type="list"
-          size="big"
-          :showType="true"
-          :visibleDetail="true"
-        />
+      <div class="content-top">
+        <div class="inner-size-basic">
+          <item-box
+            :item="itemSelected"
+            type="list"
+            size="big"
+            :showType="true"
+            :visibleDetail="true"
+          />
+          <div v-if="highRankItems.length !== 0" class="wrap-high-rank">
+            <h4 class="title">상위 아이템</h4>
+            <item-list :items="highRankItems">
+              <template v-slot="{ item: highRankItems }">
+                <item-box
+                  :item="highRankItems"
+                  :showComp="false"
+                  size="small"
+                />
+              </template>
+            </item-list>
+          </div>
+        </div>
+      </div>
+      <div class="inner-size-basic mrg-top-medium">
         <div class="text-refer top">
           <p class="align-right">
             <span class="badge-text-wrap">
@@ -44,7 +63,7 @@
                 type="list"
                 size="xsmall"
                 :badgeDrop="false"
-              ></item-box> 
+              ></item-box>
             </template>
           </item-list>
           <item-list
@@ -58,15 +77,17 @@
                 type="list"
                 size="xsmall"
                 :badgeDrop="false"
-              ></item-box> 
+              ></item-box>
             </template>
           </item-list>
         </title-content>
       </div>
-      <comp-tree
-        :item="itemSelected"
-        :allIngrdnts="allIngrdnts"
-      />
+      <div class="mrg-top-medium">
+        <comp-tree
+          :item="itemSelected"
+          :allIngrdnts="allIngrdnts"
+        />
+      </div>
     </template>
   </div>
 </template>
@@ -75,6 +96,7 @@
 import TitleContent from '@/components/common/TitleContent.vue'
 import CompTree from '@/components/item/CompTree.vue'
 import { parserStrData, fillDataAndInsertValue } from '@/plugins/utils/item'
+import { getOnlyText, deepClone } from '@/plugins/utils/'
 import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
 
@@ -96,18 +118,19 @@ export default {
     const itemsData = items.length === 0
       ? await store.dispatch('GET_ITEMS')
       : items
-    const combinationItems = await itemsData.filter(item => item.ingredients)
+    const compositionItems = await itemsData.filter(item => item.ingredients)
     const item = itemsData.find(item => item.id === id && item.type === type)
     const itemName = item && item.name
     return {
-      combinationItems,
+      compositionItems,
       itemName
     }
   },
   data() {
     return {
       itemSelected: null,
-      allIngrdnts: []
+      allIngrdnts: [],
+      highRankItems: []
     }
   },
   computed: {
@@ -151,10 +174,16 @@ export default {
       // console.log('itemSetup, allIngrdnts', itemSetup, allIngrdnts)
       this.itemSelected = itemSetup
       this.allIngrdnts = allIngrdnts
-    },
-    removeSearchResult() {
-      this.itemSelected = null
-      this.allIngrdnts = []
+      this.highRankItems = deepClone(this.compositionItems)
+        .filter(item => {
+          const { ingredients } = item
+          if(!ingredients) return false
+          if(getOnlyText(ingredients).includes(getOnlyText(this.itemSelected.name))) return item
+        })
+        .map(item => {
+          item.option = parserStrData(item.option)
+          return item
+        })
     },
     setIngrdntsDataLoop(item) {
       const { setterIngrdnts, setterOptions } = this.dataSetters(item, allIngrdnts)
@@ -205,7 +234,7 @@ export default {
         if(!data[key]) continue
         afterContinue && afterContinue(data)
       }
-    }
+    },
   }
 }
 </script>

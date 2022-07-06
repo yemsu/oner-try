@@ -14,17 +14,12 @@
   }
   &.side {
     .wrap-search {
-      width: 300px;
-    }
-  }
-  &.compact {
-    position: absolute;
-    z-index: 3;
-    top: 15px;
-    right: 0;
-    padding: 0;
-    .wrap-search {
-      width: 150px;
+      width: 250px;
+      ::v-deep {
+        input {
+          font-size: $font-size-M-pc;
+        }
+      }
     }
   }
   .wrap-search {

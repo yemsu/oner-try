@@ -3,7 +3,7 @@
     <div v-if="ranking.length === 0" style="margin-top: 300px; font-size: 1.5em; text-align: center;">
       데이터 로딩중💦 잠시만 기다려 주세요🐱‍🏍
     </div>
-    <div v-else class="inner-size-basic">
+    <div v-else class="inner-size-basic mrg-top-medium">
     <!-- <div class="bar-notice">
       ❗ 현재 랭킹이 정상적으로 업데이트 되지 않는 현상이 있습니다. 확인 중에 있으니 조금만 기다려주세요.
     </div> -->

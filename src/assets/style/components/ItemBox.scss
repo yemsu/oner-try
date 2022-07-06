@@ -244,7 +244,6 @@ $xbig-img-size: 90px;
         }
         &-big {
           display: flex;
-          padding: 15px 10px;
           @include setTypeListSize($big-img-size);
           ::v-deep {
             .item-box-info {
@@ -255,7 +254,7 @@ $xbig-img-size: 90px;
           }
           .area-detail {
             padding: 0 20px;
-            margin-left: 50px;
+            margin-left: 40px;
             dd {
               font-size: 14px;
             }

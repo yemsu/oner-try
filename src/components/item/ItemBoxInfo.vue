@@ -24,7 +24,7 @@
             드랍
           </p>
           <p
-            v-if="isComp && badgeType"
+            v-if="isComp && showComp"
             :class="`badge ${isRecruit ? 'recruit' : 'mix'}`"
           >
             {{ isRecruit ? '영입' : '조합'}}
@@ -62,6 +62,10 @@ export default {
       type: Boolean,
       default: () => false
     },
+    showComp: {
+      type: Boolean,
+      default: () => true
+    },
     showName: {
       type: Boolean,
       default: () => true
@@ -71,10 +75,6 @@ export default {
       default: () => true
     },
     badgeDrop: {
-      type: Boolean,
-      default: () => true 
-    },
-    badgeType: {
       type: Boolean,
       default: () => true 
     },

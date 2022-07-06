@@ -18,6 +18,6 @@ export default {
   position: relative;
   min-height: 100vh;
   $header-height: 41px;
-  padding: ($header-height + 15px) 20px 100px;
+  padding: $header-height 0 100px;
 }
 </style>
