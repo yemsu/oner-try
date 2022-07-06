@@ -4,9 +4,9 @@
       데이터 로딩중💦 잠시만 기다려 주세요🐱‍🏍
     </div>
     <div v-else class="inner-size-basic">
-    <div class="bar-notice" style="width: 100%; padding: 10px; text-align: center; background-color: $color-point;">
+    <!-- <div class="bar-notice">
       ❗ 현재 랭킹이 정상적으로 업데이트 되지 않는 현상이 있습니다. 확인 중에 있으니 조금만 기다려주세요.
-    </div>
+    </div> -->
       <!-- <ul class="list-filter">
         <li>
           <button class="button-filter" @click="filterHero">
