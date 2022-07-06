@@ -100,11 +100,6 @@ export default {
       heroes: 'getHeroes',
     })
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.$nuxt.refresh()
-    })
-  },
   methods: {
     findHero(name) {
       return this.heroes.find(hero => hero.name === name)

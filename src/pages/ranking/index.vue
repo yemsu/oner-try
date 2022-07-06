@@ -74,6 +74,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
+      this.$nuxt.refresh()
       const checker = this.$refs['checker-observer']
       this.infiniteScroll(checker)
     })
