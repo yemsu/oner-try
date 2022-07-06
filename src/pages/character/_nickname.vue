@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <div class="inner-size-basic mrg-top-medium">
+    <div class="inner-size-basic mrg-top-small">
       <h2 class="title-page"><i class="skull">☠</i> {{ nickname }}</h2>
       <v-tab
         v-if="charactersParsed"
