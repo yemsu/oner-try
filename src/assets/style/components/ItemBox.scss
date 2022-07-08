@@ -90,9 +90,11 @@ $xbig-img-size: 90px;
     &.legend {
       ::v-deep {
         .item-box-info {
-          .box-img {
-            border: 2px solid $color-legend;
-            box-shadow: 0 0 10px $color-legend-sub;
+          .area-img {
+            .box-img {
+              border: 2px solid $color-legend;
+              box-shadow: 0 0 10px $color-legend-sub;
+            }
           }
         }
       }
@@ -100,27 +102,35 @@ $xbig-img-size: 90px;
     &.epic {
       ::v-deep {
         .item-box-info {
-          .box-img {
-            border: 2px solid $color-epic;
-            box-shadow: 0 0 5px $color-epic-sub;
+          .area-img {
+            .box-img {
+              border: 2px solid $color-epic;
+              box-shadow: 0 0 5px $color-epic-sub;
+            }
           }
+
         }
       }
     }
     &.rare {
       ::v-deep {
         .item-box-info {
-          .box-img {
-            border: 2px solid $color-rare;
+          .area-img {
+            .box-img {
+              border: 2px solid $color-rare;
+            }
           }
+
         }
       }
     }
     &.normal {
       ::v-deep {
         .item-box-info {
-          .box-img {
-            border: 2px solid $color-normal;
+          .area-img {
+            .box-img {
+              border: 2px solid $color-normal;
+            }
           }
         }
       }
