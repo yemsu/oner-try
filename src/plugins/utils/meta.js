@@ -1,7 +1,7 @@
 const setMeta = (metaObj = {}) => {
   const { description, url, title  } = metaObj
   const resultMeta = []
-  const defaultDesc = '워크3 Onepiece RPG 정보 제공 사이트 ONER TRY. '
+  const defaultDesc = '워크3 원피스 RPG 정보 제공 사이트 ONER TRY. '
   if(Object.keys(metaObj).length === 0) return []
 
   // description
