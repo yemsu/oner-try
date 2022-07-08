@@ -9,6 +9,7 @@
     ]"
   >
     <input
+      ref="baseInput"
       :type="inputType"
       :placeholder="isCompactMode ? '' : `${category}${this.usage.includes('search') ? ' 검색' : ''}`"
       :value="value"
@@ -55,9 +56,19 @@ export default {
     isActive: {
       type: Boolean,
       default: () => false
+    },
+    focusOnMounted: {
+      type: Boolean,
+      default: () => false
     }
   },
   mounted() {
+    if(this.focusOnMounted) {
+      setTimeout(() => {
+        this.focusToInput()
+      }, 100);
+    }
+
     document.addEventListener('click', e => {
       const targetArea = className => e.target.closest(className)
       if(!targetArea('.wrap-input') && !targetArea('.item-match')) this.onBlurInput()
@@ -76,6 +87,9 @@ export default {
     onEnter(e) {
       if(e.key !== 'Enter') return
       this.$emit('onEnter', this.value)
+    },
+    focusToInput() {
+      this.$refs.baseInput.focus()
     }
   }
 }

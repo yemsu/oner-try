@@ -11,6 +11,7 @@
         :value="inputValue"
         :isCompactMode="size === 'small' && !isSearching"
         :isActive="isSearching && !!matchingData.data"
+        :focusOnMounted="size === 'big' && true"
         @onUpdateInput="updateInput"
         @onFocusInput="focusInput"
         @onBlurInput="blurInput"

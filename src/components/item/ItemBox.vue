@@ -76,6 +76,8 @@
         <base-input 
           category="아이템명(선박은 강화수치까지)"
           :value="inputValue"
+          :focusOnMounted="true"
+          size="small"
           @onUpdateInput="updateInput"
           @onEnter="enterInput"
         />
