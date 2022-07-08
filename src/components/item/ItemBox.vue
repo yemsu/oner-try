@@ -71,8 +71,7 @@
       </div>
       <div
         v-if="isActiveReportPopup" 
-        class="popup"
-        style="position: absolute; bottom: 0; left: 0; z-index: 999; transform: translateY(50%);"
+        class="box-item-report"
       >
         <base-input 
           category="아이템명(선박은 강화수치까지)"
