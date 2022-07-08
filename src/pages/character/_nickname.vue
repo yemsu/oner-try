@@ -7,7 +7,7 @@
             category="닉네임(첫 검색 대소문자 구분)"
             :matchingData="{type: 'string', data: userNickNames}"
             :defaultMatchingList="false"
-            size="side"
+            size="small"
             resultPath="/character"
             :paramKey="['nickname']"
             @onRemoveSearchResult="removeSearchResult"

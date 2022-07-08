@@ -8,7 +8,7 @@
       category="닉네임(첫 검색 대소문자 구분)"
       :matchingData="{type: 'string', data: userNickNames}"
       :defaultMatchingList="false"
-      size="main"
+      size="big"
       resultPath="/character"
       :paramKey="['nickname']"
     />

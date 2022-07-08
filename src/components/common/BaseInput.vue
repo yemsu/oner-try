@@ -5,6 +5,7 @@
       size,
       {'compact': isCompactMode},
       {'searching': isActive},
+      usage
     ]"
   >
     <input

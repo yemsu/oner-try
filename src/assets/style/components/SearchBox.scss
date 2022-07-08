@@ -4,7 +4,7 @@
       width: 280px;
     }
   }
-  &.main {
+  &.big {
     display: flex;
     justify-content: center;
     margin-top: 33vh;
@@ -12,7 +12,7 @@
       width: 500px;
     }
   }
-  &.side {
+  &.small {
     .wrap-search {
       width: 250px;
       ::v-deep {

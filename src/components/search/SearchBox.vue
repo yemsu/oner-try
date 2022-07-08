@@ -1,15 +1,15 @@
 <template>
-  <div :class="['box-search', {'compact':size === 'side'}, size]">
+  <div :class="['box-search', {'compact':size === 'small'}, size]">
     <div :class="[
       'wrap-search',
-      {'compact': size === 'side' && !isSearching}
+      {'compact': size === 'small' && !isSearching}
     ]">
       <base-input
         usage="search"
         :size="size"
         :category="category"
         :value="inputValue"
-        :isCompactMode="size === 'side' && !isSearching"
+        :isCompactMode="size === 'small' && !isSearching"
         :isActive="isSearching && !!matchingData.data"
         @onUpdateInput="updateInput"
         @onFocusInput="focusInput"

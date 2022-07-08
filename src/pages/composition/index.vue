@@ -6,7 +6,7 @@
     <search-box
       category="조합 아이템"
       :matchingData="{type: 'item', data: combinationItems}"
-      size="main"
+      size="big"
       resultPath="/composition"
       :paramKey="['type', 'id']"
     />

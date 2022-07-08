@@ -9,7 +9,7 @@
           :items="items"
           :matchingData="{type: 'item', data: compositionItems}"
           :result="itemSelected"
-          size="side"
+          size="small"
           resultPath="/composition"
           :paramKey="['type', 'id']"
           @onSearch="fnSearch"
