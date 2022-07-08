@@ -5,6 +5,7 @@ export default {
     APP_TITLE: 'ONER TRY',
     BASE_URL: 'https://onertry.fun',
     CONT_PATH: 'https://onerapi.xyz',
+    CONT_PATH_LOCAL: 'http://1.227.192.121',
   },
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
