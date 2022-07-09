@@ -144,6 +144,7 @@ export default {
   },
   mounted() {
     this.fnSearch(this.nickname)
+    this.sendPageView()
   },
   methods: {
     async fnSearch(newNickName) {
@@ -210,6 +211,10 @@ export default {
       this.charactersParsed = null
       this.selectedChar = null
     },
+    async sendPageView() {
+      const namePageView = await checkUpdatePageView(this.itemSelected)
+      namePageView && postCompositionPageView({ name: this.itemSelected.name })
+    }
   }
 }
 </script>

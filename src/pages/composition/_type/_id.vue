@@ -96,7 +96,9 @@
 import TitleContent from '@/components/common/TitleContent.vue'
 import CompTree from '@/components/item/CompTree.vue'
 import { parserStrData, fillDataAndInsertValue } from '@/plugins/utils/item'
-import { getOnlyText, deepClone } from '@/plugins/utils/'
+import { getOnlyText, deepClone } from '@/plugins/utils'
+import { checkUpdatePageView } from '@/plugins/utils/pageView'
+import { postCompositionPageView } from '@/plugins/utils/https'
 import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
 
@@ -155,6 +157,9 @@ export default {
 
       return {sailors, etcItems}
     }
+  },
+  mounted() {
+    this.sendPageView()
   },
   methods: {
     fnSearch(result) {
@@ -235,6 +240,10 @@ export default {
         afterContinue && afterContinue(data)
       }
     },
+    async sendPageView() {
+      const namePageView = await checkUpdatePageView(this.itemSelected)
+      namePageView && postCompositionPageView({ name: this.itemSelected.name })
+    }
   }
 }
 </script>

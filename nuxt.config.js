@@ -6,6 +6,7 @@ export default {
     BASE_URL: 'https://onertry.fun',
     CONT_PATH: 'https://onerapi.xyz',
     CONT_PATH_LOCAL: 'http://1.227.192.121',
+    IP_ADMIN: '1.235.236.132',
   },
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -39,6 +40,7 @@ export default {
         innerHTML: `if(!wcs_add) var wcs_add = {}; wcs_add['wa'] = '1501b3ca5e1f000'; if(window.wcs) { wcs_do(); }`
       },
       { type: 'text/javascript', src: 'https://www.googletagmanager.com/gtag/js?id=G-8GJK6WJPDB', async: true },
+      { type: 'text/javascript', src: 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js' },
       {
         type: 'text/javascript',
         innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-8GJK6WJPDB');`

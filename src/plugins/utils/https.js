@@ -48,6 +48,21 @@ export const postItemName = (params) => {
   .then(res => res)
   .catch(error => errorHandler('postItemName', error))
 }
+export const postCharacterPageView = (params) => {
+  return $axios.post(`/register/characterPageView`, null, { params })
+  .then(res => res)
+  .catch(error => errorHandler('characterPageView', error))
+}
+export const postCompositionPageView = (params) => {
+  return $axios.post(`/register/compositionPageView`, null, { params })
+  .then(res => res)
+  .catch(error => errorHandler('compositionPageView', error))
+}
+export const getIpClient = () => {
+  return axios.get(`https://api.ipify.org?format=json`)
+  .then(res => res)
+  .catch(error => errorHandler('getIpClient', error))
+}
 
 // etc
 export const getServerStatus = () => {
