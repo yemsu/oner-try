@@ -196,14 +196,6 @@ export default {
       }
 
       const newData = fillDataAndInsertValue(this.items, data(), 'stack', true)
-      for(const data of newData) {
-        if(data && data.option) {
-          data.option = parserStrData(data.option)
-        }
-        if(data && data.gradeOption) {
-          data.gradeOption = parserStrData(data.gradeOption)
-        }
-      }
 
       const result = type.includes('colleague') 
         ? fillDefaultList(newData, 3)

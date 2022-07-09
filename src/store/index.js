@@ -15,16 +15,7 @@ import {
     const dataTypeArray = Array.isArray(_data) ? _data : [_data]
     return dataTypeArray.map(data => getDefaultData(data))
   }
-  const dataParser = (newData, type) => {
-    for(const data of newData) {
-      if(data?.option) {
-        data.option = parserStrData(data.option)
-      }
-      if(data?.gradeOption) {
-        data.gradeOption = parserStrData(data.gradeOption)
-      }
-    }
-  
+  const dataParser = (newData, type) => {  
     const result = type.includes('colleague') 
       ? fillDefaultList(newData, 3)
       : type.includes('ship')

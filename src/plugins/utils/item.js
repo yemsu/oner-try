@@ -52,12 +52,12 @@ export const parserStrData = (strData) => { // name: value, name: value ...
 
   return objList
 }
-export const fillDataAndInsertValue = (fullDataList, rawDataList, newDataKey, useDefaultData) => {
-  const names = objArrKeys(rawDataList)
+export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey, useDefaultData) => {
+  const names = objArrKeys(targetDataList)
   const newData = names.map((name, i) => {
-    const data = rawDataList[i]
+    const data = targetDataList[i]
     if(isBlank(name)) return null
-    const fullData = findData(fullDataList, 'name', name)
+    const fullData = deepClone(findData(fullDataList, 'name', name))
     if(!fullData && useDefaultData) {
       return { name }
     } else if(!fullData) {
@@ -65,9 +65,15 @@ export const fillDataAndInsertValue = (fullDataList, rawDataList, newDataKey, us
       return false
     }
 
-    const itemValue = Object.values(data)[0]
+    if(fullData.option) {
+      fullData.option = parserStrData(fullData.option)
+    }
+    if(fullData.gradeOption) {
+      fullData.gradeOption = parserStrData(fullData.gradeOption)
+    }
 
-    return Object.assign(deepClone(fullData), {[newDataKey]: itemValue})
+    const itemValue = Object.values(data)[0]
+    return Object.assign(fullData, {[newDataKey]: itemValue})
   })
 
   return newData
