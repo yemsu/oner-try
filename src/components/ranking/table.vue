@@ -97,10 +97,31 @@ export default {
   },
   computed: {
     ...mapGetters({
+      rankingCrr: 'user/getRankingCrr',
+      ranking: 'user/getRanking',
       heroes: 'getHeroes',
     })
   },
+  async created() {    
+    if(this.ranking.length === 0) await this.$store.dispatch('user/GET_RANKING')
+
+    this.setRankingList()
+  },
+  mounted() {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.useInfiniteScroll && this.infiniteScroll()
+      }, 300)
+    })
+  },
+  beforeDestroy() {
+    this.resetRanking({ number: this.defaultDataNum })
+  },
   methods: {
+    ...mapMutations({
+      addRanking: 'user/ADD_RANKING_DATA',
+      resetRanking: 'user/RESET_RANKING_DATA'
+    }),
     findHero(name) {
       return this.heroes.find(hero => hero.name === name)
     },
