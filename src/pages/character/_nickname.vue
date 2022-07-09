@@ -74,6 +74,8 @@ import TitleContent from '@/components/common/TitleContent.vue'
 import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
 import setMeta from '@/plugins/utils/meta';
 import { deepClone, addCommaNumber } from '@/plugins/utils'
+import { checkUpdatePageView } from '@/plugins/utils/pageView'
+import { postCharacterPageView } from '@/plugins/utils/https'
 import { mapGetters } from 'vuex';
 export default {
   name: 'CharacterResult',
@@ -212,8 +214,8 @@ export default {
       this.selectedChar = null
     },
     async sendPageView() {
-      const namePageView = await checkUpdatePageView(this.itemSelected)
-      namePageView && postCompositionPageView({ name: this.itemSelected.name })
+      const namePageView = await checkUpdatePageView('character', this.itemSelected)
+      namePageView && postCharacterPageView({ name: this.itemSelected.name })
     }
   }
 }
