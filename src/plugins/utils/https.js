@@ -38,6 +38,14 @@ export const getRanking = () => {
   return $axios.get(`/ranking`)
     .catch(error => errorHandler('getRanking', error))
 }
+export const getCompositionPageViews = (params) => {
+  return $axios.get(`/compositionPageViews`, { params })
+  .catch(error => errorHandler('getCompositionPageView', error))
+}
+export const getCharacterPageViews = (params) => {
+  return $axios.get(`/characterPageViews`, { params })
+  .catch(error => errorHandler('getCharacterPageViews', error))
+}
 export const postGameUser = (params) => {
   return $axios.post(`/register/gameUser`, null, { params })
   .then(res => res)
@@ -53,10 +61,20 @@ export const postCharacterPageView = (params) => {
   .then(res => res)
   .catch(error => errorHandler('characterPageView', error))
 }
+export const postMurgeCharacterView = (params) => {
+  return $axios.post(`/register/murgeCharacterView`, null, { params })
+  .then(res => res)
+  .catch(error => errorHandler('postMurgeCharacterView', error))
+}
+export const postMurgeCompositionView = (params) => {
+  return $axios.post(`/register/murgeCompositionView`, null, { params })
+  .then(res => res)
+  .catch(error => errorHandler('murgeCompositionView', error))
+}
 export const postCompositionPageView = (params) => {
   return $axios.post(`/register/compositionPageView`, null, { params })
   .then(res => res)
-  .catch(error => errorHandler('compositionPageView', error))
+  .catch(error => errorHandler('postCompositionPageView', error))
 }
 export const getIpClient = () => {
   return axios.get(`https://api.ipify.org?format=json`)

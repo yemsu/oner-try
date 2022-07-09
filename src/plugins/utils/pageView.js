@@ -57,3 +57,29 @@ export const checkUpdatePageView = async (type, name) => {
     return true
   }
 }
+
+export const totalPageViewGAData = async (nameChecker, DbPageViews) => {
+  const { default: gaPageViews } = await import('@/plugins/utils/ga-pageView.json')
+  const gaCompositionPageViews = gaPageViews
+    .filter(data => data.name.includes(nameChecker))
+    .map(data => {
+      data.name = data.name.split(nameChecker)[0]
+      return data
+    })
+
+  const result = gaCompositionPageViews.reduce((acc, gaPageView) => {
+    const { name, pageView } = gaPageView
+    const DbPageView = DbPageViews.find(data => name === data.name)
+    const result = DbPageView
+      ? Object.assign({...gaPageView}, {pageView: DbPageView.pageView + pageView})
+      : gaPageView
+    acc.push(result)
+    return acc
+  }, [])
+
+  // console.log( 'DbPageViews', DbPageViews[0])
+  // console.log( 'gaPageViews', gaPageViews.find(pageView => pageView.name.includes('대령 코비')))
+  // console.log('result', result.find(pageView => pageView.name.includes('대령 코비')))
+  
+  return result
+}

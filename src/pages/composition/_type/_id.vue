@@ -97,8 +97,8 @@ import TitleContent from '@/components/common/TitleContent.vue'
 import CompTree from '@/components/item/CompTree.vue'
 import { parserStrData, fillDataAndInsertValue } from '@/plugins/utils/item'
 import { getOnlyText, deepClone } from '@/plugins/utils'
-import { checkUpdatePageView } from '@/plugins/utils/pageView'
-import { postCompositionPageView } from '@/plugins/utils/https'
+import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
+import { postCompositionPageView, getCompositionPageViews, postMurgeCompositionView } from '@/plugins/utils/https'
 import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
 
@@ -160,6 +160,8 @@ export default {
   },
   mounted() {
     this.sendPageView()
+
+    // this.mergePVData()
   },
   methods: {
     fnSearch(result) {
@@ -244,8 +246,16 @@ export default {
       const { name } = this.itemSelected
       const namePageView = await checkUpdatePageView('composition', name)
       namePageView && postCompositionPageView({ name })
+    },
+    async mergePVData() {
+      const { data: DbPageViews } = await getCompositionPageViews({ startDate: '2022,7,9' })
+      const resultData = await totalPageViewGAData(' 조합법', DbPageViews)
+      resultData.forEach(data => {
+        postMurgeCompositionView({ name: data.name, pageView: data.pageView})
+      })
+      console.log('totalPageViewGAData', resultData)
     }
-  }
+  },
 }
 </script>
 

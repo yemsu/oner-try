@@ -74,8 +74,8 @@ import TitleContent from '@/components/common/TitleContent.vue'
 import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
 import setMeta from '@/plugins/utils/meta';
 import { deepClone, addCommaNumber } from '@/plugins/utils'
-import { checkUpdatePageView } from '@/plugins/utils/pageView'
-import { postCharacterPageView } from '@/plugins/utils/https'
+import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
+import { postCharacterPageView, getCharacterPageViews, postMurgeCharacterView } from '@/plugins/utils/https'
 import { mapGetters } from 'vuex';
 export default {
   name: 'CharacterResult',
@@ -147,6 +147,8 @@ export default {
   mounted() {
     this.fnSearch(this.nickname)
     this.sendPageView()
+
+    // this.mergePVData()
   },
   methods: {
     async fnSearch(newNickName) {
@@ -216,8 +218,16 @@ export default {
     async sendPageView() {
       const namePageView = await checkUpdatePageView('character', this.nickname)
       namePageView && postCharacterPageView({ name: this.nickname })
+    },
+    async mergePVData() {
+      const { data: DbPageViews } = await getCharacterPageViews({ startDate: '2022,7,9' })
+      const resultData = await totalPageViewGAData('의 캐릭터', DbPageViews)
+      resultData.forEach(data => {
+        postMurgeCharacterView({ name: data.name, pageView: data.pageView})
+      })
+      console.log('totalPageViewGAData', resultData)
     }
-  }
+  },
 }
 </script>
 
