@@ -27,7 +27,7 @@ const returnNowDateStr = () => {
 const setStoragePageView = (storageName, data) => {
   window.sessionStorage.setItem(storageName, JSON.stringify(data))
 }
-export const checkUpdatePageView = async (type, itemSelected) => {
+export const checkUpdatePageView = async (type, name) => {
   const { data: ipData } = await getIpClient()
   if(ipData.ip === process.env.IP_ADMIN) return false
   if(process.env.NODE_ENV !== 'production') return false
@@ -35,7 +35,6 @@ export const checkUpdatePageView = async (type, itemSelected) => {
   const storageName = `oner_try_${type}_page_view`
   const sessionData = JSON.parse(window.sessionStorage.getItem(storageName)) || []
   console.log('sessionData', sessionData)
-  const { name } = itemSelected
   const nowDateStr = returnNowDateStr()
   console.log('nowDateStr', nowDateStr)
   const sameNameData = sessionData.find(data => data.name === name)

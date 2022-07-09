@@ -214,8 +214,8 @@ export default {
       this.selectedChar = null
     },
     async sendPageView() {
-      const namePageView = await checkUpdatePageView('character', this.itemSelected)
-      namePageView && postCharacterPageView({ name: this.itemSelected.name })
+      const namePageView = await checkUpdatePageView('character', nickname)
+      namePageView && postCharacterPageView({ name: nickname })
     }
   }
 }

@@ -241,8 +241,9 @@ export default {
       }
     },
     async sendPageView() {
+      const { name } = this.itemSelected
       const namePageView = await checkUpdatePageView('composition', this.itemSelected)
-      namePageView && postCompositionPageView({ name: this.itemSelected.name })
+      namePageView && postCompositionPageView({ name })
     }
   }
 }
