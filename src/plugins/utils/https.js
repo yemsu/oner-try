@@ -39,6 +39,7 @@ export const getRanking = () => {
     .catch(error => errorHandler('getRanking', error))
 }
 export const getCompositionPageViews = (params) => {
+  if(!params) params = { startDate: '2022-7-9' }
   return $axios.get(`/compositionPageViews`, { params })
   .catch(error => errorHandler('getCompositionPageView', error))
 }
