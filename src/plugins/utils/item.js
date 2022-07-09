@@ -57,23 +57,24 @@ export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey,
   const newData = names.map((name, i) => {
     const data = targetDataList[i]
     if(isBlank(name)) return null
-    const fullData = deepClone(findData(fullDataList, 'name', name))
+    const fullData = findData(fullDataList, 'name', name)
     if(!fullData && useDefaultData) {
       return { name }
     } else if(!fullData) {
       console.error(`NO ITEM: ${name} - CHECK DB!`)
       return false
     }
+    const fullDataClone = deepClone(fullData)
 
-    if(fullData.option) {
-      fullData.option = parserStrData(fullData.option)
+    if(fullDataClone.option) {
+      fullDataClone.option = parserStrData(fullDataClone.option)
     }
-    if(fullData.gradeOption) {
-      fullData.gradeOption = parserStrData(fullData.gradeOption)
+    if(fullDataClone.gradeOption) {
+      fullDataClone.gradeOption = parserStrData(fullDataClone.gradeOption)
     }
 
     const itemValue = Object.values(data)[0]
-    return Object.assign(fullData, {[newDataKey]: itemValue})
+    return Object.assign(fullDataClone, {[newDataKey]: itemValue})
   })
 
   return newData
