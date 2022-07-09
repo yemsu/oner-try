@@ -107,13 +107,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      rankingCrr: 'getRankingCrr',
-      ranking: 'getRanking',
+      rankingCrr: 'user/getRankingCrr',
+      ranking: 'user/getRanking',
       heroes: 'getHeroes',
     })
   },
   async created() {    
-    if(this.ranking.length === 0) await this.$store.dispatch('GET_RANKING')
+    if(this.ranking.length === 0) await this.$store.dispatch('user/GET_RANKING')
 
     this.setRankingList()
   },
@@ -129,8 +129,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      addRanking: 'ADD_RANKING_DATA',
-      resetRanking: 'RESET_RANKING_DATA'
+      addRanking: 'user/ADD_RANKING_DATA',
+      resetRanking: 'user/RESET_RANKING_DATA'
     }),
     findHero(name) {
       return this.heroes.find(hero => hero.name === name)

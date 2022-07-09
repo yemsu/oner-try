@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const $axios = axios.create({
-  baseURL: process.env.CONT_PATH + '/api'
+  baseURL: process.env.CONT_PATH_LOCAL + '/api'
 })
 
 export const getSailors = () => {

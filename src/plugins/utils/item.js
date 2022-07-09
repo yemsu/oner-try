@@ -38,10 +38,7 @@ export const getOptionUnit = (key) => {
 }
 export const parserStrData = (strData) => { // name: value, name: value ...
   if(!strData) return []
-  if(typeof(strData) !== 'string') {
-    console.error('parserStrData(): Argument type must be "String"', strData)
-    return false
-  }
+  if(typeof(strData) !== 'string') return strData
   const checkSingle = !strData.includes(',')
   const data = checkSingle ? [strData] : strData.replace(/\[ | \]/, '').split(',')
   const objList = data.map(str => {

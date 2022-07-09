@@ -76,7 +76,7 @@ import setMeta from '@/plugins/utils/meta';
 import { deepClone, addCommaNumber } from '@/plugins/utils'
 import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
 import { postCharacterPageView, getCharacterPageViews, postMurgeCharacterView } from '@/plugins/utils/https'
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   name: 'CharacterResult',
   components: {
@@ -91,9 +91,10 @@ export default {
     })
   },
   async asyncData({ store, params }) {
-    const { gameUsers, heroes } = store.state
+    const { user, heroes } = store.state
+    const { gameUsers } = user
     const gameUsersData = gameUsers.length === 0
-      ? await store.dispatch('GET_GAME_USERS')
+      ? await store.dispatch('user/GET_GAME_USERS')
       : gameUsers
     const userNickNames = gameUsersData.map(user => user.nickName)
     if(heroes.length === 0) await store.dispatch('GET_HEROES')
@@ -134,11 +135,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      characters: 'getCharacters',
+      characters: 'user/getCharacters',
+      nickName: 'user/getNickName',
+      gameUsers: 'user/getGameUsers',
       heroes: 'getHeroes',
       equipments: 'getEquipments',
-      nickName: 'getNickName',
-      gameUsers: 'getGameUsers',
       sailors: 'getSailors',
       colleagues: 'getColleagues',
       items: 'getItems',
@@ -151,11 +152,18 @@ export default {
     // this.mergePVData()
   },
   methods: {
+    ...mapActions({
+      getCharacters: 'user/GET_CHARACTERS',
+      getItems: 'GET_ITEMS'
+    }),
+    ...mapMutations({
+      setUserNickName: 'user/SET_NICKNAME'
+    }),
     async fnSearch(newNickName) {
       console.log('setSearchResult', newNickName)
 
-      this.$store.commit('SET_NICKNAME', newNickName)
-      await this.$store.dispatch('GET_CHARACTERS', { nickName: newNickName })
+      this.setUserNickName(newNickName)
+      await this.getCharacters({ nickName: newNickName })
       console.log('characters 원형', this.characters)
 
       if(!this.characters) {
@@ -166,7 +174,7 @@ export default {
       }
 
       // console.log('heroes', this.heroes)
-      if(this.items.length === 0) await this.$store.dispatch('GET_ITEMS')
+      if(this.items.length === 0) await this.getItems()
       this.ships = this.items.filter(item => item.type === 'ship')
       const newChars = deepClone(this.characters).map(character => {
         const checkDone = character.hero
