@@ -223,7 +223,8 @@ export default {
     },
     dataSetters() {
       const setterIngrdnts = (item, allIngrdnts) => {
-        const ingredients = fillDataAndInsertValue(this.items, item.ingredients, 'requiredNumber')
+
+        const ingredients = fillDataAndInsertValue(this.items, parserStrData(item.ingredients), 'requiredNumber')
         ingredients.forEach(data => Object.assign(data, { requiredNumber: data.requiredNumber*1}))
         item.ingredients = ingredients
         allIngrdnts.push(...this.itemsHasKey(item.ingredients, 'ingredients'))

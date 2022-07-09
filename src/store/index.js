@@ -34,7 +34,7 @@ import {
   }
   const dataParseHandler = (items, rawData, type) => {
     const data1 = dataSettedDefault(rawData, type)
-    const data2 = fillDataAndInsertValue(items, data1.join(','), 'stack', true)
+    const data2 = fillDataAndInsertValue(items, parserStrData(data1.join(',')), 'stack', true)
     const data3 = dataParser(data2, type)
   
     return data3

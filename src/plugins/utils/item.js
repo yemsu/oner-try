@@ -52,15 +52,10 @@ export const parserStrData = (strData) => { // name: value, name: value ...
 
   return objList
 }
-export const fillDataAndInsertValue = (fullDataList, newDatas, newDataKey, useDefaultData) => {
-  if(typeof(newDatas) !== 'string') {
-    console.error('parserIngrdntStrData(): "newDatas" Argument type must be String', newDatas)
-    return false
-  }
-  const objDataList = parserStrData(newDatas)
-  const names = objArrKeys(objDataList)
+export const fillDataAndInsertValue = (fullDataList, rawDataList, newDataKey, useDefaultData) => {
+  const names = objArrKeys(rawDataList)
   const newData = names.map((name, i) => {
-    const data = objDataList[i]
+    const data = rawDataList[i]
     if(isBlank(name)) return null
     const fullData = findData(fullDataList, 'name', name)
     if(!fullData && useDefaultData) {

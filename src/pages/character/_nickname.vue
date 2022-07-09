@@ -191,10 +191,11 @@ export default {
       const data = () => {
         const _data = character[type]
         const dataTypeArray = Array.isArray(_data) ? _data : [_data]
-        return dataTypeArray.map(data => getDefaultData(data))
+        const result = dataTypeArray.map(data => getDefaultData(data))
+        return parserStrData(result.join(','))
       }
 
-      const newData = fillDataAndInsertValue(this.items, data().join(','), 'stack', true)
+      const newData = fillDataAndInsertValue(this.items, data(), 'stack', true)
       for(const data of newData) {
         if(data && data.option) {
           data.option = parserStrData(data.option)
