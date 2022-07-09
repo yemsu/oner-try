@@ -220,7 +220,7 @@ export default {
       namePageView && postCharacterPageView({ name: this.nickname })
     },
     async mergePVData() {
-      const { data: DbPageViews } = await getCharacterPageViews({ startDate: '2022,7,9' })
+      const { data: DbPageViews } = await getCharacterPageViews({ startDate: '2022-7-9' })
       const resultData = await totalPageViewGAData('의 캐릭터', DbPageViews)
       resultData.forEach(data => {
         postMurgeCharacterView({ name: data.name, pageView: data.pageView})

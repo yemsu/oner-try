@@ -248,7 +248,7 @@ export default {
       namePageView && postCompositionPageView({ name })
     },
     async mergePVData() {
-      const { data: DbPageViews } = await getCompositionPageViews({ startDate: '2022,7,9' })
+      const { data: DbPageViews } = await getCompositionPageViews({ startDate: '2022-7-9' })
       const resultData = await totalPageViewGAData(' 조합법', DbPageViews)
       resultData.forEach(data => {
         postMurgeCompositionView({ name: data.name, pageView: data.pageView})
