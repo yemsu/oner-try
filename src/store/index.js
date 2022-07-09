@@ -44,8 +44,7 @@ export const state = () => ({
   colleagues: [],
   gameUsers: [],
   ranking: [],
-  rankingInfiniteScroll: [],
-  rankingMain: [],
+  rankingCrr: [],
 })
 
 export const getters = {
@@ -79,11 +78,8 @@ export const getters = {
   getRanking(state) {
     return state.ranking
   },
-  getRankingInfiniteScroll(state) {
-    return state.rankingInfiniteScroll
-  },
-  getRankingMain(state) {
-    return state.rankingMain
+  getRankingCrr(state) {
+    return state.rankingCrr
   },
 }
 
@@ -127,9 +123,9 @@ export const mutations = {
 
     state[type] = data
   },
-  ADD_RANKING_DATA(state, {type, number}) {
-    const { [type]: data, ranking } = state
-    const thisData = deepClone(ranking).splice(data.length, number)
+  ADD_RANKING_DATA(state, { number }) {
+    const { rankingCrr, ranking } = state
+    const thisData = deepClone(ranking).splice(rankingCrr.length, number)
     const newData = thisData.map(user => {
       const sailors = user.sailors
         ? dataParseHandler(state.items, user, 'sailors') 
@@ -140,12 +136,10 @@ export const mutations = {
       return Object.assign(user, { sailors, colleagues })
     })
 
-    state[type] = data.concat(newData)
+    state.rankingCrr = rankingCrr.concat(newData)
   },
-  RESET_RANKING_DATA(state, {type, number}) {
-    const { [type]: data } = state
-
-    state[type] = data.splice(0, number)
+  RESET_RANKING_DATA(state, { number }) {
+    state.rankingCrr = state.rankingCrr.splice(0, number)
   },
 }
 const dataTyped = (data) => {

@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div v-if="ranking.length === 0" style="margin-top: 300px; font-size: 1.5em; text-align: center;">
-      데이터 로딩중💦 잠시만 기다려 주세요🐱‍🏍
-    </div>
-    <div v-else class="inner-size-basic mrg-top-medium">
+    <div class="inner-size-basic mrg-top-medium">
     <!-- <div class="bar-notice">
       ❗ 현재 랭킹이 정상적으로 업데이트 되지 않는 현상이 있습니다. 확인 중에 있으니 조금만 기다려주세요.
     </div> -->
@@ -31,17 +28,16 @@
         </p>
       </div>
       <rankingTable
-        :ranking="rankingInfiniteScroll"
+        :defaultDataNum="15"
       />
     </div>
-    <div ref="checker-observer"></div>
   </div>
 </template>
 
 <script>
 import rankingTable from '@/components/ranking/table.vue'
 import setMeta from '@/plugins/utils/meta';
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   head() {
@@ -65,48 +61,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      rankingInfiniteScroll: 'getRankingInfiniteScroll',
-      ranking: 'getRanking',
       items: 'getItems',
       heroes: 'getHeroes',
     })
   },
-  async created() {    
-    if(this.ranking.length === 0) await this.$store.dispatch('GET_RANKING')
-    if(this.rankingInfiniteScroll.length === 0) this.addRanking({type: 'rankingInfiniteScroll', number: 15})
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.$nuxt.refresh()
-      const checker = this.$refs['checker-observer']
-      this.infiniteScroll(checker)
-    })
-  },
-  beforeDestroy() {
-    this.resetRanking({type: 'rankingInfiniteScroll', number: 15})
-  },
-  methods: {
-    ...mapMutations({
-      addRanking: 'ADD_RANKING_DATA',
-      resetRanking: 'RESET_RANKING_DATA'
-    }),
-    infiniteScroll(checker) {
-      if(!checker) return
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.intersectionRatio > 0) {
-            const checkEnd = this.ranking.length === this.rankingInfiniteScroll.length
-            console.log('on', checkEnd)
-            if(checkEnd) return false
-            // checkEnd && io.disconnect()
-            this.addRanking({type: 'rankingInfiniteScroll', number: 15})
-          }
-        })
-      })
-
-      io.observe(checker);
-    }
-  }
 }
 </script>
 

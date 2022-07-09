@@ -1,106 +1,137 @@
 <template>
-  <table class="list-ranking">
-    <caption>랭킹 순위에 따른 랭크, 영웅, 유저명, 현상금, 선원, 동료 정보 테이블</caption>
-    <thead>
-      <tr>
-        <th scope="col">랭크</th>
-        <th scope="col">영웅</th>
-        <th scope="col">레벨</th>
-        <th scope="col">유저명</th>
-        <th scope="col">현상금</th>
-        <th scope="col">선원</th>
-        <th scope="col">동료</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        :class="`item-ranking tear-${getRankInfo(i).index}`"
-        v-for="(user, i) in ranking"
-        :key="`user${i}`"
-      >
-        <td class="rank">
-          <span :class="`rank-title type-${getRankInfo(i).index}`" v-if="i <= 11"> 
-            <span class="skull">☠</span>
-            {{ getRankInfo(i).title }}
-          </span>
-          <span class="number-rank" v-else>{{ i + 1 }}</span>            
-        </td>
-        <td class="thumb-hero">
-          <item-box
-            :item="findHero(user.name)"
-            :showName="false"
-            :wantedPaper="i === 0 && true"
-            :showBounty="false"
-            :size="i === 0 && true ? 'basic' : 'small'"
-          ></item-box>
-          <template v-if="i === 0">
-            <span class="crown">👑</span>
-            <span class="money">💰</span>
-          </template>
-        </td>
-        <td class="level">
-          {{ user.lv }}
-        </td>
-        <td class="nickname">
-          <router-link :to="`/character/${user.nickName}`">
-            {{ user.nickName }}
-          </router-link>
-        </td>
-        <td class="bounty">$ {{ addCommaNumber(user.bounty) }}</td>
-        <td class="sailors">
-          <ul class="list-items">
-            <li
-              v-for="(sailor, i) in user.sailors"
-              :key="`sailor${i}`"
-            >
-              <item-box 
-                :item="sailor"
-                :showName="false"
-                :onlyImg="true"
-                :roundImg="true"
-                size="small"
-              />
-            </li>
-          </ul>
-        </td>
-        <td class="colleagues">
-          <ul class="list-items">
-            <li
-              v-for="(colleague, i) in user.colleagues"
-              :key="`colleague${i}`"
-            >
-              <item-box 
-                :item="colleague"
-                :showName="false"
-                :onlyImg="true"
-                :roundImg="true"
-                size="small"
-              />
-            </li>
-          </ul>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div>
+    <div v-if="rankingCrr.length === 0" style="margin-top: 300px; font-size: 1.5em; text-align: center;">
+      데이터 로딩중💦 잠시만 기다려 주세요🐱‍🏍
+    </div>
+    <table v-else class="list-ranking">
+      <caption>랭킹 순위에 따른 랭크, 영웅, 유저명, 현상금, 선원, 동료 정보 테이블</caption>
+      <thead>
+        <tr>
+          <th scope="col">랭크</th>
+          <th scope="col">영웅</th>
+          <th scope="col">레벨</th>
+          <th scope="col">유저명</th>
+          <th scope="col">현상금</th>
+          <th scope="col">선원</th>
+          <th scope="col">동료</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          :class="`item-ranking tear-${getRankInfo(i).index}`"
+          v-for="(user, i) in rankingCrr"
+          :key="`user${i}`"
+        >
+          <td class="rank">
+            <span :class="`rank-title type-${getRankInfo(i).index}`" v-if="i <= 11">
+              <span class="skull">☠</span>
+              {{ getRankInfo(i).title }}
+            </span>
+            <span class="number-rank" v-else>{{ i + 1 }}</span>
+          </td>
+          <td class="thumb-hero">
+            <item-box
+              :item="findHero(user.name)"
+              :showName="false"
+              :wantedPaper="i === 0 && true"
+              :showBounty="false"
+              :size="i === 0 && true ? 'basic' : 'small'"
+            ></item-box>
+            <template v-if="i === 0">
+              <span class="crown">👑</span>
+              <span class="money">💰</span>
+            </template>
+          </td>
+          <td class="level">
+            {{ user.lv }}
+          </td>
+          <td class="nickname">
+            <router-link :to="`/character/${user.nickName}`">
+              {{ user.nickName }}
+            </router-link>
+          </td>
+          <td class="bounty">$ {{ addCommaNumber(user.bounty) }}</td>
+          <td class="sailors">
+            <ul class="list-items">
+              <li
+                v-for="(sailor, i) in user.sailors"
+                :key="`sailor${i}`"
+              >
+                <item-box
+                  :item="sailor"
+                  :showName="false"
+                  :onlyImg="true"
+                  :roundImg="true"
+                  size="small"
+                />
+              </li>
+            </ul>
+          </td>
+          <td class="colleagues">
+            <ul class="list-items">
+              <li
+                v-for="(colleague, i) in user.colleagues"
+                :key="`colleague${i}`"
+              >
+                <item-box
+                  :item="colleague"
+                  :showName="false"
+                  :onlyImg="true"
+                  :roundImg="true"
+                  size="small"
+                />
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="useInfiniteScroll" ref="checker-observer"></div>
+  </div>
 </template>
 
 <script>
 import { addCommaNumber } from '@/plugins/utils'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   props: {
-    ranking: {
-      type: Array,
-      default: () => []
-    }
+    defaultDataNum: {
+      type: Number,
+      default: () => 1
+    },
+    useInfiniteScroll: {
+      type: Boolean,
+      default: () => true
+    },
   },
   computed: {
     ...mapGetters({
+      rankingCrr: 'getRankingCrr',
+      ranking: 'getRanking',
       heroes: 'getHeroes',
     })
   },
+  async created() {    
+    if(this.ranking.length === 0) await this.$store.dispatch('GET_RANKING')
+
+    this.setRankingList()
+  },
+  mounted() {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.useInfiniteScroll && this.infiniteScroll()
+      }, 300)
+    })
+  },
+  beforeDestroy() {
+    this.resetRanking({ number: this.defaultDataNum })
+  },
   methods: {
+    ...mapMutations({
+      addRanking: 'ADD_RANKING_DATA',
+      resetRanking: 'RESET_RANKING_DATA'
+    }),
     findHero(name) {
       return this.heroes.find(hero => hero.name === name)
     },
@@ -120,6 +151,31 @@ export default {
 
       return rankInfo
     },
+    setRankingList() {
+      const { length: dataLength } = this.rankingCrr
+      if(dataLength === this.defaultDataNum) return
+      const checkNeedMoreData = dataLength < this.defaultDataNum
+      const methodName = checkNeedMoreData
+        ? 'addRanking'
+        : 'resetRanking'
+
+      this[methodName]({ number: this.defaultDataNum })
+    },
+    infiniteScroll() {
+      const checker = this.$refs['checker-observer']
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.intersectionRatio > 0) {
+            const checkEnd = this.ranking.length === this.rankingCrr.length
+            if(checkEnd) return false
+            console.log('observer on', checkEnd)
+            this.addRanking({ number: 15 })
+          }
+        })
+      })
+
+      io.observe(checker);
+    }
   }
 }
 </script>

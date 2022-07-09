@@ -46,8 +46,9 @@
           </p>
         </div>
         <div class="area-contents">
-          <rankingTable
-            :ranking="rankingMain"
+          <rankingTable 
+            :defaultDataNum="5"
+            :useInfiniteScroll="false"
           />
         </div>
       </section>
@@ -58,7 +59,7 @@
 <script>
 import rankingTable from '@/components/ranking/table.vue'
 import setMeta from '@/plugins/utils/meta';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   head() {
@@ -96,20 +97,8 @@ export default {
       heroes: 'getHeroes',
       gameUsers: 'getGameUsers',
       characters: 'getCharacters',
-      rankingMain: 'getRankingMain',
-      ranking: 'getRanking',
     })
   },
-  async created() {
-    // ranking
-    if(this.ranking.length === 0) await this.$store.dispatch('GET_RANKING')
-    if(this.rankingMain.length === 0) this.addRanking({type: 'rankingMain', number: 5})
-  },
-  methods: {
-    ...mapMutations({
-      addRanking: 'ADD_RANKING_DATA'
-    }),
-  }
 }
 </script>
 
