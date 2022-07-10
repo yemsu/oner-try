@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import rankingTable from '@/components/ranking/table.vue'
+import rankingTable from '@/components/pages/ranking/Table.vue'
 import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
 
