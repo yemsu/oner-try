@@ -28,7 +28,8 @@ export default {
     })
   },
   async asyncData({ store }) {
-    const { gameUsers, heroes } = store.state
+    const { user, heroes } = store.state
+    const { gameUsers } = user
     const gameUsersData = gameUsers.length === 0
       ? await store.dispatch('GET_GAME_USERS')
       : gameUsers
