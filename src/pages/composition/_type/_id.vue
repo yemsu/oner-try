@@ -3,17 +3,12 @@
     <div class="top-bar">
       <div class="inner-size-basic">
         <div class="align-right">
-        <search-box
-          v-if="compositionItems.length !== 0"
-          category="조합 아이템"
-          :items="items"
-          :matchingData="{type: 'item', data: compositionItems}"
-          :result="itemSelected"
-          size="small"
-          resultPath="/composition"
-          :paramKey="['type', 'id']"
-          @onSearch="fnSearch"
-        />
+          <composition-search-box
+            v-if="compositionItems.length !== 0"
+            :matchingData="compositionItems"
+            :fnSearch="fnSearch"
+            size="small"
+          />
         </div>
       </div>
     </div>
@@ -93,6 +88,7 @@
 </template>
 
 <script>
+import CompositionSearchBox from "@/components/pages/composition/SearchBox.vue"
 import TitleContent from '@/components/common/TitleContent.vue'
 import CompTree from '@/components/item/CompTree.vue'
 import { parserStrData, fillDataAndInsertValue } from '@/plugins/utils/item'
@@ -112,6 +108,7 @@ export default {
   },
   components: {
     TitleContent,
+    CompositionSearchBox,
     CompTree
   },
   async asyncData({ store, params }) {

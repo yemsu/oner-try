@@ -3,14 +3,9 @@
     <div class="top-bar">
       <div class="inner-size-basic">
         <div class="align-right">
-          <search-box
-            category="닉네임(첫 검색 대소문자 구분)"
-            :matchingData="{type: 'string', data: userNickNames}"
-            :defaultMatchingList="false"
+          <character-search-box
+            :matchingData="userNickNames"
             size="small"
-            resultPath="/character"
-            :paramKey="['nickname']"
-            @onRemoveSearchResult="removeSearchResult"
           />
         </div>
       </div>
@@ -69,6 +64,7 @@
 </template>
 
 <script>
+import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
 import VTab from '@/components/common/VTab.vue'
 import TitleContent from '@/components/common/TitleContent.vue'
 import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
@@ -81,7 +77,8 @@ export default {
   name: 'CharacterResult',
   components: {
     VTab,
-    TitleContent
+    TitleContent,
+    CharacterSearchBox
   },
   head() {
     return setMeta({
@@ -211,10 +208,6 @@ export default {
           ? fillDefaultList(newData, 1)
           : newData
       return result
-    },
-    removeSearchResult() {
-      this.charactersParsed = null
-      this.selectedChar = null
     },
     async sendPageView() {
       const namePageView = await checkUpdatePageView('character', this.nickname)

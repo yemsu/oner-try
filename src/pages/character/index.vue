@@ -3,19 +3,15 @@
     <ItemCheckerBoard
       :items="pureHeroes"
     />
-    <search-box
-      v-if="userNickNames.length !== 0"
-      category="닉네임(첫 검색 대소문자 구분)"
-      :matchingData="{type: 'string', data: userNickNames}"
-      :defaultMatchingList="false"
+    <character-search-box
+      :matchingData="userNickNames"
       size="big"
-      resultPath="/character"
-      :paramKey="['nickname']"
     />
   </div>
 </template>
 
 <script>
+import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
 import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
 export default {
@@ -26,6 +22,9 @@ export default {
       title: '캐릭터',
       description: '캐릭터가 궁금한 유저를 검색 해보세요',
     })
+  },
+  components: {
+    CharacterSearchBox
   },
   async asyncData({ store }) {
     const { user, heroes } = store.state

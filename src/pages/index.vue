@@ -7,13 +7,8 @@
           <p>다른 유저의 빌드를 참고해 보세요. 😎</p>
         </div>
         <div class="area-contents">
-          <search-box
-            v-if="userNickNames.length !== 0"
-            category="닉네임(첫 검색 대소문자 구분)"
-            :matchingData="{type: 'string', data: userNickNames}"
-            :defaultMatchingList="false"
-            resultPath="/character"
-            :paramKey="['nickname']"
+          <character-search-box
+            :matchingData="userNickNames"
           />
         </div>
       </section>
@@ -23,11 +18,8 @@
           <p>조합법을 한눈에 볼 수 있습니다. 👀</p>
         </div>
         <div class="area-contents">
-          <search-box
-            category="조합 아이템"
-            :matchingData="{type: 'item', data: combinationItems}"
-            resultPath="/composition"
-            :paramKey="['type', 'id']"
+          <composition-search-box
+            :matchingData="compositionItems"
           />
         </div>
       </section>
@@ -57,7 +49,9 @@
 </template>
 
 <script>
-import rankingTable from '@/components/pages/ranking/Table.vue'
+import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
+import CompositionSearchBox from "@/components/pages/composition/SearchBox.vue"
+import RankingTable from '@/components/pages/ranking/Table.vue'
 import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
 
@@ -69,7 +63,9 @@ export default {
     })
   },
   components: {
-    rankingTable
+    CharacterSearchBox,
+    CompositionSearchBox,
+    RankingTable
   },
   async asyncData({ store }) {
     const { user, heroes, items } = store.state
@@ -86,10 +82,10 @@ export default {
     const itemsData = items.length === 0
       ? await store.dispatch('GET_ITEMS')
       : items
-    const combinationItems = itemsData.filter(item => item.ingredients)
+    const compositionItems = itemsData.filter(item => item.ingredients)
     return {
       userNickNames,
-      combinationItems
+      compositionItems
     }
   },
   computed: {
