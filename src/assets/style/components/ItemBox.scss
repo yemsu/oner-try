@@ -49,7 +49,7 @@ $xbig-img-size: 90px;
   background-color: rgba(0, 0, 0, 0.1);
   border: 1px solid var(--border-gray);
 }
-.item {
+.box-item {
   padding: 6px;
   box-sizing: content-box;
   .wrap-info {
@@ -295,7 +295,7 @@ $xbig-img-size: 90px;
   }
 }
 
-.item {
+.box-item {
   position: relative;
   .wrap-box:hover ~ .tooltip {
     display: block;

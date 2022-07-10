@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'item',
+      'box-item',
       item ? item.grade : '',
       `size-${size}`,
       `type-${type}`,
