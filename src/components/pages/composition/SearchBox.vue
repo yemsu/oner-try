@@ -2,11 +2,10 @@
   <search-box
     category="조합 아이템"
     :matchingData="{type: 'item', data: matchingData}"
-    :rankingList="pvSearchRanking"
+    :rankingList="rankingList"
     :size="size"
     resultPath="/composition"
     :paramKey="['type', 'id']"
-    @onSearch="fnSearch"
   />
 </template>
 
@@ -19,10 +18,6 @@ export default {
       type: Array,
       default: () => null
     },
-    fnSearch: {
-      type: Function,
-      default: () => {}
-    },
     size: {
       type: String,
       default: () => "basic"
@@ -30,23 +25,23 @@ export default {
   },
   data() {
     return {
-      pvSearchRanking: null,
+      rankingList: null,
     }
   },
   computed: {
     ...mapGetters({
       items: 'getItems',
-      compositionPV: 'pageView/getComposition',
-      pageViewSearchRanking: 'pageView/getCompositionSearchRanking',
+      pageViews: 'pageView/getComposition',
+      pageViewRanking: 'pageView/getCompositionSearchRanking',
     }),
   },
   async created() {
-    if(this.compositionPV.length === 0) await this.getCompositionPV(10)
-    this.pvSearchRanking = fillDataAndInsertValue(this.items, this.pageViewSearchRanking, 'pageView')
+    if(this.pageViews.length === 0) await this.getPageView(10)
+    this.rankingList = fillDataAndInsertValue(this.items, this.pageViewRanking, 'pageView')
   },
   methods: {
     ...mapActions({
-      getCompositionPV: 'pageView/GET_COMPOSITION',
+      getPageView: 'pageView/GET_COMPOSITION',
     }),
   }
 }

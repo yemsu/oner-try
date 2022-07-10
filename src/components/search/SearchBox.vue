@@ -45,25 +45,26 @@
           :key="`matchingData${i}`"
           class="item-match"
         >
-          <template v-if="isItem">
-            <p v-if="showRankingList" class="number-ranking">{{ i + 1 }}</p>
+          <p v-if="showRankingList" class="number-ranking">{{ i + 1 }}</p>
+          <template>
             <item-box
+              v-if="isItem"
               size="small"
               type="list"
               :item="data"
               :showTooltip="false"
             />
-            <p v-if="showRankingList" class="value-ranking">{{ data.pageView }}</p>
+            <button
+              v-else
+              :class="{'button-keyword': !isItem}"
+              @click="routerPush(data)"
+            >
+              <p>
+                {{ data }}
+              </p>
+            </button>
           </template>
-          <button
-            v-else
-            :class="{'button-keyword': !isItem}"
-            @click="routerPush(data)"
-          >
-            <p>
-              {{ data }}
-            </p>
-          </button>
+          <p v-if="showRankingList" class="value-ranking">{{ data.pageView }}</p>
         </div>
       </div>
     </div>

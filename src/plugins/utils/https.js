@@ -44,6 +44,7 @@ export const getCompositionPageViews = (params) => {
   .catch(error => errorHandler('getCompositionPageView', error))
 }
 export const getCharacterPageViews = (params) => {
+  if(!params) params = { startDate: '2022-7-9' }
   return $axios.get(`/characterPageViews`, { params })
   .catch(error => errorHandler('getCharacterPageViews', error))
 }

@@ -2,7 +2,7 @@
   <search-box
     category="닉네임(첫 검색 대소문자 구분)"
     :matchingData="{type: 'string', data: matchingData}"
-    :defaultMatchingList="false"
+    :rankingList="rankingList"
     :size="size"
     resultPath="/character"
     :paramKey="['nickname']"
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 export default {
   props: {
     matchingData: {
@@ -20,6 +21,27 @@ export default {
       type: String,
       default: () => "basic"
     }
+  },
+  data() {
+    return {
+      rankingList: null,
+    }
+  },
+  computed: {
+    ...mapGetters({
+      gameUsers: 'user/getGameUsers',
+      pageViews: 'pageView/getCharacter',
+      pageViewRanking: 'pageView/getCharacterSearchRanking',
+    }),
+  },
+  async created() {
+    if(this.pageViews.length === 0) await this.getPageView(10)
+    this.rankingList = this.pageViewRanking.map(data => Object.keys(data)[0])
+  },
+  methods: {
+    ...mapActions({
+      getPageView: 'pageView/GET_CHARACTER',
+    }),
   }
 }
 </script>

@@ -6,7 +6,6 @@
           <composition-search-box
             v-if="compositionItems.length !== 0"
             :matchingData="compositionItems"
-            :fnSearch="fnSearch"
             size="small"
           />
         </div>
