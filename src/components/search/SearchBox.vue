@@ -33,6 +33,28 @@
             :item="data"
             :showTooltip="false"
           />
+        </div>
+      </div>
+      <div
+        v-if="isSearching && matchingData.data"
+        class="items-match"
+      >
+        <p v-if="showRankingList" class="title-list"> 검색 순위 <span>TOP 10</span></p>
+        <div
+          v-for="(data, i) in matchDataSliced"
+          :key="`matchingData${i}`"
+          class="item-match"
+        >
+          <template v-if="isItem">
+            <p v-if="showRankingList" class="number-ranking">{{ i + 1 }}</p>
+            <item-box
+              size="small"
+              type="list"
+              :item="data"
+              :showTooltip="false"
+            />
+            <p v-if="showRankingList" class="value-ranking">{{ data.pageView }}</p>
+          </template>
           <button
             v-else
             :class="{'button-keyword': !isItem}"
@@ -84,6 +106,10 @@ export default {
       type: String,
       default: () => '/'
     },
+    rankingList: {
+      type: Array,
+      default: () => null
+    },
   },
   data() {
     return {
@@ -107,10 +133,18 @@ export default {
     }
   },
   computed: {
+    showRankingList() {
+      return this.rankingList && !this.inputValue
+    },
+    noDefaultMatchingList() {
+      return !this.defaultMatchingList && !this.inputValue
+    },
     matchDataSliced() {
+      console.log('rankingList', this.rankingList)
+      if(this.noDefaultMatchingList) return []
+      if(this.showRankingList) return this.rankingList
       const { data, type } = this.matchingData
-      const sliceNum = 5
-      if(!this.defaultMatchingList && !this.inputValue) return []
+      const sliceNum = 10
       if(!this.inputValue) return data.slice(0, sliceNum)
       const noBlank = target => {
         return target.replace(/ /g, '')

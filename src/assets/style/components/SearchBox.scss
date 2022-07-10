@@ -7,7 +7,7 @@
   &.big {
     display: flex;
     justify-content: center;
-    margin-top: 33vh;
+    margin-top: 16vh;
     .wrap-search {
       width: 500px;
     }
@@ -31,16 +31,40 @@
       width: 100%;
       background-color: var(--color-white);
       border: 1px solid var(--border-gray);
+      .title-list {
+        padding: 3px 10px;
+        background-color: var(--color-black);
+        font-size: $font-size-S-pc;
+        color: var(--color-white);
+        text-align: center;
+      }
       > .item-match {
+        display: flex;
+        align-items: center;
+        > button,
+        ::v-deep .box-item {
+          flex: 1;
+        }
         > button {
+          padding: 0 10px;
           width: 100%;
-          padding: 0 5px;
           &.button-keyword {
             padding: 10px 20px;
           }
         }
         &:nth-child(n+2) {
           border-top: 1px solid var(--border-light-gray)
+        }
+        .number-ranking {
+          min-width: 2em;
+          padding-left: 10px;
+          font-size: $font-size-S-pc;
+          color: var(--color-dark-gray);
+        }
+        .value-ranking {
+          padding-right: 10px;
+          font-size: $font-size-S-pc;
+          color: $color-point-sub;
         }
       }
     }
