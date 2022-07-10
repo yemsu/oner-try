@@ -27,7 +27,7 @@
           캐릭터 검색을 이용한 유저만 랭킹에 노출됩니다. (갱신 주기: 30분)
         </p>
       </div>
-      <rankingTable
+      <ranking-table
         :defaultDataNum="15"
       />
     </div>

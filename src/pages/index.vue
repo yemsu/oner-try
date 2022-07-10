@@ -46,7 +46,7 @@
           </p>
         </div>
         <div class="area-contents">
-          <rankingTable 
+          <ranking-table 
             :defaultDataNum="5"
             :useInfiniteScroll="false"
           />
