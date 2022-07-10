@@ -6,6 +6,7 @@
     :size="size"
     resultPath="/composition"
     :paramKey="['type', 'id']"
+    @onSearch="fnSearch"
   />
 </template>
 
@@ -21,6 +22,10 @@ export default {
     size: {
       type: String,
       default: () => "basic"
+    },
+    fnSearch: {
+      type: Function,
+      default: () => {}
     }
   },
   data() {
