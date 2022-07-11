@@ -70,7 +70,7 @@ export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey,
       fullDataClone.gradeOption = parserStrData(fullDataClone.gradeOption)
     }
 
-    const itemValue = Object.values(data)[0]
+    const itemValue = `${Object.values(data)[0]}`.trim()
     return Object.assign(fullDataClone, {[newDataKey]: itemValue})
   })
 
