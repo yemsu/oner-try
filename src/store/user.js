@@ -109,15 +109,14 @@ export const actions = {
         const sailorData = sailors.length === 0 ? rootState.items : sailors
         const colleagueData = colleagues.length === 0 ? rootState.items : colleagues
         const newData = data.map(user => {
-          const sailors = user.sailors
+          const sailors = user.sailors !== '[]'
             ? dataParseHandler(sailorData, user, 'sailors') 
-            : []
-          const colleagues = user.colleagues
+            : new Array(6).fill(null)
+          const colleagues = user.colleagues !== '[]'
             ? dataParseHandler(colleagueData, user, 'colleagues')
-            : []
+            : new Array(3).fill(null)
           return Object.assign(user, { sailors, colleagues })
         })
-
         commit(`SET_RANKING`, newData)
         return data
       })
