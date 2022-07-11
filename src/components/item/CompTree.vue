@@ -29,7 +29,7 @@
                   :items="propsD1.ingredients"
                   :depthIndex="2"
                   itemSize="basic"
-                  :class="{ 'show-depth3': dataShowDepth3[propsD1.index] }"
+                  :class="{ 'show-depth3': dataShowDepth3[`index${propsD1.index}`] }"
                 >
                   <template v-slot="{ props: propsD2 }">
                     <comp-tree-depth

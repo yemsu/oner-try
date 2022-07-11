@@ -74,6 +74,14 @@
   &.depth-2 {
     display: flex;
     height: 100%;
+    &.show-depth3 {
+      > .wrap-items {
+        &:last-child {
+          // 마지막 아이템 툴팁 잘리는 현상 있어 padding 삽입
+          padding-right: 100px;
+        }
+      }
+    }
     > .wrap-items {
       flex-shrink: 0;
       border-right: 1px solid var(--color-white);
