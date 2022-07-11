@@ -19,7 +19,7 @@
       height: 48px;
     }
     @if $type == 'basic' {
-      width: 110%;
+      width: 100%;
       top: 0;
       border-top: $border-style;
     }
@@ -81,15 +81,14 @@
         display: flex;
         justify-content: center;
       }
-    }
-    ::v-deep {
-      .name {
-        min-height: 2.4em;
-        line-height: 1.2;
-        .text {
-          position: relative;
-          z-index: 1;
-          background-color: var(--bg-light-point-100);
+      ::v-deep {
+        .name {
+          min-height: 3em;
+          .text {
+            position: relative;
+            z-index: 1;
+            background-color: var(--bg-light-point-100);
+          }
         }
       }
     }
@@ -99,6 +98,9 @@
     justify-content: center;
     @include treeLine('direct');
     > .wrap-items {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 4px 5px 0;
       @include treeLine('basic');
       &:last-child {
@@ -115,7 +117,7 @@
       }
       // @include treeLine('straight');
       ::v-deep {
-        .item {
+        .box-item {
           padding-top: 0;
           .name .text {
             background-color: transparent;
