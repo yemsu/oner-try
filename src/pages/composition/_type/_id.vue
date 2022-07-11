@@ -152,7 +152,13 @@ export default {
         }
       })
 
-      return {sailors, etcItems}
+      const sortRequiredNumber = dataList => {
+        return dataList.sort((a, b) => a.requiredNumber - b.requiredNumber)
+      }
+      return {
+        sailors: sortRequiredNumber(sailors),
+        etcItems: sortRequiredNumber(etcItems)
+      }
     }
   },
   mounted() {
