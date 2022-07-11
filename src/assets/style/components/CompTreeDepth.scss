@@ -19,7 +19,6 @@
       height: 48px;
     }
     @if $type == 'basic' {
-      width: 100%;
       top: 0;
       border-top: $border-style;
     }
@@ -109,6 +108,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 72px;
       padding: 4px 5px 0;
       @include treeLine('basic');
       &:last-child {
@@ -117,7 +117,11 @@
     }
   }
   &.depth-4 {
-    padding: 10px 5px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0 0;
     background-color: var(--color-white);
     > .wrap-items {
       &:first-child {
