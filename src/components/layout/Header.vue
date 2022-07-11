@@ -1,12 +1,13 @@
 <template>
   <header>
-    <h1 class="logo"><NuxtLink to="/">ONER TRY</NuxtLink></h1>
+    <h1 class="logo"><nuxt-link to="/">ONER TRY</nuxt-link></h1>
     <nav class="gnb">
-      <NuxtLink to="/character">캐릭터</NuxtLink>
-      <NuxtLink to="/composition">조합법</NuxtLink>
-      <NuxtLink to="/ranking">랭킹</NuxtLink>
-      <!-- <NuxtLink to="/build">빌드툴</NuxtLink> -->
-      <!-- <NuxtLink to="/other">다른 메뉴</NuxtLink> -->
+      <nuxt-link to="/character">캐릭터</nuxt-link>
+      <nuxt-link to="/composition">조합법</nuxt-link>
+      <nuxt-link to="/ranking">랭킹</nuxt-link>
+      <nuxt-link to="/items">아이템도감</nuxt-link>
+      <!-- <nuxt-link to="/build">빌드툴</nuxt-link> -->
+      <!-- <nuxt-link to="/other">다른 메뉴</nuxt-link> -->
     </nav>
     <ul class="menu-util">
       <li><a href="https://cafe.naver.com/onepiecerpg/595" target="_blank" title="새창">맵/확장팩 다운로드</a></li>

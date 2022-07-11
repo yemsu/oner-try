@@ -38,6 +38,10 @@ export const getRanking = () => {
   return $axios.get(`/ranking`)
     .catch(error => errorHandler('getRanking', error))
 }
+export const getSynergies = () => {
+  return $axios.get(`/synergies`)
+    .catch(error => errorHandler('getSynergies', error))
+}
 export const getCompositionPageViews = (params) => {
   if(!params) params = { startDate: '2022-7-9' }
   return $axios.get(`/compositionPageViews`, { params })

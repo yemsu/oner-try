@@ -1,10 +1,13 @@
+import { parserStrData } from '@/plugins/utils/item'
 import {
   getItems,
   getSailors,
   getEtcItems,
   getEquipments,
   getHeroes,
-  getColleagues } from '@/plugins/utils/https'
+  getColleagues,
+  getSynergies
+} from '@/plugins/utils/https'
 
 export const state = () => ({
   items: [],
@@ -13,6 +16,7 @@ export const state = () => ({
   equipments: [],
   heroes: [],
   colleagues: [],
+  synergies: [],
 })
 
 export const getters = {
@@ -57,6 +61,9 @@ export const mutations = {
     const newData = data.map(colleague => Object.assign(colleague, {type: 'colleague'}))
     state[type] = newData
   },
+  SET_SYNERGIES(state, {data}) {
+    state.synergies = data
+  },
 }
 const dataTyped = (data) => {
   const newData = data.map(item =>{
@@ -79,7 +86,9 @@ export const actions = {
     return getSailors()
       .then(({data}) => {
         // console.log('GET_SAILORS',data)
-        commit(`SET_SAILORS`, {data: dataTyped(data), type: 'sailors'})
+        const newData = data.map(dataItem => Object.assign(dataItem, {option: parserStrData(dataItem.option)}))
+
+        commit(`SET_SAILORS`, {data: newData, type: 'sailors'})
         return data
       })
       .catch(error => console.log('GET_SAILORS', error))
@@ -118,5 +127,18 @@ export const actions = {
         return data
       })
       .catch(error => console.log('GET_COLLEAGUES', error))
+  },
+  GET_SYNERGIES({ commit }, payload) {
+    return getSynergies(payload)
+      .then(({data}) => {
+        const newData = data.map(dataItem => {
+          const option = parserStrData(dataItem.option)
+          const sailors = parserStrData(dataItem.sailors)
+          return Object.assign(dataItem, {option, sailors})
+        })
+        commit(`SET_SYNERGIES`, {data: newData})
+        return data
+      })
+      .catch(error => console.log('GET_SYNERGIES', error))
   },
 }
