@@ -58,11 +58,6 @@ export const postItemName = (params) => {
   .then(res => res)
   .catch(error => errorHandler('postItemName', error))
 }
-export const postCharacterPageView = (params) => {
-  return $axios.post(`/register/characterPageView`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('characterPageView', error))
-}
 export const postMurgeCharacterView = (params) => {
   return $axios.post(`/register/murgeCharacterView`, null, { params })
   .then(res => res)
@@ -72,6 +67,11 @@ export const postMurgeCompositionView = (params) => {
   return $axios.post(`/register/murgeCompositionView`, null, { params })
   .then(res => res)
   .catch(error => errorHandler('murgeCompositionView', error))
+}
+export const postCharacterPageView = (params) => {
+  return $axios.post(`/register/characterPageView`, null, { params })
+  .then(res => res)
+  .catch(error => errorHandler('postCharacterPageView', error))
 }
 export const postCompositionPageView = (params) => {
   return $axios.post(`/register/compositionPageView`, null, { params })
