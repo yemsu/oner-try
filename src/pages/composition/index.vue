@@ -31,7 +31,7 @@ export default {
   async asyncData({ store }) {
     const { items } = store.state
     const itemsData = items.length === 0
-      ? await store.dispatch('GET_ITEMS')
+      ? await store.dispatch('item/GET_ITEMS')
       : items
     const compositionItems = itemsData.filter(item => item.ingredients)
     const legendItems = compositionItems.filter(item => item.grade === 'legend')

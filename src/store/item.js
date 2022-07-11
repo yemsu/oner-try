@@ -2,12 +2,62 @@ import {
   getItems,
   getSailors,
   getEtcItems,
-  getCharacters,
   getEquipments,
   getHeroes,
-  getGameUsers,
   getColleagues } from '@/plugins/utils/https'
 
+export const state = () => ({
+  items: [],
+  sailors: [],
+  etcItems: [],
+  equipments: [],
+  heroes: [],
+  colleagues: [],
+})
+
+export const getters = {
+  getItems(state) {
+    return state.items
+  },
+  getSailors(state) {
+    return state.sailors
+  },
+  getEtcItems(state) {
+    return state.etcItems
+  },
+  getEquipments(state) {
+    return state.equipments
+  },
+  getHeroes(state) {
+    return state.heroes
+  },
+  getColleagues(state) {
+    return state.colleagues
+  },
+}
+
+export const mutations = {
+  SET_ITEMS(state, {type, data}) {
+    state[type] = data
+  },
+  SET_SAILORS(state, {type, data}) {
+    state[type] = data
+  },
+  SET_ETC_ITEMS(state, {type, data}) {
+    state[type] = data
+  },
+  SET_EQUIPMENTS(state, {type, data}) {
+    state[type] = data
+  },
+  SET_HEROS(state, {type, data}) {
+    const newData = data.map(hero => Object.assign(hero, {type: 'hero'}))
+    state[type] = newData
+  },
+  SET_COLLEAGUES(state, {type, data}) {
+    const newData = data.map(colleague => Object.assign(colleague, {type: 'colleague'}))
+    state[type] = newData
+  },
+}
 const dataTyped = (data) => {
   const newData = data.map(item =>{
     const type = item.type || 'etcItem'
@@ -15,8 +65,7 @@ const dataTyped = (data) => {
   })
   return newData
 }
-
-export default {
+export const actions = {
   GET_ITEMS({ commit }) {
     return getItems()
       .then(({data}) => {
@@ -44,14 +93,6 @@ export default {
       })
       .catch(error => console.log('GET_ETC_ITEMS', error))
   },
-  GET_CHARACTERS({ commit }, payload) {
-    return getCharacters(payload)
-      .then(({data}) => {
-        commit(`SET_CHARACTERS`, {data, type: 'characters'})
-        return data
-      })
-      .catch(error => console.log('GET_CHARACTERS', error))
-  },
   GET_EQUIPMENTS({ commit }, payload) {
     return getEquipments(payload)
       .then(({data}) => {
@@ -78,13 +119,4 @@ export default {
       })
       .catch(error => console.log('GET_COLLEAGUES', error))
   },
-  GET_GAME_USERS({ commit }, payload) {
-    return getGameUsers(payload)
-      .then(({data}) => {
-        // console.log('GET_GAME_USERS', data)
-        commit(`SET_GAME_USERS`, {data, type: 'gameUsers'})
-        return data
-      })
-      .catch(error => console.log('GET_GAME_USERS', error))
-  }
 }

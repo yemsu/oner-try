@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      items: 'getItems',
+      items: 'item/getItems',
       pageViews: 'pageView/getComposition',
       pageViewRanking: 'pageView/getCompositionSearchRanking',
     }),

@@ -51,9 +51,9 @@ export default {
     rankingTable
   },
   async asyncData({ store }) {
-    const { items, heroes } = store.state
-    if(items.length === 0) await store.dispatch('GET_ITEMS')
-    if(heroes.length === 0) await store.dispatch('GET_HEROES')
+    const { item: { items, heroes } } = store.state
+    if(items.length === 0) await store.dispatch('item/GET_ITEMS')
+    if(heroes.length === 0) await store.dispatch('item/GET_HEROES')
     const pureHeroes = heroes.filter(hero => !hero.name.includes('(스킨)'))
     return {
       pureHeroes
@@ -61,8 +61,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      items: 'getItems',
-      heroes: 'getHeroes',
+      items: 'item/getItems',
+      heroes:  'item/getHeroes',
     })
   },
 }

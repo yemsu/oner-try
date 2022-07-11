@@ -112,10 +112,10 @@ export default {
     CompTree
   },
   async asyncData({ store, params }) {
-    const { items } = store.state
+    const { item: { items } } = store.state
     const { id, type } = params
     const itemsData = items.length === 0
-      ? await store.dispatch('GET_ITEMS')
+      ? await store.dispatch('item/GET_ITEMS')
       : items
     const compositionItems = await itemsData.filter(item => item.ingredients)
     const item = itemsData.find(item => item.id === id && item.type === type)
@@ -134,7 +134,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      items: 'getItems',
+      items: 'item/getItems',
     }),
     totalIngrdnts() {
       const sailors = []

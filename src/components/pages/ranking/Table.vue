@@ -92,7 +92,7 @@
 
 <script>
 import { addCommaNumber } from '@/plugins/utils'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   props: {
@@ -109,11 +109,11 @@ export default {
     ...mapGetters({
       rankingCrr: 'user/getRankingCrr',
       ranking: 'user/getRanking',
-      heroes: 'getHeroes',
+      heroes:  'item/getHeroes',
     })
   },
   async created() {    
-    if(this.ranking.length === 0) await this.$store.dispatch('user/GET_RANKING')
+    if(this.ranking.length === 0) await this.getRanking()
 
     this.setRankingList()
   },
@@ -128,6 +128,9 @@ export default {
     this.resetRanking({ number: this.defaultDataNum })
   },
   methods: {
+    ...mapActions({
+      getRanking: 'user/GET_RANKING',
+    }),
     ...mapMutations({
       addRanking: 'user/ADD_RANKING_DATA',
       resetRanking: 'user/RESET_RANKING_DATA'

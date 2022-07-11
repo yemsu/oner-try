@@ -27,21 +27,20 @@ export default {
     CharacterSearchBox
   },
   async asyncData({ store }) {
-    const { user, heroes } = store.state
-    const { gameUsers } = user
+    const { user: { gameUsers }, item: { heroes } } = store.state
     const gameUsersData = gameUsers.length === 0
-      ? await store.dispatch('GET_GAME_USERS')
+      ? await store.dispatch('user/GET_GAME_USERS')
       : gameUsers
     const userNickNames = gameUsersData.map(user => user.nickName)
-    if(heroes.length === 0) await store.dispatch('GET_HEROES')
+    if(heroes.length === 0) await store.dispatch('item/GET_HEROES')
     return {
       userNickNames
     }
   },
   computed: {
     ...mapGetters({
-      heroes: 'getHeroes',
-      gameUsers: 'getGameUsers',
+      heroes:  'item/getHeroes',
+      gameUsers: 'user/getGameUsers',
     }),    
     pureHeroes() {
       return [...this.heroes].filter(hero => !hero.name.includes('(스킨)'))

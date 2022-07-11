@@ -88,13 +88,12 @@ export default {
     })
   },
   async asyncData({ store, params }) {
-    const { user, heroes } = store.state
-    const { gameUsers } = user
+    const { user: { gameUsers }, item: { heroes } } = store.state
     const gameUsersData = gameUsers.length === 0
       ? await store.dispatch('user/GET_GAME_USERS')
       : gameUsers
     const userNickNames = gameUsersData.map(user => user.nickName)
-    if(heroes.length === 0) await store.dispatch('GET_HEROES')
+    if(heroes.length === 0) await store.dispatch('item/GET_HEROES')
     const nickname = params.nickname
     return {
       userNickNames,
@@ -135,11 +134,11 @@ export default {
       characters: 'user/getCharacters',
       nickName: 'user/getNickName',
       gameUsers: 'user/getGameUsers',
-      heroes: 'getHeroes',
-      equipments: 'getEquipments',
-      sailors: 'getSailors',
-      colleagues: 'getColleagues',
-      items: 'getItems',
+      heroes:  'item/getHeroes',
+      equipments: 'item/getEquipments',
+      sailors: 'item/getSailors',
+      colleagues: 'item/getColleagues',
+      items: 'item/getItems',
     })
   },
   mounted() {
@@ -151,7 +150,7 @@ export default {
   methods: {
     ...mapActions({
       getCharacters: 'user/GET_CHARACTERS',
-      getItems: 'GET_ITEMS'
+      getItems: 'item/GET_ITEMS'
     }),
     ...mapMutations({
       setUserNickName: 'user/SET_NICKNAME'
