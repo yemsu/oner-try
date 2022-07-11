@@ -11,10 +11,10 @@
     <template v-if="item">
       <div class="wrap-box">
         <button
-          v-if="isComp(item) || (isNoDataItem(item) && !this.roundImg)"
           @click="clickItem(item)"
           :title="isNoDataItem(item) ? '클릭하여 아이템 이름을 알려주세요!' : ''"
           class="wrap-info"
+          :is="isComp(item) || (isNoDataItem(item) && !this.roundImg) ? 'button' : 'div'"
         >
           <item-box-info
             :item="item"
@@ -31,21 +31,6 @@
             :customBadge="customBadge"
           />
         </button>
-        <item-box-info
-          v-else
-          :item="item"
-          :isComp="isComp(item)"
-          :wantedPaper="wantedPaper"
-          :isNoDataItem="isNoDataItem(item)"
-          :badgeDrop="badgeDrop"
-          :showType="showType"
-          :showComp="showComp"
-          :showName="showName"
-          :showBounty="showBounty"
-          :onlyImg="onlyImg"
-          :roundImg="roundImg"
-          :customBadge="customBadge"
-        />
       </div>
       
       <!-- tooltip -->
