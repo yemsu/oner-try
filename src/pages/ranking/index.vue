@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="inner-size-basic mrg-top-medium">
-    <!-- <div class="bar-notice">
-      ❗ 현재 랭킹이 정상적으로 업데이트 되지 않는 현상이 있습니다. 확인 중에 있으니 조금만 기다려주세요.
-    </div> -->
+      <p class="bar-notice">
+        ❗ 랭킹 산정 방식이 변경되었습니다.  레벨 > 장비점수 > 현상금 <br>(게임 내 정책과는 무관하며 사이트 자체 산정 방식입니다. 재미로 안보면 고소함)
+      </p>
       <!-- <ul class="list-filter">
         <li>
           <button class="button-filter" @click="filterHero">

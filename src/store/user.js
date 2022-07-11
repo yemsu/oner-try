@@ -62,15 +62,8 @@ export const mutations = {
   SET_NICKNAME(state, payload) {
     state.nickName = payload
   },
-  SET_RANKING(state, data) {
-    const sortData = data.sort((a, b) => {
-      if(a.lv === b.lv) {
-        return a.bounty - b.bounty
-      }
-      return a.lv - b.lv
-    }).reverse()
-    
-    state.ranking = sortData
+  SET_RANKING(state, data) {    
+    state.ranking = data
   },
   ADD_RANKING_DATA(state, { number }) {
     const { rankingCrr, ranking } = state
@@ -115,9 +108,40 @@ export const actions = {
           const colleagues = user.colleagues !== '[]'
             ? dataParseHandler(colleagueData, user, 'colleagues')
             : new Array(3).fill(null)
-          return Object.assign(user, { sailors, colleagues })
+
+          Object.assign(user, { sailors, colleagues })
+          // 장비 점수 삽입
+          const scoreByGrade = {
+            normal: 1,
+            rare: 2,
+            epic: 3,
+            legend: 4
+          }
+          const getScore = items => {
+            return items.reduce((acc, item) => {
+              if(!item) return acc
+              const { grade, stack } = item
+              const gradeScore = grade ? scoreByGrade[grade] : 1
+              const stackValue = stack ? stack.replace(/\[|\]/g, '') : 1
+              acc += (gradeScore * stackValue)
+              return acc
+            }, 0)
+          }
+          const itemScore = getScore(sailors) + getScore(colleagues)
+          Object.assign(user, { itemScore })
+
+          return user
         })
-        commit(`SET_RANKING`, newData)
+        
+        const sortData = newData.sort((a, b) => {
+          if(b.lv === a.lv) {
+            if(b.itemScore === a.itemScore) return b.bounty - a.bounty
+            return b.itemScore - a.itemScore
+          }
+          return b.lv - a.lv
+        })
+
+        commit(`SET_RANKING`, sortData)
         return data
       })
       .catch(error => console.log('user/GET_RANKING', error))
