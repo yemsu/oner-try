@@ -11,30 +11,64 @@
     <template v-if="item">
       <div class="wrap-box">
         <button
-          @click="clickItem(item)"
-          :title="isNoDataItem(item) ? '클릭하여 아이템 이름을 알려주세요!' : ''"
+          @click="clickItem()"
+          :title="isNoDataItem ? '클릭하여 아이템 이름을 알려주세요!' : ''"
           class="wrap-info"
-          :is="isComp(item) || (isNoDataItem(item) && !this.roundImg) ? 'button' : 'div'"
+          :is="isComp || (isNoDataItem && !this.roundImg) ? 'button' : 'div'"
         >
-          <item-box-info
-            :item="item"
-            :isComp="isComp(item)"
-            :wantedPaper="wantedPaper"
-            :isNoDataItem="isNoDataItem(item)"
-            :badgeDrop="badgeDrop"
-            :showType="showType"
-            :showComp="showComp"
-            :showName="showName"
-            :showBounty="showBounty"
-            :onlyImg="onlyImg"
-            :roundImg="roundImg"
-            :customBadge="customBadge"
-          />
+          <div class="item-box-info">
+            <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
+            <div class="area-img">
+              <div v-if="imgSrc" class="box-img">
+                <img
+                  :src="imgSrc"
+                  :alt="item.name"
+                  class="img-item"
+                />
+              </div>
+              <p v-else-if="isNoDataItem && !roundImg" class="box-img blank no-id">
+                아이템명 알려주기 click!
+              </p>
+              <p v-else-if="!isNoDataItem" class="box-img blank no-src">
+                이미지 준비중
+              </p>
+              <p v-else class="box-img blank">
+                ???
+              </p>
+              <div v-if="!onlyImg" class="badges">
+                <template v-if="!wantedPaper">
+                  <p v-if="badgeDrop && item.dropMonster" class="badge drop-monster">
+                    드랍
+                  </p>
+                  <p
+                    v-if="isComp && showComp"
+                    :class="`badge ${isRecruit ? 'recruit' : 'mix'}`"
+                  >
+                    {{ isRecruit ? '영입' : '조합'}}
+                  </p>
+                  <p v-if="item.stack" class="badge black line-gold">
+                    {{ item.stack }}
+                  </p>
+                  <p v-if="item.type && showType" :class="`badge type ${item.type}`">
+                    {{ typeName }}
+                  </p>
+                  <p v-if="item.requiredNumber" class="badge black">
+                    {{ item.requiredNumber }}
+                  </p>
+                </template>
+                <p v-if="customBadge" class="badge black">
+                  {{ customBadge }}
+                </p>
+              </div>
+            </div>
+            <p v-if="!wantedPaper && showName" class="name"><span class="text">{{ item.name }}</span></p>
+            <p v-if="wantedPaper && showBounty" class="bounty"><span class="text">$ {{ item.bounty || 0 }}</span></p>
+          </div>
         </button>
       </div>
       
       <!-- tooltip -->
-      <div v-if="!noTooltip(item)" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
+      <div v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
         <dl class="details">
           <div v-if="item.dropMonster">
             <dt class="color-drop">획득처</dt>
@@ -50,7 +84,7 @@
             </div>
           </template>
         </dl>
-        <div v-if="!visibleDetail && isComp(item)" class="wrap-sub-text">
+        <div v-if="!visibleDetail && isComp" class="wrap-sub-text">
           <p class="color-neon"><small>조합 보러가기 </small><i class="icon-arrow right small border-neon"></i></p>
         </div>
       </div>
@@ -75,13 +109,11 @@
 
 <script>
 import BaseInput from '@/components/common/BaseInput.vue'
-import { getOptionTitle, getOptionUnit } from '@/plugins/utils/item'
+import { getOptionTitle, getOptionUnit, imgSrc } from '@/plugins/utils/item'
 import { isOnlyNumber } from '@/plugins/utils'
 import { postItemName } from '@/plugins/utils/https'
-import ItemBoxInfo from './ItemBoxInfo.vue'
 export default {
   components: {
-    ItemBoxInfo,
     BaseInput
   },
   props: {
@@ -149,6 +181,44 @@ export default {
       inputValue: null
     }
   },
+  computed: {
+    isComp() {
+      return !!this.item.ingredients
+    },
+    isRecruit() {
+      return this.item.ingredients.length === 1
+    },
+    imgSrc() {
+      const { type, id, groupName } = this.item
+      
+      const data = [type, id]
+      data.forEach(key => {
+        this.checkData(key) 
+        return ''
+      })
+      const imgName = groupName || id
+      // return ``
+      return imgSrc(type, imgName)
+    },
+    isNoDataItem() {
+      return isOnlyNumber(this.item.name)
+    },
+    noTooltip() {
+      return !this.showTooltip || !this.item.dropMonster && !this.item.option
+    },
+    typeName() {
+      switch (this.item.type) {
+        case 'sailor':
+          return '선원'
+        case 'colleague':
+          return '동료'
+        case 'etcItem':
+          return '기타'
+        default:
+          break;
+      }
+    }
+  },
   mounted() {
     document.addEventListener('click', e => {
       if(!this.isActiveReportPopup) return
@@ -157,9 +227,6 @@ export default {
     })
   },
   methods: {
-    isNoDataItem(item) {
-      return isOnlyNumber(item.name)
-    },
     getOption(option, optionType) {
       const key = Object.keys(option)[0]
       switch (optionType) {
@@ -169,18 +236,11 @@ export default {
           return getOptionUnit(key);      
       }
     },
-    noTooltip(item) {
-      return !this.showTooltip || !item.dropMonster && !item.option
-    },
-    isComp(item) {
-      return !!item.ingredients
-    },
-    clickItem(item) {
-      console.log('clickItem')
-      const {id, type} = item
-      if(this.isNoDataItem(item)) {
+    clickItem() {
+      const { id, type, name } = this.item
+      if(this.isNoDataItem) {
         this.isActiveReportPopup = true
-        this.reportingItemId = item.name
+        this.reportingItemId = name
         console.log('this.reportingItemId', this.reportingItemId)
         return 
       }
@@ -195,7 +255,10 @@ export default {
       this.isActiveReportPopup = false
       this.inputValue = ''
       alert('감사합니다! 🤸‍♀️')
-    }
+    },
+    checkData(key = '') {
+      if(this.item[key]) console.error(`${this.item.name} has no "${key}"`)
+    },
   }
 }
 </script>
