@@ -26,6 +26,9 @@ export default {
         { title: '선박', name: 'ship'}
       ]
     }
+  },
+  created() {
+    this.$router.push('/items/sailor')
   }
 }
 </script>

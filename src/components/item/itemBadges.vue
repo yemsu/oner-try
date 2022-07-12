@@ -1,24 +1,17 @@
 <template>
   <div :class="['item-badges', 'badges', {'position-inner': innerPosition}]">
     <template v-if="!wantedPaper">
-      <p v-if="badgeDrop && item.dropMonster" class="badge drop-monster">
-        드랍
-      </p>
-      <p
-        v-if="isComp && showComp"
-        :class="`badge ${isRecruit ? 'recruit' : 'mix'}`"
+      <template
+        v-for="(badge, i) in badgesInfo"
       >
-        {{ isRecruit ? '영입' : '조합'}}
-      </p>
-      <p v-if="item.stack" class="badge black line-gold">
-        {{ item.stack }}
-      </p>
-      <p v-if="item.type && showType" :class="`badge type ${item.type}`">
-        {{ typeName }}
-      </p>
-      <p v-if="item.requiredNumber" class="badge black">
-        {{ item.requiredNumber }}
-      </p>
+        <p
+          v-if="badge.condition && showBadge(badge.name)"
+          :class="`badge ${badge.className}`"
+          :key="`badge${i}`"
+        >
+          {{ badge.text }}
+        </p>
+      </template>
     </template>
     <p v-if="customBadge" class="badge black">
       {{ customBadge }}
@@ -37,30 +30,18 @@ export default {
       type: Boolean,
       default: () => false
     },
-    badgeDrop: {
-      type: Boolean,
-      default: () => true
-    },
-    isComp: {
-      type: Boolean,
-      default: () => true
-    },
-    showComp: {
-      type: Boolean,
-      default: () => true
-    },
-    showType: {
-      type: Boolean,
-      default: () => false
-    },
     customBadge: {
       type: String,
-      default: () => ''
+      default: () => null
     },
     innerPosition: {
       type: Boolean,
       default: () => true
     },
+    showBadges: {
+      type: Array,
+      default: () => ['type', 'howGet', 'stack', 'requiredNumber', 'custom']
+    }
   },
   data() {
     return {
@@ -81,6 +62,56 @@ export default {
         default:
           break;
       }
+    },
+    badgesInfo() {
+      const { type, stack, requiredNumber, dropMonster, ingredients } = this.item
+      const howGetItemList = {
+        'recruit': '영입',
+        'composition': '조합',
+        'drop-monster': '드랍',
+      }
+      const howGetKey = ingredients
+        ? this.isRecruit ? 'recruit' : 'composition'
+        : 'drop-monster'
+
+      return [
+        {
+          name: 'type',
+          condition: type,
+          text: this.typeName,
+          className: `type ${type}`,
+        },
+        {
+          name: 'howGet',
+          condition: dropMonster || ingredients,
+          text: howGetItemList[howGetKey],
+          className: howGetKey
+        },
+        {
+          name: 'stack',
+          condition: stack,
+          text: stack,
+          className: `black line-gold`
+        },
+        {
+          name: 'requiredNumber',
+          condition: requiredNumber,
+          text: requiredNumber,
+          className: 'black'
+        },
+        {
+          name: 'custom',
+          condition: this.customBadge,
+          text: this.customBadge,
+          className: 'black'
+        },
+
+      ]
+    }
+  },
+  methods: {
+    showBadge(type) {
+      return this.showBadges.includes(type)
     }
   }
 }
@@ -91,5 +122,24 @@ export default {
   position: absolute;
   right: 0;
   bottom: 0;
+}
+.badge {
+  &.composition {
+    background-color: rgba(255, 200, 174, 0.8);
+  }
+  &.recruit {
+    background-color: rgba(196, 255, 232, 0.8);
+  }
+  &.type {
+    background-color: $color-point;
+    color: #fff;
+    font-weight: 300;
+    &.sailor {
+      background-color: royalblue;
+    }
+    &.colleague {
+      background-color: green;
+    }
+  }
 }
 </style>

@@ -19,7 +19,7 @@
             :item="itemSelected"
             type="list"
             size="big"
-            :showType="true"
+            :showBadges="['type', 'howGet']"
             :visibleDetail="true"
           />
           <div v-if="highRankItems.length !== 0" class="wrap-high-rank">
@@ -28,7 +28,6 @@
               <template v-slot="{ item: highRankItems }">
                 <item-box
                   :item="highRankItems"
-                  :showComp="false"
                   size="small"
                 />
               </template>
@@ -56,8 +55,8 @@
               <item-box
                 :item="item"
                 type="list"
+                :showBadges="['requiredNumber']"
                 size="xsmall"
-                :badgeDrop="false"
               ></item-box>
             </template>
           </item-list>
@@ -71,7 +70,7 @@
                 :item="item"
                 type="list"
                 size="xsmall"
-                :badgeDrop="false"
+                :showBadges="['requiredNumber']"
               ></item-box>
             </template>
           </item-list>

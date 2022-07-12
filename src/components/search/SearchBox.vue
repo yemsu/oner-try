@@ -31,6 +31,7 @@
             size="small"
             type="list"
             :item="data"
+            :showBadges="['howGet']"
             :showTooltip="false"
           />
         </div>
@@ -52,6 +53,7 @@
               size="small"
               type="list"
               :item="data"
+              :showBadges="['howGet']"
               :showTooltip="false"
             />
             <button

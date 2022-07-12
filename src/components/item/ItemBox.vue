@@ -40,9 +40,7 @@
                 :item="item"
                 :wantedPaper="wantedPaper"
                 :badgeDrop="badgeDrop"
-                :isComp="isComp"
-                :showComp="showComp"
-                :showType="showType"
+                :showBadges="showBadges"
                 :customBadge="customBadge"
                 :innerPosition="true"
               />
@@ -127,14 +125,6 @@ export default {
       type: Boolean,
       default: () => false
     },
-    showType: {
-      type: Boolean,
-      default: () => false
-    },
-    showComp: {
-      type: Boolean,
-      default: () => true
-    },
     showBounty: {
       type: Boolean,
       default: () => true
@@ -159,6 +149,10 @@ export default {
       type: String,
       default: () => ''
     },
+    showBadges: {
+      type: Array,
+      default: () => []
+    }
   },
   data() {
     return {

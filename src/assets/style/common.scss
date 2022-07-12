@@ -192,23 +192,6 @@ caption, .ir-hidden {
   &.line-gold {
     border: 1px solid $color-gold;
   }
-  &.mix {
-    background-color: rgba(255, 200, 174, 0.8);
-  }
-  &.recruit {
-    background-color: rgba(196, 255, 232, 0.8);
-  }
-  &.type {
-    background-color: $color-point;
-    color: #fff;
-    font-weight: 300;
-    &.sailor {
-      background-color: royalblue;
-    }
-    &.colleague {
-      background-color: green;
-    }
-  }
   &:not([class*=line-]):nth-child(n+2) {
     border-left: none;
   }
