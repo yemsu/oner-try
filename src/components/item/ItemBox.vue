@@ -11,10 +11,10 @@
     <template v-if="item">
       <div class="wrap-box">
         <button
-          @click="clickItem()"
+          @click="goItemPage && clickItem()"
           :title="isNoDataItem ? '클릭하여 아이템 이름을 알려주세요!' : ''"
           class="wrap-info"
-          :is="isComp || (isNoDataItem && !this.roundImg) ? 'button' : 'div'"
+          :is="goItemPage ? 'button' : 'div'"
         >
           <div class="item-box-info">
             <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
@@ -183,6 +183,9 @@ export default {
     noTooltip() {
       return !this.showTooltip || !this.item.dropMonster && !this.item.option
     },
+    goItemPage() {
+      return this.isComp || (this.isNoDataItem && !this.roundImg)
+    }
   },
   mounted() {
     document.addEventListener('click', e => {
