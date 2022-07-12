@@ -86,7 +86,9 @@ export const actions = {
     return getSailors()
       .then(({data}) => {
         // console.log('GET_SAILORS',data)
-        commit(`SET_SAILORS`, {data: dataTyped(data), type: 'sailors'})
+        const newData = data.map(dataItem => Object.assign(dataItem, {option: parserStrData(dataItem.option)}))
+
+        commit(`SET_SAILORS`, {data: newData, type: 'sailors'})
         return data
       })
       .catch(error => console.log('GET_SAILORS', error))
