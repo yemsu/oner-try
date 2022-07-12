@@ -64,11 +64,9 @@ export const mutations = {
   },
   SET_RANKING(state, data) {
     const sortData = data.sort((a, b) => {
-      if(a.lv === b.lv) {
-        return a.bounty - b.bounty
-      }
-      return a.lv - b.lv
-    }).reverse()
+      const logic = (item) => item.lv * (item.bounty / 1000)
+      return logic(b) - logic(a)
+    })
     
     state.ranking = sortData
   },
