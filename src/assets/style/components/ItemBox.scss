@@ -126,13 +126,6 @@ $space: 3px;
           .name {
             font-size: $font-size-S-pc + 8;
           }
-          .area-detail {
-            padding: 0 20px;
-            margin-left: 40px;
-            dd {
-              font-size: 14px;
-            }
-          }
         }
       }
     }
@@ -188,29 +181,6 @@ $space: 3px;
     padding: 5px;
     font-size: $font-size-S-pc;
     white-space: nowrap;
-    &:not(.tooltip) {
-      .details {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        > div {
-          border-left: 2px solid rgba(0, 0, 0, 0.1);
-          padding-left: 8px;
-          &:nth-child(n+2) {
-            margin-left: 20px;
-          }
-        }
-      }
-    }
-    dt {
-      margin-right: 5px;
-    }
-    .color-drop {
-      color: $color-point;
-    }
-    .color-option {
-      color: $color-point-sub;
-    }
   }
   .tooltip {
     $tooltip-bg: rgba(0, 0, 0, 0.8);
@@ -222,6 +192,7 @@ $space: 3px;
     background-color: $tooltip-bg;
     font-weight: 300;
     color: #fff;
+    text-align: left;
     transform: translateX(100%);
     &:before {
       display: block;
@@ -238,16 +209,10 @@ $space: 3px;
       transform: translate(-100%, -50%);
       content: '';
     }
-    .details {
-      > div {
-        display: flex;
+    ::v-deep {
+      .color-option {
+        color: $color-point-sub-bright;
       }
-    }
-    .color-drop {
-      color: $color-point-bright;
-    }
-    .color-option {
-      color: $color-point-sub-bright;
     }
   }
 }

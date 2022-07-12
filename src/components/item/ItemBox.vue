@@ -47,21 +47,11 @@
       
       <!-- tooltip -->
       <div v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
-        <dl class="details">
-          <div v-if="item.dropMonster">
-            <dt class="color-drop">획득처</dt>
-            <dd>{{ item.dropMonster }}</dd>
-          </div>
-          <template v-if="item.option">
-            <div
-              v-for="(option, i) in item.option"
-              :key="`itemOption${i}`"
-            >
-              <dt class="color-option">{{ getOption(option, 'title') }}</dt>
-              <dd>+{{ Object.values(option)[0] }} {{ getOption(option, 'unit') }}</dd>
-            </div>
-          </template>
-        </dl>
+        <item-detail-info 
+          :item="itemDetailInfoData"
+          :type="itemDetailInfoType"
+          bgColor="black"
+        />
         <div v-if="!visibleDetail && isComp" class="wrap-sub-text">
           <p class="color-neon"><small>조합 보러가기 </small><i class="icon-arrow right small border-neon"></i></p>
         </div>
@@ -87,7 +77,6 @@
 
 <script>
 import BaseInput from '@/components/common/BaseInput.vue'
-import { getOptionTitle, getOptionUnit } from '@/plugins/utils/item'
 import { isOnlyNumber } from '@/plugins/utils'
 import { postItemName } from '@/plugins/utils/https'
 export default {
@@ -175,9 +164,17 @@ export default {
     itemImageData() {
       const { type, id, groupName, name, grade } = this.item
       return { type, id, groupName, name, grade }
-    }
+    },
+    itemDetailInfoData() {
+      const { dropMonster, option } = this.item
+      return { dropMonster, option }
+    },
+    itemDetailInfoType() {
+      return this.visibleDetail && this.size === 'big' ? 'list-main' : 'basic'
+    },
   },
   mounted() {
+    // console.log('item', this.item.name, this.item.option)
     document.addEventListener('click', e => {
       if(!this.isActiveReportPopup) return
       const targetArea = className => e.target.closest(className)
@@ -185,15 +182,6 @@ export default {
     })
   },
   methods: {
-    getOption(option, optionType) {
-      const key = Object.keys(option)[0]
-      switch (optionType) {
-        case 'title':
-          return getOptionTitle(key);
-        case 'unit':
-          return getOptionUnit(key);      
-      }
-    },
     clickItem() {
       const { id, type, name } = this.item
       if(this.isNoDataItem) {
