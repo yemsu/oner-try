@@ -1,0 +1,92 @@
+
+@mixin setSize($img-size) {
+  width: $img-size;
+  height: $img-size;
+  .box-img {
+    height: 100%;
+    .img-item {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .item-blank {
+    height: $img-size;
+  } 
+}
+@mixin blank() {
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-gray);
+}
+
+.item-img {
+  overflow: hidden;
+  .box-img {
+    &.blank {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: keep-all;
+      color: var(--color-gray);
+      line-height: 1.2;
+      font-size: 12px;
+      @include blank();
+    }
+    &.no-id {
+      color: $color-point;
+    }
+  }
+  &.size {
+    &-xsmall {
+      @include setSize($item-image-xsmall);
+    }
+    &-small {
+      @include setSize($item-image-small);
+    }
+    &-basic {
+      @include setSize($item-image-basic);     
+    }
+    &-big {
+      @include setSize($item-image-big);     
+    }
+    &-xbig {
+      @include setSize($item-image-xbig);       
+    }
+  }
+  &.round {
+    border-radius: 100%;
+    border: 1px solid var(--color-white);
+    &.legend {
+      border: 2px solid $color-legend;
+      box-shadow: 0 0 10px $color-legend-sub;
+      .box-img {
+      }
+    }
+    &.epic {
+      border: 2px solid $color-epic;
+      box-shadow: 0 0 5px $color-epic-sub;
+      .box-img {
+      }
+    }
+    &.rare {
+      border: 2px solid $color-rare;
+      .box-img {
+      }
+    }
+    &.normal {
+      border: 2px solid $color-normal;
+      .box-img {
+      }
+    }
+    .box-img {
+      .img-item {
+        width: 150% !important;
+        height: 150% !important;
+        margin: -26% 0 0 -25%;
+        border-radius: 100%;
+      }
+    }
+    .item-blank {
+      border-radius: 100%;
+    }
+  }
+}
