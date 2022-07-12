@@ -60,7 +60,7 @@ export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey,
     } else if(!fullData) {
       console.error(`NO ITEM: ${name} - CHECK DB!`)
       return false
-    }
+    }  
     const fullDataClone = deepClone(fullData)
 
     if(fullDataClone.option) {
@@ -70,8 +70,10 @@ export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey,
       fullDataClone.gradeOption = parserStrData(fullDataClone.gradeOption)
     }
 
-    const itemValue = `${Object.values(data)[0]}`.trim()
-    return Object.assign(fullDataClone, {[newDataKey]: itemValue})
+    const itemValue = Object.values(data)[0]
+    const isString = typeof(itemValue) === 'string'
+    const newObj = {[newDataKey]: isString ? itemValue.trim() : itemValue }
+    return Object.assign(fullDataClone, newObj)
   })
 
   return newData
