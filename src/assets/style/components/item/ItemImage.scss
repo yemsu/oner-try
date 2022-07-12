@@ -27,11 +27,16 @@
       justify-content: center;
       word-break: keep-all;
       color: var(--color-gray);
-      line-height: 1.2;
-      font-size: 12px;
       @include blank();
     }
-    &.no-id {
+    &.blank,
+    &.blank > button {
+      line-height: 1.2;
+      font-size: 12px;
+      text-align: center;
+    }
+    &.no-id,
+    &.no-id > button {
       color: $color-point;
     }
   }
@@ -58,24 +63,16 @@
     &.legend {
       border: 2px solid $color-legend;
       box-shadow: 0 0 10px $color-legend-sub;
-      .box-img {
-      }
     }
     &.epic {
       border: 2px solid $color-epic;
       box-shadow: 0 0 5px $color-epic-sub;
-      .box-img {
-      }
     }
     &.rare {
       border: 2px solid $color-rare;
-      .box-img {
-      }
     }
     &.normal {
       border: 2px solid $color-normal;
-      .box-img {
-      }
     }
     .box-img {
       .img-item {
@@ -89,4 +86,13 @@
       border-radius: 100%;
     }
   }
+}
+
+.box-item-report {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  z-index: 9;
+  width: 250px;
+  transform: translateY(-50%);
 }
