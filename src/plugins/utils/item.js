@@ -1,4 +1,6 @@
 import { deepClone, getOnlyText, objArrKeys } from '@/plugins/utils'
+import { optionsMap } from '@/plugins/utils/item-def'
+
 export const findData = (dataList, key, checkValue) => {
   return dataList.find(data => getOnlyText(data[key]) === getOnlyText(checkValue))
 }
@@ -11,26 +13,7 @@ export const imgSrc = (type, id) => {
   return process.env.CONT_PATH  + path
 }
 export const getOptionTitle = (key) => {
-  const map = new Map([
-    ['str', '견문색'],
-    ['dex', '무장색'],
-    ['int', '패왕색'],
-    ['ct', '치명타 확률'],
-    ['ctD', '치명타 피해량'],
-    ['dct', '파괴치명타 확률'],
-    ['ss', '스킬 속도'],
-    ['adt', '추가 피해량'],
-    ['minD', '최소 피해량'],
-    ['maxD', '최대 피해량'],
-    ['df', '막기 확률'],
-    ['hp', '체력'],
-    ['ev', '회피 확률'],
-    ['dr', '추가 룬파괴량'],
-    ['cd', '재사용 대기시간 감소'],
-    ['po', '생활포인트 획득량'],
-    ['ms', '이동속도']
-  ])
-  return map.get(key) 
+  return optionsMap.get(key) 
 }
 export const getOptionUnit = (key) => {
   const noUnit = ['hp', 'po', 'ms']
@@ -42,6 +25,7 @@ export const parserStrData = (strData) => { // name: value, name: value ...
   const checkSingle = !strData.includes(',')
   const data = checkSingle ? [strData] : strData.replace(/\[ | \]/, '').split(',')
   const objList = data.map(str => {
+    if(!isBlank(str) && !str.includes(':')) return str.trim()
     const splitStr = str.split(':')
     const nameValue = getOnlyText(splitStr[0])
     return {[nameValue]: splitStr[1]}
