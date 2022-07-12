@@ -22,6 +22,7 @@
                 :isNoDataItem="isNoDataItem"
                 :size="size"
                 :isComp="isComp"
+                :isLink="isLink"
               />
               <item-badges
                 v-if="!onlyImg && showBadges.length !== 0 && !isNoDataItem"
@@ -118,6 +119,10 @@ export default {
     isPirateKing: {
       type: Boolean,
       default: () => false
+    },
+    isLink: {
+      type: Boolean,
+      default: () => true
     }
   },
   computed: {

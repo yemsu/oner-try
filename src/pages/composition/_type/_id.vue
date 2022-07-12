@@ -21,6 +21,7 @@
             size="big"
             :showBadges="['type', 'howGet']"
             :visibleDetail="true"
+            :isLink="false"
           />
           <div v-if="highRankItems.length !== 0" class="wrap-high-rank">
             <h4 class="title">상위 아이템</h4>

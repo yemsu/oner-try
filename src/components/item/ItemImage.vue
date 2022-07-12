@@ -20,7 +20,7 @@
         />
       </button>
       <p
-        v-else-if="isNoDataItem && !isRoundImg"
+        v-else-if="isReportButton"
         class="box-img blank no-id"
       >
         <button
@@ -80,6 +80,10 @@ export default {
     isComp: {
       type: Boolean,
       default: () => true
+    },
+    isLink: {
+      type: Boolean,
+      default: () => true
     }
   },
   data() {
@@ -103,8 +107,11 @@ export default {
       return imgSrc(type, imgName)
     },
     goItemPage() {
-      return this.isComp || (this.isNoDataItem && !this.isRoundImg)
+      return this.isComp && this.isLink
     },
+    isReportButton() {
+      return this.isNoDataItem && !this.isRoundImg
+    }
   },
   mounted() {
     document.addEventListener('click', e => {
