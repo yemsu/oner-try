@@ -1,17 +1,12 @@
 $space: 3px;
 $big-img-size: 70px;
 $xbig-img-size: 90px;
-@mixin badges-inner() {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
 @mixin setTypeBasicSize($img-size) {
   width: $img-size;
   @include setTypeListSize($img-size);
   .item-blank {
     height: $img-size;
-  }
+  } 
 }
 @mixin setTypeListSize($img-size) {
   ::v-deep {
@@ -172,48 +167,19 @@ $xbig-img-size: 90px;
         &-small {
           $img-size: 40px;
           @include setTypeBasicSize($img-size);
-          ::v-deep {
-            .item-box-info {
-              .badges {
-                width: 120%;
-                margin-left: -10%;
-              }
-            }
-          }
         }
         &-basic {
           $img-size: 55px;
-          @include setTypeBasicSize($img-size);
-          ::v-deep {
-            .item-box-info {
-              .badges {
-                @include badges-inner();
-              }
-            }
-          }       
+          @include setTypeBasicSize($img-size);     
         }
         &-big {
-          @include setTypeBasicSize($big-img-size);
-          ::v-deep {
-            .item-box-info {
-              .badges {
-                @include badges-inner();
-              }
-            }
-          }       
+          @include setTypeBasicSize($big-img-size);     
           &.wanted-paper {
             @include setWantedPaper($big-img-size);
           }     
         }
         &-xbig {
-          @include setTypeBasicSize($xbig-img-size);
-          ::v-deep {
-            .item-box-info {
-              .badges {
-                @include badges-inner();
-              }
-            }
-          }       
+          @include setTypeBasicSize($xbig-img-size);       
           &.wanted-paper {
             @include setWantedPaper($xbig-img-size);
           }     
@@ -230,9 +196,6 @@ $xbig-img-size: 90px;
           height: 100%;
           .name {
             margin-left: 6px;
-          }
-          .badges {
-            @include badges-inner();
           }
         }
       }      

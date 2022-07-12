@@ -35,31 +35,17 @@
               <p v-else class="box-img blank">
                 ???
               </p>
-              <div v-if="!onlyImg" class="badges">
-                <template v-if="!wantedPaper">
-                  <p v-if="badgeDrop && item.dropMonster" class="badge drop-monster">
-                    드랍
-                  </p>
-                  <p
-                    v-if="isComp && showComp"
-                    :class="`badge ${isRecruit ? 'recruit' : 'mix'}`"
-                  >
-                    {{ isRecruit ? '영입' : '조합'}}
-                  </p>
-                  <p v-if="item.stack" class="badge black line-gold">
-                    {{ item.stack }}
-                  </p>
-                  <p v-if="item.type && showType" :class="`badge type ${item.type}`">
-                    {{ typeName }}
-                  </p>
-                  <p v-if="item.requiredNumber" class="badge black">
-                    {{ item.requiredNumber }}
-                  </p>
-                </template>
-                <p v-if="customBadge" class="badge black">
-                  {{ customBadge }}
-                </p>
-              </div>
+              <item-badges
+                v-if="!onlyImg"
+                :item="item"
+                :wantedPaper="wantedPaper"
+                :badgeDrop="badgeDrop"
+                :isComp="isComp"
+                :showComp="showComp"
+                :showType="showType"
+                :customBadge="customBadge"
+                :innerPosition="true"
+              />
             </div>
             <p v-if="!wantedPaper && showName" class="name"><span class="text">{{ item.name }}</span></p>
             <p v-if="wantedPaper && showBounty" class="bounty"><span class="text">$ {{ item.bounty || 0 }}</span></p>
@@ -185,9 +171,6 @@ export default {
     isComp() {
       return !!this.item.ingredients
     },
-    isRecruit() {
-      return this.item.ingredients.length === 1
-    },
     imgSrc() {
       const { type, id, groupName } = this.item
       
@@ -206,18 +189,6 @@ export default {
     noTooltip() {
       return !this.showTooltip || !this.item.dropMonster && !this.item.option
     },
-    typeName() {
-      switch (this.item.type) {
-        case 'sailor':
-          return '선원'
-        case 'colleague':
-          return '동료'
-        case 'etcItem':
-          return '기타'
-        default:
-          break;
-      }
-    }
   },
   mounted() {
     document.addEventListener('click', e => {
