@@ -13,7 +13,8 @@ export const imgSrc = (type, id) => {
   return process.env.CONT_PATH  + path
 }
 export const getOptionTitle = (key) => {
-  return optionsMap.get(key) 
+  const findKey = [...optionsMap.keys()].find(optionKey => optionKey.toLowerCase() === key.toLowerCase())
+  return optionsMap.get(findKey) 
 }
 export const getOptionUnit = (key) => {
   const noUnit = ['hp', 'po', 'ms']
