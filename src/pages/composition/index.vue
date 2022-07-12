@@ -29,7 +29,7 @@ export default {
     })
   },
   async asyncData({ store }) {
-    const { items } = store.state
+    const { item: { items } } = store.state
     const itemsData = items.length === 0
       ? await store.dispatch('item/GET_ITEMS')
       : items

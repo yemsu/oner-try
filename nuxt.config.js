@@ -34,16 +34,17 @@ export default {
     ],
     __dangerouslyDisableSanitizers: ['noscript', 'script'],
     script: [
-      { type: 'text/javascript', src: '//wcs.naver.net/wcslog.js' },
+      { type: 'text/javascript', src: '//wcs.naver.net/wcslog.js', async: true },
       {
         type: 'text/javascript',
         innerHTML: `if(!wcs_add) var wcs_add = {}; wcs_add['wa'] = '1501b3ca5e1f000'; if(window.wcs) { wcs_do(); }`
       },
       { type: 'text/javascript', src: 'https://www.googletagmanager.com/gtag/js?id=G-8GJK6WJPDB', async: true },
-      { type: 'text/javascript', src: 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js' },
+      { type: 'text/javascript', src: 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js', async: true },
       {
         type: 'text/javascript',
-        innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-8GJK6WJPDB');`
+        innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-8GJK6WJPDB');`,
+        async: true
       },
     ]
   },

@@ -1,9 +1,10 @@
 <template>
   <div>
     <div class="inner-size-basic mrg-top-medium">
-    <!-- <div class="bar-notice">
-      ❗ 현재 랭킹이 정상적으로 업데이트 되지 않는 현상이 있습니다. 확인 중에 있으니 조금만 기다려주세요.
-    </div> -->
+    <p class="bar-notice">
+      ❗ 랭킹 산정 방식이 변경되었습니다. (2022.07.12)
+      <br><strong>레벨 > 현상금</strong> 👉 <strong>레벨 * 현상금</strong>
+    </p>
       <!-- <ul class="list-filter">
         <li>
           <button class="button-filter" @click="filterHero">
