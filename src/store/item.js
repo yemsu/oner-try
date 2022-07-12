@@ -132,8 +132,8 @@ export const actions = {
     return getSynergies(payload)
       .then(({data}) => {
         const newData = data.map(dataItem => {
-          const option = parserStrData(dataItem.option)
-          const sailors = parserStrData(dataItem.sailors)
+          const option = parserStrData(dataItem.option, 'list')
+          const sailors = parserStrData(dataItem.sailors, 'list')
           return Object.assign(dataItem, {option, sailors})
         })
         commit(`SET_SYNERGIES`, {data: newData})

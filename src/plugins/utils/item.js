@@ -19,13 +19,13 @@ export const getOptionUnit = (key) => {
   const noUnit = ['hp', 'po', 'ms']
   return noUnit.includes(key) ? '' : '%'
 }
-export const parserStrData = (strData) => { // name: value, name: value ...
+export const parserStrData = (strData, type = 'object') => { // name: value, name: value ...
   if(!strData) return []
   if(typeof(strData) !== 'string') return strData
   const checkSingle = !strData.includes(',')
   const data = checkSingle ? [strData] : strData.replace(/\[ | \]/, '').split(',')
   const objList = data.map(str => {
-    if(!isBlank(str) && !str.includes(':')) return str.trim()
+    if(type === 'list') return str.trim()
     const splitStr = str.split(':')
     const nameValue = getOnlyText(splitStr[0])
     return {[nameValue]: splitStr[1]}
