@@ -35,7 +35,9 @@ export default {
     }
   },
   created() {
-    this.$router.push('/items/sailor')
+    if(this.$route.fullPath === this.$route.matched[0].path) {
+      this.$router.push('/items/sailor')
+    }
   }
 }
 </script>

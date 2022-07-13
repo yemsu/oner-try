@@ -15,6 +15,10 @@ export const equipOnlyOptionsDef = {
   dex: '무장색',
   int: '패왕색',
 }
+export const colosseumOptions = {
+ at: '공격력',
+ as: '공격속도'
+}
 export const noEquipOptions = {
   ct: '치명타 확률',
   ctD: '치명타 피해량',
@@ -34,8 +38,9 @@ export const noEquipOptions = {
 export const gradesMap = new Map(Object.entries(gradesDef))
 export const equipmentsOnlyOptionsMap = new Map(Object.entries(equipOnlyOptionsDef))
 export const noEquipOptionsMap = new Map(Object.entries(noEquipOptions))
+export const colosseumOptionsMap = new Map(Object.entries(colosseumOptions))
 const totalOptions = () => {
-  const totalOptions = new Map([...noEquipOptionsMap])
+  const totalOptions = new Map([...noEquipOptionsMap, ...colosseumOptionsMap])
   for(const [key, value] of equipmentsOnlyOptionsMap) {
     totalOptions.set(key, value)
   }

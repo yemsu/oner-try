@@ -55,9 +55,11 @@ export default {
       }
     },  
     isMarkOption(option) {
-      return [...this.markOptions].includes(option)
+      if(!this.markOptions) return false
+      return this.markOptions.includes(option)
     },
     isMinus(option) {
+      if(!Object.values(option)[0]) return false
       return Object.values(option)[0].includes('-')
     }
   }

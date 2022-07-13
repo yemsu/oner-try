@@ -59,9 +59,8 @@ export const mutations = {
     const newData = data.map(hero => Object.assign(hero, {type: 'hero'}))
     state[type] = newData
   },
-  SET_COLLEAGUES(state, {type, data}) {
-    const newData = data.map(colleague => Object.assign(colleague, {type: 'colleague'}))
-    state[type] = newData
+  SET_COLLEAGUES(state, {data}) {
+    state.colleagues = data
   },
   SET_SYNERGIES(state, {data}) {
     state.synergies = data
@@ -98,6 +97,26 @@ export const actions = {
       })
       .catch(error => console.log('GET_SAILORS', error))
   },
+  GET_COLLEAGUES({ commit }, payload) {
+    return getColleagues(payload)
+      .then(({data}) => {
+        // console.log('GET_COLLEAGUES', data)
+        const newData = data.map(dataItem => {
+          const { option, coloOption, coloPassive } = dataItem
+          const optionObj = {option: parserStrData(option)}
+          const coloOptionObj = coloOption ? {coloOption: parserStrData(coloOption)} : {}
+          const coloPassiveObj = coloPassive ? {coloPassive: parserStrData(coloPassive, 'list')} : {}
+          const newObj = coloOption
+            ? Object.assign(optionObj, {...coloOptionObj, ...coloPassiveObj})
+            : optionObj
+          return Object.assign(dataItem, newObj)
+        })
+
+        commit(`SET_COLLEAGUES`, {data: newData})
+        return newData
+      })
+      .catch(error => console.log('GET_COLLEAGUES', error))
+  },
   GET_ETC_ITEMS({ commit }) {
     return getEtcItems()
       .then(({data}) => {
@@ -124,15 +143,6 @@ export const actions = {
       })
       .catch(error => console.log('GET_HEROES', error))
   },
-  GET_COLLEAGUES({ commit }, payload) {
-    return getColleagues(payload)
-      .then(({data}) => {
-        // console.log('GET_COLLEAGUES', data)
-        commit(`SET_COLLEAGUES`, {data, type: 'colleagues'})
-        return data
-      })
-      .catch(error => console.log('GET_COLLEAGUES', error))
-  },
   GET_SYNERGIES({ commit }) {
     return getSynergies()
       .then(({data}) => {
@@ -150,7 +160,6 @@ export const actions = {
     if(state.sailors.length === 0) await dispatch('GET_SAILORS')
     if(state.synergies.length === 0) await dispatch('GET_SYNERGIES')
 
-    
     // gradeScoresDef
     const { sailors, synergies } = state
     const newData = deepClone(sailors).map(sailor => {
