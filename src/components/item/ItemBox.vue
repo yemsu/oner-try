@@ -25,7 +25,7 @@
                 :isLink="isLink"
               />
               <item-badges
-                v-if="!onlyImg && showBadges.length !== 0 && !isNoDataItem"
+                v-if="showItemBadges"
                 :item="item"
                 :wantedPaper="wantedPaper"
                 :showBadges="showBadges"
@@ -146,6 +146,9 @@ export default {
     itemDetailInfoType() {
       return this.visibleDetail && this.size === 'big' ? 'list-main' : 'basic'
     },
+    showItemBadges() {
+      return !this.onlyImg && (this.showBadges.length !== 0 || this.customBadge) && !this.isNoDataItem
+    }
   },
 }
 </script>
