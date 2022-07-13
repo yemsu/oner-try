@@ -162,7 +162,6 @@ export default {
     }
   },
   mounted() {
-    this.sendPageView()
 
     // this.mergePVData()
   },
@@ -179,6 +178,8 @@ export default {
         })
         return false
       }
+
+      this.sendPageView()
 
       const { newItem: itemSetup, allIngrdnts } = this.setIngrdntsDataLoop(result)
       // console.log('itemSetup, allIngrdnts', itemSetup, allIngrdnts)

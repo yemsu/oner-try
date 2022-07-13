@@ -143,7 +143,6 @@ export default {
   },
   mounted() {
     this.fnSearch(this.nickname)
-    this.sendPageView()
 
     // this.mergePVData()
   },
@@ -169,6 +168,8 @@ export default {
         return false
       }
 
+      this.sendPageView()
+      
       // console.log('heroes', this.heroes)
       if(this.items.length === 0) await this.getItems()
       this.ships = this.items.filter(item => item.type === 'ship')
