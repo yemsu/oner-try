@@ -1,0 +1,46 @@
+
+.details {
+  &.basic {
+    > div {
+      display: flex;
+      &:nth-child(n + 2) {
+        margin-top: 3px;
+      }
+    }
+    dt {
+      margin-right: 5px;
+    }
+  }
+  .option-match {
+    font-weight: bold;
+  }
+  .mark {
+    // font-weight: bold;
+    color: $color-neon;
+  }
+  &.list-main {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-left: 40px;
+    > div {
+      border-left: 2px solid rgba(0, 0, 0, 0.1);
+      padding-left: 8px;
+      &:nth-child(n+2) {
+        margin-left: 20px;
+      }
+      dd {
+        font-size: $font-size-M-pc;
+      }
+    }
+  }
+  .color-drop {
+    color: $color-point-bright;
+  }
+  .color-option {
+    color: $color-point-sub;
+  }
+  .color-option-minus {
+    color: $color-point;
+  }
+}

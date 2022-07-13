@@ -13,6 +13,7 @@ $color-point-300: #a59fc2;
 $color-point-200: #bebad4;
 $color-point-100: #d8d5e7;
 
+$color-mark: #f9ffc3;
 $color-neon: #5fee27;
 $color-gold: #cfa61f;
 $wanted-brown: #5a352d;
@@ -58,11 +59,13 @@ $list-gap-basic: 10px;
   --border-dark: #999;
   --border-dark-gray: #aaa;
   --border-gray: #ccc;
+  --border-gray-100: #ddd;
   --border-light-gray: #eee;
 
   --bg-dark: #333;
   --bg-dark-gray: rgb(97, 98, 102);
-  --bg-gray: rgb(180, 181, 187);
+  --bg-gray: #b4b5bb;
+  --bg-gray-100: #ddd;
   --bg-light-gray: #eee;
   --bg-light-point-200: rgb(230, 229, 238);
   --bg-light-point-100: #f0eff5;

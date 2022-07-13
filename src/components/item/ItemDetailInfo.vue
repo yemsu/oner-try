@@ -8,9 +8,16 @@
       <div
         v-for="(option, i) in options"
         :key="`itemOption${i}`"
+        :class="{'option-match': isMarkOption(Object.keys(option)[0])}"
       >
-        <dt class="color-option">{{ getOption(option, 'title') }}</dt>
-        <dd>+{{ Object.values(option)[0] }} {{ getOption(option, 'unit') }}</dd>
+        <dt :class="isMinus(option) ? 'color-option-minus' : 'color-option'">
+          <span v-if="isMarkOption(Object.keys(option)[0])" class="mark"> ✔ </span>
+          {{ getOption(option, 'title') }}
+        </dt>
+        <dd>
+          {{ isMinus(option) ? '' : '+' }}{{ Object.values(option)[0] }} 
+          {{ getOption(option, 'unit') }}
+        </dd>
       </div>
     </template>
   </dl>
@@ -32,6 +39,10 @@ export default {
       type: String,
       default: () => 'basic' // list-main
     },
+    markOptions: {
+      type: Array,
+      default: () => []
+    }
   },
   methods: {
     getOption(option, optionType) {
@@ -42,42 +53,17 @@ export default {
         case 'unit':
           return getOptionUnit(key);      
       }
+    },  
+    isMarkOption(option) {
+      return [...this.markOptions].includes(option)
     },
+    isMinus(option) {
+      return Object.values(option)[0].includes('-')
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.details {
-  &.basic {
-    > div {
-      display: flex;
-    }
-    dt {
-      margin-right: 5px;
-    }
-  }
-  &.list-main {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    margin-left: 40px;
-    > div {
-      border-left: 2px solid rgba(0, 0, 0, 0.1);
-      padding-left: 8px;
-      &:nth-child(n+2) {
-        margin-left: 20px;
-      }
-      dd {
-        font-size: $font-size-M-pc;
-      }
-    }
-  }
-  .color-drop {
-    color: $color-point-bright;
-  }
-  .color-option {
-  color: $color-point-sub;
-  }
-}
+@import '@/assets/style/components/item/ItemDetailInfo.scss';
 </style>

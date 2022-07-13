@@ -49,7 +49,7 @@
           <tr>
             <th scope="col">선원</th>
             <th scope="col">옵션</th>
-            <th scope="col">시너지</th>
+            <th scope="col">인연 / 악연</th>
           </tr>
         </thead>
         <tbody>
@@ -70,6 +70,7 @@
             <td>
               <item-detail-info
                 :options="sailor.option"
+                :markOptions="optionsSelected"
               />
             </td>
             <td>
@@ -85,8 +86,16 @@
                       :options="synergy.option"
                     />
                   </dd>
-                  <dd>
-                    선원: {{ synergy.sailors.join(', ') }}
+                  <dd class="sailors badges badge-gap">
+                    <!-- <span class="badge black">선원</span> -->
+                    <!-- {{ synergy.sailors.join(', ') }} -->
+                    <span
+                      v-for="(sailor, i) in synergy.sailors"
+                      :key="`sailor${i}`"
+                      class="badge size-big type-round line-gray"
+                    >
+                      {{ sailor }}
+                    </span>
                   </dd>
                 </div>
               </dl>
@@ -140,10 +149,10 @@ export default {
     resultSailors() {
       const resultSailors = this.sailors.filter(sailor => {
         const { grade, option: options } = sailor
-        const allGrade = this.gradesSelected.length === 0
-        const allOption = this.optionsSelected.length === 0
+        const isAllGrade = this.gradesSelected.length === 0
+        const isAllOption = this.optionsSelected.length === 0
         // filtering grade
-        const filteringGrade = allGrade ? true
+        const filteringGrade = isAllGrade ? true
           : this.gradesSelected.includes(grade)
       // console.log('filteringGrade', filteringGrade)
         if(!filteringGrade) return false
@@ -154,11 +163,12 @@ export default {
 
         const checkOptions = [...new Set(checkListOptions)]
 
-        const filteringOptions = allOption ? true
+        const filteringOptions = isAllOption ? true
           : checkOptions.length === 1 && checkOptions[0]
         if(filteringOptions === true) return true
         else if(filteringOptions.length === options.length) return true
       })
+      
       return resultSailors
     }
   },
@@ -175,16 +185,17 @@ export default {
       return isActiveMenu
     },
     toggleMenu(key, type) {
+      const dataName = `${type}sSelected`
       if(key === 'all') {
-        this[`${type}sSelected`] = []
+        this[dataName] = []
         return
       }
-      if(this[`${type}sSelected`].includes(key)) {
-        const index = this[`${type}sSelected`].indexOf(key)
-        this[`${type}sSelected`].splice(index, 1)
+      if(this[dataName].includes(key)) {
+        const index = this[dataName].indexOf(key)
+        this[dataName].splice(index, 1)
       } else {
-        this[`${type}sSelected`].push(key)
-      }
+        this[dataName].push(key)
+      }     
     },
   }
 }
