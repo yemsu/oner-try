@@ -24,6 +24,7 @@ $color-rank3: rgb(36, 61, 172);
 $color-point-bright: #95aeff;
 $color-point-sub-bright: #ffa742;
 
+// layout
 $basic-container-width: 1080px;
 
 // size
@@ -42,6 +43,9 @@ $item-image-small: 40px;
 $item-image-basic: 55px;
 $item-image-big: 70px;
 $item-image-xbig: 90px;
+
+// list padding, gap
+$list-gap-basic: 10px;
 
 :root {
   --color-black: #333;
