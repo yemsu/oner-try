@@ -1,7 +1,6 @@
 <template>
   <button
-    :class="`btn ${type}`"
-    :toggle="toggleData"
+    :class="`btn ${type} bg-${bg}`"
     @click="clickHandler"
   >
     <slot></slot>
@@ -17,7 +16,11 @@ export default {
   props: {
     type: {
       type: String,
-      default: () => ''
+      default: () => '' //icon, mode-wide, round
+    },
+    bg: {
+      type: String,
+      default: () => '' //icon, mode-wide, round
     },
     toggleData: {
       type: Boolean,
@@ -37,22 +40,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn {
-  // padding: 3px 10px;
-  // border-radius: 5px;
-  // font-weight: 300;
-  &.dark {
-    background-color: var(--color-black);
-    color: var(--color-white);
-  }
-  &.icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3px 5px;
-    border: 1px solid var(--border-dark-200);
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-}
+@import '@/assets/style/components/common/BaseButton.scss';
 </style>

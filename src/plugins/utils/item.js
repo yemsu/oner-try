@@ -1,5 +1,5 @@
 import { deepClone, getOnlyText, objArrKeys } from '@/plugins/utils'
-import { optionsMap } from '@/plugins/utils/item-def'
+import { optionsMap, gradeScoresDef } from '@/plugins/utils/item-def'
 
 export const findData = (dataList, key, checkValue) => {
   return dataList.find(data => getOnlyText(data[key]) === getOnlyText(checkValue))
@@ -15,6 +15,12 @@ export const imgSrc = (type, id) => {
 export const getOptionTitle = (key) => {
   const findKey = [...optionsMap.keys()].find(optionKey => optionKey.toLowerCase() === key.toLowerCase())
   return optionsMap.get(findKey) 
+}
+export const getGradeScore = (key) => {
+  return gradeScoresDef[key]
+}
+export const sortByGrade = (items) => {
+  return items.sort((a, b) => getGradeScore(b.grade) - getGradeScore(a.grade))
 }
 export const getOptionUnit = (key) => {
   const noUnit = ['hp', 'po', 'ms']

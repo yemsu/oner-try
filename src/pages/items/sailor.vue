@@ -1,81 +1,118 @@
 <template>
   <div>
-    <dl>
-      <dt>등급</dt>
-      <dd
-        v-for="(gradeTitle, key) in gradeMenus"
-        :key="`gradeTitle${key}`"
-      >
-        <button @click="toggleMenu(key, 'grade')">{{ gradeTitle }} {{ isActiveMenu(key, 'grade') }}</button>
-      </dd>
-    </dl>
-    <dl>
-      <dt>옵션</dt>
-      <dd
-        v-for="(optionTitle, key) in optionMenus"
-        :key="`optionTitle${key}`"
-      >
-        <button @click="toggleMenu(key, 'option')">{{ optionTitle }} {{ isActiveMenu(key, 'option') }}</button>
-      </dd>
-    </dl>
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">name</th>
-          <th scope="col">option</th>
-          <th scope="col">synergy</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(sailor, i) in resultSailors"
-          :key="`sailor${i}`"
+    <dl class="list-menu-filter">
+      <dt class="title">등급</dt>
+      <div class="wrap-menu list-button-common">
+        <dd
+          v-for="(gradeTitle, key) in gradeMenus"
+          :key="`gradeTitle${key}`"
+          :class="['menu-filter', {'active': isActiveMenu(key, 'grade')}]"
         >
-          <td>
-            <item-box
-              size="small"
-              type="list"
-              :item="sailor"
-              :showBadges="['howGet']"
-              :showTooltip="false"
-            />
-          </td>
-          <td>
-            <item-detail-info 
-              :options="sailor.option"
-            />
-          </td>
-          <td>
-            <dl>
-              <div
-                v-for="(synergy, i) in sailor.synergies"
-                :key="`synergy${sailor.name}${i}`"
-              >
-                <dt>{{ synergy.name }}</dt>
-                <dd>
-                  <item-detail-info 
-                    :options="synergy.option"
-                  />
-                </dd>
-                <dd>
-                  {{ synergy.sailors.join() }}
-                </dd>
-              </div>
-            </dl>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          <base-button
+            @click="toggleMenu(key, 'grade')"
+            class="button-filter"
+            type="round"
+            :bg="isActiveMenu(key, 'grade') ? 'active': 'inActive'"
+          >
+            {{ gradeTitle }}
+          </base-button>
+        </dd>
+      </div>
+    </dl>
+    <dl class="list-menu-filter">
+      <dt class="title">옵션</dt>
+      <div class="wrap-menu list-button-common">
+        <dd
+          v-for="(optionTitle, key) in optionMenus"
+          :key="`optionTitle${key}`"
+          :class="['menu-filter', {'active': isActiveMenu(key, 'option')}]"
+        >
+          <base-button
+            @click="toggleMenu(key, 'option')"
+            class="button-filter"
+            type="round"
+            :bg="isActiveMenu(key, 'option') ? 'active': 'inActive'"
+          >
+            {{ optionTitle }}
+          </base-button>
+        </dd>
+      </div>
+    </dl>
+    <div class="mrg-top-medium">
+      <table>
+        <colgroup>
+          <col width="25%">
+          <col width="30%">
+          <col width="45%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">선원</th>
+            <th scope="col">옵션</th>
+            <th scope="col">시너지</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(sailor, i) in resultSailors"
+            :key="`sailor${i}`"
+          >
+            <td>
+              <item-box
+                size="small"
+                type="list"
+                :item="sailor"
+                :showBadges="['howGet']"
+                :showTooltip="false"
+              />
+            </td>
+            <td>
+              <item-detail-info
+                :options="sailor.option"
+              />
+            </td>
+            <td>
+              <dl v-if="sailor.synergies.length !== 0" class="synergies">
+                <div
+                  v-for="(synergy, i) in sailor.synergies"
+                  :key="`synergy${sailor.name}${i}`"
+                  class="wrap-synergy"
+                >
+                  <dt class="title">{{ synergy.name }}</dt>
+                  <dd>
+                    <item-detail-info
+                      :options="synergy.option"
+                    />
+                  </dd>
+                  <dd>
+                    선원: {{ synergy.sailors.join(', ') }}
+                  </dd>
+                </div>
+              </dl>
+              <span v-else>-</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
 // import { mapGetters, mapActions, mapMutations } from 'vuex'
+import BaseButton from '@/components/common/BaseButton.vue'
+import setMeta from '@/plugins/utils/meta';
 import { noEquipOptions, gradesDef } from '@/plugins/utils/item-def'
 export default {
-  data() {
-    return {
-    }
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `아이템 도감`,
+      description: `원하는 아이템 정보 필터링하고 확인해보세요`,
+    })
+  },
+  components: {
+    BaseButton
   },
   async asyncData({ store }) {
     const { item: { sailors_synergy } } = store.state
@@ -84,8 +121,8 @@ export default {
       : sailors_synergy
 
     const commonMenu = { all: 'ALL' }
-    const gradeMenus = Object.assign(gradesDef, commonMenu)
-    const optionMenus =  Object.assign(noEquipOptions, commonMenu)
+    const gradeMenus = Object.assign({...commonMenu}, gradesDef)
+    const optionMenus =  Object.assign({...commonMenu}, noEquipOptions)
     return {
       sailors,
       optionMenus,
@@ -152,5 +189,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import '@/assets/style/pages/items/table.scss';
 </style>

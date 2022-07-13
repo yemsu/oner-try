@@ -1,5 +1,5 @@
 import { isSameText, deepClone } from '@/plugins/utils'
-import { parserStrData } from '@/plugins/utils/item'
+import { parserStrData, sortByGrade } from '@/plugins/utils/item'
 import {
   getItems,
   getSailors,
@@ -150,6 +150,8 @@ export const actions = {
     if(state.sailors.length === 0) await dispatch('GET_SAILORS')
     if(state.synergies.length === 0) await dispatch('GET_SYNERGIES')
 
+    
+    // gradeScoresDef
     const { sailors, synergies } = state
     const newData = deepClone(sailors).map(sailor => {
       const { name } = sailor
@@ -159,7 +161,7 @@ export const actions = {
       return sailor
     })
     
-    commit(`SET_SAILORS_SYNERGY`, {data: newData})
+    commit(`SET_SAILORS_SYNERGY`, {data: sortByGrade(newData)})
     return newData
   },
 }

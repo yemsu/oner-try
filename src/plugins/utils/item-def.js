@@ -4,6 +4,12 @@ export const gradesDef = {
   rare: '레어',
   normal: '노말',
 }
+export const gradeScoresDef = {
+  legend: 4,
+  epic: 3,
+  rare: 2,
+  normal: 1,
+}
 export const equipOnlyOptionsDef = {
   str: '견문색',
   dex: '무장색',
