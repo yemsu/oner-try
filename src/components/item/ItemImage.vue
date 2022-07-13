@@ -6,19 +6,21 @@
         `size-${size}`,
         {'round': isRoundImg},
         item.grade
-      ]">
-      <button
+    ]">
+      <item-link
         v-if="imgSrc"
-        @click="goItemPage && clickItem()"
         class="box-img"
-        :is="goItemPage ? 'button' : 'div'"
+        :itemType="item.type"
+        :itemId="item.id"
+        :isLink="isComp && isLink"
+        :isBlankLink="isBlankLink"
       >
         <img
           :src="imgSrc"
           :alt="item.name"
           class="img-item"
         />
-      </button>
+      </item-link>
       <p
         v-else-if="isReportButton"
         class="box-img blank no-id"
@@ -84,6 +86,10 @@ export default {
     isLink: {
       type: Boolean,
       default: () => true
+    },
+    isBlankLink: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {
@@ -106,12 +112,12 @@ export default {
       // return ``
       return imgSrc(type, imgName)
     },
-    goItemPage() {
-      return this.isComp && this.isLink
-    },
     isReportButton() {
       return this.isNoDataItem && !this.isRoundImg
-    }
+    },
+    linkItemComposition() {
+      return `/composition/${this.item.type}/${this.item.id}`
+    },
   },
   mounted() {
     document.addEventListener('click', e => {
@@ -123,10 +129,6 @@ export default {
   methods: {
     checkData(key = '') {
       if(this.item[key]) console.error(`${this.item.name} has no "${key}"`)
-    },
-    clickItem() {
-      const { id, type } = this.item
-      this.$router.push(`/composition/${type}/${id}`)
     },
     reportItem() {
       const { name } = this.item

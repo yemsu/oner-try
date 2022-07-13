@@ -64,6 +64,7 @@
                 :item="sailor"
                 :showBadges="['howGet']"
                 :showTooltip="false"
+                :isBlankLink="true"
               />
             </td>
             <td>

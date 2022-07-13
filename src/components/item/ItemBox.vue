@@ -10,10 +10,12 @@
     ]">
     <template v-if="item">
       <div class="wrap-box">
-        <button
+        <item-link
           class="wrap-info"
-          @click="isLink && clickItem()"
-          :is="isLink ? 'button' : 'div'"
+          :itemType="item.type"
+          :itemId="item.id"
+          :isLink="isComp && isLink"
+          :isBlankLink="isBlankLink"
         >
           <div class="item-box-info">
             <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
@@ -42,7 +44,7 @@
               <span class="money">💰</span>
             </template>
           </div>
-        </button>
+        </item-link>
       </div>
       
       <!-- tooltip -->
@@ -126,6 +128,10 @@ export default {
     isLink: {
       type: Boolean,
       default: () => true
+    },
+    isBlankLink: {
+      type: Boolean,
+      default: () => false
     }
   },
   computed: {
