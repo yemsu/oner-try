@@ -59,7 +59,6 @@
           >
             <td>
               <item-box
-                size="small"
                 type="list"
                 :item="sailor"
                 :showBadges="['howGet']"
@@ -117,8 +116,8 @@ export default {
   head() {
     return setMeta({
       url: this.$route.fullPath,
-      title: `아이템 도감`,
-      description: `원하는 아이템 정보 필터링하고 확인해보세요`,
+      title: `선원 아이템 도감`,
+      description: `원하는 등급, 옵션을 선택하고 선원 아이템 정보를 확인해보세요`,
     })
   },
   components: {
