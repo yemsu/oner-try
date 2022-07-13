@@ -1,3 +1,4 @@
+import { isSameText, deepClone } from '@/plugins/utils'
 import { parserStrData } from '@/plugins/utils/item'
 import {
   getItems,
@@ -12,6 +13,7 @@ import {
 export const state = () => ({
   items: [],
   sailors: [],
+  sailors_synergy: [],
   etcItems: [],
   equipments: [],
   heroes: [],
@@ -63,6 +65,9 @@ export const mutations = {
   },
   SET_SYNERGIES(state, {data}) {
     state.synergies = data
+  },
+  SET_SAILORS_SYNERGY(state, {data}) {    
+    state.sailors_synergy = data
   },
 }
 const dataTyped = (data) => {
@@ -128,17 +133,33 @@ export const actions = {
       })
       .catch(error => console.log('GET_COLLEAGUES', error))
   },
-  GET_SYNERGIES({ commit }, payload) {
-    return getSynergies(payload)
+  GET_SYNERGIES({ commit }) {
+    return getSynergies()
       .then(({data}) => {
         const newData = data.map(dataItem => {
-          const option = parserStrData(dataItem.option, 'list')
+          const option = parserStrData(dataItem.option)
           const sailors = parserStrData(dataItem.sailors, 'list')
           return Object.assign(dataItem, {option, sailors})
         })
         commit(`SET_SYNERGIES`, {data: newData})
-        return data
+        return newData
       })
       .catch(error => console.log('GET_SYNERGIES', error))
+  },
+  async GET_SAILORS_SYNERGY({ commit, state, dispatch }) {
+    if(state.sailors.length === 0) await dispatch('GET_SAILORS')
+    if(state.synergies.length === 0) await dispatch('GET_SYNERGIES')
+
+    const { sailors, synergies } = state
+    const newData = deepClone(sailors).map(sailor => {
+      const { name } = sailor
+      sailor.synergies = synergies.filter(({ sailors: synergySailors }) => {
+        return synergySailors.find(synergySailor => isSameText(synergySailor, name))
+      })
+      return sailor
+    })
+    
+    commit(`SET_SAILORS_SYNERGY`, {data: newData})
+    return newData
   },
 }

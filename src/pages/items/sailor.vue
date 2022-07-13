@@ -22,8 +22,8 @@
       <thead>
         <tr>
           <th scope="col">name</th>
-          <th scope="col">grade</th>
           <th scope="col">option</th>
+          <th scope="col">synergy</th>
         </tr>
       </thead>
       <tbody>
@@ -31,9 +31,38 @@
           v-for="(sailor, i) in resultSailors"
           :key="`sailor${i}`"
         >
-          <td>{{ sailor.name }}</td>
-          <td>{{ sailor.grade }}</td>
-          <td>{{ sailor.option }}</td>
+          <td>
+            <item-box
+              size="small"
+              type="list"
+              :item="sailor"
+              :showBadges="['howGet']"
+              :showTooltip="false"
+            />
+          </td>
+          <td>
+            <item-detail-info 
+              :options="sailor.option"
+            />
+          </td>
+          <td>
+            <dl>
+              <div
+                v-for="(synergy, i) in sailor.synergies"
+                :key="`synergy${sailor.name}${i}`"
+              >
+                <dt>{{ synergy.name }}</dt>
+                <dd>
+                  <item-detail-info 
+                    :options="synergy.option"
+                  />
+                </dd>
+                <dd>
+                  {{ synergy.sailors.join() }}
+                </dd>
+              </div>
+            </dl>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -42,27 +71,23 @@
 
 <script>
 // import { mapGetters, mapActions, mapMutations } from 'vuex'
-import { noEquipOptions, gradesDef } from '@/plugins/utils/item-def.js'
+import { noEquipOptions, gradesDef } from '@/plugins/utils/item-def'
 export default {
   data() {
     return {
     }
   },
   async asyncData({ store }) {
-    const { item: { sailors, synergies } } = store.state
-    const sailorsData = sailors.length === 0
-      ? await store.dispatch('item/GET_SAILORS')
-      : sailors
-    const synergiesData = synergies.length === 0
-      ? await store.dispatch('item/GET_SYNERGIES')
-      : synergies
+    const { item: { sailors_synergy } } = store.state
+    const sailors = sailors_synergy.length === 0
+      ? await store.dispatch('item/GET_SAILORS_SYNERGY')
+      : sailors_synergy
 
     const commonMenu = { all: 'ALL' }
     const gradeMenus = Object.assign(gradesDef, commonMenu)
     const optionMenus =  Object.assign(noEquipOptions, commonMenu)
     return {
-      sailors: sailorsData,
-      synergies: synergiesData,
+      sailors,
       optionMenus,
       gradeMenus
     }
@@ -101,7 +126,6 @@ export default {
   },
   mounted() {
     console.log('sailsaors', this.sailors)
-    console.log('synergies', this.synergies)
   },
   methods: {
     isActiveMenu(key, type) {

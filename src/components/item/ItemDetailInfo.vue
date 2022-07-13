@@ -1,12 +1,12 @@
 <template>
   <dl :class="`details ${type}`">
-    <div v-if="item.dropMonster">
+    <div v-if="dropMonster">
       <dt class="color-drop">획득처</dt>
-      <dd>{{ item.dropMonster }}</dd>
+      <dd>{{ dropMonster }}</dd>
     </div>
-    <template v-if="item.option">
+    <template v-if="options">
       <div
-        v-for="(option, i) in item.option"
+        v-for="(option, i) in options"
         :key="`itemOption${i}`"
       >
         <dt class="color-option">{{ getOption(option, 'title') }}</dt>
@@ -20,8 +20,12 @@
 import { getOptionTitle, getOptionUnit } from '@/plugins/utils/item'
 export default {
   props: {
-    item: {
-      type: Object,
+    options: {
+      type: Array,
+      default: () => null
+    },
+    dropMonster: {
+      type: String,
       default: () => null
     },
     type: {
