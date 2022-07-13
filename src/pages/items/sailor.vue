@@ -180,7 +180,7 @@ export default {
       }
       if(this[`${type}sSelected`].includes(key)) {
         const index = this[`${type}sSelected`].indexOf(key)
-        this[`${type}sSelected`].splice(index)
+        this[`${type}sSelected`].splice(index, 1)
       } else {
         this[`${type}sSelected`].push(key)
       }
