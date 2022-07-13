@@ -10,8 +10,10 @@
     ]">
     <template v-if="item">
       <div class="wrap-box">
-        <div
+        <button
           class="wrap-info"
+          @click="isLink && clickItem()"
+          :is="isLink ? 'button' : 'div'"
         >
           <div class="item-box-info">
             <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
@@ -22,7 +24,7 @@
                 :isNoDataItem="isNoDataItem"
                 :size="size"
                 :isComp="isComp"
-                :isLink="isLink"
+                :isLink="false"
               />
               <item-badges
                 v-if="showItemBadges"
@@ -40,13 +42,14 @@
               <span class="money">💰</span>
             </template>
           </div>
-        </div>
+        </button>
       </div>
       
       <!-- tooltip -->
       <div v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
         <item-detail-info 
-          :item="itemDetailInfoData"
+          :options="item.option"
+          :dropMonster="item.dropMonster"
           :type="itemDetailInfoType"
         />
         <div v-if="!visibleDetail && isComp" class="wrap-sub-text">
@@ -139,10 +142,6 @@ export default {
       const { type, id, groupName, name, grade } = this.item
       return { type, id, groupName, name, grade }
     },
-    itemDetailInfoData() {
-      const { dropMonster, option } = this.item
-      return { dropMonster, option }
-    },
     itemDetailInfoType() {
       return this.visibleDetail && this.size === 'big' ? 'list-main' : 'basic'
     },
@@ -150,6 +149,12 @@ export default {
       return !this.onlyImg && (this.showBadges.length !== 0 || this.customBadge) && !this.isNoDataItem
     }
   },
+  methods: {
+    clickItem() {
+      const { id, type } = this.item
+      this.$router.push(`/composition/${type}/${id}`)
+    },
+  }
 }
 </script>
 
