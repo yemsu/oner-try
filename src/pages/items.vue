@@ -34,9 +34,19 @@ export default {
       ]
     }
   },
+  watch: {
+    $route() {
+      this.goToDefaultPage()
+    }
+  },
   created() {
-    if(this.$route.fullPath === this.$route.matched[0].path) {
-      this.$router.push('/items/sailor')
+    this.goToDefaultPage()
+  },
+  methods: {
+    goToDefaultPage() {
+      if(this.$route.fullPath === this.$route.matched[0].path) {
+        this.$router.push('/items/sailor')
+      }
     }
   }
 }
