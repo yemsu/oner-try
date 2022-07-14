@@ -71,6 +71,7 @@
               <item-detail-info
                 :options="sailor.option"
                 :markOptions="optionsSelected"
+                :highlightTitle="false"
               />
             </td>
             <td>
@@ -78,14 +79,14 @@
                 <div
                   v-for="(synergy, i) in sailor.synergies"
                   :key="`synergy${sailor.name}${i}`"
-                  class="wrap-synergy"
+                  class="box-gray" 
                 >
                   <dt :class="`title color-${classNegaPosi(synergy)}`">
                     {{ synergy.name }} 
                   </dt>
                   <dd>
                     <item-detail-info
-                      :options="synergy.option"
+                      :options="synergy.option"                :highlightTitle="false"
                     />
                   </dd>
                   <dd class="sailors badges badge-gap">

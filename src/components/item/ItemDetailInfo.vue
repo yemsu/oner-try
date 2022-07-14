@@ -9,9 +9,10 @@
         v-for="(option, i) in options"
         :key="`itemOption${i}`"
         :class="{'option-match': isMarkOption(Object.keys(option)[0])}"
+        class="options"
       >
-        <dt class="title">
-          <span v-if="isMarkOption(Object.keys(option)[0])" class="mark"> ✔ </span>
+        <dt :class="['title', {'color-point-sub': highlightTitle}]">
+          <!-- <span v-if="isMarkOption(Object.keys(option)[0])" class="mark"> ✔ </span> -->
           {{ getOption(option, 'title') }}
         </dt>
         <dd>
@@ -39,6 +40,10 @@ export default {
       type: String,
       default: () => 'basic' // list-main
     },
+    highlightTitle: {
+      type: Boolean,
+      default: () => true // list-main
+    },
     markOptions: {
       type: Array,
       default: () => []
@@ -55,9 +60,11 @@ export default {
       }
     },  
     isMarkOption(option) {
-      return [...this.markOptions].includes(option)
+      if(!this.markOptions) return false
+      return this.markOptions.includes(option)
     },
     isMinus(option) {
+      if(!Object.values(option)[0]) return false
       return Object.values(option)[0].includes('-')
     }
   }

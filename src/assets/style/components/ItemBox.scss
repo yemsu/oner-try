@@ -213,9 +213,16 @@ $space: 3px;
       content: '';
     }
     ::v-deep {
-      .color-option {
-        color: $color-point-sub-bright;
+      .details {
+        .options {
+          .title {
+            &.color-point-sub {
+              color: $color-point-sub-bright;
+            }
+          }
+        }
       }
+
     }
   }
 }
