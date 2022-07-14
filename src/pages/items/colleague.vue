@@ -21,22 +21,25 @@
     </dl>
     <div class="mrg-top-medium">
       <div class="text-refer top">
-        <p class="badge-text-wrap">
-          이름이 다른 동료의 동일한 
-          <span class="badge buff">버프</span>
-          <span class="badge deBuff">디버프</span>
-          는 효과 중첩가능
-        </p>
-        <p class="align-right">
-          2022.06.13 도감 기준
-        </p>
+        <div class="align-left">
+          <p>총 {{ resultColleagues.length }}개</p>
+        </div>
+        <div class="align-right">
+          <p class="badge-text-wrap">
+            이름이 다른 동료의 동일한
+            <span class="badge buff">버프</span>
+            <span class="badge deBuff">디버프</span>
+            는 효과 중첩가능
+          </p>
+          <p>2022.06.13 도감 기준</p>
+        </div>
       </div>
       <table>
         <colgroup>
           <col width="20%">
-          <col width="18%">
+          <col width="22%">
           <col width="10%">
-          <col width="47%">
+          <col width="43%">
         </colgroup>
         <thead>
           <tr>
@@ -79,6 +82,7 @@
                     v-if="colleague.coloYn"
                     :options="colleague.coloOption"
                     :highlightTitle="false"
+                    :pureValue="true"
                   />
                 </div>
                 <div v-if="colleague.coloPassive" class="wrap-passive box-gray">

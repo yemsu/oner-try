@@ -93,7 +93,7 @@ table {
   height: 100%;
   gap: 20px;
   .wrap-details {
-    width: 130px;
+    width: 100px;
   }
   .wrap-passive {
     flex: 1;
@@ -103,14 +103,16 @@ table {
   }
 }
 .badge {
-  border: 1px solid #aaa;
   &.buff {
+    border-color: #aaa;
     background-color: $badge-color-orange-light;
   }
   &.deBuff {
+    border-color: #aaa;
     background-color: $badge-color-blue-light;
   }
   &.self {
+    border-color: #aaa;
     background-color: $badge-color-green-light;
   }
 } 

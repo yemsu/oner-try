@@ -16,8 +16,9 @@
           {{ getOption(option, 'title') }}
         </dt>
         <dd>
-          {{ isMinus(option) ? '' : '+' }}{{ Object.values(option)[0] }} 
-          {{ getOption(option, 'unit') }}
+          {{ pureValue || isMinus(option) ? '' : '+' }}
+          {{ Object.values(option)[0] }} 
+          {{ pureValue ? '' : getOption(option, 'unit') }}
         </dd>
       </div>
     </template>
@@ -42,7 +43,11 @@ export default {
     },
     highlightTitle: {
       type: Boolean,
-      default: () => true // list-main
+      default: () => true
+    },
+    pureValue: {
+      type: Boolean,
+      default: () => false
     },
     markOptions: {
       type: Array,

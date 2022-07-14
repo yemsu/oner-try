@@ -228,6 +228,22 @@ caption, .ir-hidden {
   &.bottom {
     margin-top: 6px;
   }
+  > [class*=align-] {
+    display: inline-flex;
+    align-items: center;
+    > p:nth-child(n + 2) {
+      position: relative;
+      padding-left: 10px;
+      margin-left: 10px;
+      &:before {
+        position: absolute;
+        left: 0;
+        color: var(--color-gray);
+        transform: translate(-50%, 0);
+        content: '|';
+      }
+    }
+  }
   > .align-right {
     margin-left: auto;
   }
