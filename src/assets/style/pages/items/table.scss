@@ -1,3 +1,4 @@
+$table-border: 1px solid var(--border-light-gray);
 .list-menu-filter {
   display: flex;
   padding: 10px;
@@ -12,7 +13,7 @@
     }
   }
   & + .list-menu-filter {
-    border-top: 1px solid var(--border-light-gray);
+    border-top: $table-border;
   }
 }
 
@@ -30,31 +31,37 @@ table {
   }
   td {
     vertical-align: middle;
-    padding: 15px 10px;
+    padding: 10px;
     font-size: $font-size-DESC-pc;
   }
+  th, td {
+    &.text-center {
+      text-align: center;
+    }
+  }
   tr {
-    border-bottom: 1px solid var(--border-light-gray);
+    border-bottom: $table-border;
+  }
+}
+
+.box-gray {
+  padding: 10px 10px;
+  border-radius: 5px;
+  background-color: #f6f6f6;
+  & + .box-gray {
+    margin-top: 5px;
+  }
+  .title {
+    font-weight: bold;
+    margin-bottom: 10px;
   }
 }
 
 .synergies {
-  .wrap-synergy {
-    padding: 10px 10px;
-    border-radius: 5px;
-    background-color: #f6f6f6;
-    & + .wrap-synergy {
-      margin-top: 5px;
+  dd {
+    & + dd {
+      margin-top: 6px;
     }
-    dd {
-      & + dd {
-        margin-top: 6px;
-      }
-    }
-  }
-  .title {
-    font-weight: bold;
-    margin-bottom: 5px;
   }
 }
 
@@ -73,5 +80,33 @@ table {
   }
   &-negative {
     border-color: $color-point-pale;
+  }
+}
+
+.columns-inline {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 20px;
+  .wrap-details {
+    width: 110px;
+  }
+  .wrap-passive {
+    flex: 1;
+    padding-left: 10px;
+    border-left: $table-border;
+    word-break: keep-all;
+    .badge {
+      border: 1px solid #aaa;
+      &.buff {
+        background-color: $badge-color-orange-light;
+      }
+      &.deBuff {
+        background-color: $badge-color-blue-light;
+      }
+      &.self {
+        background-color: $badge-color-green-light;
+      }
+    } 
   }
 }

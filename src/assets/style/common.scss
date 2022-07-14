@@ -217,6 +217,10 @@ caption, .ir-hidden {
   align-items: center;
   .badge {
     margin-right: 3px;
+    &.last {
+      margin-right: 0;
+      margin-left: 3px;
+    }
   }
 }
 //  content top
