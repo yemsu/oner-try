@@ -6,7 +6,6 @@
           <composition-search-box
             v-if="compositionItems.length !== 0"
             :matchingData="compositionItems"
-            :fnSearch="fnSearch"
             size="small"
           />
         </div>
@@ -179,7 +178,6 @@ export default {
         return false
       }
 
-      this.sendPageView()
 
       const { newItem: itemSetup, allIngrdnts } = this.setIngrdntsDataLoop(result)
       // console.log('itemSetup, allIngrdnts', itemSetup, allIngrdnts)
@@ -195,6 +193,8 @@ export default {
           item.option = parserStrData(item.option)
           return item
         })
+
+      this.sendPageView()
     },
     setIngrdntsDataLoop(item) {
       const { setterIngrdnts, setterOptions } = this.dataSetters(item, allIngrdnts)
