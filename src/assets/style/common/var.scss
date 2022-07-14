@@ -47,7 +47,7 @@ $font-size-title-S-pc: 20px;
 $font-size-title-XS-pc: 16px;
 $font-size-B-pc: 16px;
 $font-size-M-pc: 14px;
-$font-size-DESC-pc: 13px;
+$font-size-MS-pc: 13px;
 $font-size-S-pc: 12px;
 $font-size-XS-pc: 11px;
 
@@ -64,6 +64,7 @@ $list-gap-basic: 10px;
 :root {
   --color-black: #333;
   --color-dark-gray: #666;
+  --color-gray-200: #888;
   --color-gray-100: #999;
   --color-gray: #aaa;
   --color-white: #fff;

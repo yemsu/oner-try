@@ -213,20 +213,15 @@ caption, .ir-hidden {
   }
 }
 .badge-text-wrap {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  .badge {
-    margin-right: 3px;
-    &.last {
-      margin-right: 0;
-      margin-left: 3px;
-    }
-  }
+  gap: 3px;
 }
 //  content top
 .text-refer {
   display: flex;
   align-items: center;
+  font-size: $font-size-MS-pc;
   &.top {
     margin-bottom: 6px;
   }

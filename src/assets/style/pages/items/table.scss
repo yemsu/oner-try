@@ -32,7 +32,7 @@ table {
   td {
     vertical-align: middle;
     padding: 15px 10px;
-    font-size: $font-size-DESC-pc;
+    font-size: $font-size-MS-pc;
     &.many-text {
       padding-top: 25px;
       padding-bottom: 25px;
@@ -100,17 +100,17 @@ table {
     padding-left: 10px;
     border-left: $table-border;
     word-break: keep-all;
-    .badge {
-      border: 1px solid #aaa;
-      &.buff {
-        background-color: $badge-color-orange-light;
-      }
-      &.deBuff {
-        background-color: $badge-color-blue-light;
-      }
-      &.self {
-        background-color: $badge-color-green-light;
-      }
-    } 
   }
 }
+.badge {
+  border: 1px solid #aaa;
+  &.buff {
+    background-color: $badge-color-orange-light;
+  }
+  &.deBuff {
+    background-color: $badge-color-blue-light;
+  }
+  &.self {
+    background-color: $badge-color-green-light;
+  }
+} 

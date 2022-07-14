@@ -20,6 +20,11 @@
       </div>
     </dl>
     <div class="mrg-top-medium">
+      <div class="text-refer top">
+        <p class="align-right">
+          2022.06.12 도감 기준
+        </p>
+      </div>
       <table>
         <colgroup>
           <col width="14%">
