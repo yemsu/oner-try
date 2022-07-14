@@ -7,7 +7,8 @@ import {
   getEquipments,
   getHeroes,
   getColleagues,
-  getSynergies
+  getSynergies,
+  getShips,
 } from '@/plugins/utils/https'
 
 export const state = () => ({
@@ -16,6 +17,8 @@ export const state = () => ({
   sailors_synergy: [],
   etcItems: [],
   equipments: [],
+  ships: [],
+  ships_table: [],
   heroes: [],
   colleagues: [],
   synergies: [],
@@ -33,6 +36,12 @@ export const getters = {
   },
   getEquipments(state) {
     return state.equipments
+  },
+  getShips(state) {
+    return state.ships
+  },
+  getShipsTable(state) {
+    return state.ships_table
   },
   getHeroes(state) {
     return state.heroes
@@ -54,6 +63,12 @@ export const mutations = {
   },
   SET_EQUIPMENTS(state, {type, data}) {
     state[type] = data
+  },
+  SET_SHIPS(state, {data}) {
+    state.ships = data
+  },
+  SET_SHIPS_TABLE(state, {data}) {
+    state.ships_table = data
   },
   SET_HEROS(state, {type, data}) {
     const newData = data.map(hero => Object.assign(hero, {type: 'hero'}))
@@ -133,6 +148,41 @@ export const actions = {
         return data
       })
       .catch(error => console.log('GET_EQUIPMENTS', error))
+  },
+  GET_SHIPS({ commit }) {
+    return getShips()
+      .then(({data}) => {
+        const newData = data.map(dataItem => {
+          const { option } = dataItem
+          const optionObj = {option: parserStrData(option)}
+          return Object.assign(dataItem, optionObj)
+        })
+        commit(`SET_SHIPS`, {data: newData})
+        return newData
+      })
+      .catch(error => console.log('GET_SHIPS', error))
+  },
+  async GET_SHIPS_TABLE({ commit, state, dispatch }) {
+    if(state.ships.length === 0) await dispatch('GET_SHIPS')
+
+    const { ships } = state
+    const newData = deepClone(ships)
+      .reduce((acc, data) => {
+        const { groupName, name, option, type } = data
+        const sameShipAccData = acc.find(data => data.groupName === groupName)
+        const nameData = name.split(' +')[0]
+        const stack = name.split(' +')[1]
+        if(!sameShipAccData) {
+          const optionsByStack = new Array(5)
+          optionsByStack[stack] = option
+          acc.push({ groupName, name: nameData, optionsByStack, type })
+        } else {
+          sameShipAccData.optionsByStack[stack] = option
+        }
+        return acc
+      }, [])
+    commit(`GET_SHIPS_TABLE`, {data: newData})
+    return newData
   },
   GET_HEROES({ commit }, payload) {
     return getHeroes(payload)

@@ -26,6 +26,10 @@ export const getEquipments = (params) => {
   return $axios.get(`/equipments`, { params })
     .catch(error => errorHandler('getEquipments', error))
 }
+export const getShips = (params) => {
+  return $axios.get(`/ships`, { params })
+    .catch(error => errorHandler('getShips', error))
+}
 export const getHeroes = (params) => {
   return $axios.get(`/heroes`, { params })
     .catch(error => errorHandler('getHeroes', error))
