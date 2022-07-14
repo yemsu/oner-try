@@ -78,12 +78,9 @@
                 <div
                   v-for="(synergy, i) in sailor.synergies"
                   :key="`synergy${sailor.name}${i}`"
-                  :class="[
-                    'wrap-synergy',
-                    isBadConnection(synergy) ? 'minus' : 'plus'
-                  ]"
+                  class="wrap-synergy"
                 >
-                  <dt class="title">
+                  <dt :class="`title color-${classNegaPosi(synergy)}`">
                     {{ synergy.name }} 
                   </dt>
                   <dd>
@@ -97,7 +94,7 @@
                     <span
                       v-for="(sailor, i) in synergy.sailors"
                       :key="`sailor${i}`"
-                      class="badge size-big type-round"
+                      :class="`badge size-big type-round line-${classNegaPosi(synergy)}`"
                     >
                       {{ sailor }}
                     </span>
@@ -202,9 +199,12 @@ export default {
         this[dataName].push(key)
       }     
     },
-    isBadConnection(synergy) {
+    isNegative(synergy) {
       const sampleValue = Object.values(synergy.option[0])[0]
       return sampleValue.includes('-')
+    },
+    classNegaPosi(synergy) {
+      return this.isNegative(synergy) ? 'negative' : 'positive'
     }
   }
 }

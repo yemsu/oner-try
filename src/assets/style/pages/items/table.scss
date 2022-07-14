@@ -21,7 +21,7 @@ table {
   background-color: var(--color-white);
   th {
     vertical-align: middle;
-    padding: 8px 15px;
+    padding: 8px 10px;
     background-color: var(--bg-light-point-100);
     font-size: $font-size-S-pc;
     font-weight: normal;
@@ -51,25 +51,27 @@ table {
         margin-top: 6px;
       }
     }
-    &.plus {
-      .title {
-        color: $color-point-sub
-      }
-      .badge {
-        border-color: $color-point-sub-pale;
-      }
-    }
-    &.minus {
-      .title {
-        color: $color-point;
-      }
-      .badge {
-        border-color: $color-point-pale;
-      }
-    }
   }
   .title {
     font-weight: bold;
     margin-bottom: 5px;
+  }
+}
+
+// positive / netavie
+.color {
+  &-positive {
+    color: $color-point-sub
+  }
+  &-negative {
+    color: $color-point;
+  }
+}
+.line{
+  &-positive {
+    border-color: $color-point-sub-pale;
+  }
+  &-negative {
+    border-color: $color-point-pale;
   }
 }
