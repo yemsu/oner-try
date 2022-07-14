@@ -6,7 +6,8 @@
       `size-${size}`,
       `type-${type}`,
       {'wanted-paper': wantedPaper},
-      {'round': isRoundImg}
+      {'round': isRoundImg},
+      {'no-padding': !padding},
     ]">
     <template v-if="item">
       <div class="wrap-box">
@@ -132,6 +133,10 @@ export default {
     isBlankLink: {
       type: Boolean,
       default: () => false
+    },
+    padding: {
+      type: Boolean,
+      default: () => true
     }
   },
   computed: {

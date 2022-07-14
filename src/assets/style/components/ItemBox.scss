@@ -21,6 +21,9 @@ $space: 3px;
   display: inline-block;
   padding: 6px;
   box-sizing: content-box;
+  &.no-padding {
+    padding: 0;
+  }
   .wrap-info {
     width: 100%;
   }

@@ -64,9 +64,10 @@
                 :showBadges="['howGet']"
                 :showTooltip="false"
                 :isBlankLink="true"
+                :padding="false"
               />
             </td>
-            <td class="td-option">
+            <td>
               <item-detail-info
                 :options="sailor.option"
                 :markOptions="optionsSelected"
