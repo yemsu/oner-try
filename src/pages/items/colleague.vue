@@ -23,9 +23,9 @@
       <table>
         <colgroup>
           <col width="20%">
-          <col width="20%">
+          <col width="18%">
           <col width="10%">
-          <col width="45%">
+          <col width="47%">
         </colgroup>
         <thead>
           <tr>
@@ -97,8 +97,8 @@ export default {
   head() {
     return setMeta({
       url: this.$route.fullPath,
-      title: `선원 아이템 도감`,
-      description: `원하는 등급, 옵션을 선택하고 선원 아이템 정보를 확인해보세요`,
+      title: `동료 아이템 도감`,
+      description: `원하는 옵션을 선택하고 동료 아이템 정보를 확인해보세요`,
     })
   },
   components: {
