@@ -37,9 +37,9 @@
       <table>
         <colgroup>
           <col width="20%">
-          <col width="18%">
+          <col width="22%">
           <col width="10%">
-          <col width="47%">
+          <col width="43%">
         </colgroup>
         <thead>
           <tr>
@@ -82,6 +82,7 @@
                     v-if="colleague.coloYn"
                     :options="colleague.coloOption"
                     :highlightTitle="false"
+                    :pureValue="true"
                   />
                 </div>
                 <div v-if="colleague.coloPassive" class="wrap-passive box-gray">
