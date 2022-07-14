@@ -125,20 +125,20 @@ export default {
 }
 .badge {
   &.composition {
-    background-color: rgba(255, 200, 174, 0.8);
+    background-color: $badge-color-orange-light;
   }
   &.recruit {
-    background-color: rgba(196, 255, 232, 0.8);
+    background-color: $badge-color-green-light;
   }
   &.type {
     background-color: $color-point;
     color: #fff;
     font-weight: 300;
     &.sailor {
-      background-color: royalblue;
+      background-color: $badge-color-blue;
     }
     &.colleague {
-      background-color: green;
+      background-color: $badge-color-green;
     }
   }
 }

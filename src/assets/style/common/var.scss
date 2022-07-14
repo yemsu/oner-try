@@ -21,12 +21,20 @@ $color-neon: #5fee27;
 $color-gold: #cfa61f;
 $wanted-brown: #5a352d;
 
+// badge line
+$color-point-bright: #95aeff;
+$color-point-sub-bright: #ffa742;
+
+// rank color
 $color-rank1: rgb(255, 60, 0);
 $color-rank2: rgb(105, 22, 173);
 $color-rank3: rgb(36, 61, 172);
 
-$color-point-bright: #95aeff;
-$color-point-sub-bright: #ffa742;
+// badge colors
+$badge-color-orange-light: rgba(255, 200, 174, 0.8);
+$badge-color-green-light: rgba(196, 255, 232, 0.8);
+$badge-color-blue: royalblue;
+$badge-color-green: green;
 
 // layout
 $basic-container-width: 1080px;
