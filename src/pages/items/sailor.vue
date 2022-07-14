@@ -40,6 +40,7 @@
     </dl>
     <div class="mrg-top-medium">
       <div class="text-refer top">
+        <p>총 {{ resultSailors.length }}개</p>
         <p class="align-right">
           2022.06.12 도감 기준
         </p>
