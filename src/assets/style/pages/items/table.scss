@@ -31,6 +31,11 @@ table {
   td {
     vertical-align: middle;
     padding: 6px 10px;
+    font-size: $font-size-DESC-pc;
+    &.td-option {
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
   }
   tr {
     border-bottom: 1px solid var(--border-light-gray);
@@ -40,14 +45,30 @@ table {
 .synergies {
   .wrap-synergy {
     padding: 10px 10px;
-    background-color: #f6f6f6;
     border-radius: 5px;
+    background-color: #f6f6f6;
     & + .wrap-synergy {
       margin-top: 5px;
     }
     dd {
       & + dd {
-        margin-top: 5px;
+        margin-top: 6px;
+      }
+    }
+    &.plus {
+      .title {
+        color: $color-point-sub
+      }
+      .badge {
+        border-color: $color-point-sub-pale;
+      }
+    }
+    &.minus {
+      .title {
+        color: $color-point;
+      }
+      .badge {
+        border-color: $color-point-pale;
       }
     }
   }

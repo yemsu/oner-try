@@ -66,7 +66,7 @@
                 :isBlankLink="true"
               />
             </td>
-            <td>
+            <td class="td-option">
               <item-detail-info
                 :options="sailor.option"
                 :markOptions="optionsSelected"
@@ -77,9 +77,14 @@
                 <div
                   v-for="(synergy, i) in sailor.synergies"
                   :key="`synergy${sailor.name}${i}`"
-                  class="wrap-synergy"
+                  :class="[
+                    'wrap-synergy',
+                    isBadConnection(synergy) ? 'minus' : 'plus'
+                  ]"
                 >
-                  <dt class="title">{{ synergy.name }}</dt>
+                  <dt class="title">
+                    {{ synergy.name }} 
+                  </dt>
                   <dd>
                     <item-detail-info
                       :options="synergy.option"
@@ -91,7 +96,7 @@
                     <span
                       v-for="(sailor, i) in synergy.sailors"
                       :key="`sailor${i}`"
-                      class="badge size-big type-round line-gray"
+                      class="badge size-big type-round"
                     >
                       {{ sailor }}
                     </span>
@@ -196,6 +201,10 @@ export default {
         this[dataName].push(key)
       }     
     },
+    isBadConnection(synergy) {
+      const sampleValue = Object.values(synergy.option[0])[0]
+      return sampleValue.includes('-')
+    }
   }
 }
 </script>

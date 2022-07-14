@@ -10,7 +10,7 @@
         :key="`itemOption${i}`"
         :class="{'option-match': isMarkOption(Object.keys(option)[0])}"
       >
-        <dt :class="isMinus(option) ? 'color-option-minus' : 'color-option'">
+        <dt class="title">
           <span v-if="isMarkOption(Object.keys(option)[0])" class="mark"> ✔ </span>
           {{ getOption(option, 'title') }}
         </dt>
