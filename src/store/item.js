@@ -181,7 +181,7 @@ export const actions = {
         }
         return acc
       }, [])
-    commit(`GET_SHIPS_TABLE`, {data: newData})
+    commit(`SET_SHIPS_TABLE`, {data: newData})
     return newData
   },
   GET_HEROES({ commit }, payload) {
