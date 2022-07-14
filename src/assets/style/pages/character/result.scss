@@ -3,7 +3,7 @@
     .tabs {
       align-items: flex-end;
       .tab {
-        margin-right: 10px;
+        margin-right: $list-gap-basic;
         &:not(.active) {
           > button {
             opacity: 0.6;
@@ -31,7 +31,7 @@
 }
 .wrap-items-info {
   display: flex;
-  gap: 10px;
+  gap: $list-gap-basic;
   min-height: 402px;
   ::v-deep {
     .box-item {
