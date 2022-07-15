@@ -1,7 +1,36 @@
 <template>
   <div class="inner-size-basic">
     <div class="wrap-quick-menu">
-      <section class="quick-menu">
+      <section class="column-2 point-banner">
+        <div class="area-text">
+          <h3 class="title">📙 아이템 도감 페이지가 오픈되었습니다 🎉</h3>
+          <p>등급 및 옵션을 필터링하고 원하는 아이템 정보를 확인해보세요.</p>
+          <p class="wrap-links">
+            <router-link
+              to="/items/sailor"
+              class="text-link wrap-icon-text"
+            >
+              선원 도감
+              <i class="icon-arrow right small with-text color-point"></i>
+            </router-link>
+            <router-link
+              to="/items/colleagues"
+              class="text-link wrap-icon-text"
+            >
+              동료 도감
+              <i class="icon-arrow right small with-text color-point"></i>
+            </router-link>
+            <router-link
+              to="/items/sailor"
+              class="text-link wrap-icon-text"
+            >
+              선박 도감
+              <i class="icon-arrow right small with-text color-point"></i>
+            </router-link>
+          </p>
+        </div>
+      </section>
+      <section class="quick-menu column">
         <div class="area-text">
           <h3 class="title">캐릭터 검색</h3>
           <p>다른 유저의 빌드를 참고해 보세요. 😎</p>
@@ -12,7 +41,7 @@
           />
         </div>
       </section>
-      <section class="quick-menu">
+      <section class="quick-menu column">
         <div class="area-text">
           <h3 class="title">조합법 검색</h3>
           <p>조합법을 한눈에 볼 수 있습니다. 👀</p>
@@ -23,7 +52,7 @@
           />
         </div>
       </section>
-      <section class="quick-menu ranking">
+      <section class="quick-menu column-2">
         <div class="area-text">
           <h3 class="title">랭킹 TOP 5</h3>
           <p>오늘의 해적왕..🥶 원피스는 어디에 있나요..? 💎 </p>

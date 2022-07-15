@@ -3,12 +3,9 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   padding-top: 50px;
-  .quick-menu {
-    padding: 50px 30px 60px;
-    border: 1px solid #fff;
+  [class*=column] {
     border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.1);
-    &.ranking {
+    &.column-2 {
       grid-column: 1 / span 2;
     }
     .area-text {
@@ -29,4 +26,19 @@
       margin-top: 20px;
     }
   }
+  .quick-menu {
+    padding: 50px 30px 60px;
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .point-banner {
+    padding-top: 30px;
+    padding-bottom: 40px;
+    background-color: var(--color-white);
+    border: 5px solid $color-neon;
+  }
+}
+.wrap-links {
+  display: inline-flex;
+  gap: 20px;
 }
