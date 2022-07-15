@@ -171,7 +171,16 @@ caption, .ir-hidden {
 // badge
 .badges {
   display: flex;
-  justify-content: center;
+  &.badge-gap {
+    gap: 5px;
+  }
+  &:not(.badge-gap) {
+    .badges {
+      &:not([class*=line-]):nth-child(n+2) {
+        border-left: none;
+      }
+    }
+  }
 }
 .badge {
   min-width: 1.5em;
@@ -183,49 +192,57 @@ caption, .ir-hidden {
   line-height: 1;
   text-align: center;
   word-spacing: -0.1em;
+  &.type-round {
+    padding: 3px 5px;
+    border-radius: 5px;
+  }
+  &.size-big {
+    font-size: $font-size-S-pc;
+  }
   &.black {
-    font-weight: 300;
     background-color: rgba(0, 0, 0, 0.8);
+    font-weight: 300;
     color: #fff;
     letter-spacing: 0;
   }
   &.line-gold {
     border: 1px solid $color-gold;
   }
-  &.mix {
-    background-color: rgba(255, 200, 174, 0.8);
-  }
-  &.recruit {
-    background-color: rgba(196, 255, 232, 0.8);
-  }
-  &.type {
-    background-color: $color-point;
-    color: #fff;
-    font-weight: 300;
-    &.sailor {
-      background-color: royalblue;
-    }
-    &.colleague {
-      background-color: green;
-    }
-  }
-  &:not([class*=line-]):nth-child(n+2) {
-    border-left: none;
+  &.line-gray {
+    border: 1px solid var(--border-gray-100);
   }
 }
 .badge-text-wrap {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  gap: 3px;
 }
 //  content top
 .text-refer {
   display: flex;
   align-items: center;
+  font-size: $font-size-MS-pc;
   &.top {
     margin-bottom: 6px;
   }
   &.bottom {
     margin-top: 6px;
+  }
+  > [class*=align-] {
+    display: inline-flex;
+    align-items: center;
+    > p:nth-child(n + 2) {
+      position: relative;
+      padding-left: 10px;
+      margin-left: 10px;
+      &:before {
+        position: absolute;
+        left: 0;
+        color: var(--color-gray);
+        transform: translate(-50%, 0);
+        content: '|';
+      }
+    }
   }
   > .align-right {
     margin-left: auto;
@@ -259,4 +276,21 @@ caption, .ir-hidden {
   background-color: rgba(255, 255, 255, 0.5);
   color: $color-point;
   text-align: center;
+}
+
+// list button
+.list-button-common {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $list-gap-basic;
+}
+.sub-nav-common {
+  display: block;
+  padding: 5px 20px;
+  border-radius: 5px;
+  background-color: var(--color-white);
+  opacity: 0.6;
+  &.nuxt-link-active {
+    opacity: 1;
+  }
 }

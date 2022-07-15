@@ -10,6 +10,10 @@ export default ({ store }) => {
       etcItems: state.etcItems,
       colleagues: state.colleagues,
       equipments: state.equipments,
+      ships: state.ships,
+      ships_table: state.ships_table,
+      synergies: state.synergies,
+      sailors_synergy: state.sailors_synergy,
     })
   }).plugin(store);
 }

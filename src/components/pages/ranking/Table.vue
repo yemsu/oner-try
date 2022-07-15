@@ -33,14 +33,11 @@
             <item-box
               :item="findHero(user.name)"
               :showName="false"
-              :wantedPaper="i === 0 && true"
+              :wantedPaper="i === 0"
+              :isPirateKing="i === 0"
               :showBounty="false"
-              :size="i === 0 && true ? 'basic' : 'small'"
+              :size="i === 0 ? 'basic' : 'small'"
             ></item-box>
-            <template v-if="i === 0">
-              <span class="crown">👑</span>
-              <span class="money">💰</span>
-            </template>
           </td>
           <td class="level">
             {{ user.lv }}
@@ -61,7 +58,7 @@
                   :item="sailor"
                   :showName="false"
                   :onlyImg="true"
-                  :roundImg="true"
+                  :isRoundImg="true"
                   size="small"
                 />
               </li>
@@ -77,7 +74,7 @@
                   :item="colleague"
                   :showName="false"
                   :onlyImg="true"
-                  :roundImg="true"
+                  :isRoundImg="true"
                   size="small"
                 />
               </li>

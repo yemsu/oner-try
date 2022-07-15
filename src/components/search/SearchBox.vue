@@ -21,24 +21,6 @@
         v-if="isSearching && matchingData.data"
         class="items-match"
       >
-        <div
-          v-for="(data, i) in matchDataSliced"
-          :key="`matchingData${i}`"
-          class="item-match"
-        >
-          <item-box
-            v-if="isItem"
-            size="small"
-            type="list"
-            :item="data"
-            :showTooltip="false"
-          />
-        </div>
-      </div>
-      <div
-        v-if="isSearching && matchingData.data"
-        class="items-match"
-      >
         <p v-if="showRankingList" class="title-list"> 검색 순위 <span>TOP 10</span></p>
         <div
           v-for="(data, i) in matchDataSliced"
@@ -47,19 +29,20 @@
         >
           <p v-if="showRankingList" class="number-ranking">{{ i + 1 }}</p>
           <template>
-            <item-box
-              v-if="isItem"
-              size="small"
-              type="list"
-              :item="data"
-              :showTooltip="false"
-            />
             <button
-              v-else
               :class="{'button-keyword': !isItem}"
               @click="routerPush(data)"
             >
-              <p>
+              <item-box
+                v-if="isItem"
+                size="small"
+                type="list"
+                :item="data"
+                :showBadges="['howGet']"
+                :showTooltip="false"
+                :isLink="false"
+              />
+              <p v-else>
                 {{ data }}
               </p>
             </button>

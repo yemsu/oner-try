@@ -26,6 +26,10 @@ export const getEquipments = (params) => {
   return $axios.get(`/equipments`, { params })
     .catch(error => errorHandler('getEquipments', error))
 }
+export const getShips = (params) => {
+  return $axios.get(`/ships`, { params })
+    .catch(error => errorHandler('getShips', error))
+}
 export const getHeroes = (params) => {
   return $axios.get(`/heroes`, { params })
     .catch(error => errorHandler('getHeroes', error))
@@ -37,6 +41,10 @@ export const getGameUsers = (params) => {
 export const getRanking = () => {
   return $axios.get(`/ranking`)
     .catch(error => errorHandler('getRanking', error))
+}
+export const getSynergies = () => {
+  return $axios.get(`/synergies`)
+    .catch(error => errorHandler('getSynergies', error))
 }
 export const getCompositionPageViews = (params) => {
   if(!params) params = { startDate: '2022-7-9' }

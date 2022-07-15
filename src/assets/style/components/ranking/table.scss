@@ -76,20 +76,6 @@
     .thumb-hero {
       display: flex;
       justify-content: center;
-      position: relative;
-      .crown {
-        position: absolute;
-        top: 26px;
-        left: 20px;
-        font-size: 0.9em;
-        transform: rotate(-30deg);
-      }
-      .money {
-        position: absolute;
-        bottom: 5px;
-        right: 20px;
-        transform: rotate(30deg);
-      }
     }
     .nickname {
       a {

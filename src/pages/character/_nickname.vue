@@ -50,8 +50,7 @@
                 <template v-slot="{ item }">
                   <item-box
                     :item="item"
-                    :badgeDrop="false"
-                    :badgeType="false"
+                    :showBadges="['howGet', 'stack']"
                   ></item-box>
                 </template>
               </item-list>

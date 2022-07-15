@@ -6,24 +6,38 @@ $color-rare: #aaff90;
 $color-normal: #f7efec;
 
 $color-point: rgb(87,75,198);
+$color-point-pale: rgb(130, 121, 212);
 $color-point-sub: #ee6b00;
+$color-point-sub-pale: #f09f5d;
+
 $color-point-500: #706896;
 $color-point-400: #8881aa;
 $color-point-300: #a59fc2;
 $color-point-200: #bebad4;
 $color-point-100: #d8d5e7;
 
+$color-mark: #f2fdcb;
 $color-neon: #5fee27;
 $color-gold: #cfa61f;
 $wanted-brown: #5a352d;
 
+// badge line
+$color-point-bright: #95aeff;
+$color-point-sub-bright: #ffa742;
+
+// rank color
 $color-rank1: rgb(255, 60, 0);
 $color-rank2: rgb(105, 22, 173);
 $color-rank3: rgb(36, 61, 172);
 
-$color-point-bright: #95aeff;
-$color-point-sub-bright: #ffa742;
+// badge colors
+$badge-color-orange-light: rgba(255, 200, 174, 0.8);
+$badge-color-green-light: rgba(196, 255, 232, 0.8);
+$badge-color-blue-light: rgba(196, 205, 255, 0.8);
+$badge-color-blue: royalblue;
+$badge-color-green: green;
 
+// layout
 $basic-container-width: 1080px;
 
 // size
@@ -33,12 +47,24 @@ $font-size-title-S-pc: 20px;
 $font-size-title-XS-pc: 16px;
 $font-size-B-pc: 16px;
 $font-size-M-pc: 14px;
+$font-size-MS-pc: 13px;
 $font-size-S-pc: 12px;
 $font-size-XS-pc: 11px;
+
+// item img size
+$item-image-xsmall: 30px;
+$item-image-small: 40px;
+$item-image-basic: 55px;
+$item-image-big: 70px;
+$item-image-xbig: 90px;
+
+// list padding, gap
+$list-gap-basic: 10px;
 
 :root {
   --color-black: #333;
   --color-dark-gray: #666;
+  --color-gray-200: #888;
   --color-gray-100: #999;
   --color-gray: #aaa;
   --color-white: #fff;
@@ -47,11 +73,13 @@ $font-size-XS-pc: 11px;
   --border-dark: #999;
   --border-dark-gray: #aaa;
   --border-gray: #ccc;
+  --border-gray-100: #ddd;
   --border-light-gray: #eee;
 
   --bg-dark: #333;
   --bg-dark-gray: rgb(97, 98, 102);
-  --bg-gray: rgb(180, 181, 187);
+  --bg-gray: #b4b5bb;
+  --bg-gray-100: #ddd;
   --bg-light-gray: #eee;
   --bg-light-point-200: rgb(230, 229, 238);
   --bg-light-point-100: #f0eff5;
