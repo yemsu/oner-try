@@ -58,6 +58,8 @@
 <script>
 import BaseInput from '@/components/common/BaseInput.vue'
 import { imgSrc } from '@/plugins/utils/item'
+import { postItemName } from '@/plugins/utils/https'
+
 export default {
   components: {
     BaseInput
