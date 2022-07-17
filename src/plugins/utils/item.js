@@ -54,10 +54,10 @@ export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey,
     }  
     const fullDataClone = deepClone(fullData)
 
-    if(fullDataClone.option) {
+    if(fullDataClone.option && typeof(fullDataClone.option) === 'string') {
       fullDataClone.option = parserStrData(fullDataClone.option)
     }
-    if(fullDataClone.gradeOption) {
+    if(fullDataClone.gradeOption &&  typeof(fullDataClone.gradeOption) === 'string') {
       fullDataClone.gradeOption = parserStrData(fullDataClone.gradeOption)
     }
 

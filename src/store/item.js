@@ -61,8 +61,8 @@ export const mutations = {
   SET_ETC_ITEMS(state, {type, data}) {
     state[type] = data
   },
-  SET_EQUIPMENTS(state, {type, data}) {
-    state[type] = data
+  SET_EQUIPMENTS(state, {data}) {
+    state.equipments = data
   },
   SET_SHIPS(state, {data}) {
     state.ships = data
@@ -141,10 +141,20 @@ export const actions = {
       })
       .catch(error => console.log('GET_ETC_ITEMS', error))
   },
-  GET_EQUIPMENTS({ commit }, payload) {
-    return getEquipments(payload)
+  GET_EQUIPMENTS({ commit }) {
+    return getEquipments()
       .then(({data}) => {
-        commit(`SET_EQUIPMENTS`, {data, type: 'equipments'})
+        
+        const newData = data.map(dataItem => {
+          const { option, gradeOption } = dataItem
+          const optionObj = {option: parserStrData(option)}
+          const gradeOptionObj = gradeOption
+            ? {gradeOption: parserStrData(gradeOption)}
+            : null
+          return Object.assign(dataItem, {...optionObj, ...gradeOptionObj})
+        })
+
+        commit(`SET_EQUIPMENTS`, {data: newData})
         return data
       })
       .catch(error => console.log('GET_EQUIPMENTS', error))
