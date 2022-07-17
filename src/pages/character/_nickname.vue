@@ -87,9 +87,9 @@ export default {
     })
   },
   async asyncData({ store, params }) {
-    const { user: { gameUsers }, item: { heroes } } = store.state
+    const { character: { gameUsers }, item: { heroes } } = store.state
     const gameUsersData = gameUsers.length === 0
-      ? await store.dispatch('user/GET_GAME_USERS')
+      ? await store.dispatch('character/GET_GAME_USERS')
       : gameUsers
     const userNickNames = gameUsersData.map(user => user.nickName)
     if(heroes.length === 0) await store.dispatch('item/GET_HEROES')
@@ -130,9 +130,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      characters: 'user/getCharacters',
-      nickName: 'user/getNickName',
-      gameUsers: 'user/getGameUsers',
+      characters: 'character/getCharacters',
+      nickName: 'character/getNickName',
+      gameUsers: 'character/getGameUsers',
       heroes:  'item/getHeroes',
       equipments: 'item/getEquipments',
       sailors: 'item/getSailors',
@@ -147,11 +147,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCharacters: 'user/GET_CHARACTERS',
+      getCharacters: 'character/GET_CHARACTERS',
       getItems: 'item/GET_ITEMS'
     }),
     ...mapMutations({
-      setUserNickName: 'user/SET_NICKNAME'
+      setUserNickName: 'character/SET_NICKNAME'
     }),
     async fnSearch(newNickName) {
       console.log('setSearchResult', newNickName)

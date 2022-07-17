@@ -118,6 +118,6 @@ export const actions = {
         commit(`SET_RANKING`, newData)
         return data
       })
-      .catch(error => console.log('user/GET_RANKING', error))
+      .catch(error => console.log('character/GET_RANKING', error))
   }
 }

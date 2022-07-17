@@ -97,11 +97,11 @@ export default {
     RankingTable
   },
   async asyncData({ store }) {
-    const { user: { gameUsers }, item: { heroes, items } } = store.state
+    const { character: { gameUsers }, item: { heroes, items } } = store.state
     // character
-    if(gameUsers.length === 0) await store.dispatch('user/GET_GAME_USERS')
+    if(gameUsers.length === 0) await store.dispatch('character/GET_GAME_USERS')
     const gameUsersData = gameUsers.length === 0
-      ? await store.dispatch('user/GET_GAME_USERS')
+      ? await store.dispatch('character/GET_GAME_USERS')
       : gameUsers
     const userNickNames = gameUsersData.map(user => user.nickName)
     if(heroes.length === 0) await store.dispatch('item/GET_HEROES')
@@ -120,8 +120,8 @@ export default {
     ...mapGetters({
       items: 'item/getItems',
       heroes:  'item/getHeroes',
-      gameUsers: 'user/getGameUsers',
-      characters: 'user/getCharacters',
+      gameUsers: 'character/getGameUsers',
+      characters: 'character/getCharacters',
     })
   },
 }

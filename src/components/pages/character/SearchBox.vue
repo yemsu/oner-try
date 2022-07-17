@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      gameUsers: 'user/getGameUsers',
+      gameUsers: 'character/getGameUsers',
       pageViews: 'pageView/getCharacter',
       pageViewRanking: 'pageView/getCharacterSearchRanking',
     }),
