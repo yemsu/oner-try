@@ -68,7 +68,6 @@
 <script>
 import BaseInput from '@/components/common/BaseInput.vue'
 import { isOnlyNumber } from '@/plugins/utils'
-import { postItemName } from '@/plugins/utils/https'
 export default {
   components: {
     BaseInput
