@@ -53,6 +53,12 @@ export default {
         innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-8GJK6WJPDB');`,
         async: true
       },
+      { 
+        type: 'text/javascript',
+        src: 'https://accounts.google.com/gsi/client',
+        async: true, 
+        defer : true, 
+      },
     ]
   },
 
