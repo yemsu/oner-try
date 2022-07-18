@@ -13,8 +13,8 @@
     <div class="inner-size-basic mrg-top-small">
       <h2 class="title-page"><i class="skull">☠</i> {{ nickname }}</h2>
       <v-tab
-        v-if="charactersParsed"
-        :tabs="charactersParsed"
+        v-if="characters.length !== 0"
+        :tabs="characters"
       >
         <template v-slot:tab="{ tab: {data, isActive} }">
           <item-box
@@ -101,9 +101,6 @@ export default {
   },
   data() {
     return {
-      charactersParsed: null,
-      selectedChar: null,
-      ships: [],
       itemAreas: [
         {
           title: "장비",
@@ -131,82 +128,30 @@ export default {
   computed: {
     ...mapGetters({
       characters: 'character/getCharacters',
-      nickName: 'character/getNickName',
-      gameUsers: 'character/getGameUsers',
-      heroes:  'item/getHeroes',
-      equipments: 'item/getEquipments',
-      sailors: 'item/getSailors',
-      colleagues: 'item/getColleagues',
-      items: 'item/getItems',
     })
   },
+  async created() {
+    if(this.characters.length === 0) await this.getCharacters({ nickName: this.nickname })
+    this.checkCharacterData()
+    console.log('characters', this.characters)
+  },
   mounted() {
-    this.fnSearch(this.nickname)
-
-    // this.mergePVData()
+    this.sendPageView()
   },
   methods: {
     ...mapActions({
       getCharacters: 'character/GET_CHARACTERS',
-      getItems: 'item/GET_ITEMS'
     }),
     ...mapMutations({
       setUserNickName: 'character/SET_NICKNAME'
     }),
-    async fnSearch(newNickName) {
-      console.log('setSearchResult', newNickName)
-
-      this.setUserNickName(newNickName)
-      await this.getCharacters({ nickName: newNickName })
-      console.log('characters 원형', this.characters)
-
-      if(!this.characters) {
+    checkCharacterData() {
+      if(this.characters.length === 0) {
         alert('존재하지 않는 닉네임이거나, 보유 캐릭터가 없습니다.')
         console.log(this.$route)
         this.$router.push('/character')
         return false
       }
-
-      this.sendPageView()
-      
-      // console.log('heroes', this.heroes)
-      if(this.items.length === 0) await this.getItems()
-      this.ships = this.items.filter(item => item.type === 'ship')
-      const newChars = deepClone(this.characters).map(character => {
-        const checkDone = character.hero
-        if(checkDone) return character
-
-        const heroData = findData(this.heroes, 'name', character.heroName)
-        const hero = heroData ? deepClone(heroData) : {id: character.heroName}
-        hero.bounty = addCommaNumber(character.bounty.trim())
-
-        const equipments = this.dataParser(character, 'equipments')
-        const sailors = this.dataParser(character, 'sailors')
-        const colleagues = this.dataParser(character, 'colleagues')
-        const ship = this.dataParser(character, 'ship')
-
-        return Object.assign(character, { hero, equipments, sailors, colleagues , ship})
-      })
-
-      this.charactersParsed = newChars
-      // console.log('charactersParsed', this.charactersParsed)
-    },
-    dataParser(character, type) {
-      const data = () => {
-        const _data = character[type]
-        const dataTypeArray = Array.isArray(_data) ? _data : [_data]
-        const result = dataTypeArray.map(data => getDefaultData(data))
-        return parserStrData(result.join(','))
-      }
-
-      const newData = fillDataAndInsertValue(this.items, data(), 'stack', true)
-
-      const result = type.includes('colleague') 
-        ? fillDefaultList(newData, 3)
-        : type.includes('ship')
-          ? fillDefaultList(newData, 1)
-          : newData
-      return result
     },
     async sendPageView() {
       const namePageView = await checkUpdatePageView('character', this.nickname)
