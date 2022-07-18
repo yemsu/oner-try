@@ -5,15 +5,15 @@ export default ({ store }) => {
     key:'onertryVuexStore',
     storage: window.sessionStorage,
     reducer: (state) => ({
-      items: state.items,
-      heroes: state.heroes,
-      etcItems: state.etcItems,
-      colleagues: state.colleagues,
-      equipments: state.equipments,
-      ships: state.ships,
-      ships_table: state.ships_table,
-      synergies: state.synergies,
-      sailors_synergy: state.sailors_synergy,
+      items: state.item.items,
+      heroes: state.item.heroes,
+      etcItems: state.item.etcItems,
+      colleagues: state.item.colleagues,
+      equipments: state.item.equipments,
+      ships: state.item.ships,
+      ships_table: state.item.ships_table,
+      synergies: state.item.synergies,
+      sailors_synergy: state.item.sailors_synergy,
     })
   }).plugin(store);
 }
