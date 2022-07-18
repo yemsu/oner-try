@@ -9,6 +9,7 @@ import {
   getColleagues,
   getSynergies,
   getShips,
+  getRyuoList
 } from '@/plugins/utils/https'
 
 export const state = () => ({
@@ -22,6 +23,7 @@ export const state = () => ({
   heroes: [],
   colleagues: [],
   synergies: [],
+  ryuoes: [],
 })
 
 export const getters = {
@@ -82,6 +84,9 @@ export const mutations = {
   },
   SET_SAILORS_SYNERGY(state, {data}) {    
     state.sailors_synergy = data
+  },
+  SET_RYUOES(state, {data}) {
+    state.ryuoes = data
   },
 }
 const dataTyped = (data) => {
@@ -232,5 +237,17 @@ export const actions = {
     
     commit(`SET_SAILORS_SYNERGY`, {data: sortByGrade(newData)})
     return newData
+  },
+  GET_RYUOES({ commit }) {
+    return getRyuoList()
+      .then(({data}) => {
+        const newData = data.map(dataItem => {
+          const option = parserStrData(dataItem.option)
+          return Object.assign(dataItem, {option})
+        })
+        commit(`SET_RYUOES`, {data: newData})
+        return newData
+      })
+      .catch(error => console.log('GET_RYUOES', error))
   },
 }
