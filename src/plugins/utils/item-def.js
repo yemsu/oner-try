@@ -4,6 +4,37 @@ export const gradesDef = {
   rare: '레어',
   normal: '노말',
 }
+export const hpDefaultValueByHero = {
+  tashigi: 90,
+  raw: 110,
+  yamato: 180,
+  luffy: 170,
+  kid: 150,
+  ace: 100,
+  baby: 80,
+  nami: 90
+}
+export const optionOrderArr = [
+  'hp', 'adt', 'maxD', 'ct', 'dr', 'minD', 'dct', 'ctD', 'ss', 'ms', 'cd', 'df', 'ev', 'str', 'dex', 'int'
+]
+export const optionDefaultValue = {
+  hp: 110,
+  adt: 0,
+  maxD: 100,
+  ct: 1,
+  dr: 0,
+  minD: 100,
+  dct: 1,
+  ctD: 200,
+  ss: 100,
+  ms: 500,
+  cd: 0,
+  df: 1,
+  ev: 0,
+  str: 1,
+  dex: 9,
+  int: 1,
+}
 export const gradeScoresDef = {
   legend: 4,
   epic: 3,
@@ -35,6 +66,7 @@ export const noEquipOptions = {
   po: '생활포인트 획득량',
   ms: '이동속도'
 }
+export const noUnitOptions = ['hp', 'po', 'ms', 'str', 'dex', 'int']
 export const gradesMap = new Map(Object.entries(gradesDef))
 export const equipmentsOnlyOptionsMap = new Map(Object.entries(equipOnlyOptionsDef))
 export const noEquipOptionsMap = new Map(Object.entries(noEquipOptions))

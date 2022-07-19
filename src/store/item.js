@@ -51,6 +51,9 @@ export const getters = {
   getColleagues(state) {
     return state.colleagues
   },
+  getSynergies(state) {
+    return state.synergies
+  },
 }
 
 export const mutations = {

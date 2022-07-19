@@ -3,7 +3,7 @@ import { deepClone, addCommaNumber } from '@/plugins/utils'
 import {
   getCharacters,
   getGameUsers,
-  getRanking 
+  getRanking
 } from '@/plugins/utils/https'
   const dataSettedDefault = (rawData, type) => {
     const _data = rawData[type]
@@ -75,13 +75,13 @@ export const mutations = {
 }
 export const actions = {
   async GET_CHARACTERS({ commit, rootState, dispatch }, payload) {
-    const { item: { heroes, equipments, sailors, colleagues, ships }} = rootState
+    const { item: { heroes, equipments, sailors, colleagues, ships, ryuoes }} = rootState
     if(heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
     if(equipments.length === 0) await dispatch('item/GET_EQUIPMENTS','', { root: true })
     if(sailors.length === 0) await dispatch('item/GET_SAILORS','', { root: true })
     if(colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
     if(ships.length === 0) await dispatch('item/GET_SHIPS','', { root: true })
-
+    if(ryuoes.length === 0) await dispatch('item/GET_RYUOES','', { root: true })
     return getCharacters(payload)
       .then(({data}) => {
         const newData = data.map(character => {
@@ -112,8 +112,13 @@ export const actions = {
           const sailors = dataParser(character, 'sailors')
           const colleagues = dataParser(character, 'colleagues')
           const ship = dataParser(character, 'ship')
+          const findCharacterRyuo = rootState.item.ryuoes[character.ryuo - 1]
+          const ryuo = {
+            name: character.ryuo || null,
+            option: findCharacterRyuo ? findCharacterRyuo.option : null
+          }
 
-          return Object.assign(character, { hero, equipments, sailors, colleagues , ship})
+          return Object.assign(character, { hero, equipments, sailors, colleagues , ship, ryuo})
         })
         
         commit(`SET_CHARACTERS`, {data: newData, type: 'characters'})

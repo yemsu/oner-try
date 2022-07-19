@@ -46,6 +46,10 @@ export const getSynergies = () => {
   return $axios.get(`/synergies`)
     .catch(error => errorHandler('getSynergies', error))
 }
+export const getRyuoList = () => {
+  return $axios.get(`/ryuoList`)
+    .catch(error => errorHandler('getRyuoList', error))
+}
 export const getCompositionPageViews = (params) => {
   if(!params) params = { startDate: '2022-7-9' }
   return $axios.get(`/compositionPageViews`, { params })
