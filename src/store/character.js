@@ -1,4 +1,5 @@
 import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
+import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
 import { deepClone, addCommaNumber } from '@/plugins/utils'
 import {
   getCharacters,
@@ -75,13 +76,14 @@ export const mutations = {
 }
 export const actions = {
   async GET_CHARACTERS({ commit, rootState, dispatch }, payload) {
-    const { item: { heroes, equipments, sailors, colleagues, ships, ryuoes }} = rootState
+    const { item: { heroes, equipments, sailors, colleagues, ships, ryuoes, synergies }} = rootState
     if(heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
     if(equipments.length === 0) await dispatch('item/GET_EQUIPMENTS','', { root: true })
     if(sailors.length === 0) await dispatch('item/GET_SAILORS','', { root: true })
     if(colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
     if(ships.length === 0) await dispatch('item/GET_SHIPS','', { root: true })
     if(ryuoes.length === 0) await dispatch('item/GET_RYUOES','', { root: true })
+    if(synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
     return getCharacters(payload)
       .then(({data}) => {
         const newData = data.map(character => {
@@ -117,8 +119,12 @@ export const actions = {
             name: characterRyuo.name,
             option: characterRyuo.option
           }] : [null]
+          Object.assign(character, { hero, equipments, sailors, colleagues , ship, ryuo})
 
-          return Object.assign(character, { hero, equipments, sailors, colleagues , ship, ryuo})
+          const characterSynergies = getCharacterSynergies(sailors, rootState.synergies)
+          const totalOption = getTotalOption(character, characterSynergies)
+
+          return Object.assign(character, { totalOption, synergies: characterSynergies })
         })
         
         commit(`SET_CHARACTERS`, {data: newData, type: 'characters'})

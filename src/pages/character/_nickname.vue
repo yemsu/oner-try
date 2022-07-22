@@ -56,22 +56,29 @@
                 </template>
               </item-list>
             </title-content>
+            <div class="area-synergies">
+              <synergy-desc
+                v-if="activeTab.synergies.length !== 0"
+                :synergies="activeTab.synergies"
+              />
+            </div>
             <div class="all-options-main">
               <item-detail-info
                 type="total"
                 columns="3"
                 colorMode="white"
-                :options="totalOption(activeTab).splice(0,12)"
+                :options="activeTab.totalOption.slice(0,12)"
                 :plusMinusUnit="false"
                 :showValueDecimal="true"
               />
+              <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
             </div>
             <div class="all-options-sub">
               <item-detail-info
                 type="total"
                 columns="1"
                 colorMode="white"
-                :options="totalOption(activeTab).splice(12)"
+                :options="activeTab.totalOption.slice(12)"
                 :plusMinusUnit="false"
                 :showValueDecimal="true"
               />
@@ -84,11 +91,11 @@
 </template>
 
 <script>
+import SynergyDesc from '@/components/item/SynergyDesc.vue'
 import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
 import VTab from '@/components/common/VTab.vue'
 import TitleContent from '@/components/common/TitleContent.vue'
 import setMeta from '@/plugins/utils/meta';
-import { optionDefaultValue, optionOrderArr, hpDefaultValueByHero } from '@/plugins/utils/item-def'
 import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
 import { postCharacterPageView, getCharacterPageViews, postMurgeCharacterView } from '@/plugins/utils/https'
 import { mapGetters, mapMutations, mapActions } from 'vuex';
@@ -97,7 +104,8 @@ export default {
   components: {
     VTab,
     TitleContent,
-    CharacterSearchBox
+    CharacterSearchBox,
+    SynergyDesc
   },
   head() {
     return setMeta({
@@ -148,20 +156,13 @@ export default {
           columnNum: "1",
           rowNum: "1",
         },
-      ]
+      ],
     }
   },
   computed: {
     ...mapGetters({
-      characters: 'character/getCharacters',
-      synergies: 'item/getSynergies',
-    })
-  },
-  async created() {
-    if(this.characters.length === 0) await this.getCharacters({ nickName: this.nickname })
-    if(this.synergies.length === 0) await this.getSynergies()
-    this.checkCharacterData()
-    console.log('characters', this.characters)
+      characters: 'character/getCharacters'
+    }),
   },
   mounted() {
     this.sendPageView()
@@ -169,79 +170,14 @@ export default {
   methods: {
     ...mapActions({
       getCharacters: 'character/GET_CHARACTERS',
-      getSynergies: 'item/GET_SYNERGIES',
     }),
     ...mapMutations({
       setUserNickName: 'character/SET_NICKNAME'
     }),
     async fnSearch(nickName) {
       await this.getCharacters({ nickName })
+      console.log('fnSearch', nickName, this.characters)
       this.checkCharacterData()
-    },
-    totalOption(character) {
-      const { equipments, sailors, colleagues, ship, ryuo } = character
-
-      const sailorNames = sailors.map(sailor => sailor && sailor.name).filter(sailor => sailor)
-      const characterSynergies = this.synergies.filter(synergy => {
-        const checkArr = synergy.sailors.map(synergySailor => {
-          return sailorNames.includes(synergySailor)
-        })
-        const checkSet = new Set(checkArr)
-        // console.log(synergy, checkSet.size === 1, checkSet[0])
-        return checkSet.size === 1 && [...checkSet][0]
-      })
-      // console.log('characterSynergies', characterSynergies)
-      const allItem = [...equipments, ...sailors, ...colleagues, ...ship, ...ryuo, ...characterSynergies]
-      const allOption = this.getOptions(allItem, character)
-      // console.log('allOption', allOption)
-      const totalOption = Object.keys(optionDefaultValue).reduce((acc, key) => {
-        const checkOption = allOption[key] || 0
-        return Object.assign(acc, {[key]: checkOption + optionDefaultValue[key]})
-      }, {})
-      // console.log('totalOption', totalOption)      
-      // ev는 str 수치를 더한다.
-      totalOption.ev += totalOption.str
-
-      // dex는 레벨을 더한다.
-      totalOption.dex += character.lv
-
-      const result = optionOrderArr.map(key => ({[key]: totalOption[key]}))
-      console.log('result', result)
-      return result
-    },
-    optionDefaultValue(key, character) {
-      return key === 'hp' ? hpDefaultValueByHero[character.hero.groupName] : optionDefaultValue[key]
-    },
-    getOptions (allOption) {
-      const options = allOption
-        .reduce((acc, data) => { 
-          if(!data?.option) return acc
-          // 여기: 데이터 없으면 기본값 뱉도록 수정 필요
-          const { option: options, gradeOption: gradeOptions, stack } = data
-          const checkGradeOption = gradeOptions || []
-          for(const option of [...options, ...checkGradeOption]) {
-            const key = Object.keys(option)[0]
-            const accValue = acc[key] || 0
-            const newValue = accValue + this.calcOptionByStack(option, stack)
-            Object.assign(acc, {[key]: newValue})
-          }
-          return acc
-        }, {})
-      return options
-    },    
-    calcOptionByStack(option, stack) {
-      const key = Object.keys(option)[0]
-      const value = option[key]
-      if(typeof(value) === 'string' && !value.includes('~')) {
-        return value*1
-      }
-
-      const optionValueMin = option[key].split('~')[0]*1
-      const optionValueMax = option[key].split('~')[1]*1
-      const stackValue = stack ? stack*1 : 1
-      const optionEachStack = (optionValueMax - optionValueMin) / 100
-      const optionValueResult = (optionEachStack * stackValue) + optionValueMin
-      return optionValueResult
     },
     checkCharacterData() {
       if(this.characters.length === 0) {
