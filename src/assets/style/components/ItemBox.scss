@@ -182,19 +182,16 @@ $space: 3px;
   }
   .area-detail {
     padding: 5px;
-    font-size: $font-size-S-pc;
     white-space: nowrap;
   }
   .tooltip {
-    $tooltip-bg: rgba(0, 0, 0, 0.8);
+    $tooltip-bg: var(--bg-dark-dim);
     display: none;
     position: absolute;
     z-index: 2;
     top: 5px;
     right: 0;
     background-color: $tooltip-bg;
-    font-weight: 300;
-    color: #fff;
     text-align: left;
     transform: translateX(100%);
     &:before {
@@ -211,18 +208,6 @@ $space: 3px;
       border-bottom-color: transparent;
       transform: translate(-100%, -50%);
       content: '';
-    }
-    ::v-deep {
-      .details {
-        .options {
-          .title {
-            &.color-point-sub {
-              color: $color-point-sub-bright;
-            }
-          }
-        }
-      }
-
     }
   }
 }

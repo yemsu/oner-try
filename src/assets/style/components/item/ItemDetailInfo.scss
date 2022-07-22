@@ -1,43 +1,102 @@
+$font-small: $font-size-S-pc;
 
 .details {
-  .options {
-    .title {
-      color: var(--color-gray-200);
-      &.color-point-sub {
-        color: $color-point-sub;
-      }
-    }
+  .title {
+    word-break: keep-all;
   }
-  &.basic {
-    > div {
-      display: flex;
-      &:nth-child(n + 2) {
-        margin-top: 0.2em;
-      }
-    }
-    dt {
-      margin-right: 0.6em;
-    }
-    dd {
-      letter-spacing: 0;
-  }
-  }
-  &.list-main {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    margin-left: 40px;
-    > div {
-      border-left: 2px solid rgba(0, 0, 0, 0.1);
-      padding-left: 8px;
-      &:nth-child(n+2) {
-        margin-left: 20px;
-      }
-      .title {
-        font-size: $font-size-S-pc;
+  &.type {
+    &-basic {
+      font-size: $font-small;
+      > .wrap-detail {
+        display: flex;
+        gap: 0.6em;
+        &:nth-child(n + 2) {
+          margin-top: 0.2em;
+        }
       }
       dd {
-        font-size: $font-size-M-pc;
+        letter-spacing: 0;
+      }
+    }
+    &-list-main {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin-left: 40px;
+      > .wrap-detail {
+        border-left: 2px solid rgba(0, 0, 0, 0.1);
+        padding-left: 8px;
+        &:nth-child(n+2) {
+          margin-left: 20px;
+        }
+        .title {
+          font-size: $font-small;
+        }
+        dd {
+          font-size: $font-size-M-pc;
+        }
+      }
+    }
+    &-total {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      justify-content: center;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      text-align: center;
+      gap: 10px;
+      font-size: $font-small;
+      .wrap-detail {
+        display: block;
+      }
+      dd {
+        font-weight: 300;
+      }
+    }
+  }
+  &.color {
+    &-black {
+      .title {
+        color: var(--color-gray-200);
+      }
+      .drop-monster {
+        .title {
+          &.color-point {
+            color: $color-point;
+          }
+        }
+      }
+      .option {
+        .title {
+          &.color-point {
+            color: $color-point-sub;
+          }
+        }
+      }
+    }
+    &-white {
+      .title {
+        color: var(--color-gray-200);
+      }
+      dd {
+        color: var(--color-white);
+        font-weight: 300
+      }
+      .drop-monster {
+        .title {
+          &.color-point {
+            color: $color-point-bright;
+          }
+        }
+      }
+      .option {
+        .title {
+          &.color-point {
+            color: $color-point-sub-bright;
+          }
+        }
       }
     }
   }
@@ -54,11 +113,5 @@
   .mark {
     // font-weight: bold;
     color: $color-neon;
-  }
-  .color-drop {
-    color: $color-point-bright;
-  }
-  .color-option-minus {
-    color: $color-point;
   }
 }

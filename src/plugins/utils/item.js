@@ -6,7 +6,8 @@ export const findData = (dataList, key, checkValue) => {
 }
 export const imgSrc = (type, id) => {
   if(!type || !id) return ''
-  const imgName = type === 'ship' || type === 'hero' ? id : type[0] + id
+  const imgNameUseId = ['ship', 'hero', 'ryuo']
+  const imgName = imgNameUseId.includes(type) ? id : type[0] + id
   const path = `/static/image/${type}/${imgName}.png`
   // const url = process.env.NODE_ENV === 'production'
   //   ? process.env.CONT_PATH : ''

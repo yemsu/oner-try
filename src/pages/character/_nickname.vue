@@ -55,13 +55,15 @@
                 </template>
               </item-list>
             </title-content>
-          </div>
-          <div class="all-options">
-            <item-detail-info
-              :options="totalOption(activeTab)"
-              :plusMinusUnit="false"
-              :showValueDecimal="true"
-            />
+            <div class="all-options">
+              <item-detail-info
+                type="total"
+                colorMode="white"
+                :options="totalOption(activeTab)"
+                :plusMinusUnit="false"
+                :showValueDecimal="true"
+              />
+            </div>
           </div>
         </template>
       </v-tab>
@@ -128,6 +130,12 @@ export default {
           type: "ship",
           columnNum: "1",
         },
+        {
+          title: "류오",
+          type: "ryuo",
+          columnNum: "1",
+          rowNum: "1",
+        },
       ]
     }
   },
@@ -142,7 +150,6 @@ export default {
     if(this.synergies.length === 0) await this.getSynergies()
     this.checkCharacterData()
     console.log('characters', this.characters)
-    console.log('synergies', this.synergies)
   },
   mounted() {
     this.sendPageView()
@@ -158,7 +165,7 @@ export default {
     totalOption(character) {
       const { equipments, sailors, colleagues, ship, ryuo } = character
 
-      const sailorNames = sailors.map(sailor => sailor.name)
+      const sailorNames = sailors.map(sailor => sailor && sailor.name).filter(sailor => sailor)
       const characterSynergies = this.synergies.filter(synergy => {
         const checkArr = synergy.sailors.map(synergySailor => {
           return sailorNames.includes(synergySailor)
@@ -167,58 +174,60 @@ export default {
         // console.log(synergy, checkSet.size === 1, checkSet[0])
         return checkSet.size === 1 && [...checkSet][0]
       })
-      console.log('characterSynergies', characterSynergies)
+      // console.log('characterSynergies', characterSynergies)
       
-      const allOption = [...equipments, ...sailors, ...colleagues, ...ship, ryuo, ...characterSynergies]
+      const allOption = [...equipments, ...sailors, ...colleagues, ...ship, ...ryuo, ...characterSynergies]
+      // console.log('allOption', allOption)
       const totalOption = this.getOptions(allOption, character)
-      console.log('totalOption', totalOption)
-
+      // console.log('totalOption', totalOption)
+      
       // ev는 str 수치를 더한다.
       totalOption.ev += totalOption.str
 
       // dex는 레벨을 더한다.
       totalOption.dex += character.lv
 
-      const result = optionOrderArr.map(option => ({[option]: totalOption[option]}))
+      const result = optionOrderArr.map(key => {
+        const checkTotalOption = totalOption[key] || 0
+        const result = checkTotalOption + this.optionDefaultValue(key, character)
+        return {[key]: result}
+      })
       console.log('result', result)
       return result
     },
     optionDefaultValue(key, character) {
       return key === 'hp' ? hpDefaultValueByHero[character.hero.groupName] : optionDefaultValue[key]
     },
-    getOptions (allOption, character) {
+    getOptions (allOption) {
       const options = allOption
         .reduce((acc, data) => { 
           if(!data?.option) return acc
           // 여기: 데이터 없으면 기본값 뱉도록 수정 필요
           const { option: options, gradeOption: gradeOptions, stack } = data
-          for(const option of options) {
+          const checkGradeOption = gradeOptions || []
+          for(const option of [...options, ...checkGradeOption]) {
             const key = Object.keys(option)[0]
-            const accValue = acc[key] || this.optionDefaultValue(key, character)
+            const accValue = acc[key] || 0
             const newValue = accValue + this.calcOptionByStack(option, stack)
             Object.assign(acc, {[key]: newValue})
           }
-          if(!gradeOptions) return acc
-          for(const gradeOption of gradeOptions) {
-            const key = Object.keys(gradeOption)[0]
-            const accValue = acc[key] || this.optionDefaultValue(key, character)
-            const newValue = accValue + this.calcOptionByStack(gradeOption, 1)
-            Object.assign(acc, {[key]: newValue})
-          }
-
-          // acc = acc.concat(options)
+          
           return acc
         }, {})
       return options
     },    
     calcOptionByStack(option, stack) {
       const key = Object.keys(option)[0]
-      const optionValueMin = (option[key].split('~')[0]*1)
-      const optionValueMax = option[key].split('~')[1]
-      const stackValue = (stack*1) || 1
-      const optionValueResult = optionValueMax 
-        ? (((optionValueMax - (optionValueMin*1)) / 100) * stackValue) + optionValueMin
-        : optionValueMin
+      const value = option[key]
+      if(typeof(value) === 'string' && !value.includes('~')) {
+        return value*1
+      }
+
+      const optionValueMin = option[key].split('~')[0]*1
+      const optionValueMax = option[key].split('~')[1]*1
+      const stackValue = stack ? stack*1 : 1
+      const optionEachStack = (optionValueMax - optionValueMin) / 100
+      const optionValueResult = (optionEachStack * stackValue) + optionValueMin
       return optionValueResult
     },
     checkCharacterData() {

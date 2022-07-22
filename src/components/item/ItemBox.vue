@@ -51,6 +51,7 @@
       <!-- tooltip -->
       <div v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
         <item-detail-info 
+          :colorMode="visibleDetail ? 'black' : 'white'"
           :options="item.option"
           :dropMonster="item.dropMonster"
           :type="itemDetailInfoType"

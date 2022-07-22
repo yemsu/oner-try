@@ -1,7 +1,7 @@
 <template>
-  <dl :class="`details ${type}`">
-    <div v-if="dropMonster">
-      <dt class="color-drop">획득처</dt>
+  <dl :class="`details type-${type} color-${colorMode}`">
+    <div v-if="dropMonster" class="wrap-detail drop-monster">
+      <dt :class="['title', {'color-point': highlightTitle}]">획득처</dt>
       <dd>{{ dropMonster }}</dd>
     </div>
     <template v-if="options">
@@ -9,10 +9,9 @@
         v-for="(option, i) in options"
         :key="`itemOption${i}`"
         :class="{'option-match': isMarkOption(Object.keys(option)[0])}"
-        class="options"
+        class="wrap-detail option"
       >
-        <dt :class="['title', {'color-point-sub': highlightTitle}]">
-          <!-- <span v-if="isMarkOption(Object.keys(option)[0])" class="mark"> ✔ </span> -->
+        <dt :class="['title', {'color-point': highlightTitle}]">
           {{ getOption(option, 'title') }}
         </dt>
         <dd>
@@ -37,9 +36,13 @@ export default {
       type: String,
       default: () => null
     },
+    colorMode: {
+      type: String,
+      default: () => 'black'
+    },
     type: {
       type: String,
-      default: () => 'basic' // list-main
+      default: () => 'basic' // basic, list-main, total
     },
     highlightTitle: {
       type: Boolean,
@@ -60,7 +63,7 @@ export default {
     markOptions: {
       type: Array,
       default: () => []
-    }
+    },
   },
   methods: {
     getOption(option, optionType) {

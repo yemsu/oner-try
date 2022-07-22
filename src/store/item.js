@@ -246,8 +246,10 @@ export const actions = {
       .then(({data}) => {
         const newData = data.map(dataItem => {
           const option = parserStrData(dataItem.option)
-          return Object.assign(dataItem, {option})
+          const name = `${dataItem.name}차 류오`
+          return Object.assign(dataItem, {name, option})
         })
+        // console.log('GET_RYUOES', newData)
         commit(`SET_RYUOES`, {data: newData})
         return newData
       })
