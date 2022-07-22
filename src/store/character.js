@@ -112,11 +112,11 @@ export const actions = {
           const sailors = dataParser(character, 'sailors')
           const colleagues = dataParser(character, 'colleagues')
           const ship = dataParser(character, 'ship')
-          const findCharacterRyuo = rootState.item.ryuoes[character.ryuo - 1]
-          const ryuo = {
-            name: character.ryuo || null,
-            option: findCharacterRyuo ? findCharacterRyuo.option : null
-          }
+          const characterRyuo = rootState.item.ryuoes.find(ryuo => ryuo.name.includes(`${character.ryuo}차`))
+          const ryuo = characterRyuo ? [{
+            name: characterRyuo.name,
+            option: characterRyuo.option
+          }] : [null]
 
           return Object.assign(character, { hero, equipments, sailors, colleagues , ship, ryuo})
         })
