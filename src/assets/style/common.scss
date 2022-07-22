@@ -102,11 +102,11 @@ caption, .ir-hidden {
   }
   &.small {
     width: 5px;
-    height: 1rem;
-    margin-left: 3px;
+    height: 1.4em;
+    margin-left: 0.45em;
     &:before {
-      width: 5px;
-      height: 5px;
+      width: 0.45em;
+      height: 0.45em;
       border-width: 1px;
     }
   }
@@ -162,7 +162,6 @@ caption, .ir-hidden {
   }
 }
 .wrap-icon-text {
-  line-height: 1;
   [class*=icon-] {
     margin-left: 5px;
   }
@@ -277,7 +276,6 @@ caption, .ir-hidden {
   text-align: center;
   a {
     color: inherit;
-    text-decoration: underline;
   }
 }
 
