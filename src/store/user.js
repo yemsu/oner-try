@@ -62,13 +62,8 @@ export const mutations = {
   SET_NICKNAME(state, payload) {
     state.nickName = payload
   },
-  SET_RANKING(state, data) {
-    const sortData = data.sort((a, b) => {
-      const logic = (item) => item.lv * (item.bounty / 1000)
-      return logic(b) - logic(a)
-    })
-    
-    state.ranking = sortData
+  SET_RANKING(state, data) {    
+    state.ranking = data
   },
   ADD_RANKING_DATA(state, { number }) {
     const { rankingCrr, ranking } = state
@@ -115,8 +110,14 @@ export const actions = {
             : new Array(3).fill(null)
           return Object.assign(user, { sailors, colleagues })
         })
-        commit(`SET_RANKING`, newData)
-        return data
+        const sortData = data.sort((a, b) => {
+          if(b.bounty === a.bounty) {
+            return b.lv - a.lv
+          }
+          return b.bounty - a.bounty
+        })
+        commit(`SET_RANKING`, sortData)
+        return sortData
       })
       .catch(error => console.log('user/GET_RANKING', error))
   }

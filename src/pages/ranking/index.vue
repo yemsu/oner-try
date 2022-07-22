@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="inner-size-basic mrg-top-medium">
-    <!-- <p class="bar-notice">
-      ❗ 랭킹 산정 방식이 변경되었습니다. (2022.07.12)
-      <br><strong>레벨 > 현상금</strong> 👉 <strong>레벨 * 현상금</strong>
-    </p> -->
+    <p class="bar-notice">
+      ❗ 랭킹 산정 방식이 변경되었습니다. (2022.07.22)
+      <br><strong>레벨 * 현상금</strong> 👉 <strong>현상금 > 레벨</strong>
+    </p>
       <!-- <ul class="list-filter">
         <li>
           <button class="button-filter" @click="filterHero">
