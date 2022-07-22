@@ -121,7 +121,7 @@ export const actions = {
           }] : [null]
           Object.assign(character, { hero, equipments, sailors, colleagues , ship, ryuo})
 
-          const characterSynergies = getCharacterSynergies(sailors, rootState.synergies)
+          const characterSynergies = getCharacterSynergies(sailors, rootState.item.synergies)
           const totalOption = getTotalOption(character, characterSynergies)
 
           return Object.assign(character, { totalOption, synergies: characterSynergies })
