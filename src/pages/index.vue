@@ -70,7 +70,7 @@
               class="text-link wrap-icon-text"
             >
               전체 랭킹 보러가기
-              <i class="icon-arrow right small with-text color-point"></i>
+              <i class="icon-arrow right small with-text border-point"></i>
             </router-link>
           </p>
         </div>
