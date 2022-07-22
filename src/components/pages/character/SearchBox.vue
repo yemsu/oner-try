@@ -6,6 +6,7 @@
     :size="size"
     resultPath="/character"
     :paramKey="['nickname']"
+    @onSearch="fnSearch"
   />
 </template>
 
@@ -20,6 +21,10 @@ export default {
     size: {
       type: String,
       default: () => "basic"
+    },
+    fnSearch: {
+      type: Function,
+      default: () => {}
     }
   },
   data() {

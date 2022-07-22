@@ -5,6 +5,7 @@
         <div class="align-right">
           <character-search-box
             :matchingData="userNickNames"
+            :fnSearch="fnSearch"
             size="small"
           />
         </div>
@@ -173,6 +174,10 @@ export default {
     ...mapMutations({
       setUserNickName: 'character/SET_NICKNAME'
     }),
+    async fnSearch(nickName) {
+      await this.getCharacters({ nickName })
+      this.checkCharacterData()
+    },
     totalOption(character) {
       const { equipments, sailors, colleagues, ship, ryuo } = character
 
