@@ -55,11 +55,22 @@
                 </template>
               </item-list>
             </title-content>
-            <div class="all-options">
+            <div class="all-options-main">
               <item-detail-info
                 type="total"
+                columns="3"
                 colorMode="white"
-                :options="totalOption(activeTab)"
+                :options="totalOption(activeTab).splice(0,12)"
+                :plusMinusUnit="false"
+                :showValueDecimal="true"
+              />
+            </div>
+            <div class="all-options-sub">
+              <item-detail-info
+                type="total"
+                columns="1"
+                colorMode="white"
+                :options="totalOption(activeTab).splice(12)"
                 :plusMinusUnit="false"
                 :showValueDecimal="true"
               />
@@ -175,23 +186,21 @@ export default {
         return checkSet.size === 1 && [...checkSet][0]
       })
       // console.log('characterSynergies', characterSynergies)
-      
-      const allOption = [...equipments, ...sailors, ...colleagues, ...ship, ...ryuo, ...characterSynergies]
+      const allItem = [...equipments, ...sailors, ...colleagues, ...ship, ...ryuo, ...characterSynergies]
+      const allOption = this.getOptions(allItem, character)
       // console.log('allOption', allOption)
-      const totalOption = this.getOptions(allOption, character)
-      // console.log('totalOption', totalOption)
-      
+      const totalOption = Object.keys(optionDefaultValue).reduce((acc, key) => {
+        const checkOption = allOption[key] || 0
+        return Object.assign(acc, {[key]: checkOption + optionDefaultValue[key]})
+      }, {})
+      // console.log('totalOption', totalOption)      
       // ev는 str 수치를 더한다.
       totalOption.ev += totalOption.str
 
       // dex는 레벨을 더한다.
       totalOption.dex += character.lv
 
-      const result = optionOrderArr.map(key => {
-        const checkTotalOption = totalOption[key] || 0
-        const result = checkTotalOption + this.optionDefaultValue(key, character)
-        return {[key]: result}
-      })
+      const result = optionOrderArr.map(key => ({[key]: totalOption[key]}))
       console.log('result', result)
       return result
     },
@@ -211,7 +220,6 @@ export default {
             const newValue = accValue + this.calcOptionByStack(option, stack)
             Object.assign(acc, {[key]: newValue})
           }
-          
           return acc
         }, {})
       return options

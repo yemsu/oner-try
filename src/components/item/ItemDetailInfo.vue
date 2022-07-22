@@ -1,5 +1,5 @@
 <template>
-  <dl :class="`details type-${type} color-${colorMode}`">
+  <dl :class="`details type-${type} color-${colorMode} columns-${columns}`">
     <div v-if="dropMonster" class="wrap-detail drop-monster">
       <dt :class="['title', {'color-point': highlightTitle}]">획득처</dt>
       <dd>{{ dropMonster }}</dd>
@@ -43,6 +43,10 @@ export default {
     type: {
       type: String,
       default: () => 'basic' // basic, list-main, total
+    },
+    columns: {
+      type: String,
+      default: () => '1'
     },
     highlightTitle: {
       type: Boolean,

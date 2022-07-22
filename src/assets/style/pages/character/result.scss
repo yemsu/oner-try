@@ -54,14 +54,21 @@
     grid-column: auto / span 1;
     grid-row: auto / span 1;    
   }
-  .all-options {
-    grid-column: auto / span 4;
+  .all-options-main {
+    grid-column: auto / span 3;
+    grid-row: auto / span 2;    
+  }
+  .all-options-sub {
+    grid-column: auto / span 1;
     grid-row: auto / span 2;    
   }
   ::v-deep {
     .box-item {
       padding-left: 15px;
       padding-right: 15px;
+    }
+    .item-blank {
+      margin-bottom: 32px;
     }
   }
 }
