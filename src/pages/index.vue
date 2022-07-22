@@ -11,21 +11,21 @@
               class="text-link wrap-icon-text"
             >
               선원 도감
-              <i class="icon-arrow right small with-text color-point"></i>
+              <i class="icon-arrow right small with-text border-point"></i>
             </router-link>
             <router-link
               to="/items/colleagues"
               class="text-link wrap-icon-text"
             >
               동료 도감
-              <i class="icon-arrow right small with-text color-point"></i>
+              <i class="icon-arrow right small with-text border-point"></i>
             </router-link>
             <router-link
               to="/items/sailor"
               class="text-link wrap-icon-text"
             >
               선박 도감
-              <i class="icon-arrow right small with-text color-point"></i>
+              <i class="icon-arrow right small with-text border-point"></i>
             </router-link>
           </p>
         </div>
