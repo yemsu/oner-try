@@ -15,7 +15,7 @@ export const hpDefaultValueByHero = {
   nami: 90
 }
 export const optionOrderArr = [
-  'hp', 'adt', 'maxD', 'ct', 'dr', 'minD', 'dct', 'ctD', 'ss', 'ms', 'cd', 'df', 'ev', 'str', 'dex', 'int'
+  'adt', 'maxD', 'ct', 'dr', 'minD', 'dct', 'ctD', 'ss', 'ms', 'cd', 'df', 'ev', 'str', 'dex', 'int', 'hp'
 ]
 export const optionDefaultValue = {
   hp: 110,
@@ -62,7 +62,7 @@ export const noEquipOptions = {
   hp: '체력',
   ev: '회피 확률',
   dr: '추가 룬파괴량',
-  cd: '재사용 대기시간 감소',
+  cd: '쿨타임 감소',
   po: '생활포인트 획득량',
   ms: '이동속도'
 }
