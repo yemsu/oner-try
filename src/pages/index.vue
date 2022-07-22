@@ -1,10 +1,40 @@
 <template>
   <div class="inner-size-basic">
     <div class="wrap-quick-menu">
-      <section class="column-2 point-banner">
+      <section class="column-full point-banner">
+        <div class="box-flex">
+          <div class="item-flex area-img">
+            <img src="@/assets/images/character-update-220722.jpg" alt="">
+          </div>
+          <div class="item-flex about">
+            <div class="area-text">
+              <h3 class="title">🤹‍♂️ 캐릭터 페이지에 기능이 추가되었습니다 🎉</h3>
+              <p>류오 / 시너지 / 스탯이 추가되었어요!</p>
+              <!-- <p>다른 유저의 빌드를 참고해 보세요.</p> -->
+            </div>
+            <div class="area-contents">
+              <character-search-box
+                :matchingData="userNickNames"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="quick-menu column">
         <div class="area-text">
-          <h3 class="title">📙 아이템 도감 페이지가 오픈되었습니다 🎉</h3>
-          <p>등급 및 옵션을 필터링하고 원하는 아이템 정보를 확인해보세요.</p>
+          <h3 class="title">조합법 검색 👀</h3>
+          <p>조합법을 한눈에 볼 수 있습니다.</p>
+        </div>
+        <div class="area-contents">
+          <composition-search-box
+            :matchingData="compositionItems"
+          />
+        </div>
+      </section>
+      <section class="quick-menu column">
+        <div class="area-text">
+          <h3 class="title">아이템 도감 📙</h3>
+          <p>등급 및 옵션을 필터링하고 <br>원하는 아이템 정보를 확인해보세요. </p>
           <p class="wrap-links">
             <router-link
               to="/items/sailor"
@@ -30,29 +60,7 @@
           </p>
         </div>
       </section>
-      <section class="quick-menu column">
-        <div class="area-text">
-          <h3 class="title">캐릭터 검색</h3>
-          <p>다른 유저의 빌드를 참고해 보세요. 😎</p>
-        </div>
-        <div class="area-contents">
-          <character-search-box
-            :matchingData="userNickNames"
-          />
-        </div>
-      </section>
-      <section class="quick-menu column">
-        <div class="area-text">
-          <h3 class="title">조합법 검색</h3>
-          <p>조합법을 한눈에 볼 수 있습니다. 👀</p>
-        </div>
-        <div class="area-contents">
-          <composition-search-box
-            :matchingData="compositionItems"
-          />
-        </div>
-      </section>
-      <section class="quick-menu column-2">
+      <section class="quick-menu column-full">
         <div class="area-text">
           <h3 class="title">랭킹 TOP 5</h3>
           <p>오늘의 해적왕..🥶 원피스는 어디에 있나요..? 💎 </p>
