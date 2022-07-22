@@ -295,3 +295,35 @@ caption, .ir-hidden {
     opacity: 1;
   }
 }
+
+//  gray box
+.box-gray {
+  padding: 10px 10px;
+  border-radius: 5px;
+  background-color: #f6f6f6;
+  & + .box-gray {
+    margin-top: 5px;
+  }
+  > .title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+}
+
+// positive / netavie
+.color {
+  &-positive {
+    color: $color-point-sub
+  }
+  &-negative {
+    color: $color-point;
+  }
+}
+.line {
+  &-positive {
+    border-color: $color-point-sub-pale;
+  }
+  &-negative {
+    border-color: $color-point-pale;
+  }
+}

@@ -9,6 +9,7 @@ import {
   getColleagues,
   getSynergies,
   getShips,
+  getRyuoList
 } from '@/plugins/utils/https'
 
 export const state = () => ({
@@ -22,6 +23,7 @@ export const state = () => ({
   heroes: [],
   colleagues: [],
   synergies: [],
+  ryuoes: [],
 })
 
 export const getters = {
@@ -49,6 +51,9 @@ export const getters = {
   getColleagues(state) {
     return state.colleagues
   },
+  getSynergies(state) {
+    return state.synergies
+  },
 }
 
 export const mutations = {
@@ -61,8 +66,8 @@ export const mutations = {
   SET_ETC_ITEMS(state, {type, data}) {
     state[type] = data
   },
-  SET_EQUIPMENTS(state, {type, data}) {
-    state[type] = data
+  SET_EQUIPMENTS(state, {data}) {
+    state.equipments = data
   },
   SET_SHIPS(state, {data}) {
     state.ships = data
@@ -82,6 +87,9 @@ export const mutations = {
   },
   SET_SAILORS_SYNERGY(state, {data}) {    
     state.sailors_synergy = data
+  },
+  SET_RYUOES(state, {data}) {
+    state.ryuoes = data
   },
 }
 const dataTyped = (data) => {
@@ -141,10 +149,20 @@ export const actions = {
       })
       .catch(error => console.log('GET_ETC_ITEMS', error))
   },
-  GET_EQUIPMENTS({ commit }, payload) {
-    return getEquipments(payload)
+  GET_EQUIPMENTS({ commit }) {
+    return getEquipments()
       .then(({data}) => {
-        commit(`SET_EQUIPMENTS`, {data, type: 'equipments'})
+        
+        const newData = data.map(dataItem => {
+          const { option, gradeOption } = dataItem
+          const optionObj = {option: parserStrData(option)}
+          const gradeOptionObj = gradeOption
+            ? {gradeOption: parserStrData(gradeOption)}
+            : null
+          return Object.assign(dataItem, {...optionObj, ...gradeOptionObj})
+        })
+
+        commit(`SET_EQUIPMENTS`, {data: newData})
         return data
       })
       .catch(error => console.log('GET_EQUIPMENTS', error))
@@ -222,5 +240,19 @@ export const actions = {
     
     commit(`SET_SAILORS_SYNERGY`, {data: sortByGrade(newData)})
     return newData
+  },
+  GET_RYUOES({ commit }) {
+    return getRyuoList()
+      .then(({data}) => {
+        const newData = data.map(dataItem => {
+          const option = parserStrData(dataItem.option)
+          const name = `${dataItem.name}차 류오`
+          return Object.assign(dataItem, {name, option})
+        })
+        // console.log('GET_RYUOES', newData)
+        commit(`SET_RYUOES`, {data: newData})
+        return newData
+      })
+      .catch(error => console.log('GET_RYUOES', error))
   },
 }

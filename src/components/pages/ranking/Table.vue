@@ -104,8 +104,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      rankingCrr: 'user/getRankingCrr',
-      ranking: 'user/getRanking',
+      rankingCrr: 'character/getRankingCrr',
+      ranking: 'character/getRanking',
       heroes:  'item/getHeroes',
     })
   },
@@ -126,11 +126,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      getRanking: 'user/GET_RANKING',
+      getRanking: 'character/GET_RANKING',
     }),
     ...mapMutations({
-      addRanking: 'user/ADD_RANKING_DATA',
-      resetRanking: 'user/RESET_RANKING_DATA'
+      addRanking: 'character/ADD_RANKING_DATA',
+      resetRanking: 'character/RESET_RANKING_DATA'
     }),
     findHero(name) {
       return this.heroes.find(hero => hero.name === name)

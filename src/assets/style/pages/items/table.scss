@@ -32,10 +32,14 @@ table {
   td {
     vertical-align: middle;
     padding: 15px 10px;
-    font-size: $font-size-MS-pc;
     &.many-text {
       padding-top: 25px;
       padding-bottom: 25px;
+    }
+    ::v-deep {
+      .details .wrap-detail {
+        font-size: $font-size-MS-pc;
+      }
     }
   }
   th, td {
@@ -45,45 +49,6 @@ table {
   }
   tr {
     border-bottom: $table-border;
-  }
-}
-
-.box-gray {
-  padding: 10px 10px;
-  border-radius: 5px;
-  background-color: #f6f6f6;
-  & + .box-gray {
-    margin-top: 5px;
-  }
-  .title {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-}
-
-.synergies {
-  dd {
-    & + dd {
-      margin-top: 6px;
-    }
-  }
-}
-
-// positive / netavie
-.color {
-  &-positive {
-    color: $color-point-sub
-  }
-  &-negative {
-    color: $color-point;
-  }
-}
-.line{
-  &-positive {
-    border-color: $color-point-sub-pale;
-  }
-  &-negative {
-    border-color: $color-point-pale;
   }
 }
 

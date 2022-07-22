@@ -103,6 +103,9 @@ export default {
   },
   computed: {  
     imgSrc() {
+      if(this.item.name && this.item.name.includes('류오')) {
+        return imgSrc('ryuo', 'ryuo')
+      }
       const { type, id, groupName } = this.item
       
       const data = [type, id]

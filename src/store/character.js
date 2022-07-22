@@ -1,9 +1,10 @@
-import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList } from '@/plugins/utils/item'
-import { deepClone } from '@/plugins/utils'
+import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
+import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
+import { deepClone, addCommaNumber } from '@/plugins/utils'
 import {
   getCharacters,
   getGameUsers,
-  getRanking 
+  getRanking
 } from '@/plugins/utils/https'
   const dataSettedDefault = (rawData, type) => {
     const _data = rawData[type]
@@ -27,7 +28,6 @@ import {
   }
 
 export const state = () => ({
-  nickName: '',
   characters: [],
   gameUsers: [],
   ranking: [],
@@ -37,9 +37,6 @@ export const state = () => ({
 export const getters = {
   getCharacters(state) {
     return state.characters
-  },
-  getNickName(state) {
-    return state.nickName
   },
   getGameUsers(state) {
     return state.gameUsers
@@ -59,10 +56,7 @@ export const mutations = {
   SET_GAME_USERS(state, {type, data}) {
     state[type] = data
   },
-  SET_NICKNAME(state, payload) {
-    state.nickName = payload
-  },
-  SET_RANKING(state, data) {    
+  SET_RANKING(state, data) {     
     state.ranking = data
   },
   ADD_RANKING_DATA(state, { number }) {
@@ -76,11 +70,60 @@ export const mutations = {
   },
 }
 export const actions = {
-  GET_CHARACTERS({ commit }, payload) {
+  async GET_CHARACTERS({ commit, rootState, dispatch }, payload) {
+    const { item: { heroes, equipments, sailors, colleagues, ships, ryuoes, synergies }} = rootState
+    if(heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
+    if(equipments.length === 0) await dispatch('item/GET_EQUIPMENTS','', { root: true })
+    if(sailors.length === 0) await dispatch('item/GET_SAILORS','', { root: true })
+    if(colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
+    if(ships.length === 0) await dispatch('item/GET_SHIPS','', { root: true })
+    if(ryuoes.length === 0) await dispatch('item/GET_RYUOES','', { root: true })
+    if(synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
     return getCharacters(payload)
       .then(({data}) => {
-        commit(`SET_CHARACTERS`, {data, type: 'characters'})
-        return data
+        const newData = data.map(character => {
+          // hero
+          const heroData = findData(heroes, 'name', character.heroName)
+          const hero = heroData ? deepClone(heroData) : {id: character.heroName}
+          hero.bounty = addCommaNumber(character.bounty.trim())
+
+          const dataParser = (character, type) => {
+            const data = () => {
+              const _data = character[type]
+              const dataTypeArray = Array.isArray(_data) ? _data : [_data]
+              const result = dataTypeArray.map(data => getDefaultData(data))
+              return parserStrData(result.join(','))
+            }
+            const typeState = type === 'ship' ? 'ships' : type
+            const newData = fillDataAndInsertValue(rootState.item[typeState], data(), 'stack', true)
+
+            const result = type.includes('colleague') 
+            ? fillDefaultList(newData, 3)
+            : type.includes('ship')
+              ? fillDefaultList(newData, 1)
+              : newData
+
+            return result
+          }
+          const equipments = dataParser(character, 'equipments')
+          const sailors = dataParser(character, 'sailors')
+          const colleagues = dataParser(character, 'colleagues')
+          const ship = dataParser(character, 'ship')
+          const characterRyuo = rootState.item.ryuoes.find(ryuo => ryuo.name.includes(`${character.ryuo}차`))
+          const ryuo = characterRyuo ? [{
+            name: characterRyuo.name,
+            option: characterRyuo.option
+          }] : [null]
+          Object.assign(character, { hero, equipments, sailors, colleagues , ship, ryuo})
+
+          const characterSynergies = getCharacterSynergies(sailors, rootState.synergies)
+          const totalOption = getTotalOption(character, characterSynergies)
+
+          return Object.assign(character, { totalOption, synergies: characterSynergies })
+        })
+        
+        commit(`SET_CHARACTERS`, {data: newData, type: 'characters'})
+        return newData
       })
       .catch(error => console.log('GET_CHARACTERS', error))
   },
@@ -119,6 +162,6 @@ export const actions = {
         commit(`SET_RANKING`, sortData)
         return sortData
       })
-      .catch(error => console.log('user/GET_RANKING', error))
+      .catch(error => console.log('character/GET_RANKING', error))
   }
 }

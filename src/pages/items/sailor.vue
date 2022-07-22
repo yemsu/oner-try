@@ -81,33 +81,11 @@
               />
             </td>
             <td>
-              <dl v-if="sailor.synergies.length !== 0" class="synergies">
-                <div
-                  v-for="(synergy, i) in sailor.synergies"
-                  :key="`synergy${sailor.name}${i}`"
-                  class="box-gray" 
-                >
-                  <dt :class="`title color-${classNegaPosi(synergy)}`">
-                    {{ synergy.name }} 
-                  </dt>
-                  <dd>
-                    <item-detail-info
-                      :options="synergy.option"                :highlightTitle="false"
-                    />
-                  </dd>
-                  <dd class="sailors badges badge-gap">
-                    <!-- <span class="badge black">선원</span> -->
-                    <!-- {{ synergy.sailors.join(', ') }} -->
-                    <span
-                      v-for="(sailor, i) in synergy.sailors"
-                      :key="`sailor${i}`"
-                      :class="`badge size-big type-round line-${classNegaPosi(synergy)}`"
-                    >
-                      {{ sailor }}
-                    </span>
-                  </dd>
-                </div>
-              </dl>
+              <!-- <dl v-if="sailor.synergies.length !== 0" class="synergies"> -->
+              <synergy-desc
+                v-if="sailor.synergies.length !== 0"
+                :synergies="sailor.synergies"
+              />
               <span v-else>-</span>
             </td>
           </tr>
@@ -119,6 +97,7 @@
 
 <script>
 // import { mapGetters, mapActions, mapMutations } from 'vuex'
+import SynergyDesc from '@/components/item/SynergyDesc.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
 import setMeta from '@/plugins/utils/meta';
 import { noEquipOptions, gradesDef } from '@/plugins/utils/item-def'
@@ -131,7 +110,8 @@ export default {
     })
   },
   components: {
-    BaseButton
+    BaseButton,
+    SynergyDesc
   },
   async asyncData({ store }) {
     const { item: { sailors_synergy } } = store.state
@@ -206,13 +186,6 @@ export default {
         this[dataName].push(key)
       }     
     },
-    isNegative(synergy) {
-      const sampleValue = Object.values(synergy.option[0])[0]
-      return sampleValue.includes('-')
-    },
-    classNegaPosi(synergy) {
-      return this.isNegative(synergy) ? 'negative' : 'positive'
-    }
   }
 }
 </script>

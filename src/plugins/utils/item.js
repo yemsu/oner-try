@@ -1,30 +1,23 @@
 import { deepClone, getOnlyText, objArrKeys } from '@/plugins/utils'
-import { optionsMap, gradeScoresDef } from '@/plugins/utils/item-def'
+import { gradeScoresDef } from '@/plugins/utils/item-def'
 
 export const findData = (dataList, key, checkValue) => {
   return dataList.find(data => getOnlyText(data[key]) === getOnlyText(checkValue))
 }
 export const imgSrc = (type, id) => {
   if(!type || !id) return ''
-  const imgName = type === 'ship' || type === 'hero' ? id : type[0] + id
+  const imgNameUseId = ['ship', 'hero', 'ryuo']
+  const imgName = imgNameUseId.includes(type) ? id : type[0] + id
   const path = `/static/image/${type}/${imgName}.png`
   // const url = process.env.NODE_ENV === 'production'
   //   ? process.env.CONT_PATH : ''
   return process.env.CONT_PATH  + path
-}
-export const getOptionTitle = (key) => {
-  const findKey = [...optionsMap.keys()].find(optionKey => optionKey.toLowerCase() === key.toLowerCase())
-  return optionsMap.get(findKey) 
 }
 export const getGradeScore = (key) => {
   return gradeScoresDef[key]
 }
 export const sortByGrade = (items) => {
   return items.sort((a, b) => getGradeScore(b.grade) - getGradeScore(a.grade))
-}
-export const getOptionUnit = (key) => {
-  const noUnit = ['hp', 'po', 'ms']
-  return noUnit.includes(key) ? '' : '%'
 }
 export const parserStrData = (strData, type = 'object') => { // name: value, name: value ...
   if(!strData) return []
@@ -54,10 +47,10 @@ export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey,
     }  
     const fullDataClone = deepClone(fullData)
 
-    if(fullDataClone.option) {
+    if(fullDataClone.option && typeof(fullDataClone.option) === 'string') {
       fullDataClone.option = parserStrData(fullDataClone.option)
     }
-    if(fullDataClone.gradeOption) {
+    if(fullDataClone.gradeOption &&  typeof(fullDataClone.gradeOption) === 'string') {
       fullDataClone.gradeOption = parserStrData(fullDataClone.gradeOption)
     }
 
