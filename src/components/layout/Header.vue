@@ -17,44 +17,5 @@
 </template>
 
 <style lang="scss" scoped>
-$menu-padding-v: 10px;
-header {
-  display: flex;
-  align-items: center;
-  position: fixed;
-  z-index: 99;
-  width: 100%;
-  background-color: var(--bg-dark);
-  padding: 0 10px;
-  font-weight: 300;
-  .logo {
-    font-size: 18px;
-    letter-spacing: 0.05em;
-    a {
-      padding: $menu-padding-v 15px;
-      color: var(--color-white);
-    }
-  }
-  .gnb {
-    display: flex;
-    a {
-      padding: $menu-padding-v 10px;
-      color: rgba(255, 255, 255, 0.8);
-      &.nuxt-link-active {
-        color: #333;
-        font-weight: 500;
-        background-color: var(--bg-light-point-200);
-      }
-    }
-  }
-  .menu-util {
-    display: flex;
-    margin-left: auto;
-    a {
-      padding: $menu-padding-v 5px;
-      font-size: 0.9em;
-      color: rgba(255, 255, 255, 0.8);
-    }
-  }
-}
+@import '@/assets/style/components/layout/Header.scss';
 </style>

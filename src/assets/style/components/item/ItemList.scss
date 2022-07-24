@@ -1,0 +1,33 @@
+.list-item {
+  display: flex;
+  flex-wrap: wrap;
+  &.column-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  &.column-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  &.column-10 {
+    > li {
+      width: 100px;
+    }
+  }
+  > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .wrap-item {
+    min-width: 90px;
+    padding: 6px 8px 0;
+    padding-bottom: 10px;
+  }
+}
+::v-deep {
+  .name {
+    min-height: 2.4em;
+    line-height: 1.2;
+  }
+}
