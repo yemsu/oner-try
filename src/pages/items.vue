@@ -31,7 +31,7 @@ export default {
         { title: '선원', name: 'sailor' },
         { title: '동료', name: 'colleague' },
         { title: '선박', name: 'ship'},
-        { title: '장비', name: 'equipments'},
+        { title: '장비', name: 'equipment'},
       ]
     }
   },
