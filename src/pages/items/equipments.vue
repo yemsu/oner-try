@@ -1,0 +1,135 @@
+<template>
+  <div>
+    <dl class="list-menu-filter">
+      <dt class="title">옵션</dt>
+      <div class="wrap-menu list-button-common">
+        <dd
+          v-for="(optionTitle, key) in optionMenus"
+          :key="`optionTitle${key}`"
+          :class="['menu-filter', {'active': isActiveMenu(key, 'option')}]"
+        >
+          <base-button
+            @click="toggleMenu(key, 'option')"
+            class="button-filter"
+            type="round"
+            :bg="isActiveMenu(key, 'option') ? 'active': 'inActive'"
+          >
+            {{ optionTitle }}
+          </base-button>
+        </dd>
+      </div>
+    </dl>
+    <div class="mrg-top-medium">  
+      <item-table
+        type="equipment"
+        :items="resultEquipments"
+        :optionsSelected="optionsSelected"
+      />
+    </div>
+  </div>
+</template>
+
+<script>
+import BaseButton from '@/components/common/BaseButton.vue'
+import setMeta from '@/plugins/utils/meta';
+import { noEquipOptions } from '@/plugins/utils/item-def'
+export default {
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `선박 아이템 도감`,
+      description: `원하는 옵션을 선택하고 강화 수치별 선박 아이템 정보를 확인해보세요`,
+    })
+  },
+  components: {
+    BaseButton
+  },
+  async asyncData({ store }) {
+    const { item: { equipments_table } } = store.state
+    const equipmentsData = equipments_table.length === 0
+      ? await store.dispatch('item/GET_EQUIPMENTS_TABLE')
+      : equipments_table
+
+    const commonMenu = { all: 'ALL' }
+    const optionMenus =  Object.assign({...commonMenu}, noEquipOptions)
+    return {
+      equipments: equipmentsData,
+      optionMenus,
+    }
+  },
+  data() {
+    return {
+      optionsSelected: []
+    }
+  },
+  computed: {
+    resultEquipments() {
+      const resultEquipments = this.equipments.filter(equipment => {
+        const { optionsByGrade, option } = equipment
+        const isAllOption = this.optionsSelected.length === 0
+// console.log('optionsByGrade', optionsByGrade)
+//       if(!optionsByGrade) return equipment
+        const checkOptionsByGrade = optionsByGrade[5] || optionsByGrade[4] || optionsByGrade[3] || optionsByGrade[2] || optionsByGrade[1] || optionsByGrade[0] || []
+      if(!checkOptionsByGrade) return equipment
+        const optionKeys = [...checkOptionsByGrade, ...option].map(option => Object.keys(option)[0])
+        const checkListOptions = this.optionsSelected.map(optionsSelected => optionKeys.includes(optionsSelected))
+
+// console.log('optionKeys', optionKeys, checkListOptions)
+        const checkOptions = [...new Set(checkListOptions)]
+
+        const filteringOptions = isAllOption ? true
+          : checkOptions.length === 1 && checkOptions[0]
+        if(filteringOptions === true) return true
+        else if(filteringOptions.length === checkOptionsByGrade.length) return true
+      })
+      
+// console.log('resultEquipments', resultEquipments)
+      return resultEquipments
+    }
+  },
+  mounted() {
+    console.log('equipments', this.equipments)
+    console.log('this.store.item.equipments', this.$store.state.item.equipments.filter(item => item.name.includes('메테오 아뮬렛')))
+  },
+  methods: {
+    isActiveMenu(key, type) {
+      const selectList = this[`${type}sSelected`]
+      const isActiveMenu = key === 'all'
+        ? selectList.length === 0
+        : selectList.includes(key)
+      
+      return isActiveMenu
+    },
+    toggleMenu(key, type) {
+      const dataName = `${type}sSelected`
+      if(key === 'all') {
+        this[dataName] = []
+        return
+      }
+      if(this[dataName].includes(key)) {
+        const index = this[dataName].indexOf(key)
+        this[dataName].splice(index, 1)
+      } else {
+        this[dataName].push(key)
+      }     
+    },
+    classNegaPosi(equipment) {
+      return equipment.coloYn ? 'positive' : 'negative'
+    },
+    classColoPassive(coloPassive) {
+      switch (coloPassive) {
+        case '버프':
+          return 'buff'
+        case '자신':
+          return 'self'
+        case '디버프':
+          return 'deBuff'
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/assets/style/pages/items/table.scss';
+</style>

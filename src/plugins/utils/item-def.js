@@ -17,6 +17,11 @@ export const hpDefaultValueByHero = {
 export const optionOrderArr = [
   'adt', 'maxD', 'ct', 'dr', 'minD', 'dct', 'ctD', 'ss', 'ms', 'cd', 'df', 'ev', 'str', 'dex', 'int', 'hp'
 ]
+export const equipmentGradeTypes = [
+  ['흔함', '귀함', '유명함', '완벽함', '황금빛'],
+  ['+0', '+1', '+2', '+3', '+4', '+5'],
+  ['잡검', '예검', '양검', '명검'],
+]
 export const optionDefaultValue = {
   hp: 110,
   adt: 0,

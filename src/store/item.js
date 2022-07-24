@@ -1,5 +1,6 @@
 import { isSameText, deepClone } from '@/plugins/utils'
 import { parserStrData, sortByGrade } from '@/plugins/utils/item'
+import { equipmentGradeTypes } from '@/plugins/utils/item-def'
 import {
   getItems,
   getSailors,
@@ -18,6 +19,7 @@ export const state = () => ({
   sailors_synergy: [],
   etcItems: [],
   equipments: [],
+  equipments_table: [],
   ships: [],
   ships_table: [],
   heroes: [],
@@ -38,6 +40,9 @@ export const getters = {
   },
   getEquipments(state) {
     return state.equipments
+  },
+  getEquipmentsTable(state) {
+    return state.equipments_table
   },
   getShips(state) {
     return state.ships
@@ -68,6 +73,9 @@ export const mutations = {
   },
   SET_EQUIPMENTS(state, {data}) {
     state.equipments = data
+  },
+  SET_EQUIPMENTS_TABLE(state, {data}) {
+    state.equipments_table = data
   },
   SET_SHIPS(state, {data}) {
     state.ships = data
@@ -167,6 +175,58 @@ export const actions = {
       })
       .catch(error => console.log('GET_EQUIPMENTS', error))
   },
+  async GET_EQUIPMENTS_TABLE({ commit, state, dispatch }) {
+    if(state.equipments.length === 0) await dispatch('GET_EQUIPMENTS')
+    // console.log('equipments',state.equipments)
+
+    const gradeTypeSample = equipmentGradeTypes.map(type => type[0])
+    const groupDataList = state.equipments.reduce((acc, equipment) => {
+      const typeSample = gradeTypeSample.find(sample => equipment.name.includes(sample))
+      const gradeTypeIndex = gradeTypeSample.indexOf(typeSample)
+      if(typeSample) {
+        const name = equipment.name.split(typeSample).find(name => name).trim()
+        acc.push({ name, gradeTypeIndex })
+      }
+      return acc
+    }, [])
+    const newData = state.equipments
+      .reduce((acc, data) => {
+        const { name, option, gradeOption, type, id, dropMonster } = data
+        const groupData = groupDataList.find(group => name.includes(group.name))
+
+        if(!groupData) {
+          console.log('groupData', name, groupData)
+          return acc
+        }
+        const groupName = groupData?.name
+        const gradeTypeIndex = groupData?.gradeTypeIndex
+        // console.log('groupName', groupName)
+        
+        const sameAccData = acc.find(data => data.name === groupName)
+        const stackName = name.split(groupName).find(name => name).trim()
+        const stackIndex = equipmentGradeTypes[gradeTypeIndex].indexOf(stackName)
+
+        // console.log('stackName', stackName)
+        // console.log('stackIndex', stackIndex)
+          if(name.includes('메테오 아뮬렛')) {
+            console.log('data', data)
+          }
+        if(!sameAccData) {
+          const optionsByGrade = new Array(6)
+          const stackNames = new Array(6)
+          optionsByGrade[stackIndex] = gradeOption || null
+          stackNames[stackIndex] = stackName
+          acc.push({ name: groupName, optionsByGrade, stackNames, option, type, id, dropMonster })
+        } else {
+          sameAccData.optionsByGrade[stackIndex] = gradeOption
+          sameAccData.stackNames[stackIndex] = stackName
+        }
+        return acc
+      }, [])
+    // console.log('newData', newData)
+    commit(`SET_EQUIPMENTS_TABLE`, {data: newData})
+    return newData
+  },
   GET_SHIPS({ commit }) {
     return getShips()
       .then(({data}) => {
@@ -183,8 +243,7 @@ export const actions = {
   async GET_SHIPS_TABLE({ commit, state, dispatch }) {
     if(state.ships.length === 0) await dispatch('GET_SHIPS')
 
-    const { ships } = state
-    const newData = deepClone(ships)
+    const newData = deepClone(state.ships)
       .reduce((acc, data) => {
         const { groupName, name, option, type } = data
         const sameShipAccData = acc.find(data => data.groupName === groupName)

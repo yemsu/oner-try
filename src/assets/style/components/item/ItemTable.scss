@@ -2,6 +2,9 @@ $table-border: 1px solid var(--border-light-gray);
 table {
   width: 100%;
   background-color: var(--color-white);
+  tr {
+    border-bottom: $table-border;
+  }
   th {
     vertical-align: middle;
     padding: 8px 10px;
@@ -15,6 +18,9 @@ table {
     vertical-align: middle;
     padding: 15px 10px;
     font-size: $font-size-MS-pc;
+    &.td-common {
+      background-color: var(--bg-light-point-50);
+    }
     .details .wrap-detail {
       font-size: $font-size-MS-pc;
     }
@@ -22,28 +28,48 @@ table {
       padding: 10px 0 15px;
     }
   }
+  &.table-equipment {
+    td {
+      .details .wrap-detail {
+        font-size: $font-size-S-pc;
+      }
+    }
+  }
   th, td {
     &.text-center {
       text-align: center;
     }
-  }
-  tr {
-    border-bottom: $table-border;
+    &.align-top {
+      vertical-align: top;
+    }
   }
 }
-.columns-inline {
+.columns {
   display: flex;
   align-items: center;
   height: 100%;
   gap: 20px;
-  .wrap-details {
-    width: 100px;
+  .wrap-options {
+    &.basic {
+      width: 180px;
+    }
+    &.small {
+      width: 100px;
+    }
   }
   .wrap-passive {
     flex: 1;
     padding-left: 10px;
     border-left: $table-border;
     word-break: keep-all;
+  }
+  .wrap-item {
+    &.small {
+      width: 110px;
+    }
+  }
+  &.align-center {
+    justify-content: center;
   }
 }
 .badge {
@@ -60,3 +86,11 @@ table {
     background-color: $badge-color-green-light;
   }
 } 
+.box-text {
+  > .title {
+    &-small {
+      font-weight: bold;
+      margin-bottom: 0.5em;
+    }
+  }
+}
