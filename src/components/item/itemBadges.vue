@@ -83,7 +83,7 @@ export default {
         },
         {
           name: 'howGet',
-          condition: dropMonster || ingredients,
+          condition: dropMonster && dropMonster !== '전용무기' || ingredients,
           text: howGetItemList[howGetKey],
           className: howGetKey
         },
