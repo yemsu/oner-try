@@ -37,8 +37,8 @@ export default {
   head() {
     return setMeta({
       url: this.$route.fullPath,
-      title: `선박 아이템 도감`,
-      description: `원하는 옵션을 선택하고 강화 수치별 선박 아이템 정보를 확인해보세요`,
+      title: `장비 아이템 도감`,
+      description: `원하는 옵션을 선택하고 강화 수치별 장비 아이템 정보를 확인해보세요`,
     })
   },
   components: {
