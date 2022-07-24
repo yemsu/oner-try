@@ -48,7 +48,7 @@
           >
             <th class="text-center">장비<br>& 옵션</th>
             <td class="td-common" colspan="6">
-              <div class="columns align-center">
+              <div class="columns align-center many-text">
                 <div class="wrap-item small">
                   <item-box
                     type="list"
@@ -162,19 +162,18 @@
                   />
                 </div>
                 <!-- 장비 등급별 옵션 -->
-                <div 
+                <div
                   v-if="data.type.includes('optionsByGrade')"
+                  class="grade-option box-text"
                 >
-                  <div class="grade-option box-text">
-                    <p class="title-small">{{ item.stackNames[stackOptionIndex(data)] }}</p>
-                    <item-detail-info
-                      v-if="item.optionsByGrade[stackOptionIndex(data)]"
-                      :options="item.optionsByGrade[stackOptionIndex(data)]"
-                      :markOptions="optionsSelected"
-                      :highlightTitle="false"
-                    />
-                    <span v-else> - </span>
-                  </div>
+                  <p class="title-small">{{ item.stackNames[stackOptionIndex(data)] }}</p>
+                  <item-detail-info
+                    v-if="item.optionsByGrade[stackOptionIndex(data)]"
+                    :options="item.optionsByGrade[stackOptionIndex(data)]"
+                    :markOptions="optionsSelected"
+                    :highlightTitle="false"
+                  />
+                  <span v-else> - </span>
                 </div>
               </td>
             </template>
@@ -283,27 +282,27 @@ export default {
         },
         {
           type: 'optionsByGrade0',
-          width: '7.5%'
+          width: '15.833%'
         },
         {
           type: 'optionsByGrade1',
-          width: '17.5%'
+          width: '15.833%'
         },
         {
           type: 'optionsByGrade2',
-          width: '17.5%'
+          width: '15.833%'
         },
         {
           type: 'optionsByGrade3',
-          width: '17.5%'
+          width: '15.833%'
         },
         {
           type: 'optionsByGrade4',
-          width: '17.5%'
+          width: '15.833%'
         },
         {
           type: 'optionsByGrade5',
-          width: '17.5%'
+          width: '15.833%'
         },
       ],
     }
