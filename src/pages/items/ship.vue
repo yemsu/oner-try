@@ -19,62 +19,12 @@
         </dd>
       </div>
     </dl>
-    <div class="mrg-top-medium">
-      <div class="text-refer top">
-        <p>총 {{ resultShips.length }}개</p>
-        <p class="align-right">
-          2022.06.12 도감 기준
-        </p>
-      </div>
-      <table>
-        <colgroup>
-          <col width="14%">
-          <col width="">
-          <col width="">
-          <col width="">
-          <col width="">
-        </colgroup>
-        <thead>
-          <tr>
-            <th scope="col" rowspan="2">선박</th>
-          </tr>
-          <tr>
-            <th scope="col">+0</th>
-            <th scope="col">+1</th>
-            <th scope="col">+2</th>
-            <th scope="col">+3</th>
-            <th scope="col">+4</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(ship, i) in resultShips"
-            :key="`ship${i}`"
-          >
-            <td>
-              <item-box
-                type="list"
-                :item="ship"
-                :showBadges="['howGet']"
-                :showTooltip="false"
-                :isBlankLink="true"
-                :padding="false"
-              />
-            </td>
-            <td 
-              v-for="(option, i) in ship.optionsByStack"
-              :key="`option${i}`"
-              class="many-text"
-            >
-              <item-detail-info
-                :options="option"
-                :markOptions="optionsSelected"
-                :highlightTitle="false"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="mrg-top-medium">  
+      <item-table
+        type="ship"
+        :items="resultShips"
+        :optionsSelected="optionsSelected"
+      />
     </div>
   </div>
 </template>

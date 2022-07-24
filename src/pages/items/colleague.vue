@@ -20,85 +20,11 @@
       </div>
     </dl>
     <div class="mrg-top-medium">
-      <div class="text-refer top">
-        <div class="align-left">
-          <p>총 {{ resultColleagues.length }}개</p>
-        </div>
-        <div class="align-right">
-          <p class="badge-text-wrap">
-            이름이 다른 동료의 동일한
-            <span class="badge buff">버프</span>
-            <span class="badge deBuff">디버프</span>
-            는 효과 중첩가능
-          </p>
-          <p>2022.06.13 도감 기준</p>
-        </div>
-      </div>
-      <table>
-        <colgroup>
-          <col width="20%">
-          <col width="22%">
-          <col width="10%">
-          <col width="43%">
-        </colgroup>
-        <thead>
-          <tr>
-            <th scope="col">동료</th>
-            <th scope="col">옵션</th>
-            <th scope="col" class="text-center">콜로세움</th>
-            <th scope="col">콜로세움 능력치</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(colleague, i) in resultColleagues"
-            :key="`colleague${i}`"
-          >
-            <td>
-              <item-box
-                type="list"
-                :item="colleague"
-                :showBadges="['howGet']"
-                :showTooltip="false"
-                :isBlankLink="true"
-                :padding="false"
-              />
-            </td>
-            <td>
-              <item-detail-info
-                v-if="colleague.option"
-                :options="colleague.option"
-                :markOptions="optionsSelected"
-                :highlightTitle="false"
-              />
-            </td>
-            <td :class="`text-center color-${classNegaPosi(colleague)}`">
-              {{ colleague.coloYn ? '가능' : '불가능' }}
-            </td>
-            <td>
-              <div class="columns-inline">
-                <div class="wrap-details">
-                  <item-detail-info
-                    v-if="colleague.coloYn"
-                    :options="colleague.coloOption"
-                    :highlightTitle="false"
-                    :pureValue="true"
-                  />
-                </div>
-                <div v-if="colleague.coloPassive" class="wrap-passive box-gray">
-                  <p class="title badge-text-wrap">
-                    {{ colleague.coloPassive[0] }}
-                    <span :class="`badge last ${classColoPassive(colleague.coloPassive[1])}`">
-                      {{ colleague.coloPassive[1] }}
-                    </span>
-                  </p>
-                  <p>{{ colleague.coloPassive[2] }}</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <item-table
+        type="colleague"
+        :items="resultColleagues"
+        :optionsSelected="optionsSelected"
+      />
     </div>
   </div>
 </template>
@@ -182,19 +108,6 @@ export default {
         this[dataName].push(key)
       }     
     },
-    classNegaPosi(colleague) {
-      return colleague.coloYn ? 'positive' : 'negative'
-    },
-    classColoPassive(coloPassive) {
-      switch (coloPassive) {
-        case '버프':
-          return 'buff'
-        case '자신':
-          return 'self'
-        case '디버프':
-          return 'deBuff'
-      }
-    }
   }
 }
 </script>

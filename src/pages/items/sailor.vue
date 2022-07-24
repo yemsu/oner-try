@@ -39,65 +39,18 @@
       </div>
     </dl>
     <div class="mrg-top-medium">
-      <div class="text-refer top">
-        <p>총 {{ resultSailors.length }}개</p>
-        <p class="align-right">
-          2022.06.12 도감 기준
-        </p>
-      </div>
-      <table>
-        <colgroup>
-          <col width="25%">
-          <col width="30%">
-          <col width="45%">
-        </colgroup>
-        <thead>
-          <tr>
-            <th scope="col">선원</th>
-            <th scope="col">옵션</th>
-            <th scope="col">인연 / 악연</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(sailor, i) in resultSailors"
-            :key="`sailor${i}`"
-          >
-            <td>
-              <item-box
-                type="list"
-                :item="sailor"
-                :showBadges="['howGet']"
-                :showTooltip="false"
-                :isBlankLink="true"
-                :padding="false"
-              />
-            </td>
-            <td>
-              <item-detail-info
-                :options="sailor.option"
-                :markOptions="optionsSelected"
-                :highlightTitle="false"
-              />
-            </td>
-            <td>
-              <!-- <dl v-if="sailor.synergies.length !== 0" class="synergies"> -->
-              <synergy-desc
-                v-if="sailor.synergies.length !== 0"
-                :synergies="sailor.synergies"
-              />
-              <span v-else>-</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <item-table
+        type="sailor"
+        :items="resultSailors"
+        :optionsSelected="optionsSelected"
+      />
     </div>
   </div>
 </template>
 
 <script>
 // import { mapGetters, mapActions, mapMutations } from 'vuex'
-import SynergyDesc from '@/components/item/SynergyDesc.vue'
+import ItemTable from '@/components/item/ItemTable.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
 import setMeta from '@/plugins/utils/meta';
 import { noEquipOptions, gradesDef } from '@/plugins/utils/item-def'
@@ -111,7 +64,7 @@ export default {
   },
   components: {
     BaseButton,
-    SynergyDesc
+    ItemTable
   },
   async asyncData({ store }) {
     const { item: { sailors_synergy } } = store.state
