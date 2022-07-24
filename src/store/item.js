@@ -160,7 +160,6 @@ export const actions = {
   GET_EQUIPMENTS({ commit }) {
     return getEquipments()
       .then(({data}) => {
-        
         const newData = data.map(dataItem => {
           const { option, gradeOption } = dataItem
           const optionObj = {option: parserStrData(option)}
@@ -169,9 +168,15 @@ export const actions = {
             : null
           return Object.assign(dataItem, {...optionObj, ...gradeOptionObj})
         })
+        const sortData = newData.sort((a, b) => {
+          const checkDrop = data => {
+            return data.dropMonster === '전용무기' ? 1 : 0
+          }
+          return checkDrop(a) - checkDrop(b)
+        })
 
-        commit(`SET_EQUIPMENTS`, {data: newData})
-        return data
+        commit(`SET_EQUIPMENTS`, {data: sortData})
+        return sortData
       })
       .catch(error => console.log('GET_EQUIPMENTS', error))
   },
@@ -205,12 +210,7 @@ export const actions = {
         const sameAccData = acc.find(data => data.name === groupName)
         const stackName = name.split(groupName).find(name => name).trim()
         const stackIndex = equipmentGradeTypes[gradeTypeIndex].indexOf(stackName)
-
-        // console.log('stackName', stackName)
-        // console.log('stackIndex', stackIndex)
-          if(name.includes('메테오 아뮬렛')) {
-            console.log('data', data)
-          }
+        
         if(!sameAccData) {
           const optionsByGrade = new Array(6)
           const stackNames = new Array(6)
