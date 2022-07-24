@@ -204,6 +204,13 @@ caption, .ir-hidden {
     color: #fff;
     letter-spacing: 0;
   }
+  &.point {
+    background-color: $color-point;
+    border-color: $color-point;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 0;
+  }
   &.line-gold {
     border: 1px solid $color-gold;
   }

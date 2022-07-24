@@ -1,7 +1,7 @@
 <template>
   <div class="inner-size-basic">
     <div class="wrap-quick-menu">
-      <section class="column-full point-banner">
+      <section class="column-full point-banner line-neon">
         <div class="box-flex">
           <div class="item-flex area-img">
             <img src="@/assets/images/character-update-220722.jpg" alt="">
@@ -31,7 +31,7 @@
           />
         </div>
       </section>
-      <section class="quick-menu column">
+      <section class="quick-menu column line-neon">
         <div class="area-text">
           <h3 class="title">아이템 도감 📙</h3>
           <p>등급 및 옵션을 필터링하고 <br>원하는 아이템 정보를 확인해보세요. </p>
@@ -55,6 +55,13 @@
               class="text-link wrap-icon-text"
             >
               선박 도감
+              <i class="icon-arrow right small with-text border-point"></i>
+            </router-link>
+            <router-link
+              to="/items/equipment"
+              class="text-link wrap-icon-text"
+            >
+              <span class="badge-text-wrap"><span class="badge point">new</span> 장비 도감 </span>
               <i class="icon-arrow right small with-text border-point"></i>
             </router-link>
           </p>
