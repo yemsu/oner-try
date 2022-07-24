@@ -20,16 +20,16 @@
     <table :class="`table-${type}`">
       <colgroup>
         <col
-          v-for="data in tableData"
-          :key="`col-${data.title}`"
+          v-for="(data, i) in tableData"
+          :key="`col-${i}`"
           :width="data.width"
         >
       </colgroup>
-      <thead>
+      <thead v-if="type !== 'equipment'">
         <tr>
           <th
-            v-for="data in tableData"
-            :key="`th-${data.title}`"
+            v-for="(data, i) in tableData"
+            :key="`th-${i}`"
             scope="col"
             :class="data.align ? `text-${data.align}` : ''"
           >
@@ -44,6 +44,7 @@
           <tr
             v-if="item.optionsByGrade"
             :key="`item-tr1-${i}`"
+            class="line-strong-top"
           >
             <th class="text-center">장비<br>& 옵션</th>
             <td class="td-common" colspan="6">
@@ -54,7 +55,7 @@
                     size="small"
                     :item="item"
                     :showBadges="['howGet']"
-                    :showTooltip="false"
+                    :tooltipNoOption="true"
                     :isBlankLink="true"
                     :padding="false"
                   />
@@ -72,23 +73,23 @@
           </tr>
           <tr :key="`item-tr2-${i}`">
             <template
-              v-for="(data) in tableData"
+              v-for="(data, i) in tableData"
             >
-            <th
-              v-if="data.th"
-              :key="`th-${data.title}`" 
-              :class="data.align ? `text-${data.align}` : ''"
-            >
-              {{ data.th }}
-            </th>
-            <td
-              v-else
-              :key="`td-${data.title}`"
-              :class="[
-                data.align ? `text-${data.align}` : '',
-                {'align-top': data.type.includes('optionsByGrade')}
-              ]"
-            >
+              <th
+                v-if="data.th"
+                :key="`tr2-th-${i}`"
+                :class="data.align ? `text-${data.align}` : ''"
+              >
+                {{ data.th }}
+              </th>
+              <td
+                v-else
+                :key="`tr2-td-${i}`"
+                :class="[
+                  data.align ? `text-${data.align}` : '',
+                  {'align-top': data.type.includes('optionsByGrade')}
+                ]"
+              >
                 <!-- 아이템 -->
                 <item-box
                   v-if="data.type === 'item'"
@@ -276,38 +277,31 @@ export default {
       ],
       equipmentTableData: [
         {
-          title: '',
           type: 'string',
           th: '등급별 옵션',
           align: 'center'
         },
         {
-          title: '+0',
           type: 'optionsByGrade0',
           width: '7.5%'
         },
         {
-          title: '+1',
           type: 'optionsByGrade1',
           width: '17.5%'
         },
         {
-          title: '+2',
           type: 'optionsByGrade2',
           width: '17.5%'
         },
         {
-          title: '+3',
           type: 'optionsByGrade3',
           width: '17.5%'
         },
         {
-          title: '+4',
           type: 'optionsByGrade4',
           width: '17.5%'
         },
         {
-          title: '+5',
           type: 'optionsByGrade5',
           width: '17.5%'
         },
