@@ -152,8 +152,8 @@ export default {
     },
     noTooltip() {
       const noData = !this.item.dropMonster && !this.item.option
-      const onlyDropHasDropData = this.tooltipNoOption && this.item.dropMonster
-      return !this.showTooltip || noData || !onlyDropHasDropData
+      const onlyDropButDropData = this.tooltipNoOption && !this.item.dropMonster
+      return !this.showTooltip || noData || onlyDropButDropData
     },
     itemImageData() {
       const { type, id, groupName, name, grade } = this.item
