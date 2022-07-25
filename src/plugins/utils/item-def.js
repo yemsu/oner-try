@@ -17,8 +17,12 @@ export const hpDefaultValueByHero = {
 export const optionOrderArr = [
   'adt', 'maxD', 'ct', 'dr', 'minD', 'dct', 'ctD', 'ss', 'ms', 'cd', 'df', 'ev', 'str', 'dex', 'int', 'hp'
 ]
+export const equipDropOrder = [
+  '후지토라', '클리크 해적단', '쿠로네코 해적단', '유령선', '부들 조합', '버기', '모건', '알비다', '반 더 데켄', '어인섬', '해군', '딜러형 전용무기', '파괴형 전용무기', '밸런스형 전용무기'
+]
 export const equipmentGradeTypes = [
-  ['흔함', '귀함', '유명함', '완벽함', '황금빛'],
+  ['황금빛'],
+  ['흔함', '귀함', '유명함', '완벽함'],
   ['+0', '+1', '+2', '+3', '+4', '+5'],
   ['잡검', '예검', '양검', '명검'],
 ]

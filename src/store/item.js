@@ -1,6 +1,6 @@
 import { isSameText, deepClone } from '@/plugins/utils'
 import { parserStrData, sortByGrade } from '@/plugins/utils/item'
-import { equipmentGradeTypes } from '@/plugins/utils/item-def'
+import { equipmentGradeTypes, equipDropOrder } from '@/plugins/utils/item-def'
 import {
   getItems,
   getSailors,
@@ -169,9 +169,7 @@ export const actions = {
           return Object.assign(dataItem, {...optionObj, ...gradeOptionObj})
         })
         const sortData = newData.sort((a, b) => {
-          const checkDrop = data => {
-            return data.dropMonster === '전용무기' ? 1 : 0
-          }
+          const checkDrop = data => equipDropOrder.indexOf(data.dropMonster)
           return checkDrop(a) - checkDrop(b)
         })
 
