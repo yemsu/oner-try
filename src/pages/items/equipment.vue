@@ -89,7 +89,6 @@ export default {
   },
   mounted() {
     console.log('equipments', this.equipments)
-    console.log('this.store.item.equipments', this.$store.state.item.equipments.filter(item => item.name.includes('메테오 아뮬렛')))
   },
   methods: {
     isActiveMenu(key, type) {

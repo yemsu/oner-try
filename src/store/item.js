@@ -1,6 +1,6 @@
 import { isSameText, deepClone } from '@/plugins/utils'
 import { parserStrData, sortByGrade } from '@/plugins/utils/item'
-import { equipmentGradeTypes, equipDropOrder } from '@/plugins/utils/item-def'
+import { equipmentGradeTypes, equipmentGradeTypeExceptions, equipDropOrder } from '@/plugins/utils/item-def'
 import {
   getItems,
   getSailors,
@@ -182,39 +182,64 @@ export const actions = {
     if(state.equipments.length === 0) await dispatch('GET_EQUIPMENTS')
     // console.log('equipments',state.equipments)
 
+    const getExceptionType = name => equipmentGradeTypeExceptions.find(exception => name.includes(exception))
     const gradeTypeSample = equipmentGradeTypes.map(type => type[0])
     const groupDataList = state.equipments.reduce((acc, equipment) => {
+      // 등급 분류 해당 안되는 케이스 예외 처리
+      // 공통 처리
       const typeSample = gradeTypeSample.find(sample => equipment.name.includes(sample))
       const gradeTypeIndex = gradeTypeSample.indexOf(typeSample)
       if(typeSample) {
-        const name = equipment.name.split(typeSample).find(name => name).trim()
+        const name = !getExceptionType(equipment.name)
+          ? equipment.name.split(typeSample).find(name => name).trim()
+          : equipment.name
         acc.push({ name, gradeTypeIndex })
       }
       return acc
     }, [])
+
     const newData = state.equipments
       .reduce((acc, data) => {
         const { name, option, gradeOption, type, id, dropMonster } = data
         const groupData = groupDataList.find(group => name.includes(group.name))
-
         if(!groupData) {
-          console.log('groupData', name, groupData)
+          console.error('no groupData', name, groupData)
           return acc
         }
-        const groupName = groupData?.name
-        const gradeTypeIndex = groupData?.gradeTypeIndex
-        // console.log('groupName', groupName)
+        const { name:groupName, gradeTypeIndex } = groupData
+        const itemObj = () => ({ id, name: groupName, type })
+
+        // 전용무기 예외 처리 - 같은 전용무기는 같은 item 배열에 삽입
+        const isDefaultEquip = dropMonster.includes('전용무기')
+        const sameDefaultEquip = acc.find(accData => accData.dropMonster === dropMonster)
+        const sameName = acc.find(accData => name.includes(accData.items[0].name))
+        const hasMe = acc.find(accData => accData.items.find(item => name.includes(item.name)))
+        if(isDefaultEquip && sameDefaultEquip && !sameName) {
+          if(!hasMe) {
+            sameDefaultEquip.items.push(itemObj())
+          }
+          return acc
+        }
         
-        const sameAccData = acc.find(data => data.name === groupName)
-        const stackName = name.split(groupName).find(name => name).trim()
-        const stackIndex = equipmentGradeTypes[gradeTypeIndex].indexOf(stackName)
+        // 전용무기별 item 묶음 처리
+        const sameAccData = acc.find(data => data.items[0].name === groupName)
+        // 예외 타입 처리
+        let stackName = getExceptionType(name)
+          ? getExceptionType(name)
+          : name.split(groupName).find(name => name).trim()
+        let stackIndex = getExceptionType(name)
+          ? 0
+          : equipmentGradeTypes[gradeTypeIndex].indexOf(stackName)
         
         if(!sameAccData) {
           const optionsByGrade = new Array(6)
           const stackNames = new Array(6)
           optionsByGrade[stackIndex] = gradeOption || null
           stackNames[stackIndex] = stackName
-          acc.push({ name: groupName, optionsByGrade, stackNames, option, type, id, dropMonster })
+          
+          const items = [itemObj()]
+
+          acc.push({ items, optionsByGrade, stackNames, option, dropMonster })
         } else {
           sameAccData.optionsByGrade[stackIndex] = gradeOption
           sameAccData.stackNames[stackIndex] = stackName

@@ -26,6 +26,7 @@ export const equipmentGradeTypes = [
   ['+0', '+1', '+2', '+3', '+4', '+5'],
   ['잡검', '예검', '양검', '명검'],
 ]
+export const equipmentGradeTypeExceptions = ['황금빛']
 export const optionDefaultValue = {
   hp: 110,
   adt: 0,

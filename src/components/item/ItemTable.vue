@@ -25,7 +25,7 @@
           :width="data.width"
         >
       </colgroup>
-      <thead v-if="type !== 'equipment'">
+      <thead>
         <tr>
           <th
             v-for="(data, i) in tableData"
@@ -41,36 +41,6 @@
         <template
           v-for="(item, i) in items"
         >
-          <tr
-            v-if="item.optionsByGrade"
-            :key="`item-tr1-${i}`"
-            class="line-strong-top"
-          >
-            <th class="text-center">장비<br>& 옵션</th>
-            <td class="td-common" colspan="6">
-              <div class="columns align-center many-text">
-                <div class="wrap-item small">
-                  <item-box
-                    type="list"
-                    size="small"
-                    :item="item"
-                    :showBadges="['howGet']"
-                    :tooltipNoOption="true"
-                    :isBlankLink="true"
-                    :padding="false"
-                  />
-                </div>
-                <div class="wrap-options basic">
-                  <item-detail-info
-                    v-if="item.option"
-                    :options="item.option"
-                    :markOptions="optionsSelected"
-                    :highlightTitle="false"
-                  />
-                </div>
-              </div>
-            </td>
-          </tr>
           <tr :key="`item-tr2-${i}`">
             <template
               v-for="(data, i) in tableData"
@@ -86,20 +56,22 @@
                 v-else
                 :key="`tr2-td-${i}`"
                 :class="[
-                  data.align ? `text-${data.align}` : '',
-                  {'align-top': data.type.includes('optionsByGrade')}
+                  data.align ? `text-${data.align}` : ''
                 ]"
               >
                 <!-- 아이템 -->
-                <item-box
-                  v-if="data.type === 'item'"
-                  type="list"
-                  :item="item"
-                  :showBadges="['howGet']"
-                  :showTooltip="false"
-                  :isBlankLink="true"
-                  :padding="false"
-                />
+                <template v-if="data.type === 'item'">
+                  <item-box
+                    v-for="(tableItem, i) in tableItems(item)"
+                    :key="`tableItem${i}`"
+                    type="list"
+                    :item="tableItem"
+                    :showBadges="['howGet']"
+                    :showTooltip="false"
+                    :isBlankLink="true"
+                    :padding="false"
+                  />
+                </template>
                 <!-- 옵션 -->
                 <item-detail-info
                   v-if="data.type === 'option'"
@@ -148,9 +120,9 @@
                   v-if="data.type.includes('optionsByStack')"
                   class="many-text"
                 >
-                {{ item.stackNames && item.stackNames[stackOptionIndex(data)] }}
+                {{ item.stackNames && item.stackNames[optionIndex(data)] }}
                   <item-detail-info
-                    :options="item.optionsByStack[stackOptionIndex(data)]"
+                    :options="item.optionsByStack[optionIndex(data)]"
                     :markOptions="optionsSelected"
                     :highlightTitle="false"
                   />
@@ -162,19 +134,35 @@
                   />
                 </div>
                 <!-- 장비 등급별 옵션 -->
-                <div
+                <dl
                   v-if="data.type.includes('optionsByGrade')"
                   class="grade-option box-text"
                 >
-                  <p class="title-small">{{ item.stackNames[stackOptionIndex(data)] }}</p>
-                  <item-detail-info
-                    v-if="item.optionsByGrade[stackOptionIndex(data)]"
-                    :options="item.optionsByGrade[stackOptionIndex(data)]"
-                    :markOptions="optionsSelected"
-                    :highlightTitle="false"
-                  />
-                  <span v-else> - </span>
-                </div>
+                  <template
+                    v-for="(gradeOption, i) in item.optionsByGrade" 
+                  >
+                    <div
+                      v-if="item.stackNames[i]"
+                      :key="`optionsByGrade${i}`"
+                      class="box-flex"
+                    >
+                      <dt class="title-small left">{{ item.stackNames[i] }}</dt>
+                      <dd>
+                        <item-detail-info
+                          v-if="gradeOption"
+                          :options="gradeOption"
+                          :markOptions="optionsSelected"
+                          :highlightTitle="false"
+                        />
+                        <span v-else> - </span>
+                      </dd>
+                    </div>
+                  </template>
+                </dl>
+                <!-- string -->
+                <span v-if="data.type === 'string'">
+                  {{ item[data.key] }}
+                </span>
               </td>
             </template>
           </tr>
@@ -276,33 +264,25 @@ export default {
       ],
       equipmentTableData: [
         {
+          title: '장비',
+          type: 'item',
+          width: '20%'
+        },
+        {
+          title: '공통 옵션',
+          type: 'option',
+          width: '30%'
+        },
+        {
+          title: '등급별 추가 옵션',
+          type: 'optionsByGrade',
+          width: '35%'
+        },
+        {
+          title: '획득처',
           type: 'string',
-          th: '등급별 옵션',
-          align: 'center'
-        },
-        {
-          type: 'optionsByGrade0',
-          width: '15.833%'
-        },
-        {
-          type: 'optionsByGrade1',
-          width: '15.833%'
-        },
-        {
-          type: 'optionsByGrade2',
-          width: '15.833%'
-        },
-        {
-          type: 'optionsByGrade3',
-          width: '15.833%'
-        },
-        {
-          type: 'optionsByGrade4',
-          width: '15.833%'
-        },
-        {
-          type: 'optionsByGrade5',
-          width: '15.833%'
+          key: 'dropMonster',
+          width: '15%'
         },
       ],
     }
@@ -321,6 +301,11 @@ export default {
     }
   },
   methods: {
+    tableItems(item) {
+      const { items, name, id, type, groupName } = item
+      const tableItems = Array.isArray(items) ? items : [{name, id, type, groupName}]
+      return tableItems
+    },
     classNegaPosi(colleague) {
       return colleague.coloYn ? 'positive' : 'negative'
     },
@@ -334,9 +319,8 @@ export default {
           return 'deBuff'
       }
     },
-    stackOptionIndex(data) {
-      const str = data.type.includes('optionsByStack')
-        ? 'optionsByStack' : 'optionsByGrade'
+    optionIndex(data) {
+      const str = 'optionsByStack'
       return data.type.split(str)[1]
     }
   }
