@@ -302,8 +302,8 @@ export default {
   },
   methods: {
     tableItems(item) {
-      const { items, name, id, type, groupName } = item
-      const tableItems = Array.isArray(items) ? items : [{name, id, type, groupName}]
+      const { items } = item
+      const tableItems = Array.isArray(items) ? items : [item]
       return tableItems
     },
     classNegaPosi(colleague) {
