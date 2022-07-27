@@ -130,5 +130,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/pages/items/table.scss';
+@import '@/assets/style/pages/item/table.scss';
 </style>
