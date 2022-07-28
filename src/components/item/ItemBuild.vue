@@ -1,8 +1,8 @@
 <template>
   <div class="item-build">
     <div class="text-refer top">
-      <p v-if="itemBuildData.saveDate">
-        최근 세이브: {{ itemBuildData.saveDate }}
+      <p v-if="data.saveDate">
+        최근 세이브: {{ data.saveDate }}
       </p>
       <p class="align-right">
         <span class="badge-text-wrap">
@@ -19,46 +19,50 @@
         :type="itemArea.type"
       >
         <item-list
-          :items="itemBuildData[itemArea.type]"
+          :items="data[itemArea.type]"
           :title="itemArea.title"
           :type="itemArea.type"
           :columnNum="itemArea.columnNum"
         >
           <template v-slot="{ item }">
             <item-box
+              v-if="!(isBuildTool && !item)"
               :item="item"
               :showBadges="['howGet', 'stack']"
             ></item-box>
+            <button v-else>select item</button>
           </template>
         </item-list>
       </title-content>
       <div class="area-synergies">
         <synergy-desc
-          v-if="itemBuildData.synergies.length !== 0"
-          :synergies="itemBuildData.synergies"
+          v-if="data.synergies.length !== 0"
+          :synergies="data.synergies"
         />
       </div>
-      <div class="all-options-main">
-        <item-detail-info
-          type="total"
-          columns="3"
-          colorMode="white"
-          :options="itemBuildData.totalOption.slice(0,12)"
-          :plusMinusUnit="false"
-          :showValueDecimal="true"
-        />
-        <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
-      </div>
-      <div class="all-options-sub">
-        <item-detail-info
-          type="total"
-          columns="1"
-          colorMode="white"
-          :options="itemBuildData.totalOption.slice(12)"
-          :plusMinusUnit="false"
-          :showValueDecimal="true"
-        />
-      </div>
+      <template v-if="data.totalOption">
+        <div class="all-options-main">
+          <item-detail-info
+            type="total"
+            columns="3"
+            colorMode="white"
+            :options="data.totalOption.slice(0,12)"
+            :plusMinusUnit="false"
+            :showValueDecimal="true"
+          />
+          <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
+        </div>
+        <div class="all-options-sub">
+          <item-detail-info
+            type="total"
+            columns="1"
+            colorMode="white"
+            :options="data.totalOption.slice(12)"
+            :plusMinusUnit="false"
+            :showValueDecimal="true"
+          />
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -73,7 +77,7 @@ export default {
     SynergyDesc
   },
   props: {
-    itemBuildData: {
+    data: {
       type: Object,
       default: () => ({
         saveDate: '',
@@ -83,9 +87,13 @@ export default {
         colleagues: new Array(3),
         ship: new Array(1),
         ryuo: new Array(1),
-        totalOption: new Array(16),
+        totalOption: null,
       })
     },
+    isBuildTool: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

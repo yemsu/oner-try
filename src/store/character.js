@@ -79,6 +79,7 @@ export const actions = {
     if(ships.length === 0) await dispatch('item/GET_SHIPS','', { root: true })
     if(ryuoes.length === 0) await dispatch('item/GET_RYUOES','', { root: true })
     if(synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
+    console.log('ryuoes', ryuoes)
     return getCharacters(payload)
       .then(({data}) => {
         const newData = data.map(character => {

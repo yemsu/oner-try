@@ -28,7 +28,7 @@ export const getTotalOption = (character, characterSynergies) => {
   totalOption.dex += character.lv
 
   const result = optionOrderArr.map(key => ({[key]: totalOption[key]}))
-  console.log('result', result)
+  console.log('getTotalOption result', result)
   return result
 }
 const defaultOptionByCharacter = (character) => {

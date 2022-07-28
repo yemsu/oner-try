@@ -27,7 +27,7 @@
         </template>
         <template v-slot:content="{ activeTab }">
           <item-build
-            :itemBuildData="activeTab"
+            :data="activeTab"
           />
         </template>
       </v-tab>

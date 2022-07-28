@@ -6,7 +6,7 @@
       <nuxt-link to="/composition">조합법</nuxt-link>
       <nuxt-link to="/ranking">랭킹</nuxt-link>
       <nuxt-link to="/items">아이템도감</nuxt-link>
-      <!-- <nuxt-link to="/build">빌드툴</nuxt-link> -->
+      <nuxt-link to="/tool/build">빌드툴</nuxt-link>
       <!-- <nuxt-link to="/other">다른 메뉴</nuxt-link> -->
     </nav>
     <ul class="menu-util">
