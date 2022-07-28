@@ -75,7 +75,16 @@ export default {
   props: {
     itemBuildData: {
       type: Object,
-      default: () => {}
+      default: () => ({
+        saveDate: '',
+        sailors: new Array(6),
+        synergies: [],
+        equipments: new Array(6),
+        colleagues: new Array(3),
+        ship: new Array(1),
+        ryuo: new Array(1),
+        totalOption: new Array(16),
+      })
     },
   },
   data() {
