@@ -1,12 +1,13 @@
+$column-num: 2;
 .wrap-quick-menu {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat($column-num, 1fr);
   gap: 20px;
   padding-top: 50px;
   [class*=column] {
     border-radius: 15px;
     &.column-full {
-      grid-column: auto / span 2;
+      grid-column: auto / span $column-num;
     }
     .area-text {
       text-align: center;
@@ -27,6 +28,10 @@
     }
   }
   .quick-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 50px 30px 60px;
     border: 1px solid #fff;
     background-color: rgba(255, 255, 255, 0.1);

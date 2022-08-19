@@ -1,7 +1,7 @@
 <template>
   <div class="inner-size-basic">
     <div class="wrap-quick-menu">
-      <section class="column-full point-banner line-neon">
+      <!-- <section class="column-full point-banner">
         <div class="box-flex">
           <div class="item-flex area-img">
             <img src="@/assets/images/character-update-220722.jpg" alt="">
@@ -10,7 +10,6 @@
             <div class="area-text">
               <h3 class="title">🤹‍♂️ 캐릭터 페이지에 기능이 추가되었습니다 🎉</h3>
               <p>류오 / 시너지 / 스탯이 추가되었어요!</p>
-              <!-- <p>다른 유저의 빌드를 참고해 보세요.</p> -->
             </div>
             <div class="area-contents">
               <character-search-box
@@ -18,6 +17,17 @@
               />
             </div>
           </div>
+        </div>
+      </section> -->
+      <section class="quick-menu column">
+        <div class="area-text">
+          <h3 class="title">캐릭터 검색</h3>
+          <p>다른 유저의 빌드를 참고해 보세요. 😎</p>
+        </div>
+        <div class="area-contents">
+          <character-search-box
+            :matchingData="userNickNames"
+          />
         </div>
       </section>
       <section class="quick-menu column">
@@ -31,7 +41,7 @@
           />
         </div>
       </section>
-      <section class="quick-menu column line-neon">
+      <section class="quick-menu column">
         <div class="area-text">
           <h3 class="title">아이템 도감 📙</h3>
           <p>등급 및 옵션을 필터링하고 <br>원하는 아이템 정보를 확인해보세요. </p>
@@ -61,10 +71,19 @@
               to="/items/equipment"
               class="text-link wrap-icon-text"
             >
-              <span class="badge-text-wrap"><span class="badge point">new</span> 장비 도감 </span>
+              <span class="badge-text-wrap">
+                <!-- <span class="badge point">new</span>  -->
+                장비 도감
+              </span>
               <i class="icon-arrow right small with-text border-point"></i>
             </router-link>
           </p>
+        </div>
+      </section>
+      <section class="quick-menu column">
+        <div class="area-text">
+          <h3 class="title">...to be continue 👻</h3>
+          <p>다음은 뭘까요</p>
         </div>
       </section>
       <section class="quick-menu column-full">

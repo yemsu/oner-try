@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="inner-size-basic mrg-top-medium">
-    <p class="bar-notice">
+    <!-- <p class="bar-notice">
       ❗ 랭킹 산정 방식이 변경되었습니다. (2022.07.22)<br>
       <strong>레벨 * 현상금</strong> 👉 <strong>현상금 > 레벨</strong><br>
       <a href="https://cafe.naver.com/onepiecerpg/5096" target="_blank" title="새창">
         관련 공지 보기
         <i class="icon-arrow small border-point right"></i>
       </a>
-    </p>
+    </p> -->
       <!-- <ul class="list-filter">
         <li>
           <button class="button-filter" @click="filterHero">
