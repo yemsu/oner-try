@@ -51,21 +51,21 @@
               class="text-link wrap-icon-text"
             >
               선원 도감
-              <i class="icon-arrow right small with-text border-point"></i>
+              <i class="icon-arrow right small border-point"></i>
             </router-link>
             <router-link
               to="/items/colleagues"
               class="text-link wrap-icon-text"
             >
               동료 도감
-              <i class="icon-arrow right small with-text border-point"></i>
+              <i class="icon-arrow right small border-point"></i>
             </router-link>
             <router-link
               to="/items/sailor"
               class="text-link wrap-icon-text"
             >
               선박 도감
-              <i class="icon-arrow right small with-text border-point"></i>
+              <i class="icon-arrow right small border-point"></i>
             </router-link>
             <router-link
               to="/items/equipment"
@@ -75,7 +75,7 @@
                 <!-- <span class="badge point">new</span>  -->
                 장비 도감
               </span>
-              <i class="icon-arrow right small with-text border-point"></i>
+              <i class="icon-arrow right small border-point"></i>
             </router-link>
           </p>
         </div>
