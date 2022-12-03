@@ -170,9 +170,6 @@ export default {
     ...mapActions({
       getCharacters: 'character/GET_CHARACTERS',
     }),
-    ...mapMutations({
-      setUserNickName: 'character/SET_NICKNAME'
-    }),
     async fnSearch(nickName) {
       await this.getCharacters({ nickName })
       console.log('fnSearch', nickName, this.characters)
