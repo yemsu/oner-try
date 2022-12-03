@@ -142,18 +142,18 @@ export const actions = {
         const { item: { sailors, colleagues, items } } = rootState
         if(sailors.length === 0) console.warn('USING ITEMS DATA : NEED SAILORS DATA - GET_RANKING')
         if(colleagues.length === 0) console.warn('USING ITEMS DATA : NEED COLLEAGUES DATA - GET_RANKING')
-        // const sailorData = sailors.length === 0 ? items : sailors
-        // const colleagueData = colleagues.length === 0 ? items : colleagues
-        // const newData = data.map(user => {
-        //   const sailors = user.sailors !== '[]'
-        //     ? dataParseHandler(sailorData, user, 'sailors') 
-        //     : new Array(6).fill(null)
-        //   const colleagues = user.colleagues !== '[]'
-        //     ? dataParseHandler(colleagueData, user, 'colleagues')
-        //     : new Array(3).fill(null)
-        //   return Object.assign(user, { sailors, colleagues })
-        // })
-        const sortData = data.sort((a, b) => {
+        const sailorData = sailors.length === 0 ? items : sailors
+        const colleagueData = colleagues.length === 0 ? items : colleagues
+        const newData = data.map(user => {
+          const sailors = user.sailors !== '[]'
+            ? dataParseHandler(sailorData, user, 'sailors') 
+            : new Array(6).fill(null)
+          const colleagues = user.colleagues !== '[]'
+            ? dataParseHandler(colleagueData, user, 'colleagues')
+            : new Array(3).fill(null)
+          return Object.assign(user, { sailors, colleagues })
+        })
+        const sortData = newData.sort((a, b) => {
           if(b.bounty === a.bounty) {
             return b.lv - a.lv
           }
