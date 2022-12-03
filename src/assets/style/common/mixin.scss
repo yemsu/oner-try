@@ -1,9 +1,10 @@
 @mixin containerSize($size:basic) {
+  max-width: 100%;
+  padding: 0 20px;
   @if($size == basic) {
     width: $basic-container-width;
   } @else if($size == wide) {
     width: 1920px;
-    padding: 0 20px;
   }
   // max-width: 100%;
   margin-left: auto; 
