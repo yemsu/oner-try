@@ -1,56 +1,54 @@
 <template>
-  <div>
+  <div
+    :class="[
+      'item-img',
+      `size-${size}`,
+      {'round': isRoundImg},
+      item.grade
+  ]">
+    <item-link
+      v-if="imgSrc"
+      class="box-img"
+      :itemType="item.type"
+      :itemId="item.id"
+      :isLink="isComp && isLink"
+      :isBlankLink="isBlankLink"
+    >
+      <img
+        :src="imgSrc"
+        :alt="item.name"
+        class="img-item"
+      />
+    </item-link>
+    <p
+      v-else-if="isReportButton"
+      class="box-img blank no-id"
+    >
+      <button
+        @click="reportItem()"
+        title="클릭하여 아이템 이름을 알려주세요!"
+      >
+        아이템명 알려주기 click!
+      </button>
+    </p>
+    <p v-else-if="!isNoDataItem" class="box-img blank no-src">
+      이미지 준비중
+    </p>
+    <p v-else class="box-img blank">
+      ???
+    </p>
+    <!-- report popup -->
     <div
-      :class="[
-        'item-img',
-        `size-${size}`,
-        {'round': isRoundImg},
-        item.grade
-    ]">
-      <item-link
-        v-if="imgSrc"
-        class="box-img"
-        :itemType="item.type"
-        :itemId="item.id"
-        :isLink="isComp && isLink"
-        :isBlankLink="isBlankLink"
-      >
-        <img
-          :src="imgSrc"
-          :alt="item.name"
-          class="img-item"
-        />
-      </item-link>
-      <p
-        v-else-if="isReportButton"
-        class="box-img blank no-id"
-      >
-        <button
-          @click="reportItem()"
-          title="클릭하여 아이템 이름을 알려주세요!"
-        >
-          아이템명 알려주기 click!
-        </button>
-      </p>
-      <p v-else-if="!isNoDataItem" class="box-img blank no-src">
-        이미지 준비중
-      </p>
-      <p v-else class="box-img blank">
-        ???
-      </p>
-      <!-- report popup -->
-      <div
-        v-if="isActiveReportPopup"
-        class="box-item-report"
-      >
-        <base-input
-          category="아이템명(선박은 강화수치까지)"
-          :value="inputValue"
-          size="small"
-          @onUpdateInput="updateInput"
-          @onEnter="enterInput"
-        />
-      </div>
+      v-if="isActiveReportPopup"
+      class="box-item-report"
+    >
+      <base-input
+        category="아이템명(선박은 강화수치까지)"
+        :value="inputValue"
+        size="small"
+        @onUpdateInput="updateInput"
+        @onEnter="enterInput"
+      />
     </div>
   </div>
 </template>

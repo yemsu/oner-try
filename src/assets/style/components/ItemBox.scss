@@ -180,7 +180,7 @@ $space: 3px;
 
 .box-item {
   position: relative;
-  .wrap-box:hover ~ .tooltip {
+  .wrap-info:hover ~ .tooltip {
     display: block;
   }
   .area-detail {
