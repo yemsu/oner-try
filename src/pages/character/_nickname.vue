@@ -44,7 +44,6 @@
             >
               <item-list
                 :items="activeTab[itemArea.type]"
-                :title="itemArea.title"
                 :type="itemArea.type"
                 :columnNum="itemArea.columnNum"
               >
