@@ -200,7 +200,7 @@ $space: 3px;
     &:before {
       display: block;
       position: absolute;
-      top: 30%;
+      top: 5px;
       left: 0px;
       width: 0;
       height: 0;
@@ -209,7 +209,7 @@ $space: 3px;
       border-color: $tooltip-bg;
       border-top-color: transparent;
       border-bottom-color: transparent;
-      transform: translate(-100%, -50%);
+      transform: translate(-100%, 0);
       content: '';
     }
   }
