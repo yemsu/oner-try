@@ -9,7 +9,7 @@
           :category="category"
           :matchingData="matchingData"
           :defaultMatchingList="defaultMatchingList"
-          size="main"
+          size="big"
           :hasResult="result && true"
           :paramKey="paramKey"
           @onSearch="onSearch"

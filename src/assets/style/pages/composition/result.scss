@@ -1,3 +1,26 @@
+.content-top {
+  padding: 10px 0;
+  background-color: var(--bg-light-point-100);
+  > .inner-size-basic {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    .wrap-high-rank {
+      margin-left: auto;
+      > .title {
+        font-size: $font-size-S-pc;
+        color: $color-point-sub;
+      }
+      ::v-deep {
+        .list-item {
+          > li + li {
+            margin-left: 6px;
+          }
+        }
+      }
+    }
+  }
+}
 .wrap-total {
   margin-bottom: 15px;
   ::v-deep {

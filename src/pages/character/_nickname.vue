@@ -1,26 +1,28 @@
 <template>
   <div>
-    <div class="area-search inner-size-basic">
-      <search-box
-        category="닉네임(첫 검색 대소문자 구분)"
-        :matchingData="{type: 'string', data: userNickNames}"
-        :defaultMatchingList="false"
-        size="side"
-        :paramKey="['nickname']"
-        @onRemoveSearchResult="removeSearchResult"
-      />
+    <div class="top-bar">
+      <div class="inner-size-basic">
+        <div class="align-right">
+          <character-search-box
+            :matchingData="userNickNames"
+            :fnSearch="fnSearch"
+            size="small"
+          />
+        </div>
+      </div>
     </div>
-    <div class="inner-size-basic">
-      <h2 class="title-page"><i class="icon-pirate">☠</i> {{ $route.params.nickname }}</h2>
+    <div class="inner-size-basic mrg-top-small">
+      <h2 class="title-page"><i class="skull">☠</i> {{ nickname }}</h2>
       <v-tab
-        v-show="charactersParsed"
-        :tabs="charactersParsed"
+        v-if="characters.length !== 0"
+        :tabs="characters"
       >
         <template v-slot:tab="{ tab: {data, isActive} }">
           <item-box
             :item="data.hero"
             :wanted-paper="true"
             :size="isActive ? 'xbig' : 'big'"
+            :customBadge="`lv.${data.lv}`"
           ></item-box>
         </template>
         <template v-slot:content="{ activeTab }">
@@ -42,13 +44,44 @@
             >
               <item-list
                 :items="activeTab[itemArea.type]"
-                :title="itemArea.title"
                 :type="itemArea.type"
                 :columnNum="itemArea.columnNum"
-                :badgeDrop="false"
-                :badgeType="false"
-              />
+              >
+                <template v-slot="{ item }">
+                  <item-box
+                    :item="item"
+                    :showBadges="['howGet', 'stack']"
+                  ></item-box>
+                </template>
+              </item-list>
             </title-content>
+            <div class="area-synergies">
+              <synergy-desc
+                v-if="activeTab.synergies.length !== 0"
+                :synergies="activeTab.synergies"
+              />
+            </div>
+            <div class="all-options-main">
+              <item-detail-info
+                type="total"
+                columns="3"
+                colorMode="white"
+                :options="activeTab.totalOption.slice(0,12)"
+                :plusMinusUnit="false"
+                :showValueDecimal="true"
+              />
+              <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
+            </div>
+            <div class="all-options-sub">
+              <item-detail-info
+                type="total"
+                columns="1"
+                colorMode="white"
+                :options="activeTab.totalOption.slice(12)"
+                :plusMinusUnit="false"
+                :showValueDecimal="true"
+              />
+            </div>
           </div>
         </template>
       </v-tab>
@@ -57,28 +90,44 @@
 </template>
 
 <script>
-import ItemList from '@/components/item/ItemList.vue'
-import TitleContent from '@/components/common/TitleContent.vue'
-import ItemBox from '@/components/item/ItemBox.vue'
+import SynergyDesc from '@/components/item/SynergyDesc.vue'
+import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
 import VTab from '@/components/common/VTab.vue'
-import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/item'
-import { deepClone, addCommaNumber } from '@/plugins'
-import { postGameUser } from '@/plugins/https'
-import { mapGetters } from 'vuex';
+import TitleContent from '@/components/common/TitleContent.vue'
+import setMeta from '@/plugins/utils/meta';
+import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
+import { postCharacterPageView, getCharacterPageViews, postMurgeCharacterView } from '@/plugins/utils/https'
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   name: 'CharacterResult',
   components: {
+    VTab,
     TitleContent,
-    ItemBox,
-    ItemList,
-    VTab
+    CharacterSearchBox,
+    SynergyDesc
+  },
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `${this.nickname}의 캐릭터`,
+      description: `${this.nickname}의 캐릭터 정보입니다.`,
+    })
+  },
+  async asyncData({ store, params }) {
+    const { character: { gameUsers }, item: { heroes } } = store.state
+    const gameUsersData = gameUsers.length === 0
+      ? await store.dispatch('character/GET_GAME_USERS')
+      : gameUsers
+    const userNickNames = gameUsersData.map(user => user.nickName)
+    if(heroes.length === 0) await store.dispatch('item/GET_HEROES')
+    const nickname = params.nickname
+    return {
+      userNickNames,
+      nickname
+    }
   },
   data() {
     return {
-      charactersParsed: null,
-      selectedChar: null,
-      userNickNames: [],
-      ships: [],
       itemAreas: [
         {
           title: "장비",
@@ -100,97 +149,53 @@ export default {
           type: "ship",
           columnNum: "1",
         },
-      ]
+        {
+          title: "류오",
+          type: "ryuo",
+          columnNum: "1",
+          rowNum: "1",
+        },
+      ],
     }
   },
   computed: {
     ...mapGetters({
-      characters: 'getCharacters',
-      heroes: 'getHeroes',
-      equipments: 'getEquipments',
-      nickName: 'getNickName',
-      gameUsers: 'getGameUsers',
-      sailors: 'getSailors',
-      colleagues: 'getColleagues',
-      items: 'getItems',
-    })
-  },
-  async created() {
-    if(this.gameUsers.length === 0) await this.$store.dispatch('GET_GAME_USERS')
-    if(this.heroes.length === 0) await this.$store.dispatch('GET_HEROES')
-    this.userNickNames = this.gameUsers.map(user => user.nickName)
+      characters: 'character/getCharacters'
+    }),
   },
   mounted() {
-    this.fnSearch(this.$route.params.nickname)
+    this.sendPageView()
   },
   methods: {
-    async fnSearch(newNickName) {
-      console.log('setSearchResult', newNickName)
-
-      this.$store.commit('SET_NICKNAME', newNickName)
-      await this.$store.dispatch('GET_CHARACTERS', { nickName: newNickName })
-      console.log('characters 원형', this.characters)
-
-      if(!this.characters) {
+    ...mapActions({
+      getCharacters: 'character/GET_CHARACTERS',
+    }),
+    async fnSearch(nickName) {
+      await this.getCharacters({ nickName })
+      console.log('fnSearch', nickName, this.characters)
+      this.checkCharacterData()
+    },
+    checkCharacterData() {
+      if(this.characters.length === 0) {
         alert('존재하지 않는 닉네임이거나, 보유 캐릭터가 없습니다.')
         console.log(this.$route)
         this.$router.push('/character')
         return false
       }
-
-      // console.log('heroes', this.heroes)
-      if(this.items.length === 0) await this.$store.dispatch('GET_ITEMS')
-      this.ships = this.items.filter(item => item.type === 'ship')
-      const newChars = deepClone(this.characters).map(character => {
-        const checkDone = character.hero
-        if(checkDone) return character
-
-        const heroData = findData(this.heroes, 'name', character.heroName)
-        const hero = heroData || {id: character.heroName}
-        hero.bounty = addCommaNumber(character.bounty)
-
-        const equipments = this.dataParser(character, 'equipments')
-        const sailors = this.dataParser(character, 'sailors')
-        const colleagues = this.dataParser(character, 'colleagues')
-        const ship = this.dataParser(character, 'ship')
-
-        return Object.assign(character, { hero, equipments, sailors, colleagues , ship})
+    },
+    async sendPageView() {
+      const namePageView = await checkUpdatePageView('character', this.nickname)
+      namePageView && postCharacterPageView({ name: this.nickname })
+    },
+    async mergePVData() {
+      const { data: DbPageViews } = await getCharacterPageViews({ startDate: '2022-7-9' })
+      const resultData = await totalPageViewGAData('의 캐릭터', DbPageViews)
+      resultData.forEach(data => {
+        postMurgeCharacterView({ name: data.name, pageView: data.pageView})
       })
-
-      this.charactersParsed = newChars
-      // console.log('charactersParsed', this.charactersParsed)
-      // post 
-      postGameUser({ nickName: newNickName })
-    },
-    dataParser(character, type) {
-      const data = () => {
-        const _data = character[type]
-        const dataTypeArray = Array.isArray(_data) ? _data : [_data]
-        return dataTypeArray.map(data => getDefaultData(data))
-      }
-
-      const newData = fillDataAndInsertValue(this.items, data().join(','), 'stack', true)
-      for(const data of newData) {
-        if(data && data.option) {
-          data.option = parserStrData(data.option)
-        }
-        if(data && data.gradeOption) {
-          data.gradeOption = parserStrData(data.gradeOption)
-        }
-      }
-
-      const result = type.includes('colleague') 
-        ? fillDefaultList(newData, 3)
-        : type.includes('ship')
-          ? fillDefaultList(newData, 1)
-          : newData
-      return result
-    },
-    removeSearchResult() {
-      this.charactersParsed = null
-      this.selectedChar = null
-    },
-  }
+      console.log('totalPageViewGAData', resultData)
+    }
+  },
 }
 </script>
 

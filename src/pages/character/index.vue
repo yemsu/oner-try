@@ -1,56 +1,51 @@
 <template>
   <div class="wrap-search">
     <ItemCheckerBoard
-      :items="heroes"
+      :items="pureHeroes"
     />
-    <search-box
-      category="닉네임(첫 검색 대소문자 구분)"
-      :matchingData="{type: 'string', data: userNickNames}"
-      :defaultMatchingList="false"
-      size="main"
-      :paramKey="['nickname']"
+    <character-search-box
+      :matchingData="userNickNames"
+      size="big"
     />
   </div>
 </template>
 
 <script>
-import SearchBox from '@/components/search/SearchBox.vue'
-import ItemCheckerBoard from '@/components/item/ItemCheckerBoard.vue'
+import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
+import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
 export default {
   name: 'SearchCharacter',
-  head: {
-    title: `${process.env.APP_TITLE} | 캐릭터`,
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content: '캐릭터가 궁금한 유저를 검색 해보세요'
-      }
-    ]
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: '캐릭터',
+      description: '캐릭터가 궁금한 유저를 검색해보세요',
+    })
   },
   components: {
-    SearchBox,
-    ItemCheckerBoard,
+    CharacterSearchBox
   },
-  data() {
+  async asyncData({ store }) {
+    const { character: { gameUsers }, item: { heroes } } = store.state
+    const gameUsersData = gameUsers.length === 0
+      ? await store.dispatch('character/GET_GAME_USERS')
+      : gameUsers
+    const userNickNames = gameUsersData.map(user => user.nickName)
+    if(heroes.length === 0) await store.dispatch('item/GET_HEROES')
     return {
-      userNickNames: []
+      userNickNames
     }
   },
   computed: {
     ...mapGetters({
-      heroes: 'getHeroes',
-      gameUsers: 'getGameUsers',
-    })
+      heroes:  'item/getHeroes',
+      gameUsers: 'character/getGameUsers',
+    }),    
+    pureHeroes() {
+      return [...this.heroes].filter(hero => !hero.name.includes('(스킨)'))
+    }
   },
-  async created() {
-    if(this.gameUsers.length === 0) await this.$store.dispatch('GET_GAME_USERS')
-    if(this.heroes.length === 0) await this.$store.dispatch('GET_HEROES')
-    this.userNickNames = this.gameUsers.map(user => user.nickName)
-  },
-  methods: {
-  }
 }
 </script>
 

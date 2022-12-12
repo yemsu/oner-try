@@ -1,69 +1,65 @@
 <template>
   <div
     :class="[
-      'item',
+      'box-item',
       item ? item.grade : '',
       `size-${size}`,
       `type-${type}`,
-      {'wanted-paper': wantedPaper}
+      {'wanted-paper': wantedPaper},
+      {'round': isRoundImg},
+      {'no-padding': !padding},
     ]">
     <template v-if="item">
-      <div class="wrap-box">
-        <button
-          v-if="isComp(item) || isNoDataItem(item)"
-          @click="clickItem(item)"
-          :title="isNoDataItem(item) ? '클릭하여 아이템 이름을 알려주세요!' : ''"
-          class="wrap-info"
-        >
-          <item-box-info
-            :item="item"
-            :isComp="isComp(item)"
-            :wantedPaper="wantedPaper"
-            :isNoDataItem="isNoDataItem(item)"
-            :badgeDrop="badgeDrop"
-          />
-        </button>
-        <item-box-info
-          v-else
-          :item="item"
-          :isComp="isComp(item)"
-          :wantedPaper="wantedPaper"
-          :isNoDataItem="isNoDataItem(item)"
-          :badgeDrop="badgeDrop"
-        />
-      </div>
+      <item-link
+        class="wrap-info"
+        :itemType="item.type"
+        :itemId="item.id"
+        :isLink="isComp && isLink"
+        :isBlankLink="isBlankLink"
+      >
+        <div class="item-box-info">
+          <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
+          <div class="area-img">
+            <item-image 
+              :item="itemImageData"
+              :isRoundImg="isRoundImg"
+              :isNoDataItem="isNoDataItem"
+              :size="size"
+              :isComp="isComp"
+              :isLink="false"
+            />
+            <item-badges
+              v-if="showItemBadges"
+              :item="item"
+              :wantedPaper="wantedPaper"
+              :showBadges="showBadges"
+              :customBadge="customBadge"
+              :innerPosition="true"
+            />
+          </div>
+          <p v-if="!wantedPaper && showName" class="name"><span class="text">{{ item.name }}</span></p>
+          <p v-if="wantedPaper && showBounty" class="bounty"><span class="text">$ {{ item.bounty || 0 }}</span></p>
+          <template v-if="isPirateKing">
+            <span class="crown">👑</span>
+            <span class="money">💰</span>
+          </template>
+        </div>
+      </item-link>
       
       <!-- tooltip -->
-      <div v-show="!noTooltip(item)" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
-        <dl class="details">
-          <div v-show="item.dropMonster">
-            <dt class="color-drop">획득처</dt>
-            <dd>{{ item.dropMonster }}</dd>
-          </div>
-          <div
-            v-show="item.option"
-            v-for="(option, i) in item.option"
-            :key="`itemOption${i}`"
-          >
-            <dt class="color-option">{{ getOption(option, 'title') }}</dt>
-            <dd>+{{ Object.values(option)[0] }} {{ getOption(option, 'unit') }}</dd>
-          </div>
-        </dl>
-        <div v-show="!visibleDetail && isComp(item)" class="wrap-sub-text">
-          <p class="color-neon"><small>조합 보러가기 </small><i class="icon-arrow right small border-neon"></i></p>
-        </div>
-      </div>
-      <div
-        v-show="isActiveReportPopup" 
-        class="popup"
-        style="position: absolute; bottom: 0; left: 0; z-index: 999; transform: translateY(50%);"
-      >
-        <base-input 
-          category="아이템명(선박은 강화수치까지)"
-          :value="inputValue"
-          @onUpdateInput="updateInput"
-          @onEnter="enterInput"
+      <div v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
+        <item-detail-info 
+          :colorMode="visibleDetail ? 'black' : 'white'"
+          :options="!tooltipNoOption ? item.option : null"
+          :dropMonster="item.dropMonster"
+          :type="itemDetailInfoType"
         />
+        <div v-if="!visibleDetail && isComp" class="wrap-sub-text">
+          <p class="color-neon">
+            <small>클릭하여 조합 보러가기 </small>
+            <i class="icon-arrow right small border-neon" />
+          </p>
+        </div>
       </div>
     </template>
     <div v-else class="item-blank"></div>
@@ -73,13 +69,9 @@
 
 <script>
 import BaseInput from '@/components/common/BaseInput.vue'
-import { getOptionTitle, getOptionUnit } from '@/plugins/item'
-import { isOnlyNumber } from '@/plugins'
-import { postItemName } from '@/plugins/https'
-import ItemBoxInfo from './ItemBoxInfo.vue'
+import { isOnlyNumber } from '@/plugins/utils'
 export default {
   components: {
-    ItemBoxInfo,
     BaseInput
   },
   props: {
@@ -95,98 +87,91 @@ export default {
       type: String,
       default: () => 'basic' // list
     },
-    badgeDrop: {
-      type: Boolean,
-      default: () => true
-    },
-    badgeType: {
-      type: Boolean,
-      default: () => true
-    },
     showTooltip: {
       type: Boolean,
       default: () => true
+    },
+    tooltipNoOption: {
+      type: Boolean,
+      default: () => false
     },
     visibleDetail: {
       type: Boolean,
       default: () => false
     },
-    showType: {
+    showBounty: {
+      type: Boolean,
+      default: () => true
+    },
+    showName: {
+      type: Boolean,
+      default: () => true
+    },
+    onlyImg: {
+      type: Boolean,
+      default: () => false
+    },
+    isRoundImg: {
       type: Boolean,
       default: () => false
     },
     wantedPaper: {
       type: Boolean,
       default: () => false
+    },
+    customBadge: {
+      type: String,
+      default: () => ''
+    },
+    showBadges: {
+      type: Array,
+      default: () => []
+    },
+    isPirateKing: {
+      type: Boolean,
+      default: () => false
+    },
+    isLink: {
+      type: Boolean,
+      default: () => true
+    },
+    isBlankLink: {
+      type: Boolean,
+      default: () => false
+    },
+    padding: {
+      type: Boolean,
+      default: () => true
     }
   },
-  data() {
-    return {
-      isActiveReportPopup: false,
-      reportingItemId: null,
-      inputValue: null
+  computed: {
+    isComp() {
+      return !!this.item.ingredients
+    },
+    isNoDataItem() {
+      return isOnlyNumber(this.item.name)
+    },
+    noTooltip() {
+      const noData = !this.item.dropMonster && !this.item.option
+      const onlyDropButDropData = this.tooltipNoOption && !this.item.dropMonster
+      return !this.showTooltip || noData || onlyDropButDropData
+    },
+    itemImageData() {
+      const { type, id, groupName, name, grade } = this.item
+      return { type, id, groupName, name, grade }
+    },
+    itemDetailInfoType() {
+      return this.visibleDetail && this.size === 'big' ? 'list-main' : 'basic'
+    },
+    showItemBadges() {
+      return !this.onlyImg && (this.showBadges.length !== 0 || this.customBadge) && !this.isNoDataItem
     }
-  },
-  mounted() {
-    document.addEventListener('click', e => {
-      if(!this.isActiveReportPopup) return
-      const targetArea = className => e.target.closest(className)
-      if(!targetArea('.item')) this.isActiveReportPopup = false
-    })
   },
   methods: {
-    isNoDataItem(item) {
-      item.name === '비프스튜' && console.log(item, isOnlyNumber(item.name))
-      return isOnlyNumber(item.name)
-    },
-    getOption(option, optionType) {
-      const key = Object.keys(option)[0]
-      switch (optionType) {
-        case 'title':
-          return getOptionTitle(key);
-        case 'unit':
-          return getOptionUnit(key);      
-      }
-    },
-    typeName(type) {
-      switch (type) {
-        case 'sailor':
-          return '선원'
-        case 'colleague':
-          return '동료'
-        case 'etcItem':
-          return '기타'
-        default:
-          break;
-      }
-    },
-    noTooltip(item) {
-      return !this.showTooltip || !item.dropMonster && !item.option
-    },
-    isComp(item) {
-      return !!item.ingredients
-    },
-    clickItem(item) {
-      console.log('clickItem')
-      const {id, type} = item
-      if(this.isNoDataItem(item)) {
-        this.isActiveReportPopup = true
-        this.reportingItemId = item.name
-        console.log('this.reportingItemId', this.reportingItemId)
-        return 
-      }
+    clickItem() {
+      const { id, type } = this.item
       this.$router.push(`/composition/${type}/${id}`)
     },
-    updateInput(value) {
-      this.inputValue = value
-    },
-    enterInput() {
-      console.log('enter!', this.reportingItemId, this.inputValue)
-      postItemName({ code: this.reportingItemId, name: this.inputValue })
-      this.isActiveReportPopup = false
-      this.inputValue = ''
-      alert('감사합니다! 🤸‍♀️')
-    }
   }
 }
 </script>

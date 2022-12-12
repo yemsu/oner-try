@@ -1,60 +1,45 @@
 <template>
-  <div class="wrap-search">
-    <ItemCheckerBoard
-      :items="items"
-    />
-    <search-box
-      v-show="combinationItems.length !== 0"
-      category="조합 아이템"
-      :matchingData="{type: 'item', data: combinationItems}"
-      size="main"
-      :paramKey="['id', 'type']"
-    />
+  <div>
+    <div class="wrap-search">
+      <ItemCheckerBoard
+        :items="legendItems"
+      />
+      <composition-search-box
+        :matchingData="compositionItems"
+        size="big"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import SearchBox from '@/components/search/SearchBox.vue'
-import ItemCheckerBoard from '@/components/item/ItemCheckerBoard.vue'
-import { mapGetters } from 'vuex';
+import CompositionSearchBox from "@/components/pages/composition/SearchBox.vue"
+import setMeta from '@/plugins/utils/meta';
 
 export default {
   name: 'SearchCharacter',
-  head: {
-    title: `${process.env.APP_TITLE} | 조합법`,
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content: '조합법이 궁금한 아이템을 검색 해보세요.'
-      }
-    ]
-  },
   components: {
-    SearchBox,
-    ItemCheckerBoard,
+    CompositionSearchBox
   },
-  data() {
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `조합법`,
+      description: `조합법이 궁금한 아이템을 검색 해보세요.`,
+    })
+  },
+  async asyncData({ store }) {
+    const { item: { items } } = store.state
+    const itemsData = items.length === 0
+      ? await store.dispatch('item/GET_ITEMS')
+      : items
+    const compositionItems = itemsData.filter(item => item.ingredients)
+    const legendItems = compositionItems.filter(item => item.grade === 'legend')
     return {
-      combinationItems: [],
+      compositionItems,
+      legendItems
     }
   },
-  computed: {
-    ...mapGetters({
-      items: 'getItems',
-    }),
-  },
-  async created() {
-    if(this.items.length === 0) await this.$store.dispatch('GET_ITEMS')
-    const combinationItems = await this.items.filter(item => item.ingredients)
-    this.combinationItems = combinationItems
-    // console.log(this.items)
-  },
-  mounted() {
-    console.log(this.$route)
-  },
-  methods: {
-  }
 }
 </script>
 

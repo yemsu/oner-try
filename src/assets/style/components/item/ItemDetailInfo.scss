@@ -1,0 +1,124 @@
+$font-small: $font-size-S-pc;
+
+.details {
+  .title {
+    word-break: keep-all;
+  }
+  &.type {
+    &-basic {
+      font-size: $font-small;
+      > .wrap-detail {
+        display: flex;
+        gap: 0.6em;
+        &:nth-child(n + 2) {
+          margin-top: 0.2em;
+        }
+      }
+      dd {
+        letter-spacing: 0;
+      }
+    }
+    &-list-main {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin-left: 40px;
+      > .wrap-detail {
+        border-left: 2px solid rgba(0, 0, 0, 0.1);
+        padding-left: 8px;
+        &:nth-child(n+2) {
+          margin-left: 20px;
+        }
+        .title {
+          font-size: $font-small;
+        }
+        dd {
+          font-size: $font-size-M-pc;
+        }
+      }
+    }
+    &-total {
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      text-align: center;
+      gap: 15px 10px;
+      font-size: $font-small;
+      .wrap-detail {
+        display: block;
+      }
+      dd {
+        font-weight: 300;
+      }
+      @for $i from 1 to 4 {
+        &.columns-#{$i} {
+          grid-template-columns: repeat(#{$i}, 1fr);
+        }
+      }
+    }
+  }
+  &.color {
+    &-black {
+      .title {
+        color: var(--color-gray-200);
+      }
+      .drop-monster {
+        .title {
+          &.color-point {
+            color: $color-point;
+          }
+        }
+      }
+      .option {
+        .title {
+          &.color-point {
+            color: $color-point-sub;
+          }
+        }
+      }
+    }
+    &-white {
+      .title {
+        color: var(--color-gray-200);
+      }
+      dd {
+        color: var(--color-white);
+        font-weight: 300
+      }
+      .drop-monster {
+        .title {
+          &.color-point {
+            color: $color-point-bright;
+          }
+        }
+      }
+      .option {
+        .title {
+          &.color-point {
+            color: $color-point-sub-bright;
+          }
+        }
+        dd {
+          letter-spacing: 0;
+        }
+      }
+    }
+  }
+  .option-match {
+    padding-left: 5px;
+    background-color: $color-mark;
+    .title {
+      color: var(--color-dark);
+    }
+    dd {
+      font-weight: bold;
+    }
+  }
+  .mark {
+    // font-weight: bold;
+    color: $color-neon;
+  }
+}

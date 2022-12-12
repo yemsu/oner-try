@@ -1,17 +1,17 @@
 <template>
-  <div :class="['box-search', {'compact':size === 'side'}]">
+  <div :class="['box-search', {'compact':size === 'small'}, size]">
     <div :class="[
       'wrap-search',
-      {'compact': size === 'side' && !isSearching},
-      {'side': size === 'side'}
+      {'compact': size === 'small' && !isSearching}
     ]">
       <base-input
         usage="search"
         :size="size"
         :category="category"
         :value="inputValue"
-        :isCompactMode="size === 'side' && !isSearching"
+        :isCompactMode="size === 'small' && !isSearching"
         :isActive="isSearching && !!matchingData.data"
+        :focusOnMounted="size === 'big' && true"
         @onUpdateInput="updateInput"
         @onFocusInput="focusInput"
         @onBlurInput="blurInput"
@@ -21,27 +21,33 @@
         v-show="isSearching && matchingData.data"
         class="items-match"
       >
+        <p v-if="showRankingList" class="title-list"> 검색 순위 <span>TOP 10</span></p>
         <div
           v-for="(data, i) in matchDataSliced"
           :key="`matchingData${i}`"
           class="item-match"
         >
-          <item-box
-            v-if="isItem"
-            size="small"
-            type="list"
-            :item="data"
-            :showTooltip="false"
-          />
-          <button
-            v-else
-            :class="{'button-keyword': !isItem}"
-            @click="routerPush(data)"
-          >
-            <p>
-              {{ data }}
-            </p>
-          </button>
+          <p v-if="showRankingList" class="number-ranking">{{ i + 1 }}</p>
+          <template>
+            <button
+              :class="{'button-keyword': !isItem}"
+              @click="routerPush(data)"
+            >
+              <item-box
+                v-if="isItem"
+                size="small"
+                type="list"
+                :item="data"
+                :showBadges="['howGet']"
+                :showTooltip="false"
+                :isLink="false"
+              />
+              <p v-else>
+                {{ data }}
+              </p>
+            </button>
+          </template>
+          <p v-if="showRankingList" class="value-ranking">{{ data.pageView }}</p>
         </div>
       </div>
     </div>
@@ -79,7 +85,15 @@ export default {
     paramKey: {
       type: Array,
       default: () => []
-    }
+    },
+    resultPath: {
+      type: String,
+      default: () => '/'
+    },
+    rankingList: {
+      type: Array,
+      default: () => null
+    },
   },
   data() {
     return {
@@ -103,10 +117,18 @@ export default {
     }
   },
   computed: {
+    showRankingList() {
+      return this.rankingList && !this.inputValue
+    },
+    noDefaultMatchingList() {
+      return !this.defaultMatchingList && !this.inputValue
+    },
     matchDataSliced() {
+      console.log('rankingList', this.rankingList)
+      if(this.noDefaultMatchingList) return []
+      if(this.showRankingList) return this.rankingList
       const { data, type } = this.matchingData
-      const sliceNum = 5
-      if(!this.defaultMatchingList && !this.inputValue) return []
+      const sliceNum = 10
       if(!this.inputValue) return data.slice(0, sliceNum)
       const noBlank = target => {
         return target.replace(/ /g, '')
@@ -141,12 +163,10 @@ export default {
           ? this.inputValue
           : typeof(value) === 'string'
             ? value : value[key]
-        Object.assign(acc, {[key]: checkValue})
+        acc += '/' + checkValue
         return acc
-      }, {})
-      const path0 = '/' + this.$route.path.split('/')[1]
-      // console.log('pathj-0', this.$route.path.split('/'))
-      this.$router.push(`${path0}/${value}`)
+      }, '')
+      this.$router.push(`${this.resultPath}${params}`)
     },
     routeparamsHandler(params) {
       params = params || this.$route.params

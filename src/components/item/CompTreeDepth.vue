@@ -6,7 +6,11 @@
       class="wrap-items"
     >
       <div class="item-main">
-        <item-box :item="item" :size="itemSize"/>
+        <item-box
+          :item="item"
+          :size="itemSize"
+          :showBadges="['howGet', 'requiredNumber']"
+        />
       </div>
       <slot :props="{ ingredients: item && item.ingredients, index: i }"></slot>
     </div>

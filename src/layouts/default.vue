@@ -1,23 +1,15 @@
 <template>
  <div id="app">
-    <header-comp />
+    <LayoutHeader />
     <div class="container">
       <nuxt />
     </div>
+    <LayoutFooter />
  </div>
 </template>
 
 <script>
-import Header from '@/components/layout/Header'
-
 export default {
-  components: {
-    HeaderComp: Header
-  },
-  data() {
-    return {
-    }
-  }
 }
 </script>
 
@@ -26,6 +18,6 @@ export default {
   position: relative;
   min-height: 100vh;
   $header-height: 41px;
-  padding: ($header-height + 15px) 20px 100px;
+  padding: $header-height 0 100px;
 }
 </style>
