@@ -122,8 +122,8 @@ export const actions = {
           return Object.assign(character, { totalOption, synergies: characterSynergies })
         })
         
-        commit(`SET_USER_CHARACTERS`, {data: newData, type: 'userCharacters'})
-        return newData
+        commit(`SET_USER_CHARACTERS`, {data: sortRank(newData), type: 'userCharacters'})
+        return sortRank(newData)
       })
       .catch(error => console.log('GET_USER_CHARACTERS', error))
   },
@@ -153,15 +153,18 @@ export const actions = {
             : new Array(3).fill(null)
           return Object.assign(user, { sailors, colleagues })
         })
-        const sortData = newData.sort((a, b) => {
-          if(b.bounty === a.bounty) {
-            return b.lv - a.lv
-          }
-          return b.bounty - a.bounty
-        })
-        commit(`SET_RANKING`, sortData)
-        return sortData
+        commit(`SET_RANKING`, sortRank(newData))
+        return sortRank(newData)
       })
       .catch(error => console.log('character/GET_RANKING', error))
   }
+}
+function sortRank(data) {
+  const newData = deepClone(data)
+  return newData.sort((a, b) => {
+    if(b.bounty === a.bounty) {
+      return b.lv - a.lv
+    }
+    return b.bounty - a.bounty
+  })
 }
