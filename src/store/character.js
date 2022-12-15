@@ -50,11 +50,11 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_USER_CHARACTERS(state, {type, data}) {
-    state[type] = data
+  SET_USER_CHARACTERS(state, data) {
+    state.userCharacters = data
   },
-  SET_GAME_USERS(state, {type, data}) {
-    state[type] = data
+  SET_GAME_USERS(state, data) {
+    state.gameUsers = data
   },
   SET_RANKING(state, data) {     
     state.ranking = data
@@ -122,7 +122,7 @@ export const actions = {
           return Object.assign(character, { totalOption, synergies: characterSynergies })
         })
         
-        commit(`SET_USER_CHARACTERS`, {data: sortRank(newData), type: 'userCharacters'})
+        commit(`SET_USER_CHARACTERS`, sortRank(newData))
         return sortRank(newData)
       })
       .catch(error => console.log('GET_USER_CHARACTERS', error))
@@ -131,7 +131,7 @@ export const actions = {
     return getGameUsers(payload)
       .then(({data}) => {
         // console.log('GET_GAME_USERS', data)
-        commit(`SET_GAME_USERS`, {data, type: 'gameUsers'})
+        commit(`SET_GAME_USERS`, data)
         return data
       })
       .catch(error => console.log('GET_GAME_USERS', error))
