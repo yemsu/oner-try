@@ -14,7 +14,7 @@ export const heroDefaultHp = {
   baby: 80,
   nami: 90
 }
-export const optionOrderArr = [
+export const optionOrder = [
   'adt', 'maxD', 'ct', 'dr', 'minD', 'dct', 'ctD', 'ss', 'ms', 'cd', 'df', 'ev', 'str', 'dex', 'int', 'hp'
 ]
 export const equipDropOrder = [

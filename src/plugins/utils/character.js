@@ -1,4 +1,4 @@
-import { optionDefaultValue, optionOrderArr, heroDefaultHp } from '@/plugins/utils/item-def'
+import { optionDefaultValue, optionOrder, heroDefaultHp } from '@/plugins/utils/item-def'
 export const getCharacterSynergies = (sailors, synergies) => {
   const sailorNames = sailors.filter(sailor => sailor).map(sailor => sailor.name)
   return synergies.filter(synergy => {
@@ -27,7 +27,7 @@ export const getTotalOption = (character, characterSynergies) => {
   // dex는 레벨을 더한다.
   totalOption.dex += character.lv
 
-  const result = optionOrderArr.map(key => ({[key]: totalOption[key]}))
+  const result = optionOrder.map(key => ({[key]: totalOption[key]}))
   console.log('result', result)
   return result
 }
