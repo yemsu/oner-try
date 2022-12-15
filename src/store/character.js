@@ -2,7 +2,7 @@ import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList,
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
 import { deepClone, addCommaNumber } from '@/plugins/utils'
 import {
-  getCharacters,
+  getUserCharacters,
   getGameUsers,
   getRanking
 } from '@/plugins/utils/https'
@@ -28,15 +28,15 @@ import {
   }
 
 export const state = () => ({
-  characters: [],
+  userCharacters: [],
   gameUsers: [],
   ranking: [],
   rankingCrr: [],
 })
 
 export const getters = {
-  getCharacters(state) {
-    return state.characters
+  getUserCharacters(state) {
+    return state.userCharacters
   },
   getGameUsers(state) {
     return state.gameUsers
@@ -50,7 +50,7 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_CHARACTERS(state, {type, data}) {
+  SET_USER_CHARACTERS(state, {type, data}) {
     state[type] = data
   },
   SET_GAME_USERS(state, {type, data}) {
@@ -70,7 +70,7 @@ export const mutations = {
   },
 }
 export const actions = {
-  async GET_CHARACTERS({ commit, rootState, dispatch }, payload) {
+  async GET_USER_CHARACTERS({ commit, rootState, dispatch }, payload) {
     const { item: { heroes, equipments, sailors, colleagues, ships, ryuoes, synergies }} = rootState
     if(heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
     if(equipments.length === 0) await dispatch('item/GET_EQUIPMENTS','', { root: true })
@@ -79,7 +79,7 @@ export const actions = {
     if(ships.length === 0) await dispatch('item/GET_SHIPS','', { root: true })
     if(ryuoes.length === 0) await dispatch('item/GET_RYUOES','', { root: true })
     if(synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
-    return getCharacters(payload)
+    return getUserCharacters(payload)
       .then(({data}) => {
         const newData = data.map(character => {
           // hero
@@ -122,10 +122,10 @@ export const actions = {
           return Object.assign(character, { totalOption, synergies: characterSynergies })
         })
         
-        commit(`SET_CHARACTERS`, {data: newData, type: 'characters'})
+        commit(`SET_USER_CHARACTERS`, {data: newData, type: 'userCharacters'})
         return newData
       })
-      .catch(error => console.log('GET_CHARACTERS', error))
+      .catch(error => console.log('GET_USER_CHARACTERS', error))
   },
   GET_GAME_USERS({ commit }, payload) {
     return getGameUsers(payload)
@@ -140,10 +140,10 @@ export const actions = {
     return getRanking(payload)
       .then(({data}) => {
         const { item: { sailors, colleagues, items } } = rootState
-        if(sailors.length === 0) console.warn('USING ITEMS DATA : NEED SAILORS DATA - GET_RANKING')
-        if(colleagues.length === 0) console.warn('USING ITEMS DATA : NEED COLLEAGUES DATA - GET_RANKING')
         const sailorData = sailors.length === 0 ? items : sailors
         const colleagueData = colleagues.length === 0 ? items : colleagues
+        // if(sailors.length === 0) console.warn('USING ITEMS DATA : NEED SAILORS DATA - GET_RANKING')
+        // if(colleagues.length === 0) console.warn('USING ITEMS DATA : NEED COLLEAGUES DATA - GET_RANKING')
         const newData = data.map(user => {
           const sailors = user.sailors !== '[]'
             ? dataParseHandler(sailorData, user, 'sailors') 

@@ -155,7 +155,7 @@ export default {
       items: 'item/getItems',
       heroes:  'item/getHeroes',
       gameUsers: 'character/getGameUsers',
-      characters: 'character/getCharacters',
+      characters: 'character/getUserCharacters',
     })
   },
 }

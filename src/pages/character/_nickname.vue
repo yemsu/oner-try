@@ -14,8 +14,8 @@
     <div class="inner-size-basic mrg-top-small">
       <h2 class="title-page"><i class="skull">☠</i> {{ nickname }}</h2>
       <v-tab
-        v-if="characters.length !== 0"
-        :tabs="characters"
+        v-if="userCharacters.length !== 0"
+        :tabs="userCharacters"
       >
         <template v-slot:tab="{ tab: {data, isActive} }">
           <item-box
@@ -160,7 +160,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      characters: 'character/getCharacters'
+      userCharacters: 'character/getUserCharacters'
     }),
   },
   mounted() {
@@ -168,15 +168,15 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCharacters: 'character/GET_CHARACTERS',
+      getUserCharacters: 'character/GET_USER_CHARACTERS',
     }),
     async fnSearch(nickName) {
-      await this.getCharacters({ nickName })
-      console.log('fnSearch', nickName, this.characters)
+      await this.getUserCharacters({ nickName })
+      console.log('fnSearch', nickName, this.userCharacters)
       this.checkCharacterData()
     },
     checkCharacterData() {
-      if(this.characters.length === 0) {
+      if(this.userCharacters.length === 0) {
         alert('존재하지 않는 닉네임이거나, 보유 캐릭터가 없습니다.')
         console.log(this.$route)
         this.$router.push('/character')
