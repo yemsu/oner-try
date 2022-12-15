@@ -190,9 +190,7 @@ export default {
         ? this.findMatchItem(params)[0]
         : params[this.paramKey[0]]
 
-      const checkNoError = this.checkErrorsFindResultByParams(params, result)
-
-      return checkNoError && result
+      return this.checkErrorResultParams(params, result) && result
     },
     findMatchItem(params) {
       // console.log('this.matchingData', this.matchingData)
@@ -205,7 +203,7 @@ export default {
 
       return result
     },
-    checkErrorsFindResultByParams(params, result) {
+    checkErrorResultParams(params, result) {
       if(this.matchingData.data !== 'item') return true
       if(!result) {
         alert('params에 해당하는 결과를 찾을 수 없습니다.', params)
