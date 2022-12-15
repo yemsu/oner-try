@@ -1,4 +1,4 @@
-import { optionDefaultValue, optionOrderArr, hpDefaultValueByHero } from '@/plugins/utils/item-def'
+import { optionDefaultValue, optionOrderArr, heroDefaultHp } from '@/plugins/utils/item-def'
 export const getCharacterSynergies = (sailors, synergies) => {
   const sailorNames = sailors.filter(sailor => sailor).map(sailor => sailor.name)
   return synergies.filter(synergy => {
@@ -33,7 +33,7 @@ export const getTotalOption = (character, characterSynergies) => {
 }
 const defaultOptionByCharacter = (character) => {
   const newObj = {...optionDefaultValue}
-  newObj.hp = hpDefaultValueByHero[character.hero.groupName]
+  newObj.hp = heroDefaultHp[character.hero.groupName]
   return newObj
 }
 const getOptions =  (allOption) => {

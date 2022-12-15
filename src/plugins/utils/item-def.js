@@ -4,7 +4,7 @@ export const gradesDef = {
   rare: '레어',
   normal: '노말',
 }
-export const hpDefaultValueByHero = {
+export const heroDefaultHp = {
   tashigi: 90,
   raw: 110,
   yamato: 180,
