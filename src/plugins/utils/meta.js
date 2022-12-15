@@ -26,7 +26,7 @@ const setMeta = (metaObj = {}) => {
   resultMeta.push({ hid: 'schema-name-value', itemprop: 'name', content: titleContent })
   
   // image
-  const imgContent = metaObj && metaObj.imageUrl
+  const imgContent = metaObj?.imageUrl
     ? `${process.env.CONT_PATH}${metaObj.imageUrl}`
     : `${process.env.CONT_PATH}/static/image/sailor/s1227899974.png`
   resultMeta.push({ hid: 'og-image-value', property: 'og:image', content: imgContent })
