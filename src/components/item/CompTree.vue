@@ -23,7 +23,7 @@
               <div
                 v-show="propsD1.ingredients"
                 class="wrap-scroll"   
-                @click="toggleD3($event, propsD1.index)"
+                @click="hasItemTree(propsD1) && toggleD3($event, propsD1.index)"
               >
                 <comp-tree-depth
                   :items="propsD1.ingredients"
@@ -49,7 +49,7 @@
                 </comp-tree-depth>
               </div>
               <button
-                v-show="propsD1.ingredients"
+                v-show="hasItemTree(propsD1)"
                 class="button-toggle"
                 @click="toggleD3($event, propsD1.index)"
                 :title="attrToggleD3(propsD1.index).title"
@@ -121,6 +121,12 @@ export default {
     },
     clickWideMode() {
       this.modeWide = !this.modeWide
+    },
+    hasItemTree(item) {
+      if(!item.ingredients) return false
+      const d2Ingredients = item.ingredients.map(itemD1 => itemD1.ingredients)
+      const result = [...new Set(d2Ingredients)]
+      return !(result.length === 1 && !result[0])
     }
   }
 }
