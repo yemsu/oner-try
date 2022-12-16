@@ -54,7 +54,7 @@
               <i class="icon-arrow right small border-point"></i>
             </router-link>
             <router-link
-              to="/items/colleagues"
+              to="/items/colleague"
               class="text-link wrap-icon-text"
             >
               동료 도감
