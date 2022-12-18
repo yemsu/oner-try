@@ -16,9 +16,9 @@ export const getTotalOption = (character, characterSynergies) => {
   // console.log('allItem', allItem)
   const allOption = getOptions(allItem, character)
   // console.log('allOption', allOption)
-  const totalOption = Object.keys(optionDefaultValue).reduce((acc, key) => {
+  const totalOption = Object.keys(optionDefaultValue).reduce((result, key) => {
     const checkOption = allOption[key] || 0
-    return Object.assign(acc, {[key]: checkOption + defaultOptionBy(character)[key]})
+    return Object.assign(result, {[key]: checkOption + defaultOptionBy(character)[key]})
   }, {})
   // console.log('totalOption', totalOption)      
   // ev는 str 수치를 더한다.
@@ -38,18 +38,18 @@ const defaultOptionBy = (character) => {
 }
 const getOptions =  (allOption) => {
   const options = allOption
-    .reduce((acc, data) => { 
-      if(!data?.option) return acc
+    .reduce((result, data) => { 
+      if(!data?.option) return result
       // 여기: 데이터 없으면 기본값 뱉도록 수정 필요
       const { option: options, gradeOption: gradeOptions, stack } = data
       const checkGradeOption = gradeOptions || []
       for(const option of [...options, ...checkGradeOption]) {
         const key = Object.keys(option)[0]
-        const accValue = acc[key] || 0
-        const newValue = accValue + calcOptionByStack(option, stack)
-        Object.assign(acc, {[key]: newValue})
+        const resultValue = result[key] || 0
+        const newValue = resultValue + calcOptionByStack(option, stack)
+        Object.assign(result, {[key]: newValue})
       }
-      return acc
+      return result
     }, {})
   return options
 } 
