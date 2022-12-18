@@ -13,9 +13,9 @@
       <nuxt-link
         class="wrap-info"
         :to="useLink && linkItemComposition()"
-        :target="useLink && isBlankLink && '_blank'"
-        :is="useLink ? 'nuxt-link' : 'div'"
-        :title="buttonTitle || (useLink && isBlankLink && '새창')"
+        :target="linkTarget"
+        :is="linkTagName"
+        :title="linkTitle"
       >
         <div class="item-box-info">
           <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
@@ -163,6 +163,15 @@ export default {
     },
     useLink() {
       return this.isComp && this.isLink
+    },
+    linkTitle() {
+      return this.buttonTitle || (this.useLink && this.isBlankLink && '새창')
+    },
+    linkTarget() {
+      return this.useLink && this.isBlankLink && '_blank'
+    },
+    linkTagName() {
+      return this.useLink ? 'nuxt-link' : 'div'      
     }
   },
   methods: {
