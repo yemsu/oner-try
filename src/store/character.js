@@ -1,31 +1,28 @@
 import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
 import { deepClone, addCommaNumber } from '@/plugins/utils'
-import {
-  getUserCharacters,
-  getGameUsers,
-  getRanking
-} from '@/plugins/utils/https'
-  const dataSettedDefault = (rawData, type) => {
-    const _data = rawData[type]
-    const dataTypeArray = Array.isArray(_data) ? _data : [_data]
-    return dataTypeArray.map(data => getDefaultData(data))
-  }
-  const dataParser = (newData, type) => {  
-    const result = type.includes('colleague') 
-      ? fillDefaultList(newData, 3)
-      : type.includes('ship')
-        ? fillDefaultList(newData, 1)
-        : newData
-    return result
-  }
-  const dataParseHandler = (items, rawData, type) => {
-    const data1 = dataSettedDefault(rawData, type)
-    const data2 = fillDataAndInsertValue(items, parserStrData(data1.join(',')), 'stack', true)
-    const data3 = dataParser(data2, type)
-  
-    return data3
-  }
+import { getUserCharacters, getGameUsers, getRanking } from '@/plugins/utils/https'
+
+const dataSettedDefault = (rawData, type) => {
+  const _data = rawData[type]
+  const dataTypeArray = Array.isArray(_data) ? _data : [_data]
+  return dataTypeArray.map(data => getDefaultData(data))
+}
+const dataParser = (newData, type) => {  
+  const result = type.includes('colleague') 
+    ? fillDefaultList(newData, 3)
+    : type.includes('ship')
+      ? fillDefaultList(newData, 1)
+      : newData
+  return result
+}
+const dataParseHandler = (items, rawData, type) => {
+  const data1 = dataSettedDefault(rawData, type)
+  const data2 = fillDataAndInsertValue(items, parserStrData(data1.join(',')), 'stack', true)
+  const data3 = dataParser(data2, type)
+
+  return data3
+}
 
 export const state = () => ({
   userCharacters: [],
