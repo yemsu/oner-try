@@ -22,18 +22,10 @@ export const state = () => ({
 })
 
 export const getters = {
-  getUserCharacters(state) {
-    return state.userCharacters
-  },
-  getGameUsers(state) {
-    return state.gameUsers
-  },
-  getRanking(state) {
-    return state.ranking
-  },
-  getRankingCrr(state) {
-    return state.rankingCrr
-  },
+  getUserCharacters: (state) => state.userCharacters,
+  getGameUsers: (state) => state.gameUsers,
+  getRanking: (state) => state.ranking,
+  getRankingCrr: (state) => state.rankingCrr,
 }
 
 export const mutations = {

@@ -29,36 +29,16 @@ export const state = () => ({
 })
 
 export const getters = {
-  getItems(state) {
-    return state.items
-  },
-  getSailors(state) {
-    return state.sailors
-  },
-  getEtcItems(state) {
-    return state.etcItems
-  },
-  getEquipments(state) {
-    return state.equipments
-  },
-  getEquipmentsTable(state) {
-    return state.equipments_table
-  },
-  getShips(state) {
-    return state.ships
-  },
-  getShipsTable(state) {
-    return state.ships_table
-  },
-  getHeroes(state) {
-    return state.heroes
-  },
-  getColleagues(state) {
-    return state.colleagues
-  },
-  getSynergies(state) {
-    return state.synergies
-  },
+  getItems: (state) => state.items,
+  getSailors: (state) => state.sailors,
+  getEtcItems: (state) => state.etcItems,
+  getEquipments: (state) => state.equipments,
+  getEquipmentsTable: (state) => state.equipments_table,
+  getShips: (state) => state.ships,
+  getShipsTable: (state) => state.ships_table,
+  getHeroes: (state) => state.heroes,
+  getColleagues: (state) => state.colleagues,
+  getSynergies: (state) => state.synergies,
 }
 
 export const mutations = {

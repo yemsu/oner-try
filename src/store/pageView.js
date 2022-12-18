@@ -12,18 +12,10 @@ export const state = () => ({
 })
 
 export const getters = {
-  getComposition(state) {
-    return state.composition
-  },
-  getCompositionSearchRanking(state) {
-    return state.CompositionSearchRanking
-  },
-  getCharacter(state) {
-    return state.character
-  },
-  getCharacterSearchRanking(state) {
-    return state.CharacterSearchRanking
-  },
+  getComposition: (state) => state.composition,
+  getCompositionSearchRanking: (state) => state.CompositionSearchRanking,
+  getCharacter: (state) => state.character,
+  getCharacterSearchRanking: (state) => state.CharacterSearchRanking,
 }
 
 export const mutations = {
