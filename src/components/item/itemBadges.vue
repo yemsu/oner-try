@@ -124,6 +124,7 @@ export default {
   bottom: 0;
 }
 .badge {
+  white-space: nowrap;
   &.composition {
     background-color: $badge-color-orange-light;
   }
