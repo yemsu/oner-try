@@ -1,5 +1,5 @@
 <template>
-  <div class="comp-tree">
+  <div class="item-tree">
     <div class="area-tree" v-show="item.ingredients">
       <div class="text-refer top inner-size-basic">
         <h4>조합 트리</h4>
@@ -14,7 +14,7 @@
       </div>
       <div :class="`inner-size-${modeWide ? 'wide' : 'basic'}`">
         <div class="wrap-tree">
-          <comp-tree-depth
+          <item-tree-depth
             :items="item.ingredients"
             :depthIndex="1"
             itemSize="basic"
@@ -25,28 +25,28 @@
                 class="wrap-scroll"   
                 @click="hasItemTree(propsD1) && toggleD3($event, propsD1.index)"
               >
-                <comp-tree-depth
+                <item-tree-depth
                   :items="propsD1.ingredients"
                   :depthIndex="2"
                   itemSize="basic"
                   :class="{ 'show-depth3': dataShowDepth3[`index${propsD1.index}`] }"
                 >
                   <template v-slot="{ props: propsD2 }">
-                    <comp-tree-depth
+                    <item-tree-depth
                       v-if="propsD2.ingredients && dataShowDepth3[`index${propsD1.index}`]"
                       :items="propsD2.ingredients"
                       :depthIndex="3"
                     >
                       <template v-slot="{ props: propsD3 }">
-                        <comp-tree-depth
+                        <item-tree-depth
                           v-if="propsD3.ingredients"
                           :items="propsD3.ingredients"
                           :depthIndex="4"
                         />
                       </template>
-                    </comp-tree-depth>
+                    </item-tree-depth>
                   </template>
-                </comp-tree-depth>
+                </item-tree-depth>
               </div>
               <button
                 v-if="hasItemTree(propsD1)"
@@ -57,7 +57,7 @@
                 <i :class="`icon-arrow ${attrToggleD3(propsD1.index).arrow}`"></i>
               </button>
             </template>
-          </comp-tree-depth>
+          </item-tree-depth>
         </div>
       </div>
     </div>
@@ -66,10 +66,10 @@
 
 <script>
 import BaseButton from '@/components/common/BaseButton.vue'
-import CompTreeDepth from '@/components/item/CompTreeDepth.vue'
+import ItemTreeDepth from '@/components/item/ItemTreeDepth.vue'
 export default {
   components: {
-    CompTreeDepth,
+    ItemTreeDepth,
     BaseButton
   },
   props: {
@@ -133,5 +133,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/components/CompTree.scss';
+@import '@/assets/style/components/ItemTree.scss';
 </style>

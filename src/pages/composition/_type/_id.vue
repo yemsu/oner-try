@@ -78,7 +78,7 @@
         </title-content>
       </div>
       <div class="mrg-top-medium">
-        <comp-tree
+        <item-tree
           :item="itemSelected"
           :allIngrdnts="allIngrdnts"
         />
@@ -90,7 +90,7 @@
 <script>
 import CompositionSearchBox from "@/components/pages/composition/SearchBox.vue"
 import TitleContent from '@/components/common/TitleContent.vue'
-import CompTree from '@/components/item/CompTree.vue'
+import ItemTree from '@/components/item/ItemTree.vue'
 import { parserStrData, fillDataAndInsertValue } from '@/plugins/utils/item'
 import { getOnlyText, deepClone } from '@/plugins/utils'
 import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
@@ -109,7 +109,7 @@ export default {
   components: {
     TitleContent,
     CompositionSearchBox,
-    CompTree
+    ItemTree
   },
   async asyncData({ store, params }) {
     const { item: { items } } = store.state
