@@ -12,10 +12,10 @@
     <template v-if="item">
       <nuxt-link
         class="wrap-info"
-        :to="isComp && isLink && linkItemComposition()"
-        :target="isComp && isLink && isBlankLink && '_blank'"
-        :is="isComp && isLink ? 'nuxt-link' : 'div'"
-        :title="isComp && isLink && isBlankLink && '새창'"
+        :to="useLink && linkItemComposition()"
+        :target="useLink && isBlankLink && '_blank'"
+        :is="useLink ? 'nuxt-link' : 'div'"
+        :title="useLink && isBlankLink && '새창'"
       >
         <div class="item-box-info">
           <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
@@ -156,6 +156,9 @@ export default {
     },
     showItemBadges() {
       return !this.onlyImg && (this.showBadges.length !== 0 || this.customBadge) && !this.isNoDataItem
+    },
+    useLink() {
+      return this.isComp && this.isLink
     }
   },
   methods: {
