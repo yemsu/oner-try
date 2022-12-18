@@ -60,11 +60,23 @@ export default {
   },
   data() {
     return {
-      optionsSelected: []
+      optionsSelected: [],
+      resultColleagues: null
     }
   },
-  computed: {
-    resultColleagues() {
+  watch: {
+    optionsSelected(crr, pre) {
+      this.setResultColleagues()
+    }
+  },
+  created() {
+    this.setResultColleagues()
+  },
+  mounted() {
+    console.log('colleagues', this.colleagues)
+  },
+  methods: {
+    setResultColleagues() {
       const resultColleagues = this.colleagues.filter(colleague => {
         const { option: options } = colleague
         const isAllOption = this.optionsSelected.length === 0
@@ -80,13 +92,8 @@ export default {
         else if(filteringOptions.length === options.length) return true
       })
       
-      return resultColleagues
-    }
-  },
-  mounted() {
-    console.log('colleagues', this.colleagues)
-  },
-  methods: {
+      this.resultColleagues = resultColleagues
+    },
     isActiveMenu(key, type) {
       const selectList = this[`${type}sSelected`]
       const isActiveMenu = key === 'all'
