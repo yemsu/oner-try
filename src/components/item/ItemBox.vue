@@ -10,12 +10,12 @@
       {'no-padding': !padding},
     ]">
     <template v-if="item">
-      <item-link
+      <nuxt-link
         class="wrap-info"
-        :itemType="item.type"
-        :itemId="item.id"
-        :isLink="isComp && isLink"
-        :isBlankLink="isBlankLink"
+        :to="isComp && isLink && linkItemComposition()"
+        :target="isComp && isLink && isBlankLink && '_blank'"
+        :is="isComp && isLink ? 'nuxt-link' : 'div'"
+        :title="isComp && isLink && isBlankLink && '새창'"
       >
         <div class="item-box-info">
           <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
@@ -44,7 +44,7 @@
             <span class="money">💰</span>
           </template>
         </div>
-      </item-link>
+      </nuxt-link>
       
       <!-- tooltip -->
       <div v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
@@ -167,6 +167,9 @@ export default {
       const { id, type } = this.item
       this.$router.push(`/composition/${type}/${id}`)
     },
+    linkItemComposition() {
+      return `/composition/${this.item.type}/${this.item.id}`
+    }
   }
 }
 </script>
