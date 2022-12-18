@@ -4,17 +4,12 @@ import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character
 import { deepClone, addCommaNumber } from '@/plugins/utils'
 import { getUserCharacters, getGameUsers, getRanking } from '@/plugins/utils/https'
 
-const dataParser = (newData, type) => {  
-  const result = type === 'colleagues' || type === 'ship'
-    ? fillDefaultList(newData, slotNumbers[type])
-    : newData
-  return result
-}
 const dataParseHandler = (items, rawData, type) => {
   const data2 = fillDataAndInsertValue(items, parserStrData(rawData[type]), 'stack', true)
-  // console.log('data2', data2)
-  const data3 = dataParser(data2, type)
-  // console.log('data3', data3)
+
+  const data3 = type === 'colleagues' || type === 'ship'
+  ? fillDefaultList(data2, slotNumbers[type])
+  : data2
 
   return data3
 }
