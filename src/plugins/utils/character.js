@@ -18,7 +18,7 @@ export const getTotalOption = (character, characterSynergies) => {
   // console.log('allOption', allOption)
   const totalOption = Object.keys(optionDefaultValue).reduce((acc, key) => {
     const checkOption = allOption[key] || 0
-    return Object.assign(acc, {[key]: checkOption + defaultOptionByCharacter(character)[key]})
+    return Object.assign(acc, {[key]: checkOption + defaultOptionBy(character)[key]})
   }, {})
   // console.log('totalOption', totalOption)      
   // ev는 str 수치를 더한다.
@@ -31,7 +31,7 @@ export const getTotalOption = (character, characterSynergies) => {
   console.log('result', result)
   return result
 }
-const defaultOptionByCharacter = (character) => {
+const defaultOptionBy = (character) => {
   const newObj = {...optionDefaultValue}
   newObj.hp = heroDefaultHp[character.hero.groupName]
   return newObj
