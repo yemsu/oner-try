@@ -150,14 +150,6 @@ export default {
       compositionItems
     }
   },
-  computed: {
-    ...mapGetters({
-      items: 'item/getItems',
-      heroes:  'item/getHeroes',
-      gameUsers: 'character/getGameUsers',
-      characters: 'character/getUserCharacters',
-    })
-  },
 }
 </script>
 
