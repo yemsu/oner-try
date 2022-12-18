@@ -1,4 +1,4 @@
-import { fillDataAndInsertValue, getDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
+import { fillDataAndInsertValue, parserDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
 import { deepClone, addCommaNumber } from '@/plugins/utils'
 import { getUserCharacters, getGameUsers, getRanking } from '@/plugins/utils/https'
@@ -6,7 +6,7 @@ import { getUserCharacters, getGameUsers, getRanking } from '@/plugins/utils/htt
 const dataSettedDefault = (rawData, type) => {
   const _data = rawData[type]
   const dataTypeArray = Array.isArray(_data) ? _data : [_data]
-  return dataTypeArray.map(data => getDefaultData(data))
+  return dataTypeArray.map(data => parserDefaultData(data))
 }
 const dataParser = (newData, type) => {  
   const result = type.includes('colleague') 
@@ -88,7 +88,7 @@ export const actions = {
             const data = () => {
               const _data = character[type]
               const dataTypeArray = Array.isArray(_data) ? _data : [_data]
-              const result = dataTypeArray.map(data => getDefaultData(data))
+              const result = dataTypeArray.map(data => parserDefaultData(data))
               return parserStrData(result.join(','))
             }
             const typeState = type === 'ship' ? 'ships' : type

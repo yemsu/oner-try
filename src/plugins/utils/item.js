@@ -63,7 +63,7 @@ export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey,
   return newData
 }
 export const isBlank = str => str.includes('빈공간')
-export const getDefaultData = (data) => {
+export const parserDefaultData = (data) => {
   return isBlank(data) ? `${data}: null` : data
 }
 export const fillDefaultList = (items, numberFixed) => {
