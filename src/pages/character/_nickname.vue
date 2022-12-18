@@ -96,8 +96,8 @@ import VTab from '@/components/common/VTab.vue'
 import TitleContent from '@/components/common/TitleContent.vue'
 import setMeta from '@/plugins/utils/meta';
 import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
-import { postCharacterPageView, getCharacterPageViews, postMurgeCharacterView } from '@/plugins/utils/https'
-import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { postCharacterPageView, getCharacterPageViews, postMergeCharacterView } from '@/plugins/utils/https'
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'CharacterResult',
   components: {
@@ -191,7 +191,7 @@ export default {
       const { data: DbPageViews } = await getCharacterPageViews({ startDate: '2022-7-9' })
       const resultData = await totalPageViewGAData('의 캐릭터', DbPageViews)
       resultData.forEach(data => {
-        postMurgeCharacterView({ name: data.name, pageView: data.pageView})
+        postMergeCharacterView({ name: data.name, pageView: data.pageView})
       })
       console.log('totalPageViewGAData', resultData)
     }

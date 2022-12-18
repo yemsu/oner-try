@@ -70,10 +70,10 @@ export const postItemName = (params) => {
   .then(res => res)
   .catch(error => errorHandler('postItemName', error))
 }
-export const postMurgeCharacterView = (params) => {
+export const postMergeCharacterView = (params) => {
   return $axios.post(`/register/murgeCharacterView`, null, { params })
   .then(res => res)
-  .catch(error => errorHandler('postMurgeCharacterView', error))
+  .catch(error => errorHandler('postMergeCharacterView', error))
 }
 export const postMurgeCompositionView = (params) => {
   return $axios.post(`/register/murgeCompositionView`, null, { params })
