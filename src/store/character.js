@@ -8,8 +8,8 @@ const dataParseHandler = (items, rawData, type) => {
   const data2 = fillDataAndInsertValue(items, parserStrData(rawData[type]), 'stack', true)
 
   const data3 = type === 'colleagues' || type === 'ship'
-  ? fillDefaultList(data2, slotNumbers[type])
-  : data2
+    ? fillDefaultList(data2, slotNumbers[type])
+    : data2
 
   return data3
 }
@@ -76,10 +76,8 @@ export const actions = {
             const typeState = type === 'ship' ? 'ships' : type
             const newData = fillDataAndInsertValue(rootState.item[typeState], data(), 'stack', true)
 
-            const result = type.includes('colleague') 
-            ? fillDefaultList(newData, 3)
-            : type.includes('ship')
-              ? fillDefaultList(newData, 1)
+            const result = type === 'colleagues' || type === 'ship'
+              ? fillDefaultList(newData, slotNumbers[type])
               : newData
 
             return result
