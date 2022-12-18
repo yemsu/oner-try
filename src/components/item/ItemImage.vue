@@ -6,20 +6,16 @@
       {'round': isRoundImg},
       item.grade
   ]">
-    <item-link
+    <div
       v-if="imgSrc"
       class="box-img"
-      :itemType="item.type"
-      :itemId="item.id"
-      :isLink="isComp && isLink"
-      :isBlankLink="isBlankLink"
     >
       <img
         :src="imgSrc"
         :alt="item.name"
         class="img-item"
       />
-    </item-link>
+    </div>
     <p
       v-else-if="isReportButton"
       class="box-img blank no-id"
