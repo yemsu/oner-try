@@ -18,8 +18,8 @@ export const getColleagues = () => {
   return $axios.get(`/colleagues`)
     .catch(error => errorHandler('getItems', error))
 }
-export const getUserCharacters = (params) => {
-  return $axios.get(`/characterList`, { params })
+export const getUserCharacters = (nickName) => {
+  return $axios.get(`/characterList`, { params: nickName })
     .catch(error => errorHandler('getUserCharacters', error))
 }
 export const getEquipments = (params) => {
