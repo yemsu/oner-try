@@ -21,7 +21,7 @@
           >
             <template v-slot="{ props: propsD1 }">
               <div
-                v-show="propsD1.ingredients"
+                v-if="propsD1.ingredients"
                 class="wrap-scroll"   
                 @click="hasItemTree(propsD1) && toggleD3($event, propsD1.index)"
               >
@@ -33,13 +33,13 @@
                 >
                   <template v-slot="{ props: propsD2 }">
                     <comp-tree-depth
-                      v-show="propsD2.ingredients && dataShowDepth3[`index${propsD1.index}`]"
+                      v-if="propsD2.ingredients && dataShowDepth3[`index${propsD1.index}`]"
                       :items="propsD2.ingredients"
                       :depthIndex="3"
                     >
                       <template v-slot="{ props: propsD3 }">
                         <comp-tree-depth
-                          v-show="propsD3.ingredients"
+                          v-if="propsD3.ingredients"
                           :items="propsD3.ingredients"
                           :depthIndex="4"
                         />
@@ -49,7 +49,7 @@
                 </comp-tree-depth>
               </div>
               <button
-                v-show="hasItemTree(propsD1)"
+                v-if="hasItemTree(propsD1)"
                 class="button-toggle"
                 @click="toggleD3($event, propsD1.index)"
                 :title="attrToggleD3(propsD1.index).title"
