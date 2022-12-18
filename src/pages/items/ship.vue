@@ -70,7 +70,7 @@ export default {
     }
   },
   created() {
-    this.setResultShips()
+    this.resultShips = this.ships
   },
   mounted() {
     console.log('ships', this.ships)

@@ -94,7 +94,7 @@ export default {
     }
   },
   created() {
-    this.setResultSailors()
+    this.resultSailors = this.sailors
   },
   methods: {
     setResultSailors() {

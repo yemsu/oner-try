@@ -70,7 +70,7 @@ export default {
     }
   },
   created() {
-    this.setResultColleagues()
+    this.resultColleagues = this.colleagues
   },
   mounted() {
     console.log('colleagues', this.colleagues)

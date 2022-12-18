@@ -69,7 +69,7 @@ export default {
     }
   },
   created() {
-    this.setResultEquipments()
+    this.resultEquipments = this.equipments
   },
   mounted() {
     console.log('equipments', this.equipments)
