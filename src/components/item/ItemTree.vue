@@ -76,11 +76,7 @@ export default {
     item: {
       type: Object,
       default: () => {}
-    },
-    allIngrdnts: {
-      type: Array,
-      default: () => []
-    },
+    }
   },
   data() {
     return {

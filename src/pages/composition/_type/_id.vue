@@ -80,7 +80,6 @@
       <div class="mrg-top-medium">
         <item-tree
           :item="itemSelected"
-          :allIngrdnts="allIngrdnts"
         />
       </div>
     </template>
@@ -183,6 +182,7 @@ export default {
       const { newItem: itemSetup, allIngrdnts } = this.setIngrdntsDataLoop(result)
       // console.log('itemSetup, allIngrdnts', itemSetup, allIngrdnts)
       this.itemSelected = itemSetup
+      console.log('allIngrdnts', allIngrdnts)
       this.allIngrdnts = allIngrdnts
       this.highRankItems = deepClone(this.compositionItems)
         .filter(item => {
