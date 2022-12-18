@@ -60,11 +60,23 @@ export default {
   },
   data() {
     return {
-      optionsSelected: []
+      optionsSelected: [],
+      resultShips: null
     }
   },
-  computed: {
-    resultShips() {
+  watch: {
+    optionsSelected(crr, pre) {
+      this.setResultShips()
+    }
+  },
+  created() {
+    this.setResultShips()
+  },
+  mounted() {
+    console.log('ships', this.ships)
+  },
+  methods: {
+    setResultShips() {
       const resultShips = this.ships.filter(ship => {
         const { optionsByStack } = ship
         const isAllOption = this.optionsSelected.length === 0
@@ -80,13 +92,8 @@ export default {
         else if(filteringOptions.length === optionsByStack[4].length) return true
       })
       
-      return resultShips
-    }
-  },
-  mounted() {
-    console.log('ships', this.ships)
-  },
-  methods: {
+      this.resultShips = resultShips
+    },
     isActiveMenu(key, type) {
       const selectList = this[`${type}sSelected`]
       const isActiveMenu = key === 'all'

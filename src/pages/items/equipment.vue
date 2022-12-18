@@ -59,11 +59,23 @@ export default {
   },
   data() {
     return {
-      optionsSelected: []
+      optionsSelected: [],
+      resultEquipments: null
     }
   },
-  computed: {
-    resultEquipments() {
+  watch: {
+    optionsSelected(crr, pre) {
+      this.setResultEquipments()
+    }
+  },
+  created() {
+    this.setResultEquipments()
+  },
+  mounted() {
+    console.log('equipments', this.equipments)
+  },
+  methods: {
+    setResultEquipments() {
       const resultEquipments = this.equipments.filter(equipment => {
         const { optionsByGrade, option } = equipment
         const isAllOption = this.optionsSelected.length === 0
@@ -83,14 +95,8 @@ export default {
         else if(filteringOptions.length === checkOptionsByGrade.length) return true
       })
       
-// console.log('resultEquipments', resultEquipments)
-      return resultEquipments
-    }
-  },
-  mounted() {
-    console.log('equipments', this.equipments)
-  },
-  methods: {
+      this.resultEquipments = resultEquipments
+    },
     isActiveMenu(key, type) {
       const selectList = this[`${type}sSelected`]
       const isActiveMenu = key === 'all'

@@ -84,11 +84,20 @@ export default {
   data() {
     return {
       gradesSelected: [],
-      optionsSelected: []
+      optionsSelected: [],
+      resultSailors: null,
     }
   },
-  computed: {
-    resultSailors() {
+  watch: {
+    optionsSelected(crr, pre) {
+      this.setResultSailors()
+    }
+  },
+  created() {
+    this.setResultSailors()
+  },
+  methods: {
+    setResultSailors() {
       const resultSailors = this.sailors.filter(sailor => {
         const { grade, option: options } = sailor
         const isAllGrade = this.gradesSelected.length === 0
@@ -96,7 +105,7 @@ export default {
         // filtering grade
         const filteringGrade = isAllGrade ? true
           : this.gradesSelected.includes(grade)
-      // console.log('filteringGrade', filteringGrade)
+        // console.log('filteringGrade', filteringGrade)
         if(!filteringGrade) return false
         // filtering option
 
@@ -111,13 +120,8 @@ export default {
         else if(filteringOptions.length === options.length) return true
       })
       
-      return resultSailors
-    }
-  },
-  mounted() {
-    console.log('sailsaors', this.sailors)
-  },
-  methods: {
+      this.resultSailors = resultSailors
+    },
     isActiveMenu(key, type) {
       const selectList = this[`${type}sSelected`]
       const isActiveMenu = key === 'all'
