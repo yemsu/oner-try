@@ -50,7 +50,7 @@
       <div v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
         <item-detail-info 
           :colorMode="visibleDetail ? 'black' : 'white'"
-          :options="!tooltipNoOption ? item.option : null"
+          :options="item.option"
           :dropMonster="item.dropMonster"
           :type="itemDetailInfoType"
         />
@@ -90,10 +90,6 @@ export default {
     showTooltip: {
       type: Boolean,
       default: () => true
-    },
-    tooltipNoOption: {
-      type: Boolean,
-      default: () => false
     },
     visibleDetail: {
       type: Boolean,
@@ -153,8 +149,7 @@ export default {
     },
     noTooltip() {
       const noData = !this.item.dropMonster && !this.item.option
-      const onlyDropButDropData = this.tooltipNoOption && !this.item.dropMonster
-      return !this.showTooltip || noData || onlyDropButDropData
+      return !this.showTooltip || noData
     },
     itemImageData() {
       const { type, id, groupName, name, grade } = this.item
