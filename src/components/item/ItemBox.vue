@@ -68,12 +68,8 @@
 
 
 <script>
-import BaseInput from '@/components/common/BaseInput.vue'
 import { isOnlyNumber } from '@/plugins/utils'
 export default {
-  components: {
-    BaseInput
-  },
   props: {
     item: {
       type: Object,
