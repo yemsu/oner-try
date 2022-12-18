@@ -42,8 +42,7 @@ const getOptions =  (allOption) => {
       if(!data?.option) return result
       // 여기: 데이터 없으면 기본값 뱉도록 수정 필요
       const { option: options, gradeOption: gradeOptions, stack } = data
-      const checkGradeOption = gradeOptions || []
-      for(const option of [...options, ...checkGradeOption]) {
+      for(const option of [...options, ...(gradeOptions || [])]) {
         const key = Object.keys(option)[0]
         const resultValue = result[key] || 0
         const newValue = resultValue + calcOptionByStack(option, stack)
