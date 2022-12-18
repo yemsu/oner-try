@@ -1,14 +1,13 @@
 import { fillDataAndInsertValue, parserDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
+import { slotNumbers } from '../plugins/utils/item-def'
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
 import { deepClone, addCommaNumber } from '@/plugins/utils'
 import { getUserCharacters, getGameUsers, getRanking } from '@/plugins/utils/https'
 
 const dataParser = (newData, type) => {  
-  const result = type.includes('colleague') 
-    ? fillDefaultList(newData, 3)
-    : type.includes('ship')
-      ? fillDefaultList(newData, 1)
-      : newData
+  const result = type === 'colleagues' || type === 'ship'
+    ? fillDefaultList(newData, slotNumbers[type])
+    : newData
   return result
 }
 const dataParseHandler = (items, rawData, type) => {

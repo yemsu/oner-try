@@ -51,6 +51,13 @@ export const gradeScoresDef = {
   rare: 2,
   normal: 1,
 }
+export const slotNumbers = {
+  sailors: 6,
+  equipments: 6,
+  colleagues: 3,
+  ship: 1,
+  ryuo: 1
+}
 export const equipOnlyOptionsDef = {
   str: '견문색',
   dex: '무장색',
