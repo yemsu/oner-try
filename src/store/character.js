@@ -60,9 +60,10 @@ export const actions = {
     if(synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
     return getUserCharacters(payload)
       .then(({data}) => {
+        if(!data) return []
         const newData = data.map(character => {
           // hero
-          const heroData = findData(heroes, 'name', character.heroName)
+          const heroData = findData(rootState.item.heroes, 'name', character.heroName)
           const hero = heroData ? deepClone(heroData) : {id: character.heroName}
           hero.bounty = character.bounty.trim().toLocaleString()
 

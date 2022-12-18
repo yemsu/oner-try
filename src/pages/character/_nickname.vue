@@ -115,13 +115,15 @@ export default {
   },
   async asyncData({ store, params }) {
     const { character: { gameUsers }, item: { heroes } } = store.state
+    const { nickname } = params
+    const userCharacters = await store.dispatch('character/GET_USER_CHARACTERS', { nickName: nickname })
     const gameUsersData = gameUsers.length === 0
       ? await store.dispatch('character/GET_GAME_USERS')
       : gameUsers
     const userNickNames = gameUsersData.map(user => user.nickName)
     if(heroes.length === 0) await store.dispatch('item/GET_HEROES')
-    const nickname = params.nickname
     return {
+      userCharacters,
       userNickNames,
       nickname
     }
@@ -158,11 +160,6 @@ export default {
       ],
     }
   },
-  computed: {
-    ...mapGetters({
-      userCharacters: 'character/getUserCharacters'
-    }),
-  },
   mounted() {
     this.sendPageView()
   },
@@ -170,9 +167,7 @@ export default {
     ...mapActions({
       getUserCharacters: 'character/GET_USER_CHARACTERS',
     }),
-    async fnSearch(nickName) {
-      await this.getUserCharacters({ nickName })
-      console.log('fnSearch', nickName, this.userCharacters)
+    async fnSearch() {
       this.checkCharacterData()
     },
     checkCharacterData() {
