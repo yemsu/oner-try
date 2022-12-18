@@ -3,11 +3,6 @@ import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character
 import { deepClone, addCommaNumber } from '@/plugins/utils'
 import { getUserCharacters, getGameUsers, getRanking } from '@/plugins/utils/https'
 
-const dataSettedDefault = (rawData, type) => {
-  const _data = rawData[type]
-  const dataTypeArray = Array.isArray(_data) ? _data : [_data]
-  return dataTypeArray.map(data => parserDefaultData(data))
-}
 const dataParser = (newData, type) => {  
   const result = type.includes('colleague') 
     ? fillDefaultList(newData, 3)
@@ -17,9 +12,10 @@ const dataParser = (newData, type) => {
   return result
 }
 const dataParseHandler = (items, rawData, type) => {
-  const data1 = dataSettedDefault(rawData, type)
-  const data2 = fillDataAndInsertValue(items, parserStrData(data1.join(',')), 'stack', true)
+  const data2 = fillDataAndInsertValue(items, parserStrData(rawData[type]), 'stack', true)
+  // console.log('data2', data2)
   const data3 = dataParser(data2, type)
+  // console.log('data3', data3)
 
   return data3
 }

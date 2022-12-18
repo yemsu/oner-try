@@ -34,6 +34,7 @@ export const parserStrData = (strData, type = 'object') => { // name: value, nam
   return objList
 }
 export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey, useDefaultData) => {
+  // console.log('fillDataAndInsertValue', fullDataList, targetDataList, newDataKey, useDefaultData)
   const names = objArrKeys(targetDataList)
   const newData = names.map((name, i) => {
     const data = targetDataList[i]
