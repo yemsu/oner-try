@@ -1,7 +1,7 @@
 import { fillDataAndInsertValue, parserDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
 import { slotNumbers } from '../plugins/utils/item-def'
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
-import { deepClone, addCommaNumber } from '@/plugins/utils'
+import { deepClone } from '@/plugins/utils'
 import { getUserCharacters, getGameUsers, getRanking } from '@/plugins/utils/https'
 
 const dataParseHandler = (items, rawData, type) => {
@@ -72,7 +72,7 @@ export const actions = {
           // hero
           const heroData = findData(heroes, 'name', character.heroName)
           const hero = heroData ? deepClone(heroData) : {id: character.heroName}
-          hero.bounty = addCommaNumber(character.bounty.trim())
+          hero.bounty = character.bounty.trim().toLocaleString()
 
           const dataParser = (character, type) => {
             const data = () => {

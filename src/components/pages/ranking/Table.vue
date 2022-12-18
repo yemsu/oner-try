@@ -47,7 +47,7 @@
               {{ user.nickName }}
             </router-link>
           </td>
-          <td class="bounty">$ {{ addCommaNumber(user.bounty) }}</td>
+          <td class="bounty">$ {{ user.bounty.toLocaleString() }}</td>
           <td class="sailors">
             <ul class="list-items">
               <li
@@ -88,7 +88,6 @@
 </template>
 
 <script>
-import { addCommaNumber } from '@/plugins/utils'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
@@ -134,9 +133,6 @@ export default {
     }),
     findHero(name) {
       return this.heroes.find(hero => hero.name === name)
-    },
-    addCommaNumber(number) {
-      return addCommaNumber(number)
     },
     getRankInfo(index) {
       if(index > 12) return false
