@@ -14,7 +14,7 @@ export const getTotalOption = (character, characterSynergies) => {
   
   const allItem = [...equipments, ...sailors, ...colleagues, ...ship, ...ryuo, ...characterSynergies]
   // console.log('allItem', allItem)
-  const allOption = getOptions(allItem, character)
+  const allOption = getOptions(allItem)
   // console.log('allOption', allOption)
   const totalOption = Object.keys(optionDefaultValue).reduce((result, key) => {
     const checkOption = allOption[key] || 0
