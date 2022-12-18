@@ -15,7 +15,7 @@
         :to="useLink && linkItemComposition()"
         :target="useLink && isBlankLink && '_blank'"
         :is="useLink ? 'nuxt-link' : 'div'"
-        :title="useLink && isBlankLink && '새창'"
+        :title="buttonTitle || (useLink && isBlankLink && '새창')"
       >
         <div class="item-box-info">
           <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
@@ -134,7 +134,11 @@ export default {
     padding: {
       type: Boolean,
       default: () => true
-    }
+    },
+    buttonTitle: {
+      type: String,
+      default: () => ''
+    },
   },
   computed: {
     isComp() {

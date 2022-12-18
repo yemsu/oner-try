@@ -68,7 +68,7 @@
                     :item="tableItem"
                     :showBadges="['howGet']"
                     :showTooltip="false"
-                    :isBlankLink="true"
+                    buttonTitle="클릭하여 조합 보러가기"
                     :padding="false"
                   />
                 </template>
