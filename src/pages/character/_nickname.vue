@@ -164,9 +164,6 @@ export default {
     this.sendPageView()
   },
   methods: {
-    ...mapActions({
-      getUserCharacters: 'character/GET_USER_CHARACTERS',
-    }),
     async fnSearch() {
       this.checkCharacterData()
     },
