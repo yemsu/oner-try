@@ -131,23 +131,21 @@ export default {
     RankingTable
   },
   async asyncData({ store }) {
-    const { character: { gameUsers }, item: { heroes, items } } = store.state
+    await store.dispatch('item/GET_HEROES')
+    await store.dispatch('item/GET_ITEMS')
+    await store.dispatch('character/GET_GAME_USERS')
+    await store.dispatch('character/GET_RANKING')
+    await store.commit('character/ADD_RANKING_DATA', { number: 5 })
+
+    const { character: { gameUsers,  rankingCrr }, item: { items } } = store.state    
     // character
-    if(gameUsers.length === 0) await store.dispatch('character/GET_GAME_USERS')
-    const gameUsersData = gameUsers.length === 0
-      ? await store.dispatch('character/GET_GAME_USERS')
-      : gameUsers
-    const userNickNames = gameUsersData.map(user => user.nickName)
-    if(heroes.length === 0) await store.dispatch('item/GET_HEROES')
+    const userNickNames = gameUsers.map(user => user.nickName)
     // composition    
-    if(items.length === 0) await store.dispatch('item/GET_ITEMS')
-    const itemsData = items.length === 0
-      ? await store.dispatch('item/GET_ITEMS')
-      : items
-    const compositionItems = itemsData.filter(item => item.ingredients)
+    const compositionItems = items.filter(item => item.ingredients)
     return {
       userNickNames,
-      compositionItems
+      compositionItems,
+      rankingCrr
     }
   },
 }
