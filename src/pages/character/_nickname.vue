@@ -161,7 +161,7 @@ export default {
     this.sendPageView()
   },
   methods: {
-    async fnSearch() {
+    fnSearch() {
       this.checkCharacterData()
     },
     checkCharacterData() {
