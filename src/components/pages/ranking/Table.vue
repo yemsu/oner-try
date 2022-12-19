@@ -108,25 +108,15 @@ export default {
       heroes:  'item/getHeroes',
     })
   },
-  async created() {    
-    if(this.ranking.length === 0) await this.getRanking()
-
-    this.setRankingList()
-  },
   mounted() {
     this.$nextTick(() => {
       setTimeout(() => {
+        this.resetRanking({ number: this.defaultDataNum })
         this.useInfiniteScroll && this.infiniteScroll()
       }, 300)
     })
   },
-  beforeDestroy() {
-    this.resetRanking({ number: this.defaultDataNum })
-  },
   methods: {
-    ...mapActions({
-      getRanking: 'character/GET_RANKING',
-    }),
     ...mapMutations({
       addRanking: 'character/ADD_RANKING_DATA',
       resetRanking: 'character/RESET_RANKING_DATA'

@@ -42,7 +42,6 @@
 <script>
 import rankingTable from '@/components/pages/ranking/Table.vue'
 import setMeta from '@/plugins/utils/meta';
-import { mapGetters } from 'vuex'
 
 export default {
   head() {
@@ -56,19 +55,19 @@ export default {
     rankingTable
   },
   async asyncData({ store }) {
-    const { item: { items, heroes } } = store.state
-    if(items.length === 0) await store.dispatch('item/GET_ITEMS')
-    if(heroes.length === 0) await store.dispatch('item/GET_HEROES')
+    await store.dispatch('item/GET_HEROES')
+    await store.dispatch('character/GET_RANKING')
+    await store.commit('character/ADD_RANKING_DATA', { number: 15 })
+
+    const { item: { heroes }, character: { ranking, rankingCrr } } = store.state
+    // 스킨이 아닌 히어로
     const pureHeroes = heroes.filter(hero => !hero.name.includes('(스킨)'))
     return {
-      pureHeroes
+      pureHeroes,
+      heroes,
+      ranking,
+      rankingCrr
     }
-  },
-  computed: {
-    ...mapGetters({
-      items: 'item/getItems',
-      heroes:  'item/getHeroes',
-    })
   },
 }
 </script>

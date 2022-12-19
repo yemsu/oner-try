@@ -114,14 +114,17 @@ export const actions = {
       })
       .catch(error => console.log('GET_GAME_USERS', error))
   },
-  GET_RANKING({ commit, rootState }, payload) {
+  async GET_RANKING({ commit, rootState, dispatch }, payload) {
+    const { item: { sailors, colleagues }} = rootState
+    if(sailors.length === 0) await dispatch('item/GET_SAILORS','', { root: true })
+    if(sailors.length === 0) await dispatch('item/GET_SAILORS','', { root: true })
+    if(colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
+
     return getRanking(payload)
       .then(({data}) => {
         const { item: { sailors, colleagues, items } } = rootState
         const sailorData = sailors.length === 0 ? items : sailors
         const colleagueData = colleagues.length === 0 ? items : colleagues
-        // if(sailors.length === 0) console.warn('USING ITEMS DATA : NEED SAILORS DATA - GET_RANKING')
-        // if(colleagues.length === 0) console.warn('USING ITEMS DATA : NEED COLLEAGUES DATA - GET_RANKING')
         const newData = data.map(user => {
           const sailors = user.sailors !== '[]'
             ? dataParseHandler(sailorData, user, 'sailors') 
