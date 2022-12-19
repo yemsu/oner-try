@@ -114,14 +114,11 @@ export default {
     })
   },
   async asyncData({ store, params }) {
-    const { character: { gameUsers }, item: { heroes } } = store.state
     const { nickname } = params
-    const userCharacters = await store.dispatch('character/GET_USER_CHARACTERS', { nickName: nickname })
-    const gameUsersData = gameUsers.length === 0
-      ? await store.dispatch('character/GET_GAME_USERS')
-      : gameUsers
-    const userNickNames = gameUsersData.map(user => user.nickName)
-    if(heroes.length === 0) await store.dispatch('item/GET_HEROES')
+    await store.dispatch('character/GET_USER_CHARACTERS', { nickName: nickname })
+    await store.dispatch('character/GET_GAME_USERS')
+    const { character: { gameUsers, userCharacters } } = store.state
+    const userNickNames = gameUsers.map(user => user.nickName)
     return {
       userCharacters,
       userNickNames,
