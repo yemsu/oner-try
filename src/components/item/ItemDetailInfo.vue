@@ -100,9 +100,10 @@ export default {
       if(!this.showValueDecimal) return value
 
       const valueDecimal = value
-      return noUnitOptions.includes(key)
+      const result = noUnitOptions.includes(key)
         ? Math.floor(value)
         : valueDecimal.toFixed(3)
+      return (result * 1).toLocaleString()
     }
   }
 }

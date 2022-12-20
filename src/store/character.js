@@ -65,7 +65,7 @@ export const actions = {
           // hero
           const heroData = findData(rootState.item.heroes, 'name', character.heroName)
           const hero = heroData ? deepClone(heroData) : {id: character.heroName}
-          hero.bounty = character.bounty.trim().toLocaleString()
+          hero.bounty = (character.bounty.trim() * 1).toLocaleString()
 
           const dataParser = (character, type) => {
             const data = () => {
