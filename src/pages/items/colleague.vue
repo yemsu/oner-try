@@ -1,24 +1,28 @@
 <template>
-  <div>
-    <dl class="list-menu-filter">
-      <dt class="title">옵션</dt>
-      <div class="wrap-menu list-button-common">
-        <dd
-          v-for="(optionTitle, key) in optionMenus"
-          :key="`optionTitle${key}`"
-          :class="['menu-filter', {'active': isActiveMenu(key, 'option')}]"
-        >
-          <base-button
-            @click="toggleMenu(key, 'option')"
-            class="button-filter"
-            type="round"
-            :bg="isActiveMenu(key, 'option') ? 'active': 'inActive'"
+  <section>
+    <h2 class="ir-hidden">동료 아이템 도감</h2>
+    <section>
+      <h2 class="ir-hidden">필터 선택</h2>
+      <dl class="list-menu-filter">
+        <dt class="title">옵션</dt>
+        <div class="wrap-menu list-button-common">
+          <dd
+            v-for="(optionTitle, key) in optionMenus"
+            :key="`optionTitle${key}`"
+            :class="['menu-filter', {'active': isActiveMenu(key, 'option')}]"
           >
-            {{ optionTitle }}
-          </base-button>
-        </dd>
-      </div>
-    </dl>
+            <base-button
+              @click="toggleMenu(key, 'option')"
+              class="button-filter"
+              type="round"
+              :bg="isActiveMenu(key, 'option') ? 'active': 'inActive'"
+            >
+              {{ optionTitle }}
+            </base-button>
+          </dd>
+        </div>
+      </dl>
+    </section>
     <div class="mrg-top-medium">
       <item-table
         type="colleague"
@@ -26,7 +30,7 @@
         :optionsSelected="optionsSelected"
       />
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
