@@ -8,7 +8,7 @@ export default {
     CONT_PATH_LOCAL: 'http://1.227.192.121',
   },
   // Target: https://go.nuxtjs.dev/config-target
-  target: 'server',
+  target: 'static',
 
   srcDir: 'src',
 

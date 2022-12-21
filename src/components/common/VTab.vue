@@ -1,16 +1,19 @@
 <template>
   <div class="wrap-tab">
-    <ul class="tabs">
-      <li
-        v-for="(tab, i) in tabs"
-        :key="`tab${i}`"
-        :class="['tab', {'active': activeIndex === i}]"
-      >
-        <button @click="activeIndex = i">
-          <slot name="tab" :tab="{data: tab, isActive: activeIndex === i}"></slot>
-        </button>
-      </li>
-    </ul>
+    <section>
+      <h2 class="ir-hidden">탭 버튼 리스트 ({{ tabs.length }})</h2>
+      <ul class="tabs">
+        <li
+          v-for="(tab, i) in tabs"
+          :key="`tab${i}`"
+          :class="['tab', {'active': activeIndex === i}]"
+        >
+          <button @click="activeIndex = i">
+            <slot name="tab" :tab="{data: tab, isActive: activeIndex === i}"></slot>
+          </button>
+        </li>
+      </ul>
+    </section>
     <div class="content">
       <slot name="content" :activeTab="tabs[activeIndex]"></slot>
     </div>

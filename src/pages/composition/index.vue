@@ -1,15 +1,14 @@
 <template>
-  <div>
-    <div class="wrap-search">
-      <ItemCheckerBoard
-        :items="legendItems"
-      />
-      <composition-search-box
-        :matchingData="compositionItems"
-        size="big"
-      />
-    </div>
-  </div>
+  <section class="wrap-search">
+    <h2 class="ir-hidden">조합법</h2>
+    <ItemCheckerBoard
+      :items="legendItems"
+    />
+    <composition-search-box
+      :matchingData="compositionItems"
+      size="big"
+    />
+  </section>
 </template>
 
 <script>
@@ -29,11 +28,10 @@ export default {
     })
   },
   async asyncData({ store }) {
+    await store.dispatch('item/GET_ITEMS')
     const { item: { items } } = store.state
-    const itemsData = items.length === 0
-      ? await store.dispatch('item/GET_ITEMS')
-      : items
-    const compositionItems = itemsData.filter(item => item.ingredients)
+    
+    const compositionItems = items.filter(item => item.ingredients)
     const legendItems = compositionItems.filter(item => item.grade === 'legend')
     return {
       compositionItems,
