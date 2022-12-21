@@ -1,5 +1,6 @@
 <template>
-  <div :class="['box-search', {'compact':size === 'small'}, size]">
+  <section :class="['box-search', {'compact':size === 'small'}, size]">
+    <h2 class="ir-hidden">검색</h2>
     <div :class="[
       'wrap-search',
       {'compact': size === 'small' && !isSearching}
@@ -17,11 +18,11 @@
         @onBlurInput="blurInput"
         @onEnter="routerPush(matchDataSliced[0])"
       />
-      <div
-        v-show="isSearching && matchingData.data"
+      <section
+        v-if="isSearching && matchingData.data"
         class="items-match"
       >
-        <p v-if="showRankingList" class="title-list"> 검색 순위 <span>TOP 10</span></p>
+        <h2 v-if="showRankingList" class="title-list"> 검색 순위 <span>TOP 10</span></h2>
         <div
           v-for="(data, i) in matchDataSliced"
           :key="`matchingData${i}`"
@@ -49,9 +50,9 @@
           </template>
           <p v-if="showRankingList" class="value-ranking">{{ data.pageView }}</p>
         </div>
-      </div>
+      </section>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

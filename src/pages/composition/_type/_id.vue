@@ -12,7 +12,8 @@
         </div>
       </div>
     </div>
-    <template v-if="itemSelected">
+    <section v-if="itemSelected">
+      <h2 class="ir-hidden">{{ itemSelected.name }} 조합법</h2>
       <div class="content-top">
         <div class="inner-size-basic">
           <item-box
@@ -23,8 +24,8 @@
             :visibleDetail="true"
             :isLink="false"
           />
-          <div v-if="highRankItems.length !== 0" class="wrap-high-rank">
-            <h4 class="title">상위 아이템</h4>
+          <section v-if="highRankItems.length !== 0" class="wrap-high-rank">
+            <h2 class="title">상위 아이템</h2>
             <item-list :items="highRankItems">
               <template v-slot="{ item: highRankItems }">
                 <item-box
@@ -33,7 +34,7 @@
                 />
               </template>
             </item-list>
-          </div>
+          </section>
         </div>
       </div>
       <div class="inner-size-basic mrg-top-medium">
@@ -82,7 +83,7 @@
           :item="itemSelected"
         />
       </div>
-    </template>
+    </section>
   </div>
 </template>
 

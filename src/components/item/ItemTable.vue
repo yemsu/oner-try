@@ -1,5 +1,6 @@
 <template>
-  <div class="item-table">
+  <section class="item-table">
+    <h2 class="ir-hidden">결과 아이템 리스트</h2>
     <div class="text-refer top">
       <div class="align-left">
         <p>총 {{ items.length }}개</p>
@@ -169,7 +170,7 @@
         </template>
       </tbody>
     </table>
-  </div>
+  </section>
 </template>
 
 <script>

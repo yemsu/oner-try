@@ -80,12 +80,12 @@
           </p>
         </div>
       </section>
-      <section class="quick-menu column">
+      <div class="quick-menu column">
         <div class="area-text">
-          <h3 class="title">...to be continue 👻</h3>
+          <p class="title">...to be continue 👻</p>
           <p>다음은 뭘까요</p>
         </div>
-      </section>
+      </div>
       <section class="quick-menu column-full">
         <div class="area-text">
           <h3 class="title">랭킹 TOP 5</h3>
