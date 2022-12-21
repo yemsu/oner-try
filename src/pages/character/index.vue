@@ -1,5 +1,6 @@
 <template>
-  <div class="wrap-search">
+  <section class="wrap-search">
+    <h2 class="ir-hidden">캐릭터</h2>
     <ItemCheckerBoard
       :items="pureHeroes"
     />
@@ -7,7 +8,7 @@
       :matchingData="userNickNames"
       size="big"
     />
-  </div>
+  </section>
 </template>
 
 <script>

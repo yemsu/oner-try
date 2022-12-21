@@ -1,15 +1,14 @@
 <template>
-  <div>
-    <div class="wrap-search">
-      <ItemCheckerBoard
-        :items="legendItems"
-      />
-      <composition-search-box
-        :matchingData="compositionItems"
-        size="big"
-      />
-    </div>
-  </div>
+  <section class="wrap-search">
+    <h2 class="ir-hidden">조합법</h2>
+    <ItemCheckerBoard
+      :items="legendItems"
+    />
+    <composition-search-box
+      :matchingData="compositionItems"
+      size="big"
+    />
+  </section>
 </template>
 
 <script>
