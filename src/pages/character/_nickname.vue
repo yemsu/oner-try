@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <div class="inner-size-basic mrg-top-small">
+    <section class="inner-size-basic mrg-top-small">
       <h2 class="title-page"><i class="skull">☠</i> {{ nickname }}</h2>
       <v-tab
         v-if="userCharacters.length !== 0"
@@ -26,66 +26,70 @@
           ></item-box>
         </template>
         <template v-slot:content="{ activeTab }">
-          <div class="text-refer top">
-            <p>최근 세이브: {{ activeTab.saveDate }}</p>
-            <p class="align-right">
-              <span class="badge-text-wrap">
-                <span class="badge black line-gold" data-v-21f97cac="">숫자</span>
-                : 초월 수치
-              </span>
-            </p>
-          </div>
-          <div class="wrap-items-info">
-            <title-content
-              v-for="(itemArea, i) in itemAreas"
-              :key="`itemArea${i}`"
-              :title="itemArea.title"
-              :type="itemArea.type"
-            >
-              <item-list
-                :items="activeTab[itemArea.type]"
+          <section>
+            <h2 class="ir-hidden">캐릭터 빌드 - {{ activeTab.heroName }} (레벨:{{ activeTab.lv }}) </h2>
+            <div class="text-refer top">
+              <p>최근 세이브: {{ activeTab.saveDate }}</p>
+              <p class="align-right">
+                <span class="badge-text-wrap">
+                  <span class="badge black line-gold" data-v-21f97cac="">숫자</span>
+                  : 초월 수치
+                </span>
+              </p>
+            </div>
+            <div class="wrap-items-info">
+              <title-content
+                v-for="(itemArea, i) in itemAreas"
+                :key="`itemArea${i}`"
+                :title="itemArea.title"
                 :type="itemArea.type"
-                :columnNum="itemArea.columnNum"
               >
-                <template v-slot="{ item }">
-                  <item-box
-                    :item="item"
-                    :showBadges="['howGet', 'stack']"
-                  ></item-box>
-                </template>
-              </item-list>
-            </title-content>
-            <div class="area-synergies">
-              <synergy-desc
-                v-if="activeTab.synergies.length !== 0"
-                :synergies="activeTab.synergies"
-              />
+                <item-list
+                  :items="activeTab[itemArea.type]"
+                  :type="itemArea.type"
+                  :columnNum="itemArea.columnNum"
+                >
+                  <template v-slot="{ item }">
+                    <item-box
+                      :item="item"
+                      :showBadges="['howGet', 'stack']"
+                    ></item-box>
+                  </template>
+                </item-list>
+              </title-content>
+              <div class="area-synergies">
+                <synergy-desc
+                  v-if="activeTab.synergies.length !== 0"
+                  :synergies="activeTab.synergies"
+                />
+              </div>
+              <section class="all-options-main">
+                <h2 class="ir-hidden">빌드 총 스탯</h2>
+                <item-detail-info
+                  type="total"
+                  columns="3"
+                  colorMode="white"
+                  :options="activeTab.totalOption.slice(0,12)"
+                  :plusMinusUnit="false"
+                  :showValueDecimal="true"
+                />
+                <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
+              </section>
+              <div class="all-options-sub">
+                <item-detail-info
+                  type="total"
+                  columns="1"
+                  colorMode="white"
+                  :options="activeTab.totalOption.slice(12)"
+                  :plusMinusUnit="false"
+                  :showValueDecimal="true"
+                />
+              </div>
             </div>
-            <div class="all-options-main">
-              <item-detail-info
-                type="total"
-                columns="3"
-                colorMode="white"
-                :options="activeTab.totalOption.slice(0,12)"
-                :plusMinusUnit="false"
-                :showValueDecimal="true"
-              />
-              <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
-            </div>
-            <div class="all-options-sub">
-              <item-detail-info
-                type="total"
-                columns="1"
-                colorMode="white"
-                :options="activeTab.totalOption.slice(12)"
-                :plusMinusUnit="false"
-                :showValueDecimal="true"
-              />
-            </div>
-          </div>
+          </section>
         </template>
       </v-tab>
-    </div>
+    </section>
   </div>
 </template>
 
