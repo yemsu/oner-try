@@ -2,6 +2,7 @@
   <header>
     <h1 class="logo"><nuxt-link to="/">ONER TRY</nuxt-link></h1>
     <nav class="gnb">
+      <h2 class="ir-hidden">사이트 메뉴</h2>
       <nuxt-link to="/character">캐릭터</nuxt-link>
       <nuxt-link to="/composition">조합법</nuxt-link>
       <nuxt-link to="/ranking">랭킹</nuxt-link>

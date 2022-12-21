@@ -80,12 +80,12 @@
           </p>
         </div>
       </section>
-      <section class="quick-menu column">
+      <div class="quick-menu column">
         <div class="area-text">
-          <h3 class="title">...to be continue 👻</h3>
+          <p class="title">...to be continue 👻</p>
           <p>다음은 뭘까요</p>
         </div>
-      </section>
+      </div>
       <section class="quick-menu column-full">
         <div class="area-text">
           <h3 class="title">랭킹 TOP 5</h3>
@@ -116,13 +116,12 @@ import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
 import CompositionSearchBox from "@/components/pages/composition/SearchBox.vue"
 import RankingTable from '@/components/pages/ranking/Table.vue'
 import setMeta from '@/plugins/utils/meta';
-import { mapGetters } from 'vuex';
 
 export default {
   head() {
     return setMeta({
       url: this.$route.fullPath,
-      description: `캐릭터, 조합법을 검색 퀵메뉴와 랭킹 TOP 5를 확인할 수 있습니다.`,
+      description: `게임 플레이에 필요한 정보들을 한눈에 확인해보세요!`,
     })
   },
   components: {
@@ -134,10 +133,8 @@ export default {
     await store.dispatch('item/GET_HEROES')
     await store.dispatch('item/GET_ITEMS')
     await store.dispatch('character/GET_GAME_USERS')
-    await store.dispatch('character/GET_RANKING')
-    await store.commit('character/ADD_RANKING_DATA', { number: 5 })
 
-    const { character: { gameUsers,  rankingCrr }, item: { items } } = store.state    
+    const { character: { gameUsers }, item: { items } } = store.state    
     // character
     const userNickNames = gameUsers.map(user => user.nickName)
     // composition    

@@ -6,6 +6,7 @@
     :size="size"
     resultPath="/composition"
     :paramKey="['type', 'id']"
+    alert-message="해당 아이템이 존재하지 않습니다."
     @onSearch="fnSearch"
   />
 </template>

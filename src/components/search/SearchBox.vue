@@ -1,5 +1,6 @@
 <template>
-  <div :class="['box-search', {'compact':size === 'small'}, size]">
+  <section :class="['box-search', {'compact':size === 'small'}, size]">
+    <h2 class="ir-hidden">검색</h2>
     <div :class="[
       'wrap-search',
       {'compact': size === 'small' && !isSearching}
@@ -15,13 +16,18 @@
         @onUpdateInput="updateInput"
         @onFocusInput="focusInput"
         @onBlurInput="blurInput"
-        @onEnter="routerPush(matchDataSliced[0])"
+        @onEnter="routerPush(useAutoEnter ? matchDataSliced[0] : inputValue)"
       />
-      <div
-        v-show="isSearching && matchingData.data"
+      
+      <search-box-skeleton 
+        v-if="!rankingList && isSearching"
+        :is-item="isItem"
+      />
+      <section
+        v-else-if="rankingList && isSearching && matchingData.data"
         class="items-match"
       >
-        <p v-if="showRankingList" class="title-list"> 검색 순위 <span>TOP 10</span></p>
+        <h2 v-if="showRankingList" class="title-list"> 검색 순위 <span>TOP 10</span></h2>
         <div
           v-for="(data, i) in matchDataSliced"
           :key="`matchingData${i}`"
@@ -49,9 +55,9 @@
           </template>
           <p v-if="showRankingList" class="value-ranking">{{ data.pageView }}</p>
         </div>
-      </div>
+      </section>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -59,7 +65,7 @@ import BaseInput from '@/components/common/BaseInput.vue'
 
 export default {
   components: {
-    BaseInput,
+    BaseInput
   },
   props: {
     matchingData: {
@@ -94,6 +100,14 @@ export default {
       type: Array,
       default: () => null
     },
+    useAutoEnter: {
+      type: Boolean,
+      default: () => true
+    },
+    alertMessage: {
+      type: String,
+      default: () => '잘못된 검색어 입니다.'
+    }
   },
   data() {
     return {
@@ -124,7 +138,6 @@ export default {
       return !this.defaultMatchingList && !this.inputValue
     },
     matchDataSliced() {
-      console.log('rankingList', this.rankingList)
       if(this.noDefaultMatchingList) return []
       if(this.showRankingList) return this.rankingList
       const { data, type } = this.matchingData
@@ -144,7 +157,7 @@ export default {
       return dataFiltered.slice(0, sliceNum)
     },
     isItem() {
-      return this.matchingData.type === 'item'
+      return this.matchingData?.type === 'item'
     }
   },
   mounted() {
@@ -158,6 +171,11 @@ export default {
       this.blurInput()
     },
     routerPush(value) {
+      if(this.hasResult(value).length === 0) {
+        alert(this.alertMessage)
+        this.inputValue = ''
+        return
+      }
       const params = this.paramKey.reduce((acc, key) => {
         const checkValue = !value
           ? this.inputValue
@@ -192,8 +210,7 @@ export default {
 
       return this.checkErrorResultParams(params, result) && result
     },
-    findMatchItem(params) {
-      // console.log('this.matchingData', this.matchingData)
+    findTotalMatchItem() {
       const result = this.paramKey.reduce((acc, key) => {
         const targetArr = acc.length === 0 ? this.matchingData.data : acc
         const matchparamsData = targetArr.filter(item => item[key] === params[key])
@@ -202,6 +219,20 @@ export default {
       }, [])
 
       return result
+    },
+    findMatchItem(params) {
+      const result = this.paramKey.reduce((acc, key) => {
+        const targetArr = acc.length === 0 ? this.matchingData.data : acc
+        const matchparamsData = targetArr.filter(item => item[key] === params[key])
+        acc = matchparamsData
+        return acc
+      }, [])
+
+      return result
+    },
+    hasResult(params) {
+      const { data } = this.matchingData
+      return data.filter(item => item === params)
     },
     checkErrorResultParams(params, result) {
       if(this.matchingData.data !== 'item') return true
