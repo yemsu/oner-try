@@ -95,6 +95,9 @@ export default {
   watch: {
     optionsSelected(crr, pre) {
       this.setResultSailors()
+    },
+    gradesSelected(crr, pre) {
+      this.setResultSailors()
     }
   },
   created() {
@@ -112,7 +115,6 @@ export default {
         // console.log('filteringGrade', filteringGrade)
         if(!filteringGrade) return false
         // filtering option
-
         const optionKeys = options.map(option => Object.keys(option)[0])
         const checkListOptions = this.optionsSelected.map(optionsSelected => optionKeys.includes(optionsSelected))
 
