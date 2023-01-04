@@ -1,5 +1,6 @@
 <template>
   <search-box
+    v-if="rankingList"
     category="조합 아이템"
     :matchingData="{type: 'item', data: matchingData}"
     :rankingList="rankingList"
