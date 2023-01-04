@@ -18,8 +18,13 @@
         @onBlurInput="blurInput"
         @onEnter="routerPush(matchDataSliced[0])"
       />
+      
+      <search-box-skeleton 
+        v-if="!rankingList"
+        :is-item="isItem"
+      />
       <section
-        v-if="isSearching && matchingData.data"
+        v-else-if="rankingList && isSearching && matchingData.data"
         class="items-match"
       >
         <h2 v-if="showRankingList" class="title-list"> 검색 순위 <span>TOP 10</span></h2>
@@ -60,7 +65,7 @@ import BaseInput from '@/components/common/BaseInput.vue'
 
 export default {
   components: {
-    BaseInput,
+    BaseInput
   },
   props: {
     matchingData: {
@@ -125,7 +130,6 @@ export default {
       return !this.defaultMatchingList && !this.inputValue
     },
     matchDataSliced() {
-      console.log('rankingList', this.rankingList)
       if(this.noDefaultMatchingList) return []
       if(this.showRankingList) return this.rankingList
       const { data, type } = this.matchingData
