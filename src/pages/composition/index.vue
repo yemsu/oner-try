@@ -28,11 +28,10 @@ export default {
     })
   },
   async asyncData({ store }) {
+    await store.dispatch('item/GET_ITEMS')
     const { item: { items } } = store.state
-    const itemsData = items.length === 0
-      ? await store.dispatch('item/GET_ITEMS')
-      : items
-    const compositionItems = itemsData.filter(item => item.ingredients)
+    
+    const compositionItems = items.filter(item => item.ingredients)
     const legendItems = compositionItems.filter(item => item.grade === 'legend')
     return {
       compositionItems,
