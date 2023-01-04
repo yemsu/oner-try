@@ -58,10 +58,7 @@ export default {
     const { item: { heroes } } = store.state
     const pureHeroes = heroes.filter(hero => !hero.name.includes('(스킨)'))
     return {
-      pureHeroes,
-      heroes,
-      ranking,
-      rankingCrr
+      pureHeroes
     }
   },
 }

@@ -141,8 +141,7 @@ export default {
     const compositionItems = items.filter(item => item.ingredients)
     return {
       userNickNames,
-      compositionItems,
-      rankingCrr
+      compositionItems
     }
   },
 }
