@@ -55,17 +55,10 @@ export default {
   },
   async asyncData({ store }) {
     await store.dispatch('item/GET_HEROES')
-    await store.dispatch('character/GET_RANKING')
-    await store.commit('character/ADD_RANKING_DATA', { number: 15 })
-
-    const { item: { heroes }, character: { ranking, rankingCrr } } = store.state
-    // 스킨이 아닌 히어로
+    const { item: { heroes } } = store.state
     const pureHeroes = heroes.filter(hero => !hero.name.includes('(스킨)'))
     return {
-      pureHeroes,
-      heroes,
-      ranking,
-      rankingCrr
+      pureHeroes
     }
   },
 }

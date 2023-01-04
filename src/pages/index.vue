@@ -116,7 +116,6 @@ import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
 import CompositionSearchBox from "@/components/pages/composition/SearchBox.vue"
 import RankingTable from '@/components/pages/ranking/Table.vue'
 import setMeta from '@/plugins/utils/meta';
-import { mapGetters } from 'vuex';
 
 export default {
   head() {
@@ -134,18 +133,15 @@ export default {
     await store.dispatch('item/GET_HEROES')
     await store.dispatch('item/GET_ITEMS')
     await store.dispatch('character/GET_GAME_USERS')
-    await store.dispatch('character/GET_RANKING')
-    await store.commit('character/ADD_RANKING_DATA', { number: 5 })
 
-    const { character: { gameUsers,  rankingCrr }, item: { items } } = store.state    
+    const { character: { gameUsers }, item: { items } } = store.state    
     // character
     const userNickNames = gameUsers.map(user => user.nickName)
     // composition    
     const compositionItems = items.filter(item => item.ingredients)
     return {
       userNickNames,
-      compositionItems,
-      rankingCrr
+      compositionItems
     }
   },
 }
