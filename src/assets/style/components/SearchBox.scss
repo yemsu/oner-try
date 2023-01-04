@@ -46,11 +46,13 @@
           flex: 1;
         }
         > button {
-          padding: 0 10px;
           width: 100%;
-          &.button-keyword {
-            padding: 10px 20px;
-          }
+        }
+        .button-item {
+          padding: 0 10px;
+        }
+        .button-keyword {
+          padding: 10px 20px;
         }
         &:nth-child(n+2) {
           border-top: 1px solid var(--border-light-gray)
