@@ -192,7 +192,7 @@ caption, .ir-hidden {
   text-align: center;
   word-spacing: -0.1em;
   &.type-round {
-    padding: 3px 5px;
+    padding: 2px 5px 3px 5px;
     border-radius: 5px;
   }
   &.size-big {
@@ -216,6 +216,12 @@ caption, .ir-hidden {
   }
   &.line-gray {
     border: 1px solid var(--border-gray-100);
+  }
+  &.banned {
+    margin-left: 5px;
+    background-color: $color-ban;
+    font-weight: 300;
+    color: #ffc;
   }
 }
 .badge-text-wrap {
@@ -256,13 +262,14 @@ caption, .ir-hidden {
 }
 
 // title
-.title-page {
+.area-page-title {
   border-bottom: 1px solid #aaa;
   margin-bottom: 10px;
   padding-bottom: 2px;
-  // margin-right: 160px;
-  font-weight: bold;
   letter-spacing: 0.01em;
+  > .title {
+    font-weight: bold;
+  }
   .skull {
     font-size: 1.1em;
   }
@@ -324,6 +331,9 @@ caption, .ir-hidden {
   }
   &-negative {
     color: $color-point;
+  }
+  &-banned {
+    color: $color-ban;
   }
 }
 .line {

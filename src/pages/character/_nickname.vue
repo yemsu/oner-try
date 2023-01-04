@@ -12,7 +12,13 @@
       </div>
     </div>
     <section class="inner-size-basic mrg-top-small">
-      <h2 class="title-page"><i class="skull">☠</i> {{ nickname }}</h2>
+      <div class="area-page-title">
+        <h2 class="title badge-text-wrap">
+          <i class="skull">☠</i> 
+          {{ nickname }}           
+          <span v-if="isBanUser(nickname)" class="badge banned size-big type-round">활동정지</span>
+        </h2>        
+      </div>
       <v-tab
         v-if="userCharacters.length !== 0"
         :tabs="userCharacters"
@@ -187,6 +193,10 @@ export default {
         postMergeCharacterView({ name: data.name, pageView: data.pageView})
       })
       console.log('totalPageViewGAData', resultData)
+    },
+    isBanUser(nickname) {
+      const banUserList = []
+      return banUserList.includes(nickname)
     }
   },
 }
