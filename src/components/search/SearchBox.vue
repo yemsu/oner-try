@@ -23,11 +23,6 @@
         v-if="!rankingList && isSearching"
         :is-item="isItem"
       />
-      
-      <search-box-skeleton 
-        v-if="!rankingList && isSearching"
-        :is-item="isItem"
-      />
       <section
         v-else-if="rankingList && isSearching && matchingData.data"
         class="items-match"
