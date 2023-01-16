@@ -1,5 +1,5 @@
 <template>
-  <section :class="['box-search', {'compact':size === 'small'}, size]">
+  <section class="box-search">
     <h2 class="ir-hidden">검색</h2>
     <div class="wrap-search">
       <section class="items-match">
