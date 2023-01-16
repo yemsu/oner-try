@@ -5,7 +5,6 @@
         <div class="align-right">
           <character-search-box
             :matchingData="userNickNames"
-            :fnSearch="fnSearch"
             size="small"
           />
         </div>
@@ -171,17 +170,6 @@ export default {
     this.sendPageView()
   },
   methods: {
-    fnSearch() {
-      this.checkCharacterData()
-    },
-    checkCharacterData() {
-      if(this.userCharacters.length === 0) {
-        alert('존재하지 않는 닉네임이거나, 보유 캐릭터가 없습니다.')
-        console.log(this.$route)
-        this.$router.push('/character')
-        return false
-      }
-    },
     async sendPageView() {
       const namePageView = await checkUpdatePageView('character', this.nickname)
       namePageView && postCharacterPageView({ name: this.nickname })
