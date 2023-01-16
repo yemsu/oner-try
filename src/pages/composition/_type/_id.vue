@@ -171,15 +171,6 @@ export default {
         ? this.items.find(item => item.name.includes(result))
         : result
         
-      if(!result) {
-        alert('해당 아이템이 존재하지 않습니다.')
-        this.$router.push({
-          params: {}
-        })
-        return false
-      }
-
-
       const { newItem: itemSetup, allIngrdnts } = this.setIngrdntsDataLoop(result)
       // console.log('itemSetup, allIngrdnts', itemSetup, allIngrdnts)
       this.itemSelected = itemSetup
