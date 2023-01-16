@@ -20,7 +20,7 @@
       />
       
       <search-box-skeleton 
-        v-if="!rankingList"
+        v-if="!rankingList && isSearching"
         :is-item="isItem"
       />
       <section
