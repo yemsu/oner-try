@@ -130,3 +130,10 @@ const errorHandler = (actionName, error) => {
   }
   console.log(`${actionName} : config`, config);
 }
+
+// character crawling raw data (for 한정 재화 계산)
+export const getRawCharacterData = (params) => {
+  return $axios.get('/rawCharacterData', { params })
+  .then(res => res)
+  .catch(error => errorHandler('rawCharacterData', error))
+}
