@@ -47,7 +47,7 @@ export default {
     },
     size: {
       type: String,
-      default: () => 'basic'
+      default: () => 'basic' // small, basic, big
     },
     isCompactMode: {
       type: Boolean,
