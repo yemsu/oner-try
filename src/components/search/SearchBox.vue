@@ -171,7 +171,7 @@ export default {
       this.blurInput()
     },
     routerPush(value) {
-      if(this.hasResult(value).length === 0) {
+      if(typeof value === 'string' && this.hasResult(value).length === 0) {
         alert(this.alertMessage)
         this.inputValue = ''
         return
