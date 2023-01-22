@@ -108,6 +108,26 @@ export const getErrorPageRouteData = status => {
   }
   return errorPageRouteData
 }
+
+// login
+export const postSocialLogin = (params) => {
+  console.log('params', params)
+  return $axios.post(`/login`, null, { params })
+  .then(res => {
+    $axios.defaults.headers.common['Authorization'] = `${res.data}`
+  // accessToken, refreshToken - 가입 여부
+    return res.data
+  })
+  .catch(error => errorHandler('postSocialLogin', error))
+}
+
+export const getUserInfo = () => {
+  console.log('$axios', $axios.defaults.headers)
+  return $axios.get(`/userInfo`)
+  .then(res => res.data)
+  .catch(error => errorHandler('getUserInfo', error))
+}
+
 const errorHandler = (actionName, error) => {
   const { response, request, message, config } = error
   if (response) {

@@ -6,6 +6,13 @@ export default {
     BASE_URL: 'https://onertry.fun',
     CONT_PATH: 'https://onerapi.xyz',
     CONT_PATH_LOCAL: 'http://1.227.192.121',
+    fbApiKey: process.env.API_KEY,
+    fbAuthDomain: process.env.AUTH_DOMAIN,
+    fbProjectId: process.env.PROJECT_ID,
+    fbStorageBucket: process.env.STORAGE_BUCKET,
+    fbMessagingSenderId: process.env.MESSAGING_SENDER_ID,
+    fbAppId: process.env.APP_ID,
+    fbMeasurementId: process.env.MEASUREMENT_ID,
   },
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -56,7 +63,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/vuexPersist', mode: 'client' }
+    { src: '~/plugins/vuexPersist', mode: 'client' },
+    { src: '~/plugins/firebase.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
