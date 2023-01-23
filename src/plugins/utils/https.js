@@ -121,11 +121,23 @@ export const postSocialLogin = (params) => {
   .catch(error => errorHandler('postSocialLogin', error))
 }
 
-export const getUserInfo = () => {
-  console.log('$axios', $axios.defaults.headers)
-  return $axios.get(`/userInfo`)
+export const getUserInfo = (token) => {
+  console.log('getUserInfo', token)
+  return $axios.get(`/user/info`, { 
+    headers: {
+      Authorization: token
+    }
+  })
   .then(res => res.data)
   .catch(error => errorHandler('getUserInfo', error))
+}
+
+
+export const postGoogleCredential = (params) => {
+  console.log('postGoogleCredential', params)
+  return $axios.post(`/user/login`, null, { params })
+  .then(res => res.data)
+  .catch(error => errorHandler('postGoogleCredential', error))
 }
 
 const errorHandler = (actionName, error) => {

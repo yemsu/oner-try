@@ -11,12 +11,22 @@
       <!-- <nuxt-link to="/other">다른 메뉴</nuxt-link> -->
     </nav>
     <ul class="menu-util">
-      <li><nuxt-link to="/login">로그인</nuxt-link></li>
+      <li><google-login-button /></li>
       <li><a href="https://cafe.naver.com/onepiecerpg/595" target="_blank" title="새창">맵/확장팩 다운로드</a></li>
       <!-- <li><router-link to="/join">회원가입</router-link></li> -->
     </ul>
   </header>
 </template>
+
+<script>
+import GoogleLoginButton from './GoogleLoginButton.vue'
+
+export default {
+  components: {
+    GoogleLoginButton
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 @import '@/assets/style/components/layout/Header.scss';

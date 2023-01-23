@@ -6,6 +6,7 @@ export default {
     BASE_URL: 'https://onertry.fun',
     CONT_PATH: 'https://onerapi.xyz',
     CONT_PATH_LOCAL: 'http://1.227.192.121',
+    AuthClientId: process.env.OAUTH_CLIENT_ID
   },
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -26,7 +27,6 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'format-detection', content: 'telephone=no' },
-      { name: 'google-site-verification', content: 'SeJH5Wk_WEoAYGUbt0DnIDmuRo-YLJaB2wxOMDqef3o' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2284%22>💀</text></svg>' }
@@ -40,6 +40,7 @@ export default {
       },
       { type: 'text/javascript', src: 'https://www.googletagmanager.com/gtag/js?id=G-8GJK6WJPDB', async: true },
       { type: 'text/javascript', src: 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js', async: true },
+      { type: 'text/javascript', src: 'https://accounts.google.com/gsi/client', async: true, defer: true },
       {
         type: 'text/javascript',
         innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-8GJK6WJPDB');`,
