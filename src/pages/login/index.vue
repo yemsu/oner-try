@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
-import { auth } from "@/plugins/firebase"
 import { postSocialLogin, getUserInfo } from "@/plugins/utils/https"
 
 export default {
@@ -64,8 +62,6 @@ export default {
     },
     async googleLogin() {
       try {
-        const provider = new GoogleAuthProvider()
-        const data = await signInWithPopup(auth, provider)
         console.log(data)
         this.userEmail = data.user.email
         this.userName = data.user.displayName
@@ -75,10 +71,7 @@ export default {
       }
     },
     clickLogout() {
-      console.log('clickLogout', auth, auth.signOut)
       try {
-        const signout = auth.signOut()
-        console.log('signout', signout)
 
         localStorage.removeItem('accessToken')
         this.userEmail = null
