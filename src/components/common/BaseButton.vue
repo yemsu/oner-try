@@ -25,7 +25,7 @@ export default {
     },
     bg: {
       type: String,
-      default: () => '' //icon, mode-wide, round
+      default: () => '' //active, inactive...
     },
     size: {
       type: String,
