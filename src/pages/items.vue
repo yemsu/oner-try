@@ -9,6 +9,7 @@
           > 
             <base-button 
               :linkTo="'/items/' + subMenu.name"
+              type="square-round"
               class="sub-nav-common"
             >
               {{ subMenu.title }}

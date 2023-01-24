@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="`btn ${type} bg-${bg}`"
+    :class="`btn ${type} bg-${bg} size-${size}`"
     @click="clickHandler"
     :is="tagName"
     :to="isNuxtLink && linkTo"
@@ -21,11 +21,15 @@ export default {
   props: {
     type: {
       type: String,
-      default: () => '' //icon, mode-wide, round
+      default: () => '' //icon, mode-wide, round, square-round
     },
     bg: {
       type: String,
       default: () => '' //icon, mode-wide, round
+    },
+    size: {
+      type: String,
+      default: () => 'medium' //small, medium, large
     },
     toggleData: {
       type: Boolean,
