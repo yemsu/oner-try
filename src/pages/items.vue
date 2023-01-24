@@ -6,13 +6,13 @@
           <li
             v-for="(subMenu, i) in subMenus"
             :key="`subMenu${i}`"
-          >
-            <nuxt-link
-              :to="'/items/' + subMenu.name"
+          > 
+            <base-button 
+              :linkTo="'/items/' + subMenu.name"
               class="sub-nav-common"
             >
               {{ subMenu.title }}
-            </nuxt-link>
+            </base-button>
           </li>
         </ul>
       </div>
@@ -24,7 +24,12 @@
 </template>
 
 <script>
+import BaseButton from '@/components/common/BaseButton.vue'
+
 export default {
+  components: {
+    BaseButton
+  },
   data() {
     return {
       subMenus: [
