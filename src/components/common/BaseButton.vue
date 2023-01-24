@@ -2,6 +2,11 @@
   <button
     :class="`btn ${type} bg-${bg}`"
     @click="clickHandler"
+    :is="tagName"
+    :to="isNuxtLink && linkTo"
+    :href="isOuterLink && linkTo"
+    :target="isOuterLink ? '_blank' : '_self'"
+    :title="isOuterLink ? '새창' : buttonTitle"
   >
     <slot></slot>
     <template v-if="type.includes('mode-wide')">
@@ -25,10 +30,31 @@ export default {
     toggleData: {
       type: Boolean,
       default: () => false
-    }
+    },
+    linkTo: {
+      type: String,
+      default: () => ''
+    },
+    buttonTitle: {
+      type: String,
+      default: () => ''
+    },
   },
   data() {
     return {
+    }
+  },
+  computed: {
+    isOuterLink() {
+      return this.linkTo.startsWith('http')
+    },
+    isNuxtLink() {
+      return !this.isOuterLink && this.linkTo
+    },
+    tagName() {
+      return this.isOuterLink ? 'a'
+        : !this.isOuterLink && this.linkTo ? 'nuxt-link'
+          : 'button'
     }
   },
   methods: {
