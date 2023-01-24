@@ -1,9 +1,11 @@
 <template>
-  <div id="googleButton"></div>
+  <div v-if="!isLogin" id="googleLogin"></div>
+  <button v-else id="googleLogout">로그아웃</button>
 </template>
 
 <script>
 import { postGoogleCredential } from "@/plugins/utils/https"
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   data() {
@@ -11,10 +13,18 @@ export default {
       authClientId: process.env.AuthClientId
     }
   },
+  computed: {
+    ...mapGetters({
+      isLogin: 'auth/getIsLogin',
+    }),
+  },
   mounted() {
     setTimeout(this.initGoogleLogin, 200);
   },
   methods: {
+    ...mapMutations({
+      setIsLogin: 'auth/SET_IS_LOGIN'
+    }),
     initGoogleLogin() {
       google.accounts.id.initialize({
         client_id: this.authClientId,
@@ -24,7 +34,7 @@ export default {
       console.log('this.authClientId, ', this.authClientId)
       // render button
       google.accounts.id.renderButton(
-        document.getElementById('googleButton'),
+        document.getElementById('googleLogin'),
         { 
           type: 'standard',
           size: 'small',
@@ -38,19 +48,19 @@ export default {
       console.log('google.accounts.id', google.accounts.id)
     },
     async onSignIn(googleUser) {
-      console.log('onSignIn')
       console.log('googleUser', googleUser)
       const res = await postGoogleCredential({ idToken: googleUser.credential})
       console.log("res", res)
       
       switch (res.type) {
         case 'join':
-          localStorage.setItem('JUID', res.token)
+          localStorage.setItem('GCID', googleUser.credential)
           this.$router.push('/join')
           break;
         case 'login':
           localStorage.setItem('JUID', res.token)
-          console.log('set cookie', localStorage.getItem('JUID'))
+          this.setIsLogin(true)
+          this.$router.push('/')
           break;
         case 'ban':
           console.log('login_limit', res.login_limit)
@@ -60,7 +70,6 @@ export default {
           break;
       }
     },
-
   }
 }
 </script>

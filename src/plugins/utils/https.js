@@ -144,6 +144,12 @@ export const getIsDuplNick = (params) => {
   .catch(error => errorHandler('getIsDuplNick', error))
 }
 
+export const postUserJoin = (params) => {
+  return $axios.post(`/user/register`, null, { params })
+  .then(res => res.data)
+  .catch(error => errorHandler('postUserJoin', error))
+}
+
 const errorHandler = (actionName, error) => {
   const { response, request, message, config } = error
   if (response) {

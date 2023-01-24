@@ -30,8 +30,9 @@ header {
   }
   .menu-util {
     display: flex;
+    align-items: center;
     margin-left: auto;
-    a {
+    a, button {
       padding: $menu-padding-v 5px;
       font-size: 0.9em;
       color: rgba(255, 255, 255, 0.8);
