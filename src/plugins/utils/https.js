@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const $axios = axios.create({
-  baseURL: process.env.CONT_PATH + '/api'
+  baseURL: process.env.CONT_PATH_LOCAL + '/api'
 })
 
 export const getSailors = () => {
@@ -132,12 +132,16 @@ export const getUserInfo = (token) => {
   .catch(error => errorHandler('getUserInfo', error))
 }
 
-
 export const postGoogleCredential = (params) => {
-  console.log('postGoogleCredential', params)
   return $axios.post(`/user/login`, null, { params })
   .then(res => res.data)
   .catch(error => errorHandler('postGoogleCredential', error))
+}
+
+export const getIsDuplNick = (params) => {
+  return $axios.get('/user/isDuplNick', { params })
+  .then(res => res.data)
+  .catch(error => errorHandler('getIsDuplNick', error))
 }
 
 const errorHandler = (actionName, error) => {

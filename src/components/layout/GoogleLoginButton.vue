@@ -45,7 +45,8 @@ export default {
       
       switch (res.type) {
         case 'join':
-          console.log('join')
+          localStorage.setItem('JUID', res.token)
+          this.$router.push('/join')
           break;
         case 'login':
           localStorage.setItem('JUID', res.token)
@@ -58,7 +59,8 @@ export default {
           console.error('onSignIn: 로그인 결과 응답 type 확인 필요')
           break;
       }
-    }
+    },
+
   }
 }
 </script>
