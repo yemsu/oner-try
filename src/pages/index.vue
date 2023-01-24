@@ -1,7 +1,6 @@
 <template>
   <div class="inner-size-basic">
     <div class="wrap-quick-menu">
-      <button @click="onClickGetUserInfo">get user info</button>
       <!-- <section class="column-full point-banner">
         <div class="box-flex">
           <div class="item-flex area-img">
@@ -117,7 +116,6 @@ import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
 import CompositionSearchBox from "@/components/pages/composition/SearchBox.vue"
 import RankingTable from '@/components/pages/ranking/Table.vue'
 import setMeta from '@/plugins/utils/meta';
-import { getUserInfo } from "@/plugins/utils/https"
 
 export default {
   head() {
@@ -146,13 +144,6 @@ export default {
       compositionItems
     }
   },
-  methods: {
-    async onClickGetUserInfo() {
-      console.log('ddd',localStorage.getItem('JUID'))
-      const result = await getUserInfo(localStorage.getItem('JUID'))
-      console.log('onClickGetUserInfo', result)
-    }
-  }
 }
 </script>
 
