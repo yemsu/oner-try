@@ -40,7 +40,7 @@ export default {
       },
       { type: 'text/javascript', src: 'https://www.googletagmanager.com/gtag/js?id=G-8GJK6WJPDB', async: true },
       { type: 'text/javascript', src: 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js', async: true },
-      { type: 'text/javascript', src: 'https://accounts.google.com/gsi/client', async: true, defer: true },
+      { type: 'text/javascript', src: 'https://accounts.google.com/gsi/client' },
       {
         type: 'text/javascript',
         innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-8GJK6WJPDB');`,

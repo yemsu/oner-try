@@ -117,7 +117,6 @@ export const postSocialLogin = (params) => {
 }
 
 export const getUserInfo = (token) => {
-  console.log('getUserInfo', token)
   return $axios.get(`/user/info`, { 
     headers: {
       Authorization: token
