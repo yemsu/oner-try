@@ -62,6 +62,7 @@
 
 <script>
 import BaseInput from '@/components/common/BaseInput.vue'
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   components: {
@@ -131,6 +132,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      userCharacters: 'character/getUserCharacters'
+    }),
     showRankingList() {
       return this.rankingList && !this.inputValue
     },
@@ -165,17 +169,33 @@ export default {
       // console.log('params', this.$router, this.$route,)
   },
   methods: {
+    ...mapMutations({
+      setUserCharacters: 'character/SET_USER_CHARACTERS'
+    }),
     onSearch(value) {
       this.$emit('onSearch', value)
       this.inputValue = ''
       this.blurInput()
     },
-    routerPush(value) {
-      if(typeof value === 'string' && this.hasResult(value).length === 0) {
+    routerPush(value) {    
+      if(this.matchingData.type === 'string') {
+        this.goCharacterSearchResult(value)
+        return
+      }
+      this.goCompositionSearchResult(value)
+    },
+    async goCharacterSearchResult(value) {
+      this.setUserCharacters([]) // reset 하지 않으면 잘못된 닉네임으로 검색해도 이전 userCharacter 유지한채 화면이 넘어가버림.
+      await this.$store.dispatch('character/GET_USER_CHARACTERS', { nickName: value })
+      console.log('this.userCharacters', this.userCharacters)
+      if(this.userCharacters.length === 0) {
         alert(this.alertMessage)
         this.inputValue = ''
         return
       }
+      this.$router.push(`${this.resultPath}/${value}`)
+    },
+    goCompositionSearchResult(value) {
       const params = this.paramKey.reduce((acc, key) => {
         const checkValue = !value
           ? this.inputValue
