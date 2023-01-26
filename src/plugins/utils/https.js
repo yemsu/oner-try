@@ -60,11 +60,6 @@ export const getCharacterPageViews = (params) => {
   return $axios.get(`/characterPageViews`, { params })
   .catch(error => errorHandler('getCharacterPageViews', error))
 }
-export const postGameUser = (params) => {
-  return $axios.post(`/register/gameUser`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('postGameUser', error))
-}
 export const postItemName = (params) => {
   return $axios.post(`/register/report`, null, { params })
   .then(res => res)
