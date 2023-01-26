@@ -1,6 +1,6 @@
 <template>
   <search-box
-    category="닉네임(첫 검색 대소문자 구분)"
+    category="닉네임(대소문자 구분)"
     :matchingData="{type: 'string', data: matchingData}"
     :rankingList="rankingList"
     :size="size"
