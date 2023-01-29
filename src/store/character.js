@@ -101,7 +101,7 @@ export const actions = {
         commit(`SET_USER_CHARACTERS`, sortRank(newData))
         return sortRank(newData)
       })
-      .catch(error => console.log('GET_USER_CHARACTERS', error))
+      .catch(error => console.error('GET_USER_CHARACTERS', error))
   },
   GET_GAME_USERS({ commit }, payload) {
     return getGameUsers(payload)
@@ -110,7 +110,7 @@ export const actions = {
         commit(`SET_GAME_USERS`, data)
         return data
       })
-      .catch(error => console.log('GET_GAME_USERS', error))
+      .catch(error => console.error('GET_GAME_USERS', error))
   },
   async GET_RANKING({ commit, rootState, dispatch }, payload) {
     const { item: { sailors, colleagues }} = rootState
@@ -135,7 +135,7 @@ export const actions = {
         commit(`SET_RANKING`, sortRank(newData))
         return sortRank(newData)
       })
-      .catch(error => console.log('character/GET_RANKING', error))
+      .catch(error => console.error('character/GET_RANKING', error))
   }
 }
 function sortRank(data) {

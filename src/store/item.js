@@ -95,7 +95,7 @@ export const actions = {
         commit(`SET_ITEMS`, {data: dataTyped(data), type: 'items'})
         return data
       })
-      .catch(error => console.log('GET_ITEMS', error))
+      .catch(error => console.error('GET_ITEMS', error))
   },
   GET_SAILORS({ commit }) {
     return getSailors()
@@ -106,7 +106,7 @@ export const actions = {
         commit(`SET_SAILORS`, {data: newData, type: 'sailors'})
         return data
       })
-      .catch(error => console.log('GET_SAILORS', error))
+      .catch(error => console.error('GET_SAILORS', error))
   },
   GET_COLLEAGUES({ commit }, payload) {
     return getColleagues(payload)
@@ -126,7 +126,7 @@ export const actions = {
         commit(`SET_COLLEAGUES`, {data: newData})
         return newData
       })
-      .catch(error => console.log('GET_COLLEAGUES', error))
+      .catch(error => console.error('GET_COLLEAGUES', error))
   },
   GET_ETC_ITEMS({ commit }) {
     return getEtcItems()
@@ -135,7 +135,7 @@ export const actions = {
         commit(`SET_ETC_ITEMS`, {data, type: 'etcItems'})
         return data
       })
-      .catch(error => console.log('GET_ETC_ITEMS', error))
+      .catch(error => console.error('GET_ETC_ITEMS', error))
   },
   GET_EQUIPMENTS({ commit }) {
     return getEquipments()
@@ -156,7 +156,7 @@ export const actions = {
         commit(`SET_EQUIPMENTS`, {data: sortData})
         return sortData
       })
-      .catch(error => console.log('GET_EQUIPMENTS', error))
+      .catch(error => console.error('GET_EQUIPMENTS', error))
   },
   async GET_EQUIPMENTS_TABLE({ commit, state, dispatch }) {
     if(state.equipments.length === 0) await dispatch('GET_EQUIPMENTS')
@@ -241,7 +241,7 @@ export const actions = {
         commit(`SET_SHIPS`, {data: newData})
         return newData
       })
-      .catch(error => console.log('GET_SHIPS', error))
+      .catch(error => console.error('GET_SHIPS', error))
   },
   async GET_SHIPS_TABLE({ commit, state, dispatch }) {
     if(state.ships.length === 0) await dispatch('GET_SHIPS')
@@ -271,7 +271,7 @@ export const actions = {
         commit(`SET_HEROS`, {data, type: 'heroes'})
         return data
       })
-      .catch(error => console.log('GET_HEROES', error))
+      .catch(error => console.error('GET_HEROES', error))
   },
   GET_SYNERGIES({ commit }) {
     return getSynergies()
@@ -284,7 +284,7 @@ export const actions = {
         commit(`SET_SYNERGIES`, {data: newData})
         return newData
       })
-      .catch(error => console.log('GET_SYNERGIES', error))
+      .catch(error => console.error('GET_SYNERGIES', error))
   },
   async GET_SAILORS_SYNERGY({ commit, state, dispatch }) {
     if(state.sailors.length === 0) await dispatch('GET_SAILORS')
@@ -315,6 +315,6 @@ export const actions = {
         commit(`SET_RYUOES`, {data: newData})
         return newData
       })
-      .catch(error => console.log('GET_RYUOES', error))
+      .catch(error => console.error('GET_RYUOES', error))
   },
 }

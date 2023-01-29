@@ -49,7 +49,7 @@ export const actions = {
         }
         return newData
       })
-      .catch(error => console.log('GET_COMPOSITION', error))
+      .catch(error => console.error('GET_COMPOSITION', error))
   },
   GET_CHARACTER({ commit }, searchRankingNum) {
     return getCharacterPageViews()
@@ -66,6 +66,6 @@ export const actions = {
         }
         return newData
       })
-      .catch(error => console.log('GET_Character', error))
+      .catch(error => console.error('GET_Character', error))
   },
 }
