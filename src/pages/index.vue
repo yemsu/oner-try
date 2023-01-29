@@ -61,7 +61,7 @@
               <i class="icon-arrow right small border-point"></i>
             </router-link>
             <router-link
-              to="/items/sailor"
+              to="/items/ship"
               class="text-link wrap-icon-text"
             >
               선박 도감
