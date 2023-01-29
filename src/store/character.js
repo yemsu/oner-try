@@ -77,9 +77,7 @@ export const actions = {
             const typeState = type === 'ship' ? 'ships' : type
             const newData = fillDataAndInsertValue(rootState.item[typeState], data(), 'stack', true)
 
-            const result = type === 'colleagues' || type === 'ship'
-              ? fillDefaultList(newData, slotNumbers[type])
-              : newData
+            const result = fillDefaultList(newData, slotNumbers[type])
 
             return result
           }
