@@ -63,7 +63,10 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ['@nuxtjs/style-resources'],
+  buildModules: [
+    '@nuxtjs/style-resources',
+    '@nuxt/typescript-build'
+  ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
