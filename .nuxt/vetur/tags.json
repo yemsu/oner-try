@@ -17,6 +17,12 @@
   "CommonVTab": {
     "description": "Auto imported from components/common/VTab.vue"
   },
+  "LayoutFooter": {
+    "description": "Auto imported from components/layout/Footer.vue"
+  },
+  "LayoutHeader": {
+    "description": "Auto imported from components/layout/Header.vue"
+  },
   "ItemBadges": {
     "description": "Auto imported from components/item/itemBadges.vue"
   },
@@ -50,12 +56,6 @@
   "ItemSynergyDesc": {
     "description": "Auto imported from components/item/SynergyDesc.vue"
   },
-  "LayoutFooter": {
-    "description": "Auto imported from components/layout/Footer.vue"
-  },
-  "LayoutHeader": {
-    "description": "Auto imported from components/layout/Header.vue"
-  },
   "SearchBox": {
     "description": "Auto imported from components/search/SearchBox.vue"
   },
@@ -65,11 +65,11 @@
   "SearchContainer": {
     "description": "Auto imported from components/search/SearchContainer.vue"
   },
-  "PagesCharacterSearchBox": {
-    "description": "Auto imported from components/pages/character/SearchBox.vue"
-  },
   "PagesCompositionSearchBox": {
     "description": "Auto imported from components/pages/composition/SearchBox.vue"
+  },
+  "PagesCharacterSearchBox": {
+    "description": "Auto imported from components/pages/character/SearchBox.vue"
   },
   "PagesRankingTable": {
     "description": "Auto imported from components/pages/ranking/Table.vue"
