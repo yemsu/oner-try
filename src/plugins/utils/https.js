@@ -4,7 +4,6 @@ const $axios = axios.create({
   baseURL: process.env.CONT_PATH + '/oner/api'
 })
 
-$axios.defaults.timeout = 5000;
 
 export const getSailors = () => {
   return $axios.get('/sailors')
