@@ -17,7 +17,7 @@ export default {
 .container {
   position: relative;
   min-height: 100vh;
-  $header-height: 41px;
+  $header-height: 80px;
   padding: $header-height 0 100px;
 }
 </style>
