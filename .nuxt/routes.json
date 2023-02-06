@@ -1,0 +1,89 @@
+[
+  {
+    "name": "character",
+    "path": "/character",
+    "component": "D:\\\\sujin-sujin\\\\oner-try\\\\src\\\\pages\\\\character\\\\index.vue",
+    "chunkName": "pages/character/index",
+    "url": "/character",
+    "_name": "_0ce0f9dc"
+  },
+  {
+    "name": "composition",
+    "path": "/composition",
+    "component": "D:\\\\sujin-sujin\\\\oner-try\\\\src\\\\pages\\\\composition\\\\index.vue",
+    "chunkName": "pages/composition/index",
+    "url": "/composition",
+    "_name": "_b230840a"
+  },
+  {
+    "name": "items",
+    "path": "/items",
+    "component": "D:\\\\sujin-sujin\\\\oner-try\\\\src\\\\pages\\\\items.vue",
+    "chunkName": "pages/items",
+    "children": [
+      {
+        "name": "items-colleague",
+        "path": "colleague",
+        "component": "D:\\\\sujin-sujin\\\\oner-try\\\\src\\\\pages\\\\items\\\\colleague.vue",
+        "chunkName": "pages/items/colleague",
+        "url": "/items/colleague",
+        "_name": "_cf5f657c"
+      },
+      {
+        "name": "items-equipment",
+        "path": "equipment",
+        "component": "D:\\\\sujin-sujin\\\\oner-try\\\\src\\\\pages\\\\items\\\\equipment.vue",
+        "chunkName": "pages/items/equipment",
+        "url": "/items/equipment",
+        "_name": "_a70910be"
+      },
+      {
+        "name": "items-sailor",
+        "path": "sailor",
+        "component": "D:\\\\sujin-sujin\\\\oner-try\\\\src\\\\pages\\\\items\\\\sailor.vue",
+        "chunkName": "pages/items/sailor",
+        "url": "/items/sailor",
+        "_name": "_06161191"
+      },
+      {
+        "name": "items-ship",
+        "path": "ship",
+        "component": "D:\\\\sujin-sujin\\\\oner-try\\\\src\\\\pages\\\\items\\\\ship.vue",
+        "chunkName": "pages/items/ship",
+        "url": "/items/ship",
+        "_name": "_6f19510e"
+      }
+    ],
+    "_name": "_153a6f7d"
+  },
+  {
+    "name": "ranking",
+    "path": "/ranking",
+    "component": "D:\\\\sujin-sujin\\\\oner-try\\\\src\\\\pages\\\\ranking\\\\index.vue",
+    "chunkName": "pages/ranking/index",
+    "url": "/ranking",
+    "_name": "_7c6fe16f"
+  },
+  {
+    "name": "character-nickname",
+    "path": "/character/:nickname",
+    "component": "D:\\\\sujin-sujin\\\\oner-try\\\\src\\\\pages\\\\character\\\\_nickname.vue",
+    "chunkName": "pages/character/_nickname",
+    "_name": "_18fdac57"
+  },
+  {
+    "name": "composition-type-id",
+    "path": "/composition/:type/:id?",
+    "component": "D:\\\\sujin-sujin\\\\oner-try\\\\src\\\\pages\\\\composition\\\\_type\\\\_id.vue",
+    "chunkName": "pages/composition/_type/_id",
+    "_name": "_042176e8"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "D:\\\\sujin-sujin\\\\oner-try\\\\src\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "url": "/",
+    "_name": "_63acd78f"
+  }
+]
