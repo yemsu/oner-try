@@ -4,10 +4,9 @@ header {
   z-index: 99;
   width: 100%;
   font-weight: 300;
-  line-height: 36px;
   a {
-    display: block;
     color: rgba(255, 255, 255, 0.8);
+    line-height: 36px;
   }
   .logo {
     font-size: 18px;
@@ -17,18 +16,21 @@ header {
       font-weight: 500;
     }
   }
-  .wrap-menu {
+  .menu-bar {
     display: flex;
     align-items: center;
+    padding-right: 10px;
     background-color: var(--bg-dark);
     &.site {
       .logo {
         background-color: $color-point;
       }
-      .gnb {
+      nav {
         a {
+          font-size: $font-size-MS-pc;
           &.nuxt-link-active,
           &.is-active {
+            font-weight: 400;
             color: #fff;
             background-color: $color-point;
           }
@@ -38,7 +40,7 @@ header {
     &.game {
       padding: 5px 10px 5px 90px;
       background-color: $color-point;
-      .gnb {
+      nav {
         a {
           &.nuxt-link-active,
           &.is-active {
@@ -51,7 +53,7 @@ header {
       }
     }
   }
-  .gnb {
+  nav {
     display: flex;
     a {
       padding: $menu-padding-v 10px;
@@ -59,16 +61,11 @@ header {
   }
   .menu-util {
     display: flex;
-    align-items: center;
-    gap: 5px;
     margin-left: auto;
-    ::v-deep {
-      a, button {
-        display: block;
-        padding: $menu-padding-v 5px;
-        font-size: 0.9em;
-        color: rgba(255, 255, 255, 0.8);
-      }
+    a {
+      padding: $menu-padding-v 5px;
+      font-size: 0.9em;
+      color: rgba(255, 255, 255, 0.8);
     }
   }
 }

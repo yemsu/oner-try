@@ -72,8 +72,8 @@ export default {
 <style lang="scss" scoped>
 svg {
   vertical-align: middle;
-  width: 90px;
-  padding-bottom: 5px; // 헤더 로고 위치에서 중앙으로 오지 않아 값 추가.
+  width: 80px;
+  padding-bottom: 2px; // 헤더 로고 위치에서 중앙으로 오지 않아 값 추가.
   filter: invert(100%) sepia(100%) brightness(100%);
 }
 </style>
