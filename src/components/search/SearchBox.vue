@@ -108,6 +108,10 @@ export default {
     alertMessage: {
       type: String,
       default: () => '잘못된 검색어 입니다.'
+    },
+    useParam: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -119,8 +123,8 @@ export default {
   },
   watch: {
     $route(newVal, oldVal) {
-      const newparams = newVal.params
-      const oldparams = oldVal.newparams
+      const newparams = newVal[this.paramOrQuery]
+      const oldparams = oldVal[this.paramOrQuery]
       console.log('searchBox route watch', this.paramKey, this.paramKey[0], newparams, newparams[this.paramKey[0]])
       if(!newparams[this.paramKey[0]]) {
         // console.log('no params')
@@ -152,16 +156,18 @@ export default {
       }
       const value = noBlank(this.inputValue)
       const dataFiltered = data.filter(dataItem =>  {
-        const targetData = type === 'item' ? dataItem.name : dataItem
+        const targetData = type === 'item' ? dataItem.name : dataItem.nickName
         const findMatch = noBlank(targetData).toLowerCase().includes(value.toLowerCase())
-        
         return findMatch
       })
-
-      return dataFiltered.slice(0, sliceNum)
+      const result = type === 'string' ? dataFiltered.map(({ nickName }) => nickName) : dataFiltered      
+      return result.slice(0, sliceNum)
     },
     isItem() {
       return this.matchingData?.type === 'item'
+    },
+    paramOrQuery() {
+      return this.useParam ? 'params' : 'query'
     }
   },
   mounted() {
@@ -191,9 +197,11 @@ export default {
       if(this.userCharacters.length === 0) {
         alert(this.alertMessage)
         this.inputValue = ''
+        this.$router.push(`${this.resultPath}`)
         return
       }
-      this.$router.push(`${this.resultPath}/${value}`)
+      const paramOrQuery = this.useParam ? `/${value}` : `/result?${this.paramKey}=${value}`
+      this.$router.push(`${this.resultPath}${paramOrQuery}`)
     },
     goCompositionSearchResult(value) {
       const params = this.paramKey.reduce((acc, key) => {
@@ -207,7 +215,7 @@ export default {
       this.$router.push(`${this.resultPath}${params}`)
     },
     routeparamsHandler(params) {
-      params = params || this.$route.params
+      params = params || this.$route[this.paramOrQuery]
       
       const noparams = Object.keys(params).length === 0
       if(noparams) return false
