@@ -26,7 +26,7 @@
         </div>
         <div class="area-contents">
           <character-search-box
-            :matchingData="userNickNames"
+            :matchingData="gameUsers"
           />
         </div>
       </section>
@@ -116,6 +116,7 @@ import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
 import CompositionSearchBox from "@/components/pages/composition/SearchBox.vue"
 import RankingTable from '@/components/pages/ranking/Table.vue'
 import setMeta from '@/plugins/utils/meta';
+import { mapGetters } from "vuex";
 
 export default {
   head() {
@@ -129,21 +130,24 @@ export default {
     CompositionSearchBox,
     RankingTable
   },
-  async asyncData({ store }) {
-    await store.dispatch('item/GET_HEROES')
-    await store.dispatch('item/GET_ITEMS')
-    await store.dispatch('character/GET_GAME_USERS')
-
-    const { character: { gameUsers }, item: { items } } = store.state    
-    // character
-    const userNickNames = gameUsers.map(user => user.nickName)
-    // composition    
-    const compositionItems = items.filter(item => item.ingredients)
+  data() {
     return {
-      userNickNames,
-      compositionItems
+      compositionItems: []
     }
   },
+  computed: {
+    ...mapGetters({
+      heroes:  'item/getHeroes',
+      items:  'item/getItems',
+      gameUsers: 'character/getGameUsers',
+    }),   
+  },
+  async created() {
+    if(this.gameUsers.length === 0) await this.$store.dispatch('character/GET_GAME_USERS')  
+    if(this.items.length === 0) await this.$store.dispatch('item/GET_ITEMS')
+    if(this.heroes.length === 0) await this.$store.dispatch('item/GET_HEROES')
+    this.compositionItems = this.items.filter(item => item.ingredients)
+  }
 }
 </script>
 
