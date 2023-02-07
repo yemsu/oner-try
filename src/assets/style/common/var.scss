@@ -5,17 +5,23 @@ $color-epic-sub: #ffe945;
 $color-rare: #aaff90;
 $color-normal: #f7efec;
 
-$color-point: #574bc6;
-$color-point-pale: #8279d4;
-$color-point-vivid-bright: #6f5fff;
-$color-point-sub: #ee6b00;
-$color-point-sub-pale: #f09f5d;
+$color-point: #be232f;
+$color-point-pale: #c04f58;
+$color-point-vivid-bright: #e03f4d;
 
-$color-point-500: #7e789e;
-$color-point-400: #8987a1;
-$color-point-300: #a59fc2;
-$color-point-200: #bdbbc9;
-$color-point-100: #dad7e2;
+// $color-point: #574bc6;
+// $color-point-pale: #8279d4;
+// $color-point-vivid-bright: #6f5fff;
+$color-point-sub: #3f489d;
+$color-point-sub-pale: #747cc2;
+
+$color-point-500: #7a7878;
+$color-point-400: #8a8787;
+$color-point-300: #a09c9c;
+$color-point-200: #c4c0c0;
+$color-point-100: #dbd7d7;
+$color-point-50: #f1edef;
+$color-point-10: #f8f6f7;
 
 $color-mark: #f2fdcb;
 $color-neon: #5fee27;
@@ -46,8 +52,8 @@ $basic-container-width: 1080px;
 $font-size-title-B-pc: 30px;
 $font-size-title-M-pc: 25px;
 $font-size-title-S-pc: 20px;
-$font-size-title-XS-pc: 17px;
-$font-size-B-pc: 17px;
+$font-size-title-XS-pc: 16px;
+$font-size-B-pc: 16px;
 $font-size-M-pc: 15px;
 $font-size-MS-pc: 14px;
 $font-size-S-pc: 13px;
@@ -84,8 +90,8 @@ $list-gap-basic: 10px;
   --bg-gray: #b4b5bb;
   --bg-gray-100: #ddd;
   --bg-light-gray: #eee;
-  --bg-light-point-300: rgb(215, 215, 226);
-  --bg-light-point-200: rgb(230, 229, 238);
-  --bg-light-point-100: #f0eff5;
-  --bg-light-point-50: #f6f6f9;
+  --bg-light-point-300: #{$color-point-200};
+  --bg-light-point-200: #{$color-point-100};
+  --bg-light-point-100: #{$color-point-50};
+  --bg-light-point-50: #{$color-point-10};
 }
