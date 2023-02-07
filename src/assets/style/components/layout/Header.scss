@@ -1,31 +1,60 @@
-$menu-padding-v: 10px;
+$menu-padding-v: 0;
 header {
-  display: flex;
-  align-items: center;
   position: fixed;
   z-index: 99;
   width: 100%;
-  background-color: var(--bg-dark);
-  padding: 0 10px;
   font-weight: 300;
+  line-height: 36px;
+  a {
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+  }
   .logo {
     font-size: 18px;
-    letter-spacing: 0.05em;
     a {
-      padding: $menu-padding-v 15px;
+      padding: $menu-padding-v 10px $menu-padding-v 15px;
       color: var(--color-white);
+      font-weight: 500;
+    }
+  }
+  .wrap-menu {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-dark);
+    &.site {
+      .logo {
+        background-color: $color-point;
+      }
+      .gnb {
+        a {
+          &.nuxt-link-active,
+          &.is-active {
+            color: #fff;
+            background-color: $color-point;
+          }
+        }
+      }
+    }
+    &.game {
+      padding: 5px 10px 5px 90px;
+      background-color: $color-point;
+      .gnb {
+        a {
+          &.nuxt-link-active,
+          &.is-active {
+            font-weight: 500;
+            background-color: $color-point-vivid-bright;
+            border-radius: 5px;
+            color: #fff;
+          }
+        }
+      }
     }
   }
   .gnb {
     display: flex;
     a {
       padding: $menu-padding-v 10px;
-      color: rgba(255, 255, 255, 0.8);
-      &.nuxt-link-active {
-        color: #333;
-        font-weight: 500;
-        background-color: var(--bg-light-point-200);
-      }
     }
   }
   .menu-util {
