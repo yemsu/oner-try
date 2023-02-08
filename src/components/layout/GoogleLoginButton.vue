@@ -3,7 +3,7 @@
     <div v-show="!isLogin" id="googleLogin"></div>
     
     <div v-show="isLogin" class="wrap-dropdown" >
-      <button v-if="userInfo.name" class="btn-dropdown" @click="isShowLoginMenu = !isShowLoginMenu">💀 {{ userInfo.name }}</button>
+      <button v-if="userInfo.siteNick" class="btn-dropdown" @click="isShowLoginMenu = !isShowLoginMenu">💀 {{ userInfo.siteNick }}</button>
       <div v-if="isShowLoginMenu" class="menu-dropdown">
         <button @click="onClickLogout({ useAlert: true })">로그아웃</button>
       </div>
@@ -30,6 +30,7 @@ export default {
   },
   watch: {
     isLogin(crr, prev) {
+      console.log('isLogin', prev)
       if(crr && crr !== prev) this.fnLogin()
     }
   },
@@ -38,6 +39,7 @@ export default {
     // setTimeout(, 0);
     const jToken = localStorage.getItem('JUID')
     if(jToken) {
+      console.log('mounted')
       this.fnLogin()
     } else {
       setTimeout(() => {
@@ -82,7 +84,7 @@ export default {
       this.setIsLogin(true)
       console.log('setIsLogin', this.isLogin)
       const userInfo = await this.getUserInfo(jToken)
-      console.log('this.userInfo', this.userInfo, this.userInfo.name)
+      console.log('this.userInfo', this.userInfo, this.userInfo.siteNick)
       !userInfo && this.onClickLogout({ useAlert: false })
     },
     async onClickLogin(googleUser) {
