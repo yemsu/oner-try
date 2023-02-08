@@ -4,53 +4,23 @@ const $axios = axios.create({
   baseURL: process.env.CONT_PATH_LOCAL + '/api'
 })
 
+// item
+export const getSailors = () => getApi('/sailors')
+export const getEtcItems = () => getApi('/etcItems')
+export const getItems = () => getApi('/items')
+export const getColleagues = () => getApi('/colleagues')
+export const getEquipments = (params) => getApi(`/equipments`, { params })
+export const getShips = (params) => getApi(`/ships`, { params })
+export const getHeroes = (params) => getApi(`/heroes`, { params })
+export const getSynergies = () => getApi(`/synergies`)
+export const getRyuoList = () => getApi(`/ryuoList`)
 
-export const getSailors = () => {
-  return $axios.get('/sailors')
-}
-export const getEtcItems = () => {
-  return $axios.get('/etcItems')
-}
-export const getItems = () => {
-  return $axios.get('/items')
-  .catch(error => errorHandler('getItems', error))
-}
-export const getColleagues = () => {
-  return $axios.get(`/colleagues`)
-    .catch(error => errorHandler('getItems', error))
-}
-export const getUserCharacters = (nickName) => {
-  return $axios.get(`/characterList`, { params: nickName })
-    .catch(error => errorHandler('getUserCharacters', error))
-}
-export const getEquipments = (params) => {
-  return $axios.get(`/equipments`, { params })
-    .catch(error => errorHandler('getEquipments', error))
-}
-export const getShips = (params) => {
-  return $axios.get(`/ships`, { params })
-    .catch(error => errorHandler('getShips', error))
-}
-export const getHeroes = (params) => {
-  return $axios.get(`/heroes`, { params })
-    .catch(error => errorHandler('getHeroes', error))
-}
-export const getGameUsers = (params) => {
-  return $axios.get(`/gameUsers`, { params })
-    .catch(error => errorHandler('getGameUsers', error))
-}
-export const getRanking = () => {
-  return $axios.get(`/ranking`)
-    .catch(error => errorHandler('getRanking', error))
-}
-export const getSynergies = () => {
-  return $axios.get(`/synergies`)
-    .catch(error => errorHandler('getSynergies', error))
-}
-export const getRyuoList = () => {
-  return $axios.get(`/ryuoList`)
-    .catch(error => errorHandler('getRyuoList', error))
-}
+// character
+export const getRanking = () => getApi(`/ranking`)
+export const getUserCharacters = (nickName) => getApi(`/characterList`, { params: nickName })
+export const getGameUsers = (params) => getApi(`/gameUsers`, { params })
+
+// page view
 export const getCompositionPageViews = (params) => {
   if(!params) params = { startDate: '2022-7-9' }
   return $axios.get(`/compositionPageViews`, { params })
@@ -58,34 +28,17 @@ export const getCompositionPageViews = (params) => {
 }
 export const getCharacterPageViews = (params) => {
   if(!params) params = { startDate: '2022-7-9' }
-  return $axios.get(`/characterPageViews`, { params })
-  .catch(error => errorHandler('getCharacterPageViews', error))
+  return getApi(`/characterPageViews`, { params })
 }
-export const postItemName = (params) => {
-  return $axios.post(`/register/report`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('postItemName', error))
-}
-export const postMergeCharacterView = (params) => {
-  return $axios.post(`/register/murgeCharacterView`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('postMergeCharacterView', error))
-}
-export const postMurgeCompositionView = (params) => {
-  return $axios.post(`/register/murgeCompositionView`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('murgeCompositionView', error))
-}
-export const postCharacterPageView = (params) => {
-  return $axios.post(`/register/characterPageView`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('postCharacterPageView', error))
-}
-export const postCompositionPageView = (params) => {
-  return $axios.post(`/register/compositionPageView`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('postCompositionPageView', error))
-}
+
+// register
+export const postItemName = (params) => postApi(`/register/report`, { params })
+export const postMergeCharacterView = (params) => postApi(`/register/murgeCharacterView`, { params })
+export const postMurgeCompositionView = (params) => postApi(`/register/murgeCompositionView`, { params })
+export const postCharacterPageView = (params) => postApi(`/register/characterPageView`, { params })
+export const postCompositionPageView = (params) => postApi(`/register/compositionPageView`, { params })
+
+// ip
 export const getIpClient = () => {
   return axios.get(`https://api.ipify.org?format=json`)
   .then(res => res)
@@ -166,4 +119,14 @@ const errorHandler = (actionName, error) => {
     console.log(`${actionName} : Error`, message);
   }
   console.log(`${actionName} : config`, config);
+}
+
+function getApi(url = '', params = { params: {} }) {
+  return $axios.get(url, params)
+    .catch(error => errorHandler(url, error))
+}
+function postApi(url = '', params = { params: {} }) {
+  return $axios.post(url, null, { params })
+    .then(res => res)
+    .catch(error => errorHandler('url', error))
 }
