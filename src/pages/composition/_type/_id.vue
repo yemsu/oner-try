@@ -25,7 +25,7 @@
             :isLink="false"
           />
           <bookmark-button
-            category="composition"
+            category="item"
             :target="itemSelected.id"
           />
           <section v-if="highRankItems.length !== 0" class="wrap-high-rank">

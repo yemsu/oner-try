@@ -36,6 +36,10 @@ export const deleteUserBookmark = ({ category, target }) => deleteApi(
 export const getUserBookmark = ({ category, target }) => getApiReturnData(
   '/user/bookmark', { category, target }
 )
+// 북마크 리스트
+export const getUserBookmarks = ({ category }) => getApiReturnData(
+  '/user/bookmarks', { category }
+)
 
 // common
 export const setDefaultHeader = (key, value) => {

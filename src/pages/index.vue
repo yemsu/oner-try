@@ -80,12 +80,23 @@
           </p>
         </div>
       </section>
-      <div class="quick-menu column">
-        <div class="area-text">
-          <p class="title">...to be continue 👻</p>
-          <p>다음은 뭘까요</p>
+      <section class="quick-menu column bg-point">
+        <div v-if="isLogin" class="area-text">
+          <h3 class="title small">
+            <span class="color-point">{{ userInfo.siteNick }}</span>님의 ⭐ 조합법
+          </h3>
+          <div class="area-contents">
+            <item-bookmarks />
+          </div>
         </div>
-      </div>
+        <div v-else class="area-text">
+          <h3 class="title">⭐ 조합법 즐겨찾기 기능 추가 ⭐</h3>
+          <p>
+            Google 계정으로 로그인하고 <br>
+            조합법 즐겨찾기 기능을 이용해 보세요! 
+          </p>
+        </div>
+      </section>
       <section class="quick-menu column-full">
         <div class="area-text">
           <h3 class="title">랭킹 TOP 5</h3>
@@ -114,9 +125,10 @@
 <script>
 import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
 import CompositionSearchBox from "@/components/pages/composition/SearchBox.vue"
+import ItemBookmarks from "@/components/item/ItemBookmarks.vue"
 import RankingTable from '@/components/pages/ranking/Table.vue'
 import setMeta from '@/plugins/utils/meta';
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   head() {
@@ -128,7 +140,8 @@ export default {
   components: {
     CharacterSearchBox,
     CompositionSearchBox,
-    RankingTable
+    RankingTable,
+    ItemBookmarks
   },
   data() {
     return {
@@ -140,13 +153,22 @@ export default {
       heroes:  'item/getHeroes',
       items:  'item/getItems',
       gameUsers: 'character/getGameUsers',
+      isLogin: 'auth/getIsLogin',
+      userInfo: 'auth/getUserInfo'
     }),   
   },
   async created() {
-    if(this.gameUsers.length === 0) await this.$store.dispatch('character/GET_GAME_USERS')  
-    if(this.items.length === 0) await this.$store.dispatch('item/GET_ITEMS')
-    if(this.heroes.length === 0) await this.$store.dispatch('item/GET_HEROES')
+    if(this.gameUsers.length === 0) await this.getGameUsers()  
+    if(this.items.length === 0) await this.getItems()
+    if(this.heroes.length === 0) await this.getHeroes()
     this.compositionItems = this.items.filter(item => item.ingredients)
+  },
+  methods: {
+    ...mapActions({
+      getGameUsers: 'character/GET_GAME_USERS',
+      getItems: 'item/GET_ITEMS',
+      getHeroes: 'item/GET_HEROES'
+    }),
   }
 }
 </script>
