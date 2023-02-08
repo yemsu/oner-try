@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { postGoogleCredential } from "@/plugins/utils/https"
+import { postGoogleCredential, setDefaultHeader } from "@/plugins/utils/https"
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
@@ -31,6 +31,7 @@ export default {
   watch: {
     isLogin(crr, prev) {
       console.log('isLogin', prev)
+      // 회원 가입 페이지에서 isLogin값 true로 하면 여기서 로그인 처리
       if(crr && crr !== prev) this.fnLogin()
     }
   },
@@ -40,7 +41,7 @@ export default {
     const jToken = localStorage.getItem('JUID')
     if(jToken) {
       console.log('mounted')
-      this.fnLogin()
+      this.setIsLogin(true)
     } else {
       setTimeout(() => {
         this.initGoogleOneTap()
@@ -81,9 +82,9 @@ export default {
     },
     async fnLogin() {
       const jToken = localStorage.getItem('JUID')
-      this.setIsLogin(true)
+      setDefaultHeader('Authorization', jToken)
       console.log('setIsLogin', this.isLogin)
-      const userInfo = await this.getUserInfo(jToken)
+      const userInfo = await this.getUserInfo()
       console.log('this.userInfo', this.userInfo, this.userInfo.siteNick)
       !userInfo && this.onClickLogout({ useAlert: false })
     },
@@ -99,7 +100,7 @@ export default {
           break;
         case 'login':
           localStorage.setItem('JUID', res.token)
-          this.fnLogin()
+          this.setIsLogin(true)
           break;
         case 'ban':
           console.log('login_limit', res.login_limit)

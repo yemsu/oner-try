@@ -20,6 +20,11 @@ export const getRanking = () => getApi(`/ranking`)
 export const getUserCharacters = (nickName) => getApi(`/characterList`, { params: nickName })
 export const getGameUsers = (params) => getApi(`/gameUsers`, { params })
 
+// common
+export const setDefaultHeader = (key, value) => {
+  $axios.defaults.headers.common[key] = value
+}
+
 // page view
 export const getCompositionPageViews = (params) => {
   if(!params) params = { startDate: '2022-7-9' }
@@ -59,33 +64,19 @@ export const getErrorPageRouteData = status => {
 }
 
 // login
-export const postSocialLogin = (params) => {
-  console.log('params', params)
-  return $axios.post(`/login`, null, { params })
-  .then(res => {
-    $axios.defaults.headers.common['Authorization'] = `${res.data}`
-  // accessToken, refreshToken - 가입 여부
-    return res.data
-  })
-  .catch(error => errorHandler('postSocialLogin', error))
-}
-
-export const getUserInfo = (token) => {
-  return $axios.get(`/user/info`, { 
-    headers: {
-      Authorization: token
-    }
-  })
-  .then(res => res.data)
-  .catch(error => errorHandler('getUserInfo', error))
+export const getUserInfo = () => {
+  return $axios.get(`/user/info`)
+    .then(res => res.data)
+    .catch(error => errorHandler('getUserInfo', error))
 }
 
 export const postGoogleCredential = (params) => {
   return $axios.post(`/user/login`, null, { params })
-  .then(res => res.data)
-  .catch(error => errorHandler('postGoogleCredential', error))
+    .then(res => res.data)
+    .catch(error => errorHandler('postGoogleCredential', error))
 }
 
+// 사이트 닉네임 중복 체크
 export const getIsDuplNick = (params) => {
   return $axios.get('/user/isDuplNick', { params })
   .then(res => res.data)
