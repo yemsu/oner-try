@@ -20,6 +20,15 @@ export const getRanking = () => getApi(`/ranking`)
 export const getUserCharacters = (nickName) => getApi(`/characterList`, { params: nickName })
 export const getGameUsers = (params) => getApi(`/gameUsers`, { params })
 
+/**
+ * category: 'composition'
+ * target: itemId
+ */
+// 북마크 추가
+export const postUserBookmark = ({ category, target }) => postApi(
+  '/user/bookmark', { params: { category, target } }
+)
+
 // common
 export const setDefaultHeader = (key, value) => {
   $axios.defaults.headers.common[key] = value
