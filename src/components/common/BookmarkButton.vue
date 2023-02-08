@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import { postUserBookmark } from '@/plugins/utils/https'
+import { postUserBookmark, deleteUserBookmark, getUserBookmark } from '@/plugins/utils/https'
+import { mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -29,15 +30,41 @@ export default {
       isBookmarked: false
     }
   },
-  mounted() {
-
+  computed: {
+    ...mapGetters({
+      isLogin: 'auth/getIsLogin'
+    }),
+    apiParams() {
+      return {
+        category: this.category,
+        target: this.target
+      }
+    }
+  },
+  async created() {
+    if(!this.isLogin) return
+    // 북마크 여부
+    const result = await getUserBookmark(this.apiParams)
+    if(result) {
+      this.isBookmarked = true
+    }
   },
   methods: {
     async clickBookmark() {
-      await postUserBookmark({
-        category: this.category,
-        target: this.target
-      })
+      // 로그인 체크
+      if(!this.isLogin) {
+        alert('로그인이 필요한 기능입니다!')
+        return
+      }
+
+      // 북마크 제거
+      if(this.isBookmarked) {
+        const result = await deleteUserBookmark(this.apiParams)
+        this.isBookmarked = false
+        return 
+      }
+      // 북마크 추가
+      const result = await postUserBookmark(this.apiParams)
       this.isBookmarked = true
     }
   }

@@ -138,6 +138,11 @@ export default {
       highRankItems: []
     }
   },
+  watch: {
+    itemSelected(crr, prev) {
+      console.log('itemSelected', crr.id)
+    }
+  },
   computed: {
     ...mapGetters({
       items: 'item/getItems',

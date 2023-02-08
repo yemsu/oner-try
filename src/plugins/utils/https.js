@@ -26,7 +26,15 @@ export const getGameUsers = (params) => getApi(`/gameUsers`, { params })
  */
 // 북마크 추가
 export const postUserBookmark = ({ category, target }) => postApi(
-  '/user/bookmark', { params: { category, target } }
+  '/user/bookmark', { category, target }
+)
+// 북마크 제거
+export const deleteUserBookmark = ({ category, target }) => deleteApi(
+  '/user/bookmark', { category, target }
+)
+// 북마크 여부
+export const getUserBookmark = ({ category, target }) => getApiReturnData(
+  '/user/bookmark', { category, target }
 )
 
 // common
@@ -125,8 +133,18 @@ function getApi(url = '', params = { params: {} }) {
   return $axios.get(url, params)
     .catch(error => errorHandler(url, error))
 }
-function postApi(url = '', params = { params: {} }) {
+function getApiReturnData(url = '', params = {}) {
+  return $axios.get(url, { params })
+    .then(({ data }) => data)
+    .catch(error => errorHandler(url, error))
+}
+function postApi(url = '', params = {}) {
   return $axios.post(url, null, { params })
+    .then(res => res)
+    .catch(error => errorHandler('url', error))
+}
+function deleteApi(url = '', params = {}) {
+  return $axios.delete(url, null, { params })
     .then(res => res)
     .catch(error => errorHandler('url', error))
 }
