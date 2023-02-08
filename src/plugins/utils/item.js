@@ -63,7 +63,7 @@ export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey,
 
   return newData
 }
-export const isBlank = str => str.includes('빈공간')
+export const isBlank = str => str.includes('빈공간') || +str > 0 // 빈공간이 숫자값으로만 들어오는 케이스가 간혹 있음
 export const parserDefaultData = (data) => {
   return isBlank(data) ? `${data}: null` : data
 }

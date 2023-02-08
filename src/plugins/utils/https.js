@@ -4,6 +4,7 @@ const $axios = axios.create({
   baseURL: process.env.CONT_PATH_LOCAL + '/api'
 })
 
+
 export const getSailors = () => {
   return $axios.get('/sailors')
 }

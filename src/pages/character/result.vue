@@ -4,7 +4,7 @@
       <div class="inner-size-basic">
         <div class="align-right">
           <character-search-box
-            :matchingData="userNickNames"
+            :matchingData="gameUsers"
             size="small"
           />
         </div>
@@ -122,18 +122,6 @@ export default {
       description: `${this.nickname}의 캐릭터 정보입니다.`,
     })
   },
-  async asyncData({ store, params }) {
-    const { nickname } = params
-    await store.dispatch('character/GET_USER_CHARACTERS', { nickName: nickname })
-    await store.dispatch('character/GET_GAME_USERS')
-    const { character: { gameUsers, userCharacters } } = store.state
-    const userNickNames = gameUsers.map(user => user.nickName)
-    return {
-      userCharacters,
-      userNickNames,
-      nickname
-    }
-  },
   data() {
     return {
       itemAreas: [
@@ -164,12 +152,39 @@ export default {
           rowNum: "1",
         },
       ],
+      nickname: ''
     }
   },
+  watch: {
+    $route(crr, prev) {
+      const { nickname } = crr.query
+      console.log('nickname', nickname)
+      this.getUserData(nickname)
+    }
+  },
+  computed: {
+    ...mapGetters({
+      userCharacters: 'character/getUserCharacters',
+      gameUsers: 'character/getGameUsers'
+    })
+  },
+  async created() {
+    if(this.gameUsers.length === 0) await this.$store.dispatch('character/GET_GAME_USERS')
+    this.getUserData(this.$route.query.nickname)
+  },
   mounted() {
-    this.sendPageView()
   },
   methods: {
+    ...mapActions({
+      getUserCharacters: 'character/GET_USER_CHARACTERS',
+      getGameUser: 'character/GET_GAME_USERS'
+    }),
+    async getUserData(nickName) {
+      this.nickname = nickName
+      await this.getUserCharacters({ nickName })
+      this.sendPageView()
+      console.log('userCharacters', nickName, this.userCharacters)
+    },
     async sendPageView() {
       const namePageView = await checkUpdatePageView('character', this.nickname)
       namePageView && postCharacterPageView({ name: this.nickname })
