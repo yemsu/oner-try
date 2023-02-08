@@ -28,6 +28,11 @@ export default {
       userInfo: 'auth/getUserInfo',
     }),
   },
+  watch: {
+    isLogin(crr, prev) {
+      if(crr && crr !== prev) this.fnLogin()
+    }
+  },
   async mounted() {
     this.initGoogleLogin()
     // setTimeout(, 0);
