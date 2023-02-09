@@ -86,10 +86,9 @@ export default {
     async fnLogin() {
       const jToken = localStorage.getItem('JUID')
       setDefaultHeader('Authorization', jToken)
-      console.log('setIsLogin', this.isLogin)
       const userInfo = await this.getUserInfo()
-      console.log('this.userInfo', this.userInfo, this.userInfo.siteNick)
-      !userInfo && this.onClickLogout()
+      userInfo ? this.setIsLogin(true) : this.onClickLogout()
+      console.log('setIsLogin', this.isLogin)
     },
     async onClickLogin(googleUser) {
       console.log('googleUser', googleUser)
@@ -136,8 +135,9 @@ export default {
 .wrap-dropdown {
   position: relative;
   .menu-dropdown {
+    $menu-bar-height: 36px;
     position: absolute;
-    top: 40px;
+    top: $menu-bar-height;
     left: 50%;
     min-width: 100%;
     text-align: center;
