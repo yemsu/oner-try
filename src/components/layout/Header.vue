@@ -3,41 +3,60 @@
     <div class="menu-bar site">
       <h1 class="logo"><nuxt-link to="/"><main-logo /></nuxt-link></h1>
       <nav>
-        <h2 class="ir-hidden">사이트 메뉴</h2>
+        <h2 class="ir-hidden">ONER TRY 게임 메뉴</h2>
         <nuxt-link to="/">원피스 RPG</nuxt-link>
         <!-- <a href="https://mrpg.onertry.fun">꿈 RPG</a> -->
       </nav>
-      <ul class="menu-util">
-        <li><google-login-button /></li>
-      </ul>
+      <div class="area-side-menu">
+        <google-login-button />
+      </div>
     </div>
-    <div class="menu-bar game">
-      <!-- <h2 class="logo"><nuxt-link to="/">ONER TRY</nuxt-link> </h2> -->
-      <nav>
-        <h2 class="ir-hidden">사이트 메뉴</h2>
-        <nuxt-link to="/character">캐릭터</nuxt-link>
-        <nuxt-link to="/composition">조합법</nuxt-link>
-        <nuxt-link to="/ranking">랭킹</nuxt-link>
-        <nuxt-link to="/items">아이템도감</nuxt-link>
-        <!-- <nuxt-link to="/build">빌드툴</nuxt-link> -->
-        <!-- <nuxt-link to="/other">다른 메뉴</nuxt-link> -->
-      </nav>
-      <ul class="menu-util">
-        <li><a href="https://cafe.naver.com/onepiecerpg/595" target="_blank" title="새창">맵/확장팩 다운로드</a></li>
-        <!-- <li><router-link to="/join">회원가입</router-link></li> -->
-      </ul>
-    </div>
+    <top-bar-menu
+      title="원피스 RPG 사이트 메뉴"
+      :menuList="siteMenuList"
+      :sideMenuList="siteSideMenuList"
+    />
   </header>
 </template>
 
 <script>
 import GoogleLoginButton from './GoogleLoginButton.vue'
 import MainLogo from '../common/MainLogo.vue';
+import TopBarMenu from '../common/TopBarMenu.vue';
 
 export default {
   components: {
     GoogleLoginButton,
-    MainLogo
+    MainLogo,
+    TopBarMenu
+  },
+  data() {
+    return {
+      siteMenuList: [
+        {
+          path: '/character',
+          menuName: '캐릭터',
+        },
+        {
+          path: '/composition',
+          menuName: '조합법',
+        },
+        {
+          path: '/ranking',
+          menuName: '랭킹',
+        },
+        {
+          path: '/items',
+          menuName: '아이템도감',
+        }
+      ],
+      siteSideMenuList: [
+        {
+          path: 'https://cafe.naver.com/onepiecerpg/595',
+          menuName: '맵/확장팩 다운로드'
+        }
+      ]
+    }
   }
 }
 </script>

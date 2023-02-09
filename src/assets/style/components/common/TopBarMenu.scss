@@ -1,0 +1,53 @@
+
+  .menu-bar {
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+    background-color: var(--bg-dark);
+    nav {
+      display: flex;
+      a {
+        display: block;
+        padding: 0 10px;
+      }
+      .menu-list {
+        display: flex;
+      }
+    }
+    &.size {
+      &-medium {
+        padding: 5px 10px 5px 90px;
+        nav {
+          a {
+            &.nuxt-link-active,
+            &.is-active {
+              font-weight: 500;
+              border-radius: 5px;
+              color: #fff;
+            }
+          }
+        }
+        .area-side-menu {
+          display: flex;
+          margin-left: auto;
+          a {
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.8);
+          }
+        }
+      }
+    }
+    &.color {
+      &-point {
+        background-color: $color-point;
+        nav {
+          a {
+            &.nuxt-link-active,
+            &.is-active {
+              background-color: $color-point-vivid-bright;
+            }
+          }
+        }
+      }
+    }
+  }

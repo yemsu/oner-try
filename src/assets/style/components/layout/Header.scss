@@ -39,21 +39,6 @@ header {
         }
       }
     }
-    &.game {
-      padding: 5px 10px 5px 90px;
-      background-color: $color-point;
-      nav {
-        a {
-          &.nuxt-link-active,
-          &.is-active {
-            font-weight: 500;
-            background-color: $color-point-vivid-bright;
-            border-radius: 5px;
-            color: #fff;
-          }
-        }
-      }
-    }
   }
   nav {
     display: flex;
@@ -61,12 +46,8 @@ header {
       padding: $menu-padding-v 10px;
     }
   }
-  .menu-util {
+  .area-side-menu {
     display: flex;
     margin-left: auto;
-    a {
-      font-size: 0.9em;
-      color: rgba(255, 255, 255, 0.8);
-    }
   }
 }
