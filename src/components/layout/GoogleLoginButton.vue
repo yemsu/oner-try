@@ -32,7 +32,7 @@ export default {
     isLogin(crr, prev) {
       console.log('isLogin : ', 'crr', crr, 'prev', prev)
       // 회원 가입 페이지에서 isLogin값 true로 하면 여기서 로그인 처리
-      if(crr && crr !== prev) this.fnLogin()
+      if(crr && crr !== prev && !this.userInfo) this.fnLogin()
     },
     $route(crr, prev) {
       this.checkLoginExpired()
