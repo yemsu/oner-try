@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
   props: {
@@ -45,6 +45,11 @@ export default {
   },
   watch: {
     isLogin(crr, prev) {
+      // 로그아웃 후 bookmarks reset
+      if(!crr && this.userItemBookmarks.length > 0) {
+        this.resetUserItemBookmarks()
+        return
+      }
       this.getUserItemBookmarks()
     }
   },
@@ -58,6 +63,9 @@ export default {
     this.getUserItemBookmarks()
   },
   methods: {
+    ...mapMutations({
+      resetUserItemBookmarks: 'bookmark/RESET_USER_ITEM_BOOKMARKS'
+    }),
     ...mapActions({
       getUserItemBookmarks: 'bookmark/GET_USER_ITEM_BOOKMARKS'
     })

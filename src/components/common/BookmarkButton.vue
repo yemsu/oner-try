@@ -33,6 +33,10 @@ export default {
   },
   watch: {
     isLogin(crr, prev) {
+      // 로그아웃 후 bookmark reset
+      if(!crr && this.isBookmarked) {
+        this.isBookmarked = false
+      }
       // 새로고침 후 렌더링 시에 실행됨 (로그인 체크 후 true 반환이 느려서 watching)
       if(crr && crr !== prev) {
         this.checkUserBookmark()

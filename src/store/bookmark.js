@@ -19,6 +19,9 @@ export const mutations = {
     state.userItemBookmarks = state.userItemBookmarks
       .filter(({id}) => id !== itemId)
   },
+  RESET_USER_ITEM_BOOKMARKS(state) {
+    state.userItemBookmarks = []
+  },
 }
 
 export const actions = {
