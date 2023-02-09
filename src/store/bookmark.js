@@ -12,6 +12,13 @@ export const mutations = {
   SET_USER_ITEM_BOOKMARKS(state, data) {
     state.userItemBookmarks = data
   },
+  ADD_USER_ITEM_BOOKMARKS(state, data) {
+    state.userItemBookmarks.push(data)
+  },
+  DELETE_USER_ITEM_BOOKMARKS(state, itemId) {
+    state.userItemBookmarks = state.userItemBookmarks
+      .filter(({id}) => id !== itemId)
+  },
 }
 
 export const actions = {

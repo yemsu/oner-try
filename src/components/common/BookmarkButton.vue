@@ -13,7 +13,7 @@
 
 <script>
 import { postUserBookmark, deleteUserBookmark, getUserBookmark } from '@/plugins/utils/https'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   props: {
@@ -46,7 +46,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLogin: 'auth/getIsLogin'
+      isLogin: 'auth/getIsLogin',
+      items: 'item/getItems'
     }),
     apiParams() {
       return {
@@ -56,6 +57,10 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      addUserItemBookmarks: 'bookmark/ADD_USER_ITEM_BOOKMARKS',
+      deleteUserItemBookmarks: 'bookmark/DELETE_USER_ITEM_BOOKMARKS'
+    }),
     async checkUserBookmark() {
       // 북마크 여부 체크
       const result = await getUserBookmark(this.apiParams)
@@ -80,6 +85,7 @@ export default {
           return
         }
         this.isBookmarked = false
+        this.deleteUserItemBookmarks(this.target)
         return 
       }
       // 북마크 추가
@@ -90,7 +96,11 @@ export default {
         return
       }
       this.isBookmarked = true
+      this.addUserItemBookmarks(this.getTargetItem())
     },
+    getTargetItem() {
+      return this.items.find(({id}) => id === this.target)
+    }
   }
 }
 </script>
