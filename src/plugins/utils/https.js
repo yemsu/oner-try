@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const $axios = axios.create({
-  baseURL: process.env.CONT_PATH_LOCAL + '/api'
+  baseURL: process.env.CONT_PATH + '/api'
 })
 
 // item
@@ -148,7 +148,7 @@ function postApi(url = '', params = {}) {
     .catch(error => errorHandler('url', error))
 }
 function deleteApi(url = '', params = {}) {
-  return $axios.delete(url, null, { params })
+  return $axios.delete(url, { params })
     .then(res => res)
     .catch(error => errorHandler('url', error))
 }
