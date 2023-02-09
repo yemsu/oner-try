@@ -45,6 +45,18 @@ i {
   }
 }
 
+//  top bar
+.top-bar {
+  padding: 6px 0;
+  background-color: $color-point-400;
+  > [class*=inner] {
+    display: flex;
+    > .align-right {
+      margin-left: auto;
+    }
+  }
+}
+
 // ir
 caption, .ir-hidden {
   position: absolute;
