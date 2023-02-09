@@ -3,7 +3,7 @@
     <top-menu-bar
       title="아이템 도감 메뉴"
       :menu-list="subMenus"
-      use-basic-inner="true"
+      :use-basic-inner="true"
       color="point-400"
     />
     <div class="inner-size-basic">
