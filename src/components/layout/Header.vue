@@ -15,6 +15,7 @@
       title="원피스 RPG 사이트 메뉴"
       :menuList="siteMenuList"
       :sideMenuList="siteSideMenuList"
+      class="game-menu"
     />
   </header>
 </template>

@@ -12,30 +12,31 @@ header {
       font-weight: 500;
     }
   }
-  .menu-bar {
+  .menu-bar.game-menu {
+    padding-left: 90px;
+  }
+  .menu-bar.site {
     display: flex;
     align-items: center;
     padding-right: 15px;
     background-color: var(--bg-dark);
-    &.site {
-      ::v-deep {
-        a, button {
-          color: rgba(255, 255, 255, 0.8);
-          line-height: 36px;
-        }
+    ::v-deep {
+      a, button {
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 36px;
       }
-      .logo {
-        background-color: $color-point;
-      }
-      nav {
-        a {
-          font-size: $font-size-MS-pc;
-          &.nuxt-link-active,
-          &.is-active {
-            font-weight: 400;
-            color: #fff;
-            background-color: $color-point;
-          }
+    }
+    .logo {
+      background-color: $color-point;
+    }
+    nav {
+      a {
+        font-size: $font-size-MS-pc;
+        &.nuxt-link-active,
+        &.is-active {
+          font-weight: 400;
+          color: #fff;
+          background-color: $color-point;
         }
       }
     }

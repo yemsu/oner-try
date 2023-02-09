@@ -1,35 +1,37 @@
 <template>
   <div :class="`menu-bar size-${size} color-${color}`">
-    <nav>
-      <h2 class="ir-hidden">{{ title }}</h2>
-      <ul class="menu-list">
-        <li
-          v-for="({ path, menuName }, i) in menuList"
-          :key="`menu${i}`"
-        >
-            <base-button 
-              :linkTo="path"
+    <div :class="['inner', {'inner-size-basic': useBasicInner}]">
+      <nav>
+        <h2 class="ir-hidden">{{ title }}</h2>
+        <ul class="menu-list">
+          <li
+            v-for="({ path, menuName }, i) in menuList"
+            :key="`menu${i}`"
+          >
+              <base-button
+                :linkTo="path"
+                type="square-round"
+              >
+                {{ menuName }}
+              </base-button>
+          </li>
+        </ul>
+      </nav>
+      <div v-if="sideMenuList.length > 0" class="area-side-menu">
+        <ul class="menu-list-side">
+          <li
+            v-for="({ path, menuName }, i) in sideMenuList"
+            :key="`utilMenu${i}`"
+          >
+            <base-button
+              :link-to="path"
               type="square-round"
             >
               {{ menuName }}
             </base-button>
-        </li>
-      </ul>
-    </nav>
-    <div class="area-side-menu">
-      <ul class="menu-list-side">
-        <li
-          v-for="({ path, menuName }, i) in sideMenuList"
-          :key="`utilMenu${i}`"
-        >
-          <base-button 
-            :link-to="path"
-            type="square-round"
-          >
-            {{ menuName }}
-          </base-button>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -60,7 +62,11 @@ export default {
     },
     color: {
       type: String,
-      default: () => 'point' // point, 
+      default: () => 'point' // point, point-400
+    },
+    useBasicInner: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {

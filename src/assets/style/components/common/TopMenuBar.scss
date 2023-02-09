@@ -1,9 +1,11 @@
 
   .menu-bar {
-    display: flex;
-    align-items: center;
     padding-right: 15px;
     background-color: var(--bg-dark);
+    > .inner {
+      display: flex;
+      align-items: center;
+    }
     a {
       color: #fff;
     }
@@ -19,7 +21,7 @@
     }
     &.size {
       &-medium {
-        padding: 5px 10px 5px 90px;
+        padding: 5px 10px;
         .area-side-menu {
           display: flex;
           margin-left: auto;
@@ -37,6 +39,17 @@
             &.nuxt-link-active,
             &.is-active {
               background-color: $color-point-vivid-bright;
+            }
+          }
+        }
+      }
+      &-point-400 {
+        background-color: $color-point-400;
+        nav {
+          a {
+            &.nuxt-link-active,
+            &.is-active {
+              background-color: $color-point-600;
             }
           }
         }
