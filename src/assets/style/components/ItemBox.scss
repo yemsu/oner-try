@@ -1,4 +1,4 @@
-$space: 3px;
+$name-space: 5px;
 @mixin setWantedPaper($img-size) {
   width: auto;
   ::v-deep {
@@ -77,9 +77,11 @@ $space: 3px;
       ::v-deep {
         .item-box-info {
           text-align: center;
+          .area-name {
+            margin-top: $name-space;
+          }
           .name {
             width: 140%;
-            margin-top: $space;
             margin-left: -20%;
             font-size: $font-size-S-pc;
           }
