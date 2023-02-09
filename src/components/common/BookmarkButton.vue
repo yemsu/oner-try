@@ -14,6 +14,7 @@
 <script>
 import { postUserBookmark, deleteUserBookmark, getUserBookmark } from '@/plugins/utils/https'
 import { mapGetters, mapMutations } from 'vuex'
+import { needLoginMsg } from '../../plugins/utils/messages'
 
 export default {
   props: {
@@ -76,7 +77,7 @@ export default {
     async clickBookmark() {
       // 로그인 체크
       if(!this.isLogin) {
-        alert('로그인이 필요한 기능입니다!')
+        alert(needLoginMsg)
         return
       }
 

@@ -19,11 +19,12 @@
     </li>
   </ul>
   <p v-else-if="isLogin" class="default-text"> 아직 즐겨찾기한 조합법이 없습니다. </p>
-  <p v-else class="default-text"> 로그인이 필요한 기능입니다.</p>
+  <p v-else class="default-text">{{ needLoginMsg }}</p>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { needLoginMsg } from '../../plugins/utils/messages';
 
 export default {
   props: {
@@ -58,7 +59,10 @@ export default {
     ...mapGetters({
       isLogin: 'auth/getIsLogin',
       userItemBookmarks: 'bookmark/getUserItemBookmarks',
-    })
+    }),
+    needLoginMsg() {
+      return needLoginMsg
+    }
   },
   created() {
     this.getUserItemBookmarks()
