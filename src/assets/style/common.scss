@@ -102,22 +102,45 @@ caption, .ir-hidden {
     transition: transform 0.3s;
   }
   &.small {
-    width: 5px;
-    height: 1.4em;
     margin-left: 0.45em;
     &:before {
       width: 0.45em;
       height: 0.45em;
       border-width: 1px;
     }
+    &.down,
+    &.up {
+      width: 0.7em;
+      height: 6px;
+    }
   }
-  &.down:before {
-    right: 45%;
-    transform: rotate(135deg) translateX(-50%);
+  &.wide {
+    &.up {
+      height: 8px;
+      &:before {
+        border-width: 1px;
+        transform: rotate(-45deg) translate(-10%, 30%) skew(10deg, 10deg);
+      }
+    }
+    &.down {
+      height: 8px;
+      &:before {
+        border-width: 1px;
+        transform: rotate(135deg) translate(-40%, -30%) skew(10deg, 10deg);
+      }
+    }
   }
-  &.up:before {
-    right: 25%;
-    transform: rotate(-45deg) translateX(-50%);
+  &.down {
+    &:before {
+      right: 45%;
+      transform: rotate(135deg) translate(-50%, -5%);
+    }
+  }
+  &.up {
+    &:before {
+      right: 25%;
+      transform: rotate(-45deg) translate(-10%, 30%);
+    }
   }
   &.right:before {
     right: 25%;
@@ -130,6 +153,11 @@ caption, .ir-hidden {
   &.border-point {
     &:before {
       border-color: $color-point;
+    }
+  }
+  &.border-dark-gray {
+    &:before {
+      border-color: var(--border-dark-gray);
     }
   }
 }

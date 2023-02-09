@@ -1,0 +1,16 @@
+.bookmarks-item {
+  display: flex;
+  &.align-hrz {
+    justify-content: space-between;
+    gap: 20px;
+  }
+  &.align-vtc {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+.default-text {
+  font-size: $font-size-S-pc;
+  text-align: center;
+  word-break: keep-all;
+}
