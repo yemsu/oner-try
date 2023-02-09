@@ -1,7 +1,7 @@
 <template>
-  <ul v-if="bookmarkItems" class="bookmarks-item">
+  <ul v-if="userItemBookmarks.length > 0" class="bookmarks-item">
     <li
-      v-for="(compItem, i) in bookmarkItems"
+      v-for="(compItem, i) in userItemBookmarks"
       :key="`bookmark${i}`"
     >
       <item-box
@@ -13,43 +13,27 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { getUserBookmarks } from '@/plugins/utils/https'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  data() {
-    return {
-      bookmarkItems: []
-    }
-  },
   watch: {
     isLogin(crr, prev) {
-    console.log('main watch', crr)
-      this.setUserBookmarks()
+      this.getUserItemBookmarks()
     }
   },
   computed: {
     ...mapGetters({
       isLogin: 'auth/getIsLogin',
-      items:  'item/getItems',
-      
+      userItemBookmarks: 'bookmark/getUserItemBookmarks',
     })
   },
   created() {
-    this.setUserBookmarks()
+    this.getUserItemBookmarks()
   },
   methods: {
-    async setUserBookmarks() {
-      if(!this.isLogin) return
-      const bookmarkItems = await getUserBookmarks({ category: 'item' })
-      if(!bookmarkItems) return // when local server hot loading
-      const compositionItems = this.items.filter(item => item.ingredients)
-      console.log('bookmarkItems', bookmarkItems)
-      this.bookmarkItems = bookmarkItems.map((
-        { target: bookmarkItemId }) => (
-          compositionItems.find(({ id }) => bookmarkItemId === id)
-      ))
-    }
+    ...mapActions({
+      getUserItemBookmarks: 'bookmark/GET_USER_ITEM_BOOKMARKS'
+    })
   }
 }
 </script>
