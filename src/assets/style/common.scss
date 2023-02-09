@@ -100,6 +100,12 @@ caption, .ir-hidden {
       width: 0.7em;
       height: 6px;
     }
+    &.right,
+    &.left {
+      width: 0.5em;
+      height: 0.85em;
+      margin-top: 0.3em;
+    }
   }
   &.wide {
     &.up {
@@ -134,7 +140,7 @@ caption, .ir-hidden {
   &.right:before {
     right: 25%;
     top: 50%;
-    transform: rotate(45deg) translateX(-50%);
+    transform: rotate(45deg) translate(-40%, -30%);
   }
   &.border-neon:before {
     border-color: $color-neon;
