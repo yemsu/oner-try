@@ -3,7 +3,11 @@
     <div v-show="!isLogin" id="googleLogin"></div>
     
     <div v-show="isLogin" class="wrap-dropdown" >
-      <button v-if="userInfo.siteNick" class="btn-dropdown" @click="isShowLoginMenu = !isShowLoginMenu">💀 {{ userInfo.siteNick }}</button>
+      <button
+        v-if="userInfo.siteNick"
+        class="btn-dropdown"
+        @click="isShowLoginMenu = !isShowLoginMenu"
+      >💀 {{ userInfo.siteNick }} <span class="icon-caret"></span></button>
       <div v-if="isShowLoginMenu" class="menu-dropdown">
         <button @click="onClickLogout('로그아웃이 완료되었습니다.')">로그아웃</button>
       </div>
@@ -134,6 +138,9 @@ export default {
 <style lang="scss" scoped>
 .wrap-dropdown {
   position: relative;
+  .btn-dropdown {
+    padding-right: 4px;
+  }
   .menu-dropdown {
     $menu-bar-height: 36px;
     position: absolute;
