@@ -80,15 +80,17 @@
           </p>
         </div>
       </section>
-      <section class="quick-menu column bg-point">
-        <div v-if="isLogin" class="area-text">
-          <h3 class="title small">
-            <span class="color-point">{{ userInfo.siteNick }}</span>님의 ⭐ 조합법
-          </h3>
+      <section class="quick-menu column bg-point item-bookmarks">
+        <template v-if="isLogin">
+          <div class="area-text">
+            <h3 class="title small">
+              <span class="color-point"><strong>{{ userInfo.siteNick }}</strong></span>님의 ⭐ 조합법
+            </h3>
+          </div>
           <div class="area-contents">
             <item-bookmarks />
           </div>
-        </div>
+        </template>
         <div v-else class="area-text">
           <h3 class="title">⭐ 조합법 즐겨찾기 기능 추가 ⭐</h3>
           <p>

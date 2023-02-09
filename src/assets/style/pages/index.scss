@@ -31,6 +31,7 @@ $column-num: 2;
     }
   }
   .quick-menu {
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,6 +41,14 @@ $column-num: 2;
     background-color: rgba(255, 255, 255, 0.1);
     &.bg-point {
       background-color: rgba(255, 255, 255, 0.6);
+    }
+    &.item-bookmarks {
+      .area-contents {
+        display: block;
+        @include scrollBar;
+        overflow-x: auto;
+        max-width: 100%;
+      }
     }
   }
   .point-banner {
