@@ -6,7 +6,7 @@
     ]"
     @click="clickBookmark"
   >
-    즐겨찾기
+    <span class="ir-hidden">즐겨찾기</span>
   </button>
 </template>
 
@@ -96,8 +96,15 @@ export default {
 
 <style lang="scss" scoped>
 .button-bookmark {
-  &.is-active {
-    background-color: yellow;
+  &:before {
+    content: '⭐';
+    font-size: 16px;
+  }
+  &.is-active:before {
+    filter: none;
+  }
+  &:not(is-active):before {
+    filter: contrast(200%) grayscale(100%) brightness(100%);
   }
 }
 </style>
