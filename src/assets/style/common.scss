@@ -328,7 +328,8 @@ caption, .ir-hidden {
   &-positive {
     color: $color-point-sub
   }
-  &-negative {
+  &-negative,
+  &-point {
     color: $color-point;
   }
   &-banned {

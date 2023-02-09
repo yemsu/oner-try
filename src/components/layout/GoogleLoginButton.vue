@@ -3,16 +3,16 @@
     <div v-show="!isLogin" id="googleLogin"></div>
     
     <div v-show="isLogin" class="wrap-dropdown" >
-      <button v-if="userInfo.name" class="btn-dropdown" @click="isShowLoginMenu = !isShowLoginMenu">💀 {{ userInfo.name }}</button>
+      <button v-if="userInfo.siteNick" class="btn-dropdown" @click="isShowLoginMenu = !isShowLoginMenu">💀 {{ userInfo.siteNick }}</button>
       <div v-if="isShowLoginMenu" class="menu-dropdown">
-        <button @click="onClickLogout({ useAlert: true })">로그아웃</button>
+        <button @click="onClickLogout('로그아웃이 완료되었습니다.')">로그아웃</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { postGoogleCredential } from "@/plugins/utils/https"
+import { postGoogleCredential, setDefaultHeader } from "@/plugins/utils/https"
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
@@ -28,11 +28,22 @@ export default {
       userInfo: 'auth/getUserInfo',
     }),
   },
+  watch: {
+    isLogin(crr, prev) {
+      console.log('isLogin : ', 'crr', crr, 'prev', prev)
+      // 회원 가입 페이지에서 isLogin값 true로 하면 여기서 로그인 처리
+      if(crr && crr !== prev) this.fnLogin()
+    },
+    $route(crr, prev) {
+      this.checkLoginExpired()
+    }
+  },
   async mounted() {
     this.initGoogleLogin()
     // setTimeout(, 0);
     const jToken = localStorage.getItem('JUID')
     if(jToken) {
+      console.log('mounted')
       this.fnLogin()
     } else {
       setTimeout(() => {
@@ -74,11 +85,11 @@ export default {
     },
     async fnLogin() {
       const jToken = localStorage.getItem('JUID')
-      this.setIsLogin(true)
+      setDefaultHeader('Authorization', jToken)
       console.log('setIsLogin', this.isLogin)
-      const userInfo = await this.getUserInfo(jToken)
-      console.log('this.userInfo', this.userInfo, this.userInfo.name)
-      !userInfo && this.onClickLogout({ useAlert: false })
+      const userInfo = await this.getUserInfo()
+      console.log('this.userInfo', this.userInfo, this.userInfo.siteNick)
+      !userInfo && this.onClickLogout()
     },
     async onClickLogin(googleUser) {
       console.log('googleUser', googleUser)
@@ -92,7 +103,7 @@ export default {
           break;
         case 'login':
           localStorage.setItem('JUID', res.token)
-          this.fnLogin()
+          this.setIsLogin(true)
           break;
         case 'ban':
           console.log('login_limit', res.login_limit)
@@ -102,7 +113,7 @@ export default {
           break;
       }
     },
-    onClickLogout({ useAlert }) {
+    onClickLogout(alertMsg) {
       localStorage.removeItem('JUID')
       this.setIsLogin(false)
       this.setUserInfo({})
@@ -111,7 +122,11 @@ export default {
         this.renderGoogleLoginBtn()
       }, 100);
       if(this.$route.path.includes('/auth/')) this.$router.push('/')
-      useAlert && alert('로그아웃이 완료되었습니다.')
+      alertMsg && alert(alertMsg)
+    },
+    checkLoginExpired() {
+      if(!this.isLogin || this.userInfo.expireTime > Date.now()) return
+      this.onClickLogout('로그인 시간이 만료되었습니다.')
     }
   }
 }

@@ -5,7 +5,7 @@
       :items="pureHeroes"
     />
     <character-search-box
-      :matchingData="userNickNames"
+      :matchingData="gameUsers"
       size="big"
     />
   </section>
@@ -27,11 +27,6 @@ export default {
   components: {
     CharacterSearchBox
   },
-  data() {
-    return {
-      userNickNames: null
-    }
-  },
   computed: {
     ...mapGetters({
       heroes:  'item/getHeroes',
@@ -42,9 +37,7 @@ export default {
     }
   },
   async created() {
-    if(this.gameUsers.length === 0) await this.$store.dispatch('character/GET_GAME_USERS')
-    this.userNickNames = this.gameUsers.map(user => user.nickName)
-    
+    if(this.gameUsers.length === 0) await this.$store.dispatch('character/GET_GAME_USERS')    
     if(this.heroes.length === 0) await this.$store.dispatch('item/GET_HEROES')
   }
 }

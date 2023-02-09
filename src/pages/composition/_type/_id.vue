@@ -24,6 +24,10 @@
             :visibleDetail="true"
             :isLink="false"
           />
+          <bookmark-button
+            category="item"
+            :target="itemSelected.id"
+          />
           <section v-if="highRankItems.length !== 0" class="wrap-high-rank">
             <h2 class="title">상위 아이템</h2>
             <item-list :items="highRankItems">
@@ -90,6 +94,7 @@
 <script>
 import CompositionSearchBox from "@/components/pages/composition/SearchBox.vue"
 import TitleContent from '@/components/common/TitleContent.vue'
+import BookmarkButton from '@/components/common/BookmarkButton.vue'
 import ItemTree from '@/components/item/ItemTree.vue'
 import { parserStrData, fillDataAndInsertValue } from '@/plugins/utils/item'
 import { getOnlyText, deepClone } from '@/plugins/utils'
@@ -109,7 +114,8 @@ export default {
   components: {
     TitleContent,
     CompositionSearchBox,
-    ItemTree
+    ItemTree,
+    BookmarkButton
   },
   async asyncData({ store, params }) {
     const { item: { items } } = store.state
@@ -130,6 +136,11 @@ export default {
       itemSelected: null,
       allIngrdnts: [],
       highRankItems: []
+    }
+  },
+  watch: {
+    itemSelected(crr, prev) {
+      console.log('itemSelected', crr.id)
     }
   },
   computed: {
@@ -174,7 +185,7 @@ export default {
       const { newItem: itemSetup, allIngrdnts } = this.setIngrdntsDataLoop(result)
       // console.log('itemSetup, allIngrdnts', itemSetup, allIngrdnts)
       this.itemSelected = itemSetup
-      console.log('allIngrdnts', allIngrdnts)
+      // console.log('allIngrdnts', allIngrdnts)
       this.allIngrdnts = allIngrdnts
       this.highRankItems = deepClone(this.compositionItems)
         .filter(item => {
@@ -252,7 +263,7 @@ export default {
         postMurgeCompositionView({ name: data.name, pageView: data.pageView})
       })
       console.log('totalPageViewGAData', resultData)
-    }
+    },
   },
 }
 </script>

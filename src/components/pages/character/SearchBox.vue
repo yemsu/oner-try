@@ -6,6 +6,7 @@
     :size="size"
     resultPath="/character"
     :paramKey="['nickname']"
+    :use-param="false"
     :use-auto-enter="false"
     alert-message="존재하지 않는 닉네임이거나, 보유 캐릭터가 없습니다."
     @onSearch="fnSearch"

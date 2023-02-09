@@ -4,54 +4,49 @@ const $axios = axios.create({
   baseURL: process.env.CONT_PATH_LOCAL + '/api'
 })
 
-$axios.defaults.timeout = 5000;
+// item
+export const getSailors = () => getApi('/sailors')
+export const getEtcItems = () => getApi('/etcItems')
+export const getItems = () => getApi('/items')
+export const getColleagues = () => getApi('/colleagues')
+export const getEquipments = (params) => getApi(`/equipments`, { params })
+export const getShips = (params) => getApi(`/ships`, { params })
+export const getHeroes = (params) => getApi(`/heroes`, { params })
+export const getSynergies = () => getApi(`/synergies`)
+export const getRyuoList = () => getApi(`/ryuoList`)
 
-export const getSailors = () => {
-  return $axios.get('/sailors')
+// character
+export const getRanking = () => getApi(`/ranking`)
+export const getUserCharacters = (nickName) => getApi(`/characterList`, { params: nickName })
+export const getGameUsers = (params) => getApi(`/gameUsers`, { params })
+
+/**
+ * category: 'composition'
+ * target: itemId
+ */
+// 북마크 추가
+export const postUserBookmark = ({ category, target }) => postApi(
+  '/user/bookmark', { category, target }
+)
+// 북마크 제거
+export const deleteUserBookmark = ({ category, target }) => deleteApi(
+  '/user/bookmark', { category, target }
+)
+// 북마크 여부
+export const getUserBookmark = ({ category, target }) => getApiReturnData(
+  '/user/bookmark', { category, target }
+)
+// 북마크 리스트
+export const getUserBookmarks = ({ category }) => getApiReturnData(
+  '/user/bookmarks', { category }
+)
+
+// common
+export const setDefaultHeader = (key, value) => {
+  $axios.defaults.headers.common[key] = value
 }
-export const getEtcItems = () => {
-  return $axios.get('/etcItems')
-}
-export const getItems = () => {
-  return $axios.get('/items')
-  .catch(error => errorHandler('getItems', error))
-}
-export const getColleagues = () => {
-  return $axios.get(`/colleagues`)
-    .catch(error => errorHandler('getItems', error))
-}
-export const getUserCharacters = (nickName) => {
-  return $axios.get(`/characterList`, { params: nickName })
-    .catch(error => errorHandler('getUserCharacters', error))
-}
-export const getEquipments = (params) => {
-  return $axios.get(`/equipments`, { params })
-    .catch(error => errorHandler('getEquipments', error))
-}
-export const getShips = (params) => {
-  return $axios.get(`/ships`, { params })
-    .catch(error => errorHandler('getShips', error))
-}
-export const getHeroes = (params) => {
-  return $axios.get(`/heroes`, { params })
-    .catch(error => errorHandler('getHeroes', error))
-}
-export const getGameUsers = (params) => {
-  return $axios.get(`/gameUsers`, { params })
-    .catch(error => errorHandler('getGameUsers', error))
-}
-export const getRanking = () => {
-  return $axios.get(`/ranking`)
-    .catch(error => errorHandler('getRanking', error))
-}
-export const getSynergies = () => {
-  return $axios.get(`/synergies`)
-    .catch(error => errorHandler('getSynergies', error))
-}
-export const getRyuoList = () => {
-  return $axios.get(`/ryuoList`)
-    .catch(error => errorHandler('getRyuoList', error))
-}
+
+// page view
 export const getCompositionPageViews = (params) => {
   if(!params) params = { startDate: '2022-7-9' }
   return $axios.get(`/compositionPageViews`, { params })
@@ -59,34 +54,17 @@ export const getCompositionPageViews = (params) => {
 }
 export const getCharacterPageViews = (params) => {
   if(!params) params = { startDate: '2022-7-9' }
-  return $axios.get(`/characterPageViews`, { params })
-  .catch(error => errorHandler('getCharacterPageViews', error))
+  return getApi(`/characterPageViews`, { params })
 }
-export const postItemName = (params) => {
-  return $axios.post(`/register/report`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('postItemName', error))
-}
-export const postMergeCharacterView = (params) => {
-  return $axios.post(`/register/murgeCharacterView`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('postMergeCharacterView', error))
-}
-export const postMurgeCompositionView = (params) => {
-  return $axios.post(`/register/murgeCompositionView`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('murgeCompositionView', error))
-}
-export const postCharacterPageView = (params) => {
-  return $axios.post(`/register/characterPageView`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('postCharacterPageView', error))
-}
-export const postCompositionPageView = (params) => {
-  return $axios.post(`/register/compositionPageView`, null, { params })
-  .then(res => res)
-  .catch(error => errorHandler('postCompositionPageView', error))
-}
+
+// register
+export const postItemName = (params) => postApi(`/register/report`, { params })
+export const postMergeCharacterView = (params) => postApi(`/register/murgeCharacterView`, { params })
+export const postMurgeCompositionView = (params) => postApi(`/register/murgeCompositionView`, { params })
+export const postCharacterPageView = (params) => postApi(`/register/characterPageView`, { params })
+export const postCompositionPageView = (params) => postApi(`/register/compositionPageView`, { params })
+
+// ip
 export const getIpClient = () => {
   return axios.get(`https://api.ipify.org?format=json`)
   .then(res => res)
@@ -107,33 +85,19 @@ export const getErrorPageRouteData = status => {
 }
 
 // login
-export const postSocialLogin = (params) => {
-  console.log('params', params)
-  return $axios.post(`/login`, null, { params })
-  .then(res => {
-    $axios.defaults.headers.common['Authorization'] = `${res.data}`
-  // accessToken, refreshToken - 가입 여부
-    return res.data
-  })
-  .catch(error => errorHandler('postSocialLogin', error))
-}
-
-export const getUserInfo = (token) => {
-  return $axios.get(`/user/info`, { 
-    headers: {
-      Authorization: token
-    }
-  })
-  .then(res => res.data)
-  .catch(error => errorHandler('getUserInfo', error))
+export const getUserInfo = () => {
+  return $axios.get(`/user/info`)
+    .then(res => res.data)
+    .catch(error => errorHandler('getUserInfo', error))
 }
 
 export const postGoogleCredential = (params) => {
   return $axios.post(`/user/login`, null, { params })
-  .then(res => res.data)
-  .catch(error => errorHandler('postGoogleCredential', error))
+    .then(res => res.data)
+    .catch(error => errorHandler('postGoogleCredential', error))
 }
 
+// 사이트 닉네임 중복 체크
 export const getIsDuplNick = (params) => {
   return $axios.get('/user/isDuplNick', { params })
   .then(res => res.data)
@@ -167,4 +131,24 @@ const errorHandler = (actionName, error) => {
     console.log(`${actionName} : Error`, message);
   }
   console.log(`${actionName} : config`, config);
+}
+
+function getApi(url = '', params = { params: {} }) {
+  return $axios.get(url, params)
+    .catch(error => errorHandler(url, error))
+}
+function getApiReturnData(url = '', params = {}) {
+  return $axios.get(url, { params })
+    .then(({ data }) => data)
+    .catch(error => errorHandler(url, error))
+}
+function postApi(url = '', params = {}) {
+  return $axios.post(url, null, { params })
+    .then(res => res)
+    .catch(error => errorHandler('url', error))
+}
+function deleteApi(url = '', params = {}) {
+  return $axios.delete(url, null, { params })
+    .then(res => res)
+    .catch(error => errorHandler('url', error))
 }
