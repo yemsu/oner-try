@@ -18,7 +18,8 @@
       />
     </li>
   </ul>
-  <p v-else class="default-text"> 아직 즐겨찾기한 조합법이 없습니다. </p>
+  <p v-else-if="isLogin" class="default-text"> 아직 즐겨찾기한 조합법이 없습니다. </p>
+  <p v-else class="default-text"> 로그인이 필요한 기능입니다.</p>
 </template>
 
 <script>
