@@ -16,6 +16,8 @@ header {
     padding-left: 90px;
   }
   .menu-bar.site {
+    position: relative;
+    z-index: 1; // 로그아웃 드롭다운 가려져 z index 삽입
     display: flex;
     align-items: center;
     padding-right: 15px;
