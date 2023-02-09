@@ -4,8 +4,8 @@
       <h1 class="logo"><nuxt-link to="/"><main-logo /></nuxt-link></h1>
       <nav>
         <h2 class="ir-hidden">사이트 메뉴</h2>
-        <a href="https://onertry.fun" class="is-active">원피스 RPG</a>
-        <a href="https://mrpg.onertry.fun">꿈 RPG</a>
+        <nuxt-link to="/">원피스 RPG</nuxt-link>
+        <!-- <a href="https://mrpg.onertry.fun">꿈 RPG</a> -->
       </nav>
       <ul class="menu-util">
         <li><google-login-button /></li>
