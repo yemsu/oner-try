@@ -71,5 +71,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/components/common/TopBarMenu.scss';
+@import '@/assets/style/components/common/TopMenuBar.scss';
 </style>

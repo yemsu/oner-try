@@ -11,7 +11,7 @@
         <google-login-button />
       </div>
     </div>
-    <top-bar-menu
+    <top-menu-bar
       title="원피스 RPG 사이트 메뉴"
       :menuList="siteMenuList"
       :sideMenuList="siteSideMenuList"
@@ -22,13 +22,13 @@
 <script>
 import GoogleLoginButton from './GoogleLoginButton.vue'
 import MainLogo from '../common/MainLogo.vue';
-import TopBarMenu from '../common/TopBarMenu.vue';
+import TopMenuBar from '../common/TopMenuBar.vue';
 
 export default {
   components: {
     GoogleLoginButton,
     MainLogo,
-    TopBarMenu
+    TopMenuBar
   },
   data() {
     return {
