@@ -1,8 +1,8 @@
 .bookmarks-item {
   display: flex;
   &.align-hrz {
-    justify-content: space-between;
-    gap: 15px;
+    justify-content: center;
+    gap: 20px;
   }
   &.align-vtc {
     flex-direction: column;

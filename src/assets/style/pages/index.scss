@@ -44,10 +44,10 @@ $column-num: 2;
     }
     &.item-bookmarks {
       .area-contents {
-        display: block;
-        @include scrollBar;
         overflow-x: auto;
-        max-width: 100%;
+        display: block;
+        width: 100%;
+        @include scrollBar;
       }
     }
   }
