@@ -83,17 +83,14 @@ export default {
 
       // 북마크 제거
       if(this.isBookmarked) {
-        const { data } = await deleteUserBookmark(this.apiParams)
-        console.log(' remove', data)
-        if(data.msg === 'false') {
-          console.error(`data.msg === 'false' :: 북마크 제거 실패`)
-          return
-        }
-        this.isBookmarked = false
-        this.deleteUserItemBookmarks(this.target)
+        this.deleteBookmark()
         return 
       }
+
       // 북마크 추가
+      this.addBookmark()
+    },
+    async addBookmark() {
       const { data } = await postUserBookmark(this.apiParams)
         console.log('add', data)
       if(data.msg === 'false') {
@@ -102,6 +99,16 @@ export default {
       }
       this.isBookmarked = true
       this.addUserItemBookmarks(this.getTargetItem())
+    },
+    async deleteBookmark() {
+      const { data } = await deleteUserBookmark(this.apiParams)
+      console.log('remove', data)
+      if(data.msg === 'false') {
+        console.error(`data.msg === 'false' :: 북마크 제거 실패`)
+        return
+      }
+      this.isBookmarked = false
+      this.deleteUserItemBookmarks(this.target)
     },
     getTargetItem() {
       return this.items.find(({id}) => id === this.target)
