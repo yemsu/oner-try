@@ -23,10 +23,7 @@
             :showBadges="['type', 'howGet']"
             :visibleDetail="true"
             :isLink="false"
-          />
-          <bookmark-button
-            category="item"
-            :target="itemSelected.id"
+            :use-bookmark="true"
           />
           <section v-if="highRankItems.length !== 0" class="wrap-high-rank">
             <h2 class="title">상위 아이템</h2>
@@ -94,7 +91,6 @@
 <script>
 import CompositionSearchBox from "@/components/pages/composition/SearchBox.vue"
 import TitleContent from '@/components/common/TitleContent.vue'
-import BookmarkButton from '@/components/common/BookmarkButton.vue'
 import ItemTree from '@/components/item/ItemTree.vue'
 import { parserStrData, fillDataAndInsertValue } from '@/plugins/utils/item'
 import { getOnlyText, deepClone } from '@/plugins/utils'
@@ -115,7 +111,6 @@ export default {
     TitleContent,
     CompositionSearchBox,
     ItemTree,
-    BookmarkButton
   },
   async asyncData({ store, params }) {
     const { item: { items } } = store.state

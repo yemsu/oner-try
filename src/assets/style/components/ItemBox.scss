@@ -116,7 +116,9 @@ $space: 3px;
         display: flex;
         align-items: center;
         height: 100%;
-        .name {
+        .area-name {
+          display: flex;
+          gap: 5px;
           margin-left: 6px;
         }
       }  

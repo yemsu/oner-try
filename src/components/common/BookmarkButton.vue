@@ -5,8 +5,9 @@
       isBookmarked && 'is-active'
     ]"
     @click="clickBookmark"
+    title="조합법 즐겨찾기 추가하기"
   >
-    <span class="ir-hidden">즐겨찾기</span>
+    <span class="ir-hidden">조합법 즐겨찾기 추가하기</span>
   </button>
 </template>
 
@@ -56,9 +57,9 @@ export default {
   },
   methods: {
     async checkUserBookmark() {
-      console.log('checkUserBookmark')
       // 북마크 여부 체크
       const result = await getUserBookmark(this.apiParams)
+      console.log('checkUserBookmark result', this.apiParams, { result })
       if(result) {
         this.isBookmarked = true
       }

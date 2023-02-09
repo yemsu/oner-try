@@ -37,7 +37,17 @@
               :innerPosition="true"
             />
           </div>
-          <p v-if="!wantedPaper && showName" class="name"><span class="text">{{ item.name }}</span></p>
+          <div
+            v-if="!wantedPaper && showName"
+            class="area-name"
+          >
+            <p class="name"><span class="text">{{ item.name }}</span></p>
+            <bookmark-button
+              v-if="useBookmark"
+              category="item"
+              :target="item.id"
+            />
+          </div>
           <p v-if="wantedPaper && showBounty" class="bounty"><span class="text">$ {{ item.bounty || 0 }}</span></p>
           <template v-if="isPirateKing">
             <span class="crown">👑</span>
@@ -69,6 +79,8 @@
 
 <script>
 import { isOnlyNumber } from '@/plugins/utils'
+import BookmarkButton from '@/components/common/BookmarkButton.vue'
+
 export default {
   props: {
     item: {
@@ -139,6 +151,13 @@ export default {
       type: String,
       default: () => ''
     },
+    useBookmark: {
+      type: Boolean,
+      default: () => false
+    }
+  },
+  components: {
+    BookmarkButton
   },
   computed: {
     isComp() {
