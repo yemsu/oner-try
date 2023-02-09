@@ -6,17 +6,15 @@
       :class="showItemBookmarks && 'is-toggle-on'"
     >
       <h2>
-        <button @click="showItemBookmarks = !showItemBookmarks">
+        <button
+          @click="showItemBookmarks = !showItemBookmarks"
+          :title="showItemBookmarks ? '접기' : '펼치기'"
+        >
           <span
-            class="icon-arrow wide border-dark-gray"
+            class="icon-arrow wide border-black"
             :class="showItemBookmarks ? 'down' : 'up'"
-          >
-            <span class="ir-hidden">
-              {{ showItemBookmarks ? '닫기' : '펼치기' }}
-            </span>
-          </span>
-          조합법
-          <span class="emoji-star">⭐</span>
+          ></span>
+          조합법<span class="emoji-star">⭐</span>
         </button>
       </h2>
       <Transition name="fade">
@@ -26,7 +24,6 @@
         >
           <item-bookmarks
             :align-hrz="false"
-            :show-name="false"
             :show-tooltip="false"
             item-size="small"
           />

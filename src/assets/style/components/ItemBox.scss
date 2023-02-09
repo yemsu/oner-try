@@ -30,15 +30,14 @@ $space: 3px;
   .wrap-info {
     width: 100%;
   }
-  ::v-deep {
-    .item-box-info {
-      display: block;
-      .area-img {
-        position: relative;
-      }
-      .name {
-        word-break: keep-all;
-      }
+  .item-box-info {
+    display: block;
+    .area-img {
+      position: relative;
+    }
+    .name {
+      line-height: 1.2;
+      word-break: keep-all;
     }
   }
   .item-blank {

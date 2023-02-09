@@ -116,17 +116,19 @@ caption, .ir-hidden {
   }
   &.wide {
     &.up {
+      width: 15px;
       height: 8px;
       &:before {
         border-width: 1px;
-        transform: rotate(-45deg) translate(-10%, 30%) skew(10deg, 10deg);
+        transform: rotate(-45deg) translate(-20%, 20%) skew(10deg, 10deg);
       }
     }
     &.down {
+      width: 15px;
       height: 8px;
       &:before {
         border-width: 1px;
-        transform: rotate(135deg) translate(-40%, -30%) skew(10deg, 10deg);
+        transform: rotate(135deg) translate(-50%, -10%) skew(10deg, 10deg);
       }
     }
   }
@@ -153,6 +155,11 @@ caption, .ir-hidden {
   &.border-point {
     &:before {
       border-color: $color-point;
+    }
+  }
+  &.border-black {
+    &:before {
+      border-color: var(--border-black);
     }
   }
   &.border-dark-gray {
