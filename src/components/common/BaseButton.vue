@@ -1,14 +1,21 @@
 <template>
+  <nuxt-link
+    v-if="isNuxtLink"
+    :class="`btn ${type} bg-${bg} size-${size}`"
+    :to="linkTo"
+  >
+    <span class="text"><slot></slot></span>
+  </nuxt-link>
   <button
+    v-else
     :class="`btn ${type} bg-${bg} size-${size}`"
     @click="clickHandler"
     :is="tagName"
-    :to="isNuxtLink && linkTo"
     :href="isOuterLink && linkTo"
     :target="isOuterLink ? '_blank' : '_self'"
     :title="isOuterLink ? '새창' : buttonTitle"
   >
-    <slot></slot>
+    <span class="text"><slot></slot></span>
     <template v-if="type.includes('mode-wide')">
       <i :class="`icon-bar-arrow ${ toggleData ? 'right' : 'left' }`"></i>
       <i :class="`icon-bar-arrow ${ toggleData ? 'left' : 'right' }`"></i>
@@ -56,9 +63,7 @@ export default {
       return !this.isOuterLink && this.linkTo
     },
     tagName() {
-      return this.isOuterLink ? 'a'
-        : !this.isOuterLink && this.linkTo ? 'nuxt-link'
-          : 'button'
+      return this.isOuterLink ? 'a' : 'button'
     }
   },
   methods: {

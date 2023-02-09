@@ -28,7 +28,22 @@
     border-radius: 5px;
     &.size {
       &-medium {
-        padding: 5px 20px;
+        min-width: 50px;
+        padding: 0 10px;
+        font-size: $font-size-M-pc;
+        line-height: 36px;
+        text-align: center;
+        .text {
+          opacity: .8;
+        }
+        &.nuxt-link-active,
+        &.is-active {
+          font-weight: 500;
+          border-radius: 5px;
+          .text {
+            opacity: 1;
+          }
+        }
       }
     }
   }

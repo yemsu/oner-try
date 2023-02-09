@@ -7,7 +7,12 @@
           v-for="({ path, menuName }, i) in menuList"
           :key="`menu${i}`"
         >
-          <nuxt-link :to="path">{{ menuName }}</nuxt-link>
+            <base-button 
+              :linkTo="path"
+              type="square-round"
+            >
+              {{ menuName }}
+            </base-button>
         </li>
       </ul>
     </nav>
@@ -17,16 +22,12 @@
           v-for="({ path, menuName }, i) in sideMenuList"
           :key="`utilMenu${i}`"
         >
-          <a
-            v-if="path.includes('http')"
-            :href="path"
-            target="_blank"
-            title="새창"
-          >{{ menuName }}</a>
-          <nuxt-link
-            v-else
-            :to="path"
-          >{{ menuName }}</nuxt-link>
+          <base-button 
+            :link-to="path"
+            type="square-round"
+          >
+            {{ menuName }}
+          </base-button>
         </li>
       </ul>
     </div>
@@ -34,7 +35,12 @@
 </template>
 
 <script>
+import BaseButton from '@/components/common/BaseButton.vue'
+
 export default {
+  components: {
+    BaseButton
+  },
   props: {
     title: {
       type: String,

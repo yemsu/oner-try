@@ -4,6 +4,9 @@
     align-items: center;
     padding-right: 15px;
     background-color: var(--bg-dark);
+    a {
+      color: #fff;
+    }
     nav {
       display: flex;
       a {
@@ -17,22 +20,11 @@
     &.size {
       &-medium {
         padding: 5px 10px 5px 90px;
-        nav {
-          a {
-            &.nuxt-link-active,
-            &.is-active {
-              font-weight: 500;
-              border-radius: 5px;
-              color: #fff;
-            }
-          }
-        }
         .area-side-menu {
           display: flex;
           margin-left: auto;
           a {
             font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.8);
           }
         }
       }

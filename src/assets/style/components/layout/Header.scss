@@ -4,12 +4,6 @@ header {
   z-index: 99;
   width: 100%;
   font-weight: 300;
-  ::v-deep {
-    a, button {
-      color: rgba(255, 255, 255, 0.8);
-      line-height: 36px;
-    }
-  }
   .logo {
     font-size: 18px;
     a {
@@ -24,6 +18,12 @@ header {
     padding-right: 15px;
     background-color: var(--bg-dark);
     &.site {
+      ::v-deep {
+        a, button {
+          color: rgba(255, 255, 255, 0.8);
+          line-height: 36px;
+        }
+      }
       .logo {
         background-color: $color-point;
       }
