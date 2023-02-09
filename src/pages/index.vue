@@ -88,7 +88,9 @@
             </h3>
           </div>
           <div class="area-contents">
-            <item-bookmarks />
+            <item-bookmarks 
+              :show-tooltip="false"
+            />
           </div>
         </template>
         <div v-else class="area-text">

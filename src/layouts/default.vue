@@ -4,7 +4,7 @@
     <div class="container">
       <nuxt />
     </div>
-    <FloatingMenu />
+    <FloatingMenu v-if="showFloatingMenu" />
     <LayoutFooter />
  </div>
 </template>
@@ -15,6 +15,11 @@ import FloatingMenu from '@/components/layout/FloatingMenu.vue';
 export default {
   components: {
     FloatingMenu
+  },
+  computed: {
+    showFloatingMenu() {
+      return this.$route.path !== '/'
+    }
   }
 }
 </script>
