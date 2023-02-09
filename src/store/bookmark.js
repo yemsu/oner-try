@@ -20,7 +20,7 @@ export const actions = {
     if(items.length === 0) await dispatch('item/GET_ITEMS','', { root: true })
 
     const bookmarkTargets = await getUserBookmarks({ category: 'item' })
-    console.log('bookmarkTargets', bookmarkTargets)
+    if(!bookmarkTargets) return // for local server hot loading error 처리
     const bookmarks = bookmarkTargets.map(({ target }) => (
       rootState.item.items.find(({ id }) => target === id)
     ))
