@@ -30,9 +30,9 @@ export default {
   },
   watch: {
     isLogin(crr, prev) {
-      console.log('isLogin : ', 'crr', crr, 'prev', prev)
+      console.log('isLogin : ', 'crr', crr, 'prev', prev, 'userInfo', this.userInfo.siteNick)
       // 회원 가입 페이지에서 isLogin값 true로 하면 여기서 로그인 처리
-      if(crr && crr !== prev && !this.userInfo) this.fnLogin()
+      if(crr && crr !== prev && !this.userInfo.siteNick) this.fnLogin()
     },
     $route(crr, prev) {
       this.checkLoginExpired()
@@ -87,8 +87,8 @@ export default {
       const jToken = localStorage.getItem('JUID')
       setDefaultHeader('Authorization', jToken)
       const userInfo = await this.getUserInfo()
+      console.log('userInfo', userInfo, this.isLogin)
       userInfo ? this.setIsLogin(true) : this.onClickLogout()
-      console.log('setIsLogin', this.isLogin)
     },
     async onClickLogin(googleUser) {
       console.log('googleUser', googleUser)
