@@ -84,7 +84,7 @@ export const getErrorPageRouteData = status => {
   return errorPageRouteData
 }
 
-// login
+// login (user)
 export const getUserInfo = () => {
   return $axios.get(`/user/info`)
     .then(res => res.data)
@@ -96,6 +96,7 @@ export const postGoogleCredential = (params) => {
     .then(res => res.data)
     .catch(error => errorHandler('postGoogleCredential', error))
 }
+export const deleteUser = () => deleteApi(`/user`)
 
 // 사이트 닉네임 중복 체크
 export const getIsDuplNick = (params) => {

@@ -10,13 +10,14 @@
       >💀 {{ userInfo.siteNick }} <span class="icon-caret"></span></button>
       <div v-if="isShowLoginMenu" class="menu-dropdown">
         <button @click="onClickLogout('로그아웃이 완료되었습니다.')">로그아웃</button>
+        <!-- <button @click="onClickDelete()">회원탈퇴</button> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { postGoogleCredential, setDefaultHeader } from "@/plugins/utils/https"
+import { postGoogleCredential, setDefaultHeader, deleteUser } from "@/plugins/utils/https"
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
@@ -132,6 +133,15 @@ export default {
       console.log('checkLoginExpired', this.userInfo?.expireTime, this.userInfo?.expireTime <= Date.now())
       if(this.userInfo?.expireTime <= Date.now()) {
         this.onClickLogout('로그인 시간이 만료되었습니다.')
+      }
+    },
+    async onClickDelete() {
+      const res = await deleteUser()
+      if(res.data === 'success') {
+        this.onClickLogout()
+        alert('탈퇴 완료')
+      } else {
+        console.error('onClickDelete', res)
       }
     }
   }
