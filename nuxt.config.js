@@ -3,9 +3,8 @@ const axios = require('axios')
 export default {
   env: {
     APP_TITLE: 'ONER TRY',
-    BASE_URL: 'https://onertry.fun',
-    CONT_PATH: 'https://onerapi.xyz',
-    CONT_PATH_LOCAL: 'http://1.227.192.121:8080',
+    BASE_URL: process.env.BASE_URL,
+    CONT_PATH: process.env.CONT_PATH,
     AuthClientId: process.env.OAUTH_CLIENT_ID
   },
   // Target: https://go.nuxtjs.dev/config-target
