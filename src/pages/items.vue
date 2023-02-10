@@ -1,22 +1,11 @@
 <template>
   <div>
-    <div class="top-bar">
-      <div class="inner-size-basic">
-        <ul class="list-button-common">
-          <li
-            v-for="(subMenu, i) in subMenus"
-            :key="`subMenu${i}`"
-          >
-            <nuxt-link
-              :to="'/items/' + subMenu.name"
-              class="sub-nav-common"
-            >
-              {{ subMenu.title }}
-            </nuxt-link>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <top-menu-bar
+      title="아이템 도감 메뉴"
+      :menu-list="subMenus"
+      :use-basic-inner="true"
+      color="point-400"
+    />
     <div class="inner-size-basic">
       <nuxt-child></nuxt-child>
     </div>
@@ -24,14 +13,21 @@
 </template>
 
 <script>
+import BaseButton from '@/components/common/BaseButton.vue'
+import TopMenuBar from '../components/common/TopMenuBar.vue'
+
 export default {
+  components: {
+    BaseButton,
+    TopMenuBar
+  },
   data() {
     return {
       subMenus: [
-        { title: '선원', name: 'sailor' },
-        { title: '동료', name: 'colleague' },
-        { title: '선박', name: 'ship'},
-        { title: '장비', name: 'equipment'},
+        { menuName: '선원', path: '/items/sailor' },
+        { menuName: '동료', path: '/items/colleague' },
+        { menuName: '선박', path: '/items/ship'},
+        { menuName: '장비', path: '/items/equipment'},
       ]
     }
   },

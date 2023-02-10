@@ -4,12 +4,18 @@
     <div class="container">
       <nuxt />
     </div>
+    <FloatingMenu />
     <LayoutFooter />
  </div>
 </template>
 
 <script>
+import FloatingMenu from '@/components/layout/FloatingMenu.vue';
+
 export default {
+  components: {
+    FloatingMenu
+  }
 }
 </script>
 
@@ -17,7 +23,7 @@ export default {
 .container {
   position: relative;
   min-height: 100vh;
-  $header-height: 41px;
+  $header-height: 80px;
   padding: $header-height 0 100px;
 }
 </style>

@@ -1,4 +1,4 @@
-$space: 3px;
+$name-space: 5px;
 @mixin setWantedPaper($img-size) {
   width: auto;
   ::v-deep {
@@ -30,15 +30,14 @@ $space: 3px;
   .wrap-info {
     width: 100%;
   }
-  ::v-deep {
-    .item-box-info {
-      display: block;
-      .area-img {
-        position: relative;
-      }
-      .name {
-        word-break: keep-all;
-      }
+  .item-box-info {
+    display: block;
+    .area-img {
+      position: relative;
+    }
+    .name {
+      line-height: 1.2;
+      word-break: keep-all;
     }
   }
   .item-blank {
@@ -78,9 +77,11 @@ $space: 3px;
       ::v-deep {
         .item-box-info {
           text-align: center;
+          .area-name {
+            margin-top: $name-space;
+          }
           .name {
             width: 140%;
-            margin-top: $space;
             margin-left: -20%;
             font-size: $font-size-S-pc;
           }
@@ -117,7 +118,9 @@ $space: 3px;
         display: flex;
         align-items: center;
         height: 100%;
-        .name {
+        .area-name {
+          display: flex;
+          gap: 5px;
           margin-left: 6px;
         }
       }  

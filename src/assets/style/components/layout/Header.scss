@@ -1,40 +1,56 @@
-$menu-padding-v: 10px;
+$menu-padding-v: 0;
 header {
-  display: flex;
-  align-items: center;
   position: fixed;
   z-index: 99;
   width: 100%;
-  background-color: var(--bg-dark);
-  padding: 0 10px;
   font-weight: 300;
   .logo {
     font-size: 18px;
-    letter-spacing: 0.05em;
     a {
-      padding: $menu-padding-v 15px;
+      padding: $menu-padding-v 10px $menu-padding-v 15px;
       color: var(--color-white);
+      font-weight: 500;
     }
   }
-  .gnb {
+  .menu-bar.game-menu {
+    padding-left: 90px;
+  }
+  .menu-bar.site {
+    position: relative;
+    z-index: 1; // 로그아웃 드롭다운 가려져 z index 삽입
     display: flex;
-    a {
-      padding: $menu-padding-v 10px;
-      color: rgba(255, 255, 255, 0.8);
-      &.nuxt-link-active {
-        color: #333;
-        font-weight: 500;
-        background-color: var(--bg-light-point-200);
+    align-items: center;
+    padding-right: 15px;
+    background-color: var(--bg-dark);
+    ::v-deep {
+      a, button {
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 36px;
+      }
+    }
+    .logo {
+      background-color: $color-point;
+    }
+    nav {
+      a {
+        font-size: $font-size-MS-pc;
+        &.nuxt-link-active,
+        &.is-active {
+          font-weight: 400;
+          color: #fff;
+          background-color: $color-point;
+        }
       }
     }
   }
-  .menu-util {
+  nav {
+    display: flex;
+    a {
+      padding: $menu-padding-v 10px;
+    }
+  }
+  .area-side-menu {
     display: flex;
     margin-left: auto;
-    a {
-      padding: $menu-padding-v 5px;
-      font-size: 0.9em;
-      color: rgba(255, 255, 255, 0.8);
-    }
   }
 }

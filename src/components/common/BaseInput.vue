@@ -10,6 +10,7 @@
   >
     <input
       ref="baseInput"
+      :id="id"
       :type="inputType"
       :placeholder="isCompactMode ? '' : `${category}${this.usage.includes('search') ? ' 검색' : ''}`"
       :value="value"
@@ -47,7 +48,7 @@ export default {
     },
     size: {
       type: String,
-      default: () => 'basic'
+      default: () => 'basic' // small, basic, big
     },
     isCompactMode: {
       type: Boolean,
@@ -60,6 +61,10 @@ export default {
     focusOnMounted: {
       type: Boolean,
       default: () => false
+    },
+    id: {
+      type: String,
+      default: () => ''
     }
   },
   mounted() {

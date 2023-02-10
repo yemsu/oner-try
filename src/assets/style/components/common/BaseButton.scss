@@ -17,8 +17,35 @@
     background-color: rgba(255, 255, 255, 0.2);
   }
   &.round {
-    padding: 5px 10px;
     border-radius: 20px;
+    &.size {
+      &-medium {
+        padding: 5px 10px;
+      }
+    }
+  }
+  &.square-round {
+    border-radius: 5px;
+    &.size {
+      &-medium {
+        min-width: 50px;
+        padding: 0 10px;
+        font-size: $font-size-M-pc;
+        line-height: 36px;
+        text-align: center;
+        .text {
+          opacity: .8;
+        }
+        &.nuxt-link-active,
+        &.is-active {
+          font-weight: 500;
+          border-radius: 5px;
+          .text {
+            opacity: 1;
+          }
+        }
+      }
+    }
   }
   &.bg {
     &-active {

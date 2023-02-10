@@ -14,6 +14,9 @@ $column-num: 2;
       > .title  {
         font-size: $font-size-title-M-pc;
         font-weight: 500;
+        &.small {
+          font-size: $font-size-title-MS-pc;
+        }
         & ~ p {
           margin-top: 10px;
           font-size: $font-size-B-pc;
@@ -35,6 +38,19 @@ $column-num: 2;
     padding: 50px 30px 60px;
     border: 1px solid #fff;
     background-color: rgba(255, 255, 255, 0.1);
+    &.bg-point {
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+    &.item-bookmarks {
+      overflow: hidden;
+      .area-contents {
+        overflow-x: auto;
+        align-items: flex-start;
+        width: 100%;
+        padding: 0 10px; // 아이템명이 아이템 영역보다 넓게 지정되어있어, 아이템 개수 많지 않아도 스크롫 생기는 이슈 때문에 추가
+        @include scrollBar;
+      }
+    }
   }
   .point-banner {
     background-color: rgba(255, 255, 255, 0.6);

@@ -23,6 +23,7 @@
             :showBadges="['type', 'howGet']"
             :visibleDetail="true"
             :isLink="false"
+            :use-bookmark="true"
           />
           <section v-if="highRankItems.length !== 0" class="wrap-high-rank">
             <h2 class="title">상위 아이템</h2>
@@ -109,7 +110,7 @@ export default {
   components: {
     TitleContent,
     CompositionSearchBox,
-    ItemTree
+    ItemTree,
   },
   async asyncData({ store, params }) {
     const { item: { items } } = store.state
@@ -130,6 +131,11 @@ export default {
       itemSelected: null,
       allIngrdnts: [],
       highRankItems: []
+    }
+  },
+  watch: {
+    itemSelected(crr, prev) {
+      console.log('itemSelected', crr.id)
     }
   },
   computed: {
@@ -174,7 +180,7 @@ export default {
       const { newItem: itemSetup, allIngrdnts } = this.setIngrdntsDataLoop(result)
       // console.log('itemSetup, allIngrdnts', itemSetup, allIngrdnts)
       this.itemSelected = itemSetup
-      console.log('allIngrdnts', allIngrdnts)
+      // console.log('allIngrdnts', allIngrdnts)
       this.allIngrdnts = allIngrdnts
       this.highRankItems = deepClone(this.compositionItems)
         .filter(item => {
@@ -252,7 +258,7 @@ export default {
         postMurgeCompositionView({ name: data.name, pageView: data.pageView})
       })
       console.log('totalPageViewGAData', resultData)
-    }
+    },
   },
 }
 </script>
