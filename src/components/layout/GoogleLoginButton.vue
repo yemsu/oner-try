@@ -54,9 +54,13 @@ export default {
       this.fnLogin()
     } else {
       setTimeout(() => {
-        this.initGoogleOneTap()
         this.renderGoogleLoginBtn()
       }, 200);
+      // 로그인 상태에서 새 탭으로 열었을때, 탭끼리 로그인 상태 공유 후 체크하여 실행될 수 있도록 setTimeout 설정
+      setTimeout(() => {
+        if(this.jToken) return
+        this.initGoogleOneTap()
+      }, 1000)
     }
   },
   methods: {
