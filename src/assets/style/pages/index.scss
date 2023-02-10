@@ -47,6 +47,7 @@ $column-num: 2;
         overflow-x: auto;
         display: block;
         width: 100%;
+        padding: 0 10px; // 아이템명이 아이템 영역보다 넓게 지정되어있어, 아이템 개수 많지 않아도 스크롫 생기는 이슈 때문에 추가
         @include scrollBar;
       }
     }
