@@ -1,7 +1,8 @@
 .bookmarks-item {
   display: flex;
+  margin: 0 auto;
   &.align-hrz {
-    // justify-content: center; 메인 조합법 북마크 - 정렬 센터로 하면 아이템 6개 이상일때 사이드가 잘리는 현상.
+    justify-content: center; 
     gap: 20px;
   }
   &.align-vtc {
