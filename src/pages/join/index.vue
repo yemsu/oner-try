@@ -135,7 +135,7 @@ export default {
         nick: this.inputValue,
         idToken: localStorage.getItem('GCID')
       })
-
+      localStorage.removeItem('GCID')
       localStorage.setItem('JUID', res.token)
       this.setIsLogin(true)
       this.$router.push('/')

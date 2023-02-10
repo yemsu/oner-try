@@ -120,7 +120,6 @@ export default {
     onClickLogout(alertMsg) {
       // 토큰값 제거
       localStorage.removeItem('JUID')
-      localStorage.removeItem('GCID')
       // store user data reset
       this.setIsLogin(false)
       this.setUserInfo({})
