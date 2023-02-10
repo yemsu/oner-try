@@ -24,7 +24,8 @@ export default {
   data() {
     return {
       authClientId: process.env.AuthClientId,
-      showUserDropdown: false
+      showUserDropdown: false,
+      jToken: null,
     }
   },
   computed: {
@@ -44,10 +45,11 @@ export default {
     }
   },
   async mounted() {
+    this.jToken = sessionStorage.getItem('JUID')
     this.initGoogleLogin()
+    this.sendJTokenToNewTab()
     // setTimeout(, 0);
-    const jToken = localStorage.getItem('JUID')
-    if(jToken) {
+    if(this.jToken) {
       console.log('GoogleLoginButton mounted')
       this.fnLogin()
     } else {
@@ -65,6 +67,31 @@ export default {
     ...mapActions({
       getUserInfo: 'auth/GET_USER_INFO'
     }),
+    sendJTokenToNewTab() {
+      const TRIGGER_NAME = 'trigger--new-tab'
+      
+      // 기존 탭
+      addEventListener('storage', (e) => { 
+        const { storageArea: { JUID }, newValue } = e
+        if(!newValue) return // when remove trigger data
+        const needSend = this.jToken && !JUID
+        const needReceive = !this.jToken && JUID
+        console.log(e.key ,':' ,{ newValue } ," at " ,e.url)
+        if(needSend) {
+          console.log("needSend!")
+          localStorage.setItem('JUID', this.jToken)
+        } else if (needReceive) {
+          console.log("receive!")
+          this.jToken = localStorage.getItem('JUID')
+          sessionStorage.setItem('JUID', this.jToken)
+          localStorage.removeItem('JUID')
+          this.fnLogin()
+        }
+      });
+      // 새 탭에서 storage 이벤트 실행을 위해
+      localStorage.setItem(TRIGGER_NAME, '1')
+      localStorage.removeItem(TRIGGER_NAME)
+    },
     initGoogleLogin() {
       google.accounts.id.initialize({
         client_id: this.authClientId,
@@ -89,8 +116,7 @@ export default {
       )
     },
     async fnLogin() {
-      const jToken = localStorage.getItem('JUID')
-      setDefaultHeader('Authorization', jToken)
+      setDefaultHeader('Authorization', this.jToken)
       const userInfo = await this.getUserInfo()
       console.log('userInfo', userInfo, this.isLogin)
       userInfo ? this.setIsLogin(true) : this.onClickLogout()
@@ -102,11 +128,11 @@ export default {
       
       switch (res.type) {
         case 'join':
-          localStorage.setItem('GCID', googleUser.credential)
+          sessionStorage.setItem('GCID', googleUser.credential)
           this.$router.push('/join')
           break;
         case 'login':
-          localStorage.setItem('JUID', res.token)
+          sessionStorage.setItem('JUID', res.token)
           this.setIsLogin(true)
           break;
         case 'ban':
@@ -119,7 +145,7 @@ export default {
     },
     onClickLogout(alertMsg) {
       // 토큰값 제거
-      localStorage.removeItem('JUID')
+      sessionStorage.removeItem('JUID')
       // store user data reset
       this.setIsLogin(false)
       this.setUserInfo({})
