@@ -4,7 +4,7 @@
     
     <div v-show="isLogin" class="wrap-dropdown" >
       <button
-        v-if="userInfo.siteNick"
+        v-if="userInfo && userInfo.siteNick"
         class="btn-dropdown"
         @click="isShowLoginMenu = !isShowLoginMenu"
       >💀 {{ userInfo.siteNick }} <span class="icon-caret"></span></button>
@@ -34,9 +34,9 @@ export default {
   },
   watch: {
     isLogin(crr, prev) {
-      console.log('isLogin : ', 'crr', crr, 'prev', prev, 'userInfo', this.userInfo.siteNick)
+      console.log('isLogin : ', 'crr', crr, 'prev', prev, 'userInfo', this.userInfo?.siteNick)
       // 회원 가입 페이지에서 isLogin값 true로 하면 여기서 로그인 처리
-      if(crr && crr !== prev && !this.userInfo.siteNick) this.fnLogin()
+      if(crr && crr !== prev && !this.userInfo) this.fnLogin()
     },
     $route(crr, prev) {
       this.checkLoginExpired()

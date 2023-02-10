@@ -84,7 +84,7 @@
         <template v-if="isLogin">
           <div class="area-text">
             <h3 class="title small">
-              <span class="color-point"><strong>{{ userInfo.siteNick }}</strong></span>님의 ⭐ 조합법
+              <span class="color-point"><strong>{{ userInfo && userInfo.siteNick }}</strong></span>님의 ⭐ 조합법
             </h3>
           </div>
           <div class="area-contents">
