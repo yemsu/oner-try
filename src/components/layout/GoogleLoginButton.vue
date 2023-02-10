@@ -86,8 +86,7 @@ export default {
           localStorage.setItem('JUID', this.jToken)
         } else if (needReceive) {
           console.log("receive!")
-          this.jToken = localStorage.getItem('JUID')
-          sessionStorage.setItem('JUID', this.jToken)
+          this.setJToken(localStorage.getItem('JUID'))
           localStorage.removeItem('JUID')
           this.fnLogin()
         }
@@ -122,7 +121,10 @@ export default {
     async fnLogin() {
       setDefaultHeader('Authorization', this.jToken)
       const userInfo = await this.getUserInfo()
-      console.log('userInfo', userInfo, this.isLogin)
+      console.log('userInfo', { userInfo }, this.isLogin)
+      if(userInfo === 'not found token') {
+        console.error('getUserInfo : no Authorization : ', this.jToken)
+      }
       userInfo ? this.setIsLogin(true) : this.onClickLogout()
     },
     async onClickLogin(googleUser) {
@@ -136,8 +138,8 @@ export default {
           this.$router.push('/join')
           break;
         case 'login':
-          sessionStorage.setItem('JUID', res.token)
-          this.setIsLogin(true)
+          this.setJToken(res.token)
+          this.fnLogin()
           break;
         case 'ban':
           console.log('login_limit', res.login_limit)
@@ -146,6 +148,10 @@ export default {
           console.error('onClickLogin: 로그인 결과 응답 type 확인 필요')
           break;
       }
+    },
+    setJToken(token) {
+      this.jToken = token
+      sessionStorage.setItem('JUID', token)
     },
     onClickLogout(alertMsg) {
       // 토큰값 제거
