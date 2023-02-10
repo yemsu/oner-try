@@ -10,7 +10,7 @@
       >💀 {{ userInfo.siteNick }} <span class="icon-caret"></span></button>
       <div v-if="showUserDropdown" class="menu-dropdown">
         <button @click="onClickLogout('로그아웃이 완료되었습니다.')">로그아웃</button>
-        <!-- <button @click="onClickDelete()">회원탈퇴</button> -->
+        <button v-if="isDevEnv" @click="onClickDelete()">회원탈퇴</button>
       </div>
     </div>
   </div>
@@ -33,6 +33,9 @@ export default {
       isLogin: 'auth/getIsLogin',
       userInfo: 'auth/getUserInfo',
     }),
+    isDevEnv() {
+      return process.env.NODE_ENV === 'development'
+    }
   },
   watch: {
     isLogin(crr, prev) {
@@ -119,9 +122,12 @@ export default {
       )
     },
     async fnLogin() {
+      if(!this.jToken) {
+        this.jToken = sessionStorage.getItem('JUID')
+      }
       setDefaultHeader('Authorization', this.jToken)
       const userInfo = await this.getUserInfo()
-      console.log('userInfo', { userInfo }, this.isLogin)
+      console.log('fnLogin userInfo', { userInfo }, this.isLogin)
       if(userInfo === 'not found token') {
         console.error('getUserInfo : no Authorization : ', this.jToken)
       }
