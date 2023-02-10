@@ -2,7 +2,7 @@ import { getUserInfo } from "@/plugins/utils/https"
 
 export const state = () => ({
   isLogin: false,
-  userInfo: {},
+  userInfo: null,
 })
 
 export const getters = {

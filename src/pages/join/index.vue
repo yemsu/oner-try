@@ -133,10 +133,10 @@ export default {
 
       const res = await postUserJoin({ 
         nick: this.inputValue,
-        idToken: localStorage.getItem('GCID')
+        idToken: sessionStorage.getItem('GCID')
       })
-
-      localStorage.setItem('JUID', res.token)
+      sessionStorage.removeItem('GCID')
+      sessionStorage.setItem('JUID', res.token)
       this.setIsLogin(true)
       this.$router.push('/')
     },
