@@ -18,7 +18,7 @@ const setMeta = (metaObj = {}) => {
   resultMeta.push({ hid: 'schema-url-value', itemprop: 'url', content: urlContent })
     
   // title
-  const defaultTitle = `${process.env.NODE_ENV === 'development' ? 'LOCAL | ' : ''}${process.env.APP_TITLE} | 워크래프트3 원피스 RPG 정보 제공 사이트`
+  const defaultTitle = `${process.env.NODE_ENV === 'development' ? 'LOCAL | ' : 'DEV | '}${process.env.APP_TITLE} | 워크래프트3 원피스 RPG 정보 제공 사이트`
   const titleContent = (title ? `${title} | ` : '') + defaultTitle
   resultMeta.push({ title: titleContent })
   resultMeta.push({ hid: 'og-title-value', property: 'og:title', content: titleContent })
