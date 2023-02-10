@@ -34,7 +34,7 @@ export default {
   },
   watch: {
     isLogin(crr, prev) {
-      console.log('isLogin : ', 'crr', crr, 'prev', prev, 'userInfo', this.userInfo?.siteNick)
+      console.log('isLogin : ', 'crr', crr, 'prev', prev, 'userInfo', this.userInfo)
       // 회원 가입 페이지에서 isLogin값 true로 하면 여기서 로그인 처리
       if(crr && crr !== prev && !this.userInfo) this.fnLogin()
     },
@@ -118,6 +118,7 @@ export default {
     },
     onClickLogout(alertMsg) {
       localStorage.removeItem('JUID')
+      localStorage.removeItem('GCID')
       this.setIsLogin(false)
       this.setUserInfo({})
       if(this.isShowLoginMenu) this.isShowLoginMenu = false
@@ -128,8 +129,10 @@ export default {
       alertMsg && alert(alertMsg)
     },
     checkLoginExpired() {
-      if(!this.isLogin || this.userInfo.expireTime > Date.now()) return
-      this.onClickLogout('로그인 시간이 만료되었습니다.')
+      console.log('checkLoginExpired', this.userInfo?.expireTime, this.userInfo?.expireTime <= Date.now())
+      if(this.userInfo?.expireTime <= Date.now()) {
+        this.onClickLogout('로그인 시간이 만료되었습니다.')
+      }
     }
   }
 }
