@@ -23,6 +23,18 @@
   "CommonVTab": {
     "description": "Auto imported from components/common/VTab.vue"
   },
+  "LayoutFloatingMenu": {
+    "description": "Auto imported from components/layout/FloatingMenu.vue"
+  },
+  "LayoutFooter": {
+    "description": "Auto imported from components/layout/Footer.vue"
+  },
+  "LayoutGoogleLoginButton": {
+    "description": "Auto imported from components/layout/GoogleLoginButton.vue"
+  },
+  "LayoutHeader": {
+    "description": "Auto imported from components/layout/Header.vue"
+  },
   "ItemBadges": {
     "description": "Auto imported from components/item/itemBadges.vue"
   },
@@ -58,18 +70,6 @@
   },
   "ItemSynergyDesc": {
     "description": "Auto imported from components/item/SynergyDesc.vue"
-  },
-  "LayoutFloatingMenu": {
-    "description": "Auto imported from components/layout/FloatingMenu.vue"
-  },
-  "LayoutFooter": {
-    "description": "Auto imported from components/layout/Footer.vue"
-  },
-  "LayoutGoogleLoginButton": {
-    "description": "Auto imported from components/layout/GoogleLoginButton.vue"
-  },
-  "LayoutHeader": {
-    "description": "Auto imported from components/layout/Header.vue"
   },
   "SearchBox": {
     "description": "Auto imported from components/search/SearchBox.vue"
