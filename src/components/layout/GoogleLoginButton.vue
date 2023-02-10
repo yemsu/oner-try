@@ -48,7 +48,7 @@ export default {
     // setTimeout(, 0);
     const jToken = localStorage.getItem('JUID')
     if(jToken) {
-      console.log('mounted')
+      console.log('GoogleLoginButton mounted')
       this.fnLogin()
     } else {
       setTimeout(() => {
