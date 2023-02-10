@@ -43,7 +43,7 @@
             {{ user.lv }}
           </td>
           <td class="nickname">
-            <router-link :to="`/character/${user.nickName}`">
+            <router-link :to="`/character/result?nickname=${user.nickName}`">
               {{ user.nickName }}
             </router-link>
           </td>
