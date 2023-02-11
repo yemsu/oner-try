@@ -12,7 +12,7 @@ table {
   th {
     vertical-align: middle;
     padding: 8px 10px;
-    background-color: var(--bg-light-point-100);
+    background-color: var(--bg-light-gray);
     font-size: $font-size-S-pc;
     font-weight: normal;
     color: var(--color-gray-40);
@@ -23,7 +23,7 @@ table {
     padding: 15px 10px;
     font-size: $font-size-MS-pc;
     &.td-common {
-      background-color: var(--bg-light-point-50);
+      background-color: var(--bg-light-gray);
     }
     .details .wrap-detail {
       font-size: $font-size-MS-pc;

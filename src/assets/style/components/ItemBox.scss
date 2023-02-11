@@ -191,7 +191,7 @@ $name-space: 5px;
     white-space: nowrap;
   }
   .tooltip {
-    $tooltip-bg: var(--bg-dark-dim);
+    $tooltip-bg: var(--bg-tooltip-dim);
     display: none;
     position: absolute;
     z-index: 2;

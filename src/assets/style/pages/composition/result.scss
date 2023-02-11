@@ -1,6 +1,6 @@
 .content-top {
   padding: 10px 0;
-  background-color: var(--bg-light-point-100);
+  background-color: var(--bg-light-gray);
   > .inner-size-basic {
     display: flex;
     align-items: center;
@@ -28,7 +28,7 @@
       &.sailors {
         margin-bottom: 10px;
         > li {
-          background-color: var(--bg-light-point-200);
+          background-color: var(--bg-gray);
         }
       }
     }

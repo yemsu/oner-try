@@ -67,29 +67,27 @@ $list-gap-basic: 10px;
   --color-white: #fff;
   --color-black: hsl(0, 4%, 20%);
   // gray
-  --color-gray-30: hsl(0, 5%, 30%);
-  --color-gray-40: hsl(0, 5%, 40%);
-  --color-gray-50: hsl(0, 5%, 50%);
+  --color-gray-30: hsl(0, 4%, 30%);
+  --color-gray-40: hsl(0, 4%, 40%);
+  --color-gray-50: hsl(0, 4%, 50%);
   --color-gray-60: hsl(0, 6%, 60%);
   --color-gray-65: hsl(0, 6%, 65%);
   --color-gray-70: hsl(0, 6%, 70%);
   --color-gray-80: hsl(0, 7%, 80%);
   --color-gray-85: hsl(0, 8%, 85%);
   --color-gray-90: hsl(0, 12%, 90%);
-  --color-gray-95: hsl(0, 13%, 95%);
+  --color-gray-95: hsl(0, 20%, 95%);
 
-  // border color - 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 별도 적용)
+  // border color - 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
   --border-gray: var(--color-gray-80);
   --border-light-gray: var(--color-gray-95);
 
+  // bg color
   --bg-dark: var(--color-black);
-  --bg-dark-dim: hsla(0, 0%, 0%, 0.8);
-  --bg-dark-gray: hsl(228, 3%, 39%);
-  --bg-gray: hsl(231, 5%, 72%);
-  --bg-gray-100: hsl(0, 0%, 87%);
-  --bg-light-gray: hsl(0, 0%, 93%);
-  --bg-light-point-300: var(--color-gray-70);
-  --bg-light-point-200: var(--color-gray-80);
-  --bg-light-point-100: var(--color-gray-90);
-  --bg-light-point-50: var(--color-gray-95);
+  --bg-dark-gray: var(--color-gray-40);
+  --bg-gray: var(--color-gray-80);
+  --bg-light-gray: var(--color-gray-95);
+
+  // tooltip bg
+  --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
 }

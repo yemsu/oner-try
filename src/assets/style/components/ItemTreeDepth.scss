@@ -47,7 +47,7 @@
         align-items: center;
         @include mainItem();
         background-color: var(--color-white);
-        border-right: 1px solid var(--bg-light-point-100);
+        border-right: 1px solid var(--bg-light-gray);
       }
     }
     &:nth-child(n+2) {
@@ -94,7 +94,7 @@
           .text {
             position: relative;
             z-index: 1;
-            background-color: var(--bg-light-point-100);
+            background-color: var(--bg-light-gray);
           }
         }
       }
