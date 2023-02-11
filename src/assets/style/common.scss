@@ -4,7 +4,7 @@
 $font-family: 'Pretendard Variable', sans-serif;
 
 body {
-  background-color: var(--bg-light-point-200);
+  background-color: var(--color-gray-85);
   font-size: $font-size-M-pc;
   line-height: 1.5;
   color: var(--color-black);
@@ -302,7 +302,7 @@ caption, .ir-hidden {
       &:before {
         position: absolute;
         left: 0;
-        color: var(--color-gray);
+        color: var(--color-gray-65);
         transform: translate(-50%, 0);
         content: '|';
       }

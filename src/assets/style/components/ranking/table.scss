@@ -7,7 +7,7 @@
     background-color: var(--bg-light-point-100);
     font-size: $font-size-S-pc;
     font-weight: normal;
-    color: var(--color-dark-gray);
+    color: var(--color-gray-40);
   }
   td {
     vertical-align: middle;
@@ -44,7 +44,7 @@
       padding-right: 2px;
       .number-rank {
         font-size: $font-size-S-pc;
-        color: var(--color-dark-gray);
+        color: var(--color-gray-40);
       }
       .rank-title {
         &.type-0 {
