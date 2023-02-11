@@ -23,6 +23,10 @@ $item-image-xbig: 90px;
 // list padding, gap
 $list-gap-basic: 10px;
 
+// filter
+$filter-brighter: brightness(120%) saturate(95%);
+$filter-darker: brightness(75%);
+
 // color maker
 $color-point-hsl: (355, 65%, 45%);
 $color-point-sub-hsl: (218, 40%, 45%);
@@ -39,6 +43,14 @@ $color-point-sub-hsl: (218, 40%, 45%);
   // pallette
   --color-white: hsl(0, 20%, 99%);
   --color-black: hsl(0, 4%, 20%);
+  // point
+  --color-point: #{colorMaker($color-point-hsl)};
+  --color-point-pale: #{colorMaker($color-point-hsl, -15%, 10%)};
+  --color-point-bright: #{colorMaker($color-point-hsl, 30%, 25%)};
+  // point sub
+  --color-point-sub: #{colorMaker($color-point-sub-hsl)};
+  --color-point-sub-pale: #{colorMaker($color-point-sub-hsl, -15%, 10%)};
+  --color-point-sub-bright: #{colorMaker($color-point-sub-hsl, 30%, 25%)};
   // gray
   --point-h: #{nth($color-point-hsl, 1)};
   --color-gray-30: hsl(var(--point-h), 4%, 30%);
@@ -51,16 +63,6 @@ $color-point-sub-hsl: (218, 40%, 45%);
   --color-gray-85: hsl(var(--point-h), 8%, 85%);
   --color-gray-90: hsl(var(--point-h), 12%, 90%);
   --color-gray-95: hsl(var(--point-h), 20%, 95%);
-  // point
-  --color-point: #{colorMaker($color-point-hsl)};
-  --color-point-pale: #{colorMaker($color-point-hsl, -15%, 10%)};
-  --color-point-bright: #{colorMaker($color-point-hsl, 30%, 25%)};
-  --color-point-vivid-bright: #{colorMaker($color-point-hsl, 10%, 10%)};
-  // point sub
-  --color-point-sub: #{colorMaker($color-point-sub-hsl)};
-  --color-point-sub-pale: #{colorMaker($color-point-sub-hsl, -15%, 10%)};
-  --color-point-sub-bright: #{colorMaker($color-point-sub-hsl, 30%, 25%)};
-  --color-point-sub-vivid-bright: #{colorMaker($color-point-sub-hsl, 10%, 10%)};
 
   // border color
   // 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
