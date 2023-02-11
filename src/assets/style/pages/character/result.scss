@@ -16,7 +16,7 @@
           }
         }
         &.active {
-          border: 5px solid $wanted-brown;
+          border: 5px solid var(--wanted-brown);
           box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
           > button {
             opacity: 1;

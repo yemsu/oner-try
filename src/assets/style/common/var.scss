@@ -4,21 +4,12 @@ $color-point: #be232f;
 $color-point-pale: #c04f58;
 $color-point-vivid-bright: #e03f4d;
 
-// $color-point: #574bc6;
-// $color-point-pale: #8279d4;
-// $color-point-vivid-bright: #6f5fff;
 $color-point-sub: #3f489d;
 $color-point-sub-pale: #747cc2;
 
-$color-mark: #f2fdcb;
-$color-neon: #5fee27;
-$color-gold: #cfa61f;
-$color-ban: #d00;
-$wanted-brown: #5a352d;
-
 // badge line
-$color-point-bright: #95aeff;
-$color-point-sub-bright: #ffa742;
+$color-point-bright: #fc737e;
+$color-point-sub-bright: #99a3fc;
 
 // rank color
 $color-rank1: rgb(255, 60, 0);
@@ -73,9 +64,12 @@ $list-gap-basic: 10px;
   --color-gray-90: hsl(0, 12%, 90%);
   --color-gray-95: hsl(0, 20%, 95%);
 
-  // border color - 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
+  // border color
+  // 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
   --border-gray: var(--color-gray-80);
   --border-light-gray: var(--color-gray-95);
+  // 아이템 스택 뱃지 라인
+  --border-gold: #cfa61f;
 
   // bg color
   --bg-dark: var(--color-black);
@@ -93,4 +87,11 @@ $list-gap-basic: 10px;
   --color-grade-epic-sub: #ffe945;
   --color-grade-rare: #aaff90;
   --color-grade-normal: #f7efec;
+
+
+  // 기타 컬러
+  --wanted-brown: #5a352d;
+  --color-text-highlight: #f2fdcb;
+  --color-green-neon: #5fee27;
+  --color-ban: #d00;
 }

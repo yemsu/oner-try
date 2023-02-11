@@ -155,7 +155,7 @@ caption, .ir-hidden {
     transform: rotate(45deg) translate(-40%, -30%);
   }
   &.border-neon:before {
-    border-color: $color-neon;
+    border-color: var(--color-green-neon);
   }
   &.border-point {
     &:before {
@@ -264,14 +264,14 @@ caption, .ir-hidden {
     letter-spacing: 0;
   }
   &.line-gold {
-    border: 1px solid $color-gold;
+    border: 1px solid var(--border-gold);
   }
   &.line-gray {
     border: 1px solid var(--color-gray-85);
   }
   &.banned {
     margin-left: 5px;
-    background-color: $color-ban;
+    background-color: var(--color-ban);
     font-weight: 300;
     color: #ffc;
   }
@@ -384,7 +384,7 @@ caption, .ir-hidden {
     color: $color-point;
   }
   &-banned {
-    color: $color-ban;
+    color: var(--color-ban);
   }
 }
 .line {

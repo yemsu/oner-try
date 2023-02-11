@@ -109,7 +109,7 @@ $font-small: $font-size-S-pc;
   }
   .option-match {
     padding-left: 5px;
-    background-color: $color-mark;
+    background-color: var(--color-text-highlight);
     .title {
       color: var(--color-dark);
     }
@@ -119,6 +119,6 @@ $font-small: $font-size-S-pc;
   }
   .mark {
     // font-weight: bold;
-    color: $color-neon;
+    color: var(--color-green-neon);
   }
 }
