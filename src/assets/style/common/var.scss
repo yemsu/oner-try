@@ -25,7 +25,7 @@ $list-gap-basic: 10px;
 
 // color maker
 $color-point-hsl: (355, 65%, 45%);
-$color-point-sub-hsl: (27, 100%, 45%);
+$color-point-sub-hsl: (218, 40%, 45%);
 @function colorMaker($hsl, $calcH: 0%, $calcL: 0%, $a: 100%) {
   @return hsla(
     #{nth($hsl, 1)},
