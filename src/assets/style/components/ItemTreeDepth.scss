@@ -1,6 +1,6 @@
 
 @mixin treeLine($type) {
-  $border-style: 1px solid var(--color-gray-40);
+  $border-style: 1px solid var(--color-gray-70);
   position: relative;
   &:before {
     display: block;
