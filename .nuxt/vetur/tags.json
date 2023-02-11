@@ -1,0 +1,89 @@
+{
+  "CommonBaseButton": {
+    "description": "Auto imported from components/common/BaseButton.vue"
+  },
+  "CommonBaseInput": {
+    "description": "Auto imported from components/common/BaseInput.vue"
+  },
+  "CommonBaseSkeleton": {
+    "description": "Auto imported from components/common/BaseSkeleton.vue"
+  },
+  "CommonBookmarkButton": {
+    "description": "Auto imported from components/common/BookmarkButton.vue"
+  },
+  "CommonMainLogo": {
+    "description": "Auto imported from components/common/MainLogo.vue"
+  },
+  "CommonTitleContent": {
+    "description": "Auto imported from components/common/TitleContent.vue"
+  },
+  "CommonTopMenuBar": {
+    "description": "Auto imported from components/common/TopMenuBar.vue"
+  },
+  "CommonVTab": {
+    "description": "Auto imported from components/common/VTab.vue"
+  },
+  "ItemBadges": {
+    "description": "Auto imported from components/item/itemBadges.vue"
+  },
+  "ItemBookmarks": {
+    "description": "Auto imported from components/item/ItemBookmarks.vue"
+  },
+  "ItemBox": {
+    "description": "Auto imported from components/item/ItemBox.vue"
+  },
+  "ItemCheckerBoard": {
+    "description": "Auto imported from components/item/ItemCheckerBoard.vue"
+  },
+  "ItemDetailInfo": {
+    "description": "Auto imported from components/item/ItemDetailInfo.vue"
+  },
+  "ItemImage": {
+    "description": "Auto imported from components/item/ItemImage.vue"
+  },
+  "ItemLink": {
+    "description": "Auto imported from components/item/ItemLink.vue"
+  },
+  "ItemList": {
+    "description": "Auto imported from components/item/ItemList.vue"
+  },
+  "ItemTable": {
+    "description": "Auto imported from components/item/ItemTable.vue"
+  },
+  "ItemTree": {
+    "description": "Auto imported from components/item/ItemTree.vue"
+  },
+  "ItemTreeDepth": {
+    "description": "Auto imported from components/item/ItemTreeDepth.vue"
+  },
+  "ItemSynergyDesc": {
+    "description": "Auto imported from components/item/SynergyDesc.vue"
+  },
+  "LayoutFloatingMenu": {
+    "description": "Auto imported from components/layout/FloatingMenu.vue"
+  },
+  "LayoutFooter": {
+    "description": "Auto imported from components/layout/Footer.vue"
+  },
+  "LayoutGoogleLoginButton": {
+    "description": "Auto imported from components/layout/GoogleLoginButton.vue"
+  },
+  "LayoutHeader": {
+    "description": "Auto imported from components/layout/Header.vue"
+  },
+  "SearchBox": {
+    "description": "Auto imported from components/search/SearchBox.vue"
+  },
+  "SearchBoxSkeleton": {
+    "description": "Auto imported from components/search/SearchBoxSkeleton.vue"
+  },
+  "PagesCharacterSearchBox": {
+    "description": "Auto imported from components/pages/character/SearchBox.vue"
+  },
+  "PagesCompositionSearchBox": {
+    "description": "Auto imported from components/pages/composition/SearchBox.vue"
+  },
+  "PagesRankingTable": {
+    "description": "Auto imported from components/pages/ranking/Table.vue"
+  }
+}
