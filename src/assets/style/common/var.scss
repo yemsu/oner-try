@@ -63,33 +63,31 @@ $item-image-xbig: 90px;
 $list-gap-basic: 10px;
 
 :root {
+  // pallette
   --color-white: #fff;
-  --color-black: #333;
-
-  --color-gray-30: hsl(0, 3%, 30%);
-  --color-gray-40: hsl(0, 3%, 40%);
-  --color-gray-50: hsl(0, 3%, 50%);
-  --color-gray-60: hsl(0, 3%, 60%);
-  --color-gray-65: hsl(0, 3%, 65%);
-  --color-gray-70: hsl(0, 4%, 70%);
-  --color-gray-80: hsl(0, 6%, 80%);
-  --color-gray-85: hsl(0, 7%, 85%);
+  --color-black: hsl(0, 4%, 20%);
+  // gray
+  --color-gray-30: hsl(0, 5%, 30%);
+  --color-gray-40: hsl(0, 5%, 40%);
+  --color-gray-50: hsl(0, 5%, 50%);
+  --color-gray-60: hsl(0, 6%, 60%);
+  --color-gray-65: hsl(0, 6%, 65%);
+  --color-gray-70: hsl(0, 6%, 70%);
+  --color-gray-80: hsl(0, 7%, 80%);
+  --color-gray-85: hsl(0, 8%, 85%);
   --color-gray-90: hsl(0, 12%, 90%);
   --color-gray-95: hsl(0, 13%, 95%);
 
-  --border-dark-200: hsl(0, 0%, 40%);
-  --border-dark: #999;
-  --border-dark-gray: #aaa;
-  --border-gray: #ccc;
-  --border-gray-100: #ddd;
-  --border-light-gray: #eee;
+  // border color - 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 별도 적용)
+  --border-gray: var(--color-gray-80);
+  --border-light-gray: var(--color-gray-95);
 
-  --bg-dark: #333;
-  --bg-dark-dim: rgba(0, 0, 0, 0.8);
-  --bg-dark-gray: rgb(97, 98, 102);
-  --bg-gray: #b4b5bb;
-  --bg-gray-100: #ddd;
-  --bg-light-gray: #eee;
+  --bg-dark: var(--color-black);
+  --bg-dark-dim: hsla(0, 0%, 0%, 0.8);
+  --bg-dark-gray: hsl(228, 3%, 39%);
+  --bg-gray: hsl(231, 5%, 72%);
+  --bg-gray-100: hsl(0, 0%, 87%);
+  --bg-light-gray: hsl(0, 0%, 93%);
   --bg-light-point-300: var(--color-gray-70);
   --bg-light-point-200: var(--color-gray-80);
   --bg-light-point-100: var(--color-gray-90);

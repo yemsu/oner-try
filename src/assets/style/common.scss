@@ -169,7 +169,7 @@ caption, .ir-hidden {
   }
   &.border-dark-gray {
     &:before {
-      border-color: var(--border-dark-gray);
+      border-color: var(--color-gray-40);
     }
   }
 }
@@ -267,7 +267,7 @@ caption, .ir-hidden {
     border: 1px solid $color-gold;
   }
   &.line-gray {
-    border: 1px solid var(--border-gray-100);
+    border: 1px solid var(--color-gray-85);
   }
   &.banned {
     margin-left: 5px;
