@@ -15,7 +15,7 @@ footer {
   border-top: 1px solid var(--border-gray);
   font-size: $font-size-S-pc;
   text-align: center;
-  color: var(--color-gray-100);
+  color: var(--color-gray-50);
   a {
     color: var(--color-dark-gray);
     text-decoration: underline;

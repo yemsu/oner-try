@@ -15,15 +15,6 @@ $color-point-vivid-bright: #e03f4d;
 $color-point-sub: #3f489d;
 $color-point-sub-pale: #747cc2;
 
-$color-point-600: #615f5f;
-$color-point-500: #7a7878;
-$color-point-400: #8a8787;
-$color-point-300: #a09c9c;
-$color-point-200: #c4c0c0;
-$color-point-100: #dbd7d7;
-$color-point-50: #f1edef;
-$color-point-10: #f8f6f7;
-
 $color-mark: #f2fdcb;
 $color-neon: #5fee27;
 $color-gold: #cfa61f;
@@ -72,16 +63,25 @@ $item-image-xbig: 90px;
 $list-gap-basic: 10px;
 
 :root {
+  --color-white: #fff;
   --color-black: #333;
+
+  --color-gray-30: hsl(0, 3%, 30%);
+  --color-gray-40: hsl(0, 3%, 40%);
+  --color-gray-50: hsl(0, 3%, 50%);
+  --color-gray-60: hsl(0, 3%, 60%);
+  --color-gray-70: hsl(0, 4%, 70%);
+  --color-gray-80: hsl(0, 6%, 80%);
+  --color-gray-85: hsl(0, 7%, 85%);
+  --color-gray-90: hsl(0, 12%, 90%);
+  --color-gray-95: hsl(0, 13%, 95%);
+
   --color-dark-gray: #666;
-  --color-gray-200: #888;
-  --color-gray-100: #999;
   --color-gray: #aaa;
   --color-light-gray-100: #ddd;
   --color-light-gray: #eee;
-  --color-white: #fff;
 
-  --border-dark-200: #666;
+  --border-dark-200: hsl(0, 0%, 40%);
   --border-dark: #999;
   --border-dark-gray: #aaa;
   --border-gray: #ccc;
@@ -94,8 +94,8 @@ $list-gap-basic: 10px;
   --bg-gray: #b4b5bb;
   --bg-gray-100: #ddd;
   --bg-light-gray: #eee;
-  --bg-light-point-300: #{$color-point-200};
-  --bg-light-point-200: #{$color-point-100};
-  --bg-light-point-100: #{$color-point-50};
-  --bg-light-point-50: #{$color-point-10};
+  --bg-light-point-300: var(--color-gray-70);
+  --bg-light-point-200: var(--color-gray-80);
+  --bg-light-point-100: var(--color-gray-90);
+  --bg-light-point-50: var(--color-gray-95);
 }

@@ -48,7 +48,7 @@ i {
 //  top bar
 .top-bar {
   padding: 6px 0;
-  background-color: $color-point-400;
+  background-color: var(--color-gray-50);
   > [class*=inner] {
     display: flex;
     > .align-right {

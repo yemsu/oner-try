@@ -33,10 +33,10 @@
       }
     }
     &.tear-1 {
-      background-color: $color-point-200;
+      background-color: var(--color-gray-70);
     }
     &.tear-2 {
-      background-color: $color-point-100;
+      background-color: var(--color-gray-80);
     }
     .rank {
       text-align: center;

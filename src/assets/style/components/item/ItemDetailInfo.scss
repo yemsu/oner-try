@@ -63,7 +63,7 @@ $font-small: $font-size-S-pc;
   &.color {
     &-black {
       .title {
-        color: var(--color-gray-200);
+        color: var(--color-gray-50);
       }
       .drop-monster {
         .title {
@@ -82,7 +82,7 @@ $font-small: $font-size-S-pc;
     }
     &-white {
       .title {
-        color: var(--color-gray-200);
+        color: var(--color-gray-50);
       }
       dd {
         color: var(--color-white);

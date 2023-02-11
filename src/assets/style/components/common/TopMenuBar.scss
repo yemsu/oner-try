@@ -44,12 +44,12 @@
         }
       }
       &-point-400 {
-        background-color: $color-point-400;
+        background-color: var(--color-gray-50);
         nav {
           a {
             &.nuxt-link-active,
             &.is-active {
-              background-color: $color-point-600;
+              background-color: var(--color-gray-30);
             }
           }
         }
