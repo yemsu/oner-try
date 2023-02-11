@@ -10,7 +10,7 @@
         z-index: 1;
         width: $button-toggle-width;
         height: calc(100% - 1px);
-        // border: 1px solid $color-point;
+        // border: 1px solid var(--color-point);
         background: var(--bg-dark-gray);
         .icon-arrow {
           position: absolute;

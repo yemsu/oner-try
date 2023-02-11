@@ -29,7 +29,7 @@ header {
       }
     }
     .logo {
-      background-color: $color-point;
+      background-color: var(--color-point);
     }
     nav {
       a {
@@ -38,7 +38,7 @@ header {
         &.is-active {
           font-weight: 400;
           color: var(--color-white);
-          background-color: $color-point;
+          background-color: var(--color-point);
         }
       }
     }

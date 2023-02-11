@@ -33,12 +33,12 @@
     }
     &.color {
       &-point {
-        background-color: $color-point;
+        background-color: var(--color-point);
         nav {
           a {
             &.nuxt-link-active,
             &.is-active {
-              background-color: $color-point-vivid-bright;
+              background-color: var(--color-point-vivid-bright);
             }
           }
         }

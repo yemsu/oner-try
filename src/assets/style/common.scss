@@ -75,11 +75,11 @@ caption, .ir-hidden {
 .svg-icon path,
 .svg-icon polygon,
 .svg-icon rect {
-  fill: $color-point;
+  fill: var(--color-point);
 }
 
 .svg-icon circle {
-  stroke: $color-point;
+  stroke: var(--color-point);
   stroke-width: 1;
 }
 
@@ -159,7 +159,7 @@ caption, .ir-hidden {
   }
   &.border-point {
     &:before {
-      border-color: $color-point;
+      border-color: var(--color-point);
     }
   }
   &.border-black {
@@ -257,8 +257,8 @@ caption, .ir-hidden {
     letter-spacing: 0;
   }
   &.point {
-    background-color: $color-point;
-    border-color: $color-point;
+    background-color: var(--color-point);
+    border-color: var(--color-point);
     font-weight: 300;
     color: #fff;
     letter-spacing: 0;
@@ -329,16 +329,16 @@ caption, .ir-hidden {
 
 // link
 .text-link {
-  color: $color-point;
+  color: var(--color-point);
 }
 // bar-notice
 .bar-notice {
   width: 100%;
   padding: 10px;
   margin-bottom: 30px;
-  border: 1px solid $color-point;
+  border: 1px solid var(--color-point);
   background-color: rgba(255, 255, 255, 0.5);
-  color: $color-point;
+  color: var(--color-point);
   text-align: center;
   a {
     color: inherit;
@@ -377,11 +377,11 @@ caption, .ir-hidden {
 // positive / netavie
 .color {
   &-positive {
-    color: $color-point-sub
+    color: var(--color-point-sub)
   }
   &-negative,
   &-point {
-    color: $color-point;
+    color: var(--color-point);
   }
   &-banned {
     color: var(--color-ban);
@@ -389,9 +389,9 @@ caption, .ir-hidden {
 }
 .line {
   &-positive {
-    border-color: $color-point-sub-pale;
+    border-color: var(--color-point-sub-pale);
   }
   &-negative {
-    border-color: $color-point-pale;
+    border-color: var(--color-point-pale);
   }
 }

@@ -66,7 +66,7 @@
         .value-ranking {
           padding-right: 10px;
           font-size: $font-size-S-pc;
-          color: $color-point-sub;
+          color: var(--color-point-sub);
         }
       }
     }

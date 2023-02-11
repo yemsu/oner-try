@@ -37,7 +37,7 @@
     }
     &.no-id,
     &.no-id > button {
-      color: $color-point;
+      color: var(--color-point);
     }
   }
   &.size {

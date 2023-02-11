@@ -38,7 +38,7 @@
   }
   .btn-enter {
     font-size: $font-size-B-pc;
-    color: $color-point;
+    color: var(--color-point);
     font-weight: 500;
     animation: enterAni 01s ease infinite;
   }

@@ -68,14 +68,14 @@ $font-small: $font-size-S-pc;
       .drop-monster {
         .title {
           &.color-point {
-            color: $color-point;
+            color: var(--color-point);
           }
         }
       }
       .option {
         .title {
           &.color-point {
-            color: $color-point-sub;
+            color: var(--color-point-sub);
           }
         }
       }
@@ -91,14 +91,14 @@ $font-small: $font-size-S-pc;
       .drop-monster {
         .title {
           &.color-point {
-            color: $color-point-bright;
+            color: var(--color-point-bright);
           }
         }
       }
       .option {
         .title {
           &.color-point {
-            color: $color-point-sub-bright;
+            color: var(--color-point-sub-bright);
           }
         }
         dd {

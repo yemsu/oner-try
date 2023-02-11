@@ -132,7 +132,7 @@ export default {
     background-color: $badge-color-green-light;
   }
   &.type {
-    background-color: $color-point;
+    background-color: var(--color-point);
     color: var(--color-white);
     font-weight: 300;
     &.sailor {

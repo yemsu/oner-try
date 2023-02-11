@@ -9,7 +9,7 @@
       margin-left: auto;
       > .title {
         font-size: $font-size-S-pc;
-        color: $color-point-sub;
+        color: var(--color-point-sub);
       }
       ::v-deep {
         .list-item {
