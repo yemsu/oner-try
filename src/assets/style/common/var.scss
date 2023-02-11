@@ -23,30 +23,44 @@ $item-image-xbig: 90px;
 // list padding, gap
 $list-gap-basic: 10px;
 
+// color maker
+$color-point-hsl: (355, 65%, 45%);
+$color-point-sub-hsl: (27, 100%, 45%);
+@function colorMaker($hsl, $calcH: 0%, $calcL: 0%, $a: 100%) {
+  @return hsla(
+    #{nth($hsl, 1)},
+    calc(#{nth($hsl, 2) + $calcH}),
+    calc(#{nth($hsl, 3) + $calcL}),
+    $a
+  )
+};
+
 :root {
   // pallette
   --color-white: hsl(0, 20%, 99%);
   --color-black: hsl(0, 4%, 20%);
   // gray
-  --color-gray-30: hsl(0, 4%, 30%);
-  --color-gray-40: hsl(0, 4%, 40%);
-  --color-gray-50: hsl(0, 4%, 50%);
-  --color-gray-60: hsl(0, 6%, 60%);
-  --color-gray-65: hsl(0, 6%, 65%);
-  --color-gray-70: hsl(0, 6%, 70%);
-  --color-gray-80: hsl(0, 7%, 80%);
-  --color-gray-85: hsl(0, 8%, 85%);
-  --color-gray-90: hsl(0, 12%, 90%);
-  --color-gray-95: hsl(0, 20%, 95%);
+  --point-h: #{nth($color-point-hsl, 1)};
+  --color-gray-30: hsl(var(--point-h), 4%, 30%);
+  --color-gray-40: hsl(var(--point-h), 4%, 40%);
+  --color-gray-50: hsl(var(--point-h), 4%, 50%);
+  --color-gray-60: hsl(var(--point-h), 6%, 60%);
+  --color-gray-65: hsl(var(--point-h), 6%, 65%);
+  --color-gray-70: hsl(var(--point-h), 6%, 70%);
+  --color-gray-80: hsl(var(--point-h), 7%, 80%);
+  --color-gray-85: hsl(var(--point-h), 8%, 85%);
+  --color-gray-90: hsl(var(--point-h), 12%, 90%);
+  --color-gray-95: hsl(var(--point-h), 20%, 95%);
   // point
-  --color-point: hsl(355, 69%, 44%);
-  --color-point-pale: hsl(355, 47%, 53%);
-  --color-point-bright: hsl(355, 96%, 72%);
-  --color-point-vivid-bright: hsl(355, 72%, 56%);
+  --color-point: #{colorMaker($color-point-hsl)};
+  --color-point-pale: #{colorMaker($color-point-hsl, -15%, 10%)};
+  --color-point-bright: #{colorMaker($color-point-hsl, 30%, 25%)};
+  --color-point-vivid-bright: #{colorMaker($color-point-hsl, 10%, 10%)};
   // point sub
-  --color-point-sub: hsl(27, 99%, 47%);
-  --color-point-sub-pale: hsl(27, 88%, 61%);
-  --color-point-sub-bright: hsl(27, 100%, 65%);
+  --color-point-sub: #{colorMaker($color-point-sub-hsl)};
+  --color-point-sub-pale: #{colorMaker($color-point-sub-hsl, -15%, 10%)};
+  --color-point-sub-bright: #{colorMaker($color-point-sub-hsl, 30%, 25%)};
+  --color-point-sub-vivid-bright: #{colorMaker($color-point-sub-hsl, 10%, 10%)};
 
   // border color
   // 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
