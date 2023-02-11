@@ -1,9 +1,4 @@
-$color-legend: #70dbbb;
-$color-legend-sub: #eeeea0;
-$color-epic: #fd8329;
-$color-epic-sub: #ffe945;
-$color-rare: #aaff90;
-$color-normal: #f7efec;
+
 
 $color-point: #be232f;
 $color-point-pale: #c04f58;
@@ -90,4 +85,12 @@ $list-gap-basic: 10px;
 
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
+
+  // 아이템 등급 컬러
+  --color-grade-legend: #70dbbb;
+  --color-grade-legend-sub: #eeeea0;
+  --color-grade-epic: #fd8329;
+  --color-grade-epic-sub: #ffe945;
+  --color-grade-rare: #aaff90;
+  --color-grade-normal: #f7efec;
 }
