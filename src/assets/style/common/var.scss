@@ -96,9 +96,12 @@ $color-point-sub-hsl: (218, 40%, 45%);
   --badge-color-green: hsl(120, 100%, 25%); // 동료 타입
 
   // 랭크 등급 표시 컬러
-  --color-rank-1: rgb(255, 60, 0);
-  --color-rank-2: rgb(105, 22, 173);
-  --color-rank-3: rgb(36, 61, 172);
+  --color-rank-1: hsl(14, 100%, 50%);
+  --color-rank-1-bg: var(--color-black);
+  --color-rank-2: hsl(273, 77%, 38%);
+  --color-rank-2-bg: var(--color-gray-80);
+  --color-rank-3: hsl(229, 65%, 41%);
+  --color-rank-3-bg:  var(--color-gray-90);
 
   // 기타 컬러
   --wanted-brown: #5a352d;

@@ -19,7 +19,7 @@
     border-bottom: 1px solid var(--border-light-gray);
     &.tear-0 {
       padding: 10px;
-      background-color: var(--color-black);
+      background-color: var(--color-rank-1-bg);
       td {
         color: var(--color-white);
         > a {
@@ -33,10 +33,10 @@
       }
     }
     &.tear-1 {
-      background-color: var(--color-gray-70);
+      background-color: var(--color-rank-2-bg);
     }
     &.tear-2 {
-      background-color: var(--color-gray-80);
+      background-color: var(--color-rank-3-bg);
     }
     .rank {
       text-align: center;
