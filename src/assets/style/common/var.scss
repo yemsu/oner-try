@@ -3,13 +3,6 @@ $color-rank1: rgb(255, 60, 0);
 $color-rank2: rgb(105, 22, 173);
 $color-rank3: rgb(36, 61, 172);
 
-// badge colors
-$badge-color-orange-light: rgba(255, 200, 174, 0.8);
-$badge-color-green-light: rgba(196, 255, 232, 0.8);
-$badge-color-blue-light: rgba(196, 205, 255, 0.8);
-$badge-color-blue: royalblue;
-$badge-color-green: green;
-
 // layout
 $basic-container-width: 1080px;
 
@@ -84,6 +77,12 @@ $list-gap-basic: 10px;
   --color-grade-rare: #aaff90;
   --color-grade-normal: #f7efec;
 
+  // 뱃지 컬러
+  --badge-color-orange-light: hsla(19, 100%, 84%, 0.8); // 조합 아이템, 콜로세움 버프 효과
+  --badge-color-green-light: hsla(157, 100%, 88%, 0.8); // 영입 아이템, 콜로세움 자신 효과
+  --badge-color-blue-light: hsla(231, 100%, 88%, 0.8); // 콜로세움 디버프 효과
+  --badge-color-blue: hsl(225, 73%, 57%); // 선원 타입
+  --badge-color-green: hsl(120, 100%, 25%); // 동료 타입
 
   // 기타 컬러
   --wanted-brown: #5a352d;

@@ -16,7 +16,7 @@
     }
   }
   .text-pass {
-    color: $badge-color-green;
+    color: var(--badge-color-green);
     &:after {
       content: ' ✔';
     }

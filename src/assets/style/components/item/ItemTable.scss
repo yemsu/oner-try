@@ -72,15 +72,15 @@ table {
 .badge {
   &.buff {
     border-color: #aaa;
-    background-color: $badge-color-orange-light;
+    background-color: var(--badge-color-orange-light);
   }
   &.deBuff {
     border-color: #aaa;
-    background-color: $badge-color-blue-light;
+    background-color: var(--badge-color-blue-light);
   }
   &.self {
     border-color: #aaa;
-    background-color: $badge-color-green-light;
+    background-color: var(--badge-color-green-light);
   }
 } 
 .box-text {

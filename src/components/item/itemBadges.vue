@@ -126,20 +126,20 @@ export default {
 .badge {
   white-space: nowrap;
   &.composition {
-    background-color: $badge-color-orange-light;
+    background-color: var(--badge-color-orange-light);
   }
   &.recruit {
-    background-color: $badge-color-green-light;
+    background-color: var(--badge-color-green-light);
   }
   &.type {
     background-color: var(--color-point);
     color: var(--color-white);
     font-weight: 300;
     &.sailor {
-      background-color: $badge-color-blue;
+      background-color: var(--badge-color-blue);
     }
     &.colleague {
-      background-color: $badge-color-green;
+      background-color: var(--badge-color-green);
     }
   }
 }
