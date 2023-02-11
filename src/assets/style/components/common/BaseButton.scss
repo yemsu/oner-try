@@ -50,7 +50,7 @@
   &.bg {
     &-active {
       background-color: $color-point;
-      color: #fff;
+      color: var(--color-white);
     }
     &-inActive {
       background-color: var(--bg-light-gray);

@@ -37,7 +37,7 @@ header {
         &.nuxt-link-active,
         &.is-active {
           font-weight: 400;
-          color: #fff;
+          color: var(--color-white);
           background-color: $color-point;
         }
       }
