@@ -1,8 +1,3 @@
-// rank color
-$color-rank1: rgb(255, 60, 0);
-$color-rank2: rgb(105, 22, 173);
-$color-rank3: rgb(36, 61, 172);
-
 // layout
 $basic-container-width: 1080px;
 
@@ -83,6 +78,11 @@ $list-gap-basic: 10px;
   --badge-color-blue-light: hsla(231, 100%, 88%, 0.8); // 콜로세움 디버프 효과
   --badge-color-blue: hsl(225, 73%, 57%); // 선원 타입
   --badge-color-green: hsl(120, 100%, 25%); // 동료 타입
+
+  // 랭크 등급 표시 컬러
+  --color-rank-1: rgb(255, 60, 0);
+  --color-rank-2: rgb(105, 22, 173);
+  --color-rank-3: rgb(36, 61, 172);
 
   // 기타 컬러
   --wanted-brown: #5a352d;
