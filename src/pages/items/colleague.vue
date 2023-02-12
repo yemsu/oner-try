@@ -72,9 +72,6 @@ export default {
   created() {
     this.resultColleagues = this.colleagues
   },
-  mounted() {
-    console.log('colleagues', this.colleagues)
-  },
   methods: {
     setResultColleagues() {
       const resultColleagues = this.colleagues.filter(colleague => {

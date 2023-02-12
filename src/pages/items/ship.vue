@@ -72,9 +72,6 @@ export default {
   created() {
     this.resultShips = this.ships
   },
-  mounted() {
-    console.log('ships', this.ships)
-  },
   methods: {
     setResultShips() {
       const resultShips = this.ships.filter(ship => {
