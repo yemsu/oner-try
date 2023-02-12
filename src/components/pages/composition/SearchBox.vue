@@ -42,12 +42,14 @@ export default {
     }),
   },
   async created() {
+    if(this.items.length === 0) await this.getItems()
     if(this.pageViews.length === 0) await this.getPageView(10)
     this.rankingList = fillDataAndInsertValue(this.items, this.pageViewRanking, 'pageView')
   },
   methods: {
     ...mapActions({
       getPageView: 'pageView/GET_COMPOSITION',
+      getItems: 'item/GET_ITEMS',
     }),
   }
 }
