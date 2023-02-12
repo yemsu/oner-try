@@ -1,7 +1,8 @@
 <template>
   <section class="wrap-search">
     <h2 class="ir-hidden">캐릭터</h2>
-    <ItemCheckerBoard
+    <item-checker-board
+      v-if="pureHeroes"
       :items="pureHeroes"
     />
     <character-search-box
@@ -13,6 +14,7 @@
 
 <script>
 import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
+import ItemCheckerBoard from '../../components/item/ItemCheckerBoard.vue';
 import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
 export default {
@@ -25,7 +27,8 @@ export default {
     })
   },
   components: {
-    CharacterSearchBox
+    CharacterSearchBox,
+    ItemCheckerBoard
   },
   computed: {
     ...mapGetters({
