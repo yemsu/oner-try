@@ -6,7 +6,8 @@
       :items="legendItems"
     />
     <composition-search-box
-      :matchingData="compositionItems"
+      v-if="compositionItems"
+      :full-data="compositionItems"
       size="big"
     />
   </section>

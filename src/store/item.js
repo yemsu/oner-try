@@ -89,6 +89,7 @@ const dataTyped = (data) => {
 }
 export const actions = {
   GET_ITEMS({ commit }) {
+    console.log('store: item/GET_ITEMS')
     return getItems()
       .then(({data}) => {
         // console.log('GET_SAILORS',data)

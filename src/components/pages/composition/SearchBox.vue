@@ -5,8 +5,21 @@
     :rankingList="rankingList"
     :size="size"
     :is-item="true"
+    :custom-match-data-item="true"
     @onSearch="fnSearch"
-  />
+  >
+    <template v-slot:matchDataItem="{ props: data }">
+      <item-box
+        size="small"
+        type="list"
+        :item="data"
+        :showBadges="['howGet']"
+        :showTooltip="false"
+        :isLink="false"
+      />
+    </template>
+  </search-box>
+
 </template>
 
 <script>
@@ -14,9 +27,9 @@ import { fillDataAndInsertValue } from '@/plugins/utils/item'
 import { mapGetters, mapActions } from 'vuex';
 export default {
   props: {
-    matchingData: {
+    fullData: {
       type: Array,
-      default: () => null
+      required: true
     },
     size: {
       type: String,
@@ -26,6 +39,7 @@ export default {
   data() {
     return {
       rankingList: null,
+      matchingData: null
     }
   },
   computed: {
@@ -36,14 +50,13 @@ export default {
     }),
   },
   async created() {
-    if(this.items.length === 0) await this.getItems()
     if(this.pageViews.length === 0) await this.getPageView(10)
     this.rankingList = fillDataAndInsertValue(this.items, this.pageViewRanking, 'pageView')
+    this.matchingData = this.returnMatchingData()
   },
   methods: {
     ...mapActions({
       getPageView: 'pageView/GET_COMPOSITION',
-      getItems: 'item/GET_ITEMS',
     }),
     fnSearch(item) {
       if(!item) {
@@ -52,6 +65,11 @@ export default {
       }
       const { id, type } = item
       this.$router.push(`/composition/${type}/${id}`)
+    },
+    returnMatchingData() {
+      if(this.items.length === 0) return []
+      const compositionItems = this.items.filter(({ ingredients }) => ingredients)
+      return compositionItems.map(({ id }) => id)
     }
   }
 }

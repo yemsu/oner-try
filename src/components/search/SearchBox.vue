@@ -36,19 +36,14 @@
           <p v-if="showRankingList" class="number-ranking">{{ i + 1 }}</p>
           <template>
             <button
-              :class="{'button-keyword': !isItem}"
               @click="onSearch(data)"
             >
-              <item-box
-                v-if="isItem"
-                size="small"
-                type="list"
-                :item="data"
-                :showBadges="['howGet']"
-                :showTooltip="false"
-                :isLink="false"
-              />
-              <p v-else>
+              <slot
+                v-if="customMatchDataItem"
+                name="matchDataItem"
+                :props="data"
+              ></slot>
+              <p v-else class="keyword">
                 {{ data }}
               </p>
             </button>
@@ -92,7 +87,11 @@ export default {
     useAutoEnter: {
       type: Boolean,
       default: () => true
-    }
+    },
+    customMatchDataItem: {
+      type: Boolean,
+      default: () => false
+    },
   },
   data() {
     return {
@@ -113,22 +112,20 @@ export default {
       return this.rankingList && !this.inputValue
     },
     matchDataSliced() {
-      if(!this.inputValue) return []
       if(this.showRankingList) return this.rankingList
       const { data, type } = this.matchingData
-      const sliceNum = 10
-      if(!this.inputValue) return data.slice(0, sliceNum)
+      const SLICE_NUM = 10
+      if(!this.inputValue) return data.slice(0, SLICE_NUM)
       const noBlank = target => {
         return target.replace(/ /g, '')
       }
       const value = noBlank(this.inputValue)
       const dataFiltered = data.filter(dataItem =>  {
-        const targetData = type === 'item' ? dataItem.name : dataItem.nickName
-        const findMatch = noBlank(targetData).toLowerCase().includes(value.toLowerCase())
+        const findMatch = noBlank(dataItem).toLowerCase().includes(value.toLowerCase())
         return findMatch
       })
       const result = type === 'string' ? dataFiltered.map(({ nickName }) => nickName) : dataFiltered      
-      return result.slice(0, sliceNum)
+      return result.slice(0, SLICE_NUM)
     },
   },
   methods: {

@@ -26,7 +26,7 @@
         </div>
         <div class="area-contents">
           <character-search-box
-            :matchingData="gameUsers"
+            :full-data="gameUsers"
           />
         </div>
       </section>
@@ -37,7 +37,7 @@
         </div>
         <div class="area-contents">
           <composition-search-box
-            :matchingData="compositionItems"
+            :full-data="compositionItems"
           />
         </div>
       </section>

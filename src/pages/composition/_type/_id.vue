@@ -5,7 +5,7 @@
         <div class="align-right">
           <composition-search-box
             v-if="compositionItems.length !== 0"
-            :matchingData="compositionItems"
+            :full-data="compositionItems"
             :fnSearch="fnSearch"
             size="small"
           />
@@ -127,7 +127,8 @@ export default {
     return {
       itemSelected: null,
       allIngrdnts: [],
-      highRankItems: []
+      highRankItems: [],
+      compositionItemIds: null,
     }
   },
   computed: {
@@ -158,6 +159,9 @@ export default {
         etcItems: sortRequiredNumber(etcItems)
       }
     }
+  },
+  created() {
+    this.compositionItemIds = this.compositionItems.map(({id}) => id)
   },
   mounted() {
     if(!this.itemSelected) this.fnSearch(this.itemName)
