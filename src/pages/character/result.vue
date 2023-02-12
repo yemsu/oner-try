@@ -4,7 +4,8 @@
       <div class="inner-size-basic">
         <div class="align-right">
           <character-search-box
-            :matchingData="gameUsers"
+            v-if="gameUsers"
+            :full-data="gameUsers"
             size="small"
           />
         </div>

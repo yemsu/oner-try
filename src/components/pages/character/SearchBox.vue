@@ -1,8 +1,9 @@
 <template>
   <search-box
     placeholder="닉네임(대소문자 구분)"
-    :matchingData="{type: 'string', data: matchingData}"
-    :rankingList="rankingList"
+    v-if="nicknameList"
+    :matching-data="nicknameList"
+    :ranking-list="rankingNameList"
     :size="size"
     :use-auto-enter="false"
     @onSearch="fnSearch"
@@ -13,9 +14,9 @@
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   props: {
-    matchingData: {
+    fullData: {
       type: Array,
-      default: () => []
+      required: true
     },
     size: {
       type: String,
@@ -24,7 +25,8 @@ export default {
   },
   data() {
     return {
-      rankingList: null,
+      rankingNameList: null,
+      nicknameList: null
     }
   },
   computed: {
@@ -36,7 +38,8 @@ export default {
   },
   async created() {
     if(this.pageViews.length === 0) await this.getPageView(10)
-    this.rankingList = this.pageViewRanking.map(data => Object.keys(data)[0])
+    this.rankingNameList = this.pageViewRanking.map(data => Object.keys(data)[0])
+    this.setNicknameList()
   },
   methods: {
     ...mapMutations({
@@ -47,7 +50,7 @@ export default {
       getPageView: 'pageView/GET_CHARACTER',
     }),
     async fnSearch(nickName) {
-      const isExistingUser = this.matchingData.find(data => data.nickName === nickName)
+      const isExistingUser = this.fullData.find(data => data.nickName === nickName)
       console.log('isExistingUser', isExistingUser)
       if(!isExistingUser) {
         // 존재하지 않는 아이디인 경우 
@@ -61,7 +64,12 @@ export default {
         name: 'character-result',
         query: { nickname: nickName }
       })
-    }
+    },
+    setNicknameList() {
+      // computed 사용하면 여러번 실행되어 최초 1회만 실행
+      console.log('setNicknameList', )
+      this.nicknameList = this.fullData.map(({ nickName }) => nickName)
+    },
   }
 }
 </script>

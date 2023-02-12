@@ -6,7 +6,6 @@
           <composition-search-box
             v-if="compositionItems.length !== 0"
             :full-data="compositionItems"
-            :fnSearch="fnSearch"
             size="small"
           />
         </div>
@@ -164,11 +163,11 @@ export default {
     this.compositionItemIds = this.compositionItems.map(({id}) => id)
   },
   mounted() {
-    if(!this.itemSelected) this.fnSearch(this.itemName)
+    if(!this.itemSelected) this.setPageData(this.itemName)
     // this.mergePVData()
   },
   methods: {
-    fnSearch(result) {
+    setPageData(result) {
       result = typeof(result) === 'string'
         ? this.items.find(item => item.name.includes(result))
         : result

@@ -11,7 +11,7 @@
         :placeholder="placeholder"
         :value="inputValue"
         :isCompactMode="size === 'small' && !isSearching"
-        :isActive="isSearching && !!matchingData.data"
+        :isActive="isSearching && !!matchingData"
         :focusOnMounted="size === 'big' && true"
         @onUpdateInput="updateInput"
         @onFocusInput="focusInput"
@@ -24,7 +24,7 @@
         :is-item="isItem"
       />
       <section
-        v-else-if="rankingList && isSearching && matchingData.data"
+        v-else-if="rankingList && isSearching && matchingData"
         class="items-match"
       >
         <h2 v-if="showRankingList" class="title-list"> 검색 순위 <span>TOP 10</span></h2>
@@ -65,12 +65,12 @@ export default {
   },
   props: {
     matchingData: {
-      type: Object,
-      default: () => {}
+      type: Array,
+      required: true
     },
     placeholder: {
       type: String,
-      default: () => ''
+      required: true
     },
     isItem: {
       type: Boolean,
@@ -102,7 +102,7 @@ export default {
   watch: {
     $route(crr, pre) {
       if(this.inputValue) this.inputValue = ''
-    }
+    },
   },
   computed: {
     ...mapGetters({
@@ -112,19 +112,14 @@ export default {
       return this.rankingList && !this.inputValue
     },
     matchDataSliced() {
-      if(this.showRankingList) return this.rankingList
-      const { data, type } = this.matchingData
+      if(!this.inputValue && this.showRankingList) return this.rankingList
       const SLICE_NUM = 10
-      if(!this.inputValue) return data.slice(0, SLICE_NUM)
-      const noBlank = target => {
-        return target.replace(/ /g, '')
-      }
+      const noBlank = target => target.replace(/ /g, '')
       const value = noBlank(this.inputValue)
-      const dataFiltered = data.filter(dataItem =>  {
+      const result = this.matchingData.filter(dataItem =>  {
         const findMatch = noBlank(dataItem).toLowerCase().includes(value.toLowerCase())
         return findMatch
       })
-      const result = type === 'string' ? dataFiltered.map(({ nickName }) => nickName) : dataFiltered      
       return result.slice(0, SLICE_NUM)
     },
   },
