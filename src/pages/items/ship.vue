@@ -50,12 +50,11 @@ export default {
     BaseButton
   },
   async asyncData({ store }) {
-    await store.dispatch('item/GET_SHIPS_TABLE')
-    const { item: { ships_table } } = store.state
+    const ships = await store.dispatch('item/GET_SHIPS_TABLE')
     const commonMenu = { all: 'ALL' }
     const optionMenus =  Object.assign({...commonMenu}, noEquipOptions)
     return {
-      ships: ships_table,
+      ships,
       optionMenus,
     }
   },
