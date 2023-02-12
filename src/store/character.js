@@ -115,22 +115,22 @@ export const actions = {
   async GET_RANKING({ commit, rootState, dispatch }, payload) {
     const { item: { sailors, colleagues }} = rootState
     if(sailors.length === 0) await dispatch('item/GET_SAILORS','', { root: true })
-    if(sailors.length === 0) await dispatch('item/GET_SAILORS','', { root: true })
     if(colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
 
     return getRanking(payload)
       .then(({data}) => {
-        const { item: { sailors, colleagues, items } } = rootState
-        const sailorData = sailors.length === 0 ? items : sailors
-        const colleagueData = colleagues.length === 0 ? items : colleagues
+        const { item: { sailors, colleagues } } = rootState
         const newData = data.map(user => {
-          const sailors = user.sailors !== '[]'
-            ? dataParseHandler(sailorData, user, 'sailors') 
+          const userSailors = user.sailors !== '[]'
+            ? dataParseHandler(sailors, user, 'sailors') 
             : new Array(6).fill(null)
-          const colleagues = user.colleagues !== '[]'
-            ? dataParseHandler(colleagueData, user, 'colleagues')
+          const userColleagues = user.colleagues !== '[]'
+            ? dataParseHandler(colleagues, user, 'colleagues')
             : new Array(3).fill(null)
-          return Object.assign(user, { sailors, colleagues })
+          return Object.assign(user, {
+            sailors: userSailors,
+            colleagues: userColleagues
+          })
         })
         commit(`SET_RANKING`, sortRank(newData))
         return sortRank(newData)
