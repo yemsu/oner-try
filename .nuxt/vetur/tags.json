@@ -80,10 +80,10 @@
   "PagesCharacterSearchBox": {
     "description": "Auto imported from components/pages/character/SearchBox.vue"
   },
-  "PagesCompositionSearchBox": {
-    "description": "Auto imported from components/pages/composition/SearchBox.vue"
-  },
   "PagesRankingTable": {
     "description": "Auto imported from components/pages/ranking/Table.vue"
+  },
+  "PagesCompositionSearchBox": {
+    "description": "Auto imported from components/pages/composition/SearchBox.vue"
   }
 }

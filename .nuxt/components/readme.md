@@ -33,5 +33,5 @@ You can directly use them in pages and other components without the need to impo
 - `<SearchBox>` | `<search-box>` (components/search/SearchBox.vue)
 - `<SearchBoxSkeleton>` | `<search-box-skeleton>` (components/search/SearchBoxSkeleton.vue)
 - `<PagesCharacterSearchBox>` | `<pages-character-search-box>` (components/pages/character/SearchBox.vue)
-- `<PagesCompositionSearchBox>` | `<pages-composition-search-box>` (components/pages/composition/SearchBox.vue)
 - `<PagesRankingTable>` | `<pages-ranking-table>` (components/pages/ranking/Table.vue)
+- `<PagesCompositionSearchBox>` | `<pages-composition-search-box>` (components/pages/composition/SearchBox.vue)
