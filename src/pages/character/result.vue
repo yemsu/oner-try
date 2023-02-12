@@ -170,9 +170,9 @@ export default {
   },
   async created() {
     if(this.gameUsers.length === 0) await this.$store.dispatch('character/GET_GAME_USERS')
-    this.getUserData(this.$route.query.nickname)
   },
   mounted() {
+    this.getUserData(this.$route.query.nickname)
   },
   methods: {
     ...mapActions({
@@ -186,6 +186,7 @@ export default {
       console.log('userCharacters', nickName, this.userCharacters)
     },
     async sendPageView() {
+      // check window session storage
       const namePageView = await checkUpdatePageView('character', this.nickname)
       namePageView && postCharacterPageView({ name: this.nickname })
     },

@@ -53,12 +53,10 @@ export const checkUpdatePageView = async (type, name) => {
     }, [])
     console.log('after 30 newSessionData', newSessionData.date, newSessionData)
     setStoragePageView(storageName, newSessionData)
-    return true
   } else {
     const newSessionData = sessionData.concat([newPageViewData(name, nowDateStr)])
     console.log('newSessionData', newSessionData)
     setStoragePageView(storageName, newSessionData)
-    return true
   }
 }
 
