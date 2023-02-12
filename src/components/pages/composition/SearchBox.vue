@@ -1,11 +1,10 @@
 <template>
   <search-box
-    category="조합 아이템"
+    placeholder="조합 아이템"
     :matchingData="{type: 'item', data: matchingData}"
     :rankingList="rankingList"
     :size="size"
-    resultPath="/composition"
-    :paramKey="['type', 'id']"
+    :is-item="true"
     @onSearch="fnSearch"
   />
 </template>

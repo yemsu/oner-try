@@ -8,7 +8,7 @@
       <base-input
         usage="search"
         :size="size"
-        :category="category"
+        :placeholder="placeholder"
         :value="inputValue"
         :isCompactMode="size === 'small' && !isSearching"
         :isActive="isSearching && !!matchingData.data"
@@ -73,17 +73,13 @@ export default {
       type: Object,
       default: () => {}
     },
-    category: {
+    placeholder: {
       type: String,
       default: () => ''
     },
-    mode: {
-      type: String,
-      default: () => ''
-    },
-    defaultMatchingList: {
+    isItem: {
       type: Boolean,
-      default: () => true
+      default: () => false
     },
     size: {
       type: String,
@@ -96,20 +92,11 @@ export default {
     useAutoEnter: {
       type: Boolean,
       default: () => true
-    },
-    alertMessage: {
-      type: String,
-      default: () => '잘못된 검색어 입니다.'
-    },
-    useParam: {
-      type: Boolean,
-      default: true
     }
   },
   data() {
     return {
       inputValue: '',
-      result: '',
       isSearching: false
     }
   },
@@ -125,11 +112,8 @@ export default {
     showRankingList() {
       return this.rankingList && !this.inputValue
     },
-    noDefaultMatchingList() {
-      return !this.defaultMatchingList && !this.inputValue
-    },
     matchDataSliced() {
-      if(this.noDefaultMatchingList) return []
+      if(!this.inputValue) return []
       if(this.showRankingList) return this.rankingList
       const { data, type } = this.matchingData
       const sliceNum = 10
@@ -145,9 +129,6 @@ export default {
       })
       const result = type === 'string' ? dataFiltered.map(({ nickName }) => nickName) : dataFiltered      
       return result.slice(0, sliceNum)
-    },
-    isItem() {
-      return this.matchingData?.type === 'item'
     },
   },
   methods: {
