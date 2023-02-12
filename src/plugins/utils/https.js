@@ -58,11 +58,11 @@ export const getCharacterPageViews = (params) => {
 }
 
 // register
-export const postItemName = (params) => postApi(`/register/report`, { params })
-export const postMergeCharacterView = (params) => postApi(`/register/murgeCharacterView`, { params })
-export const postMurgeCompositionView = (params) => postApi(`/register/murgeCompositionView`, { params })
-export const postCharacterPageView = (params) => postApi(`/register/characterPageView`, { params })
-export const postCompositionPageView = (params) => postApi(`/register/compositionPageView`, { params })
+export const postItemName = (params) => postApi(`/register/report`, params)
+export const postMergeCharacterView = (params) => postApi(`/register/murgeCharacterView`, params)
+export const postMurgeCompositionView = (params) => postApi(`/register/murgeCompositionView`, params)
+export const postCharacterPageView = (params) => postApi(`/register/characterPageView`, params)
+export const postCompositionPageView = (params) => postApi(`/register/compositionPageView`, params)
 
 // ip
 export const getIpClient = () => {
