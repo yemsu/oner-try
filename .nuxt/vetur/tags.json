@@ -23,18 +23,6 @@
   "CommonVTab": {
     "description": "Auto imported from components/common/VTab.vue"
   },
-  "LayoutFloatingMenu": {
-    "description": "Auto imported from components/layout/FloatingMenu.vue"
-  },
-  "LayoutFooter": {
-    "description": "Auto imported from components/layout/Footer.vue"
-  },
-  "LayoutGoogleLoginButton": {
-    "description": "Auto imported from components/layout/GoogleLoginButton.vue"
-  },
-  "LayoutHeader": {
-    "description": "Auto imported from components/layout/Header.vue"
-  },
   "ItemBadges": {
     "description": "Auto imported from components/item/itemBadges.vue"
   },
@@ -71,22 +59,31 @@
   "ItemSynergyDesc": {
     "description": "Auto imported from components/item/SynergyDesc.vue"
   },
+  "LayoutFloatingMenu": {
+    "description": "Auto imported from components/layout/FloatingMenu.vue"
+  },
+  "LayoutFooter": {
+    "description": "Auto imported from components/layout/Footer.vue"
+  },
+  "LayoutGoogleLoginButton": {
+    "description": "Auto imported from components/layout/GoogleLoginButton.vue"
+  },
+  "LayoutHeader": {
+    "description": "Auto imported from components/layout/Header.vue"
+  },
   "SearchBox": {
     "description": "Auto imported from components/search/SearchBox.vue"
   },
   "SearchBoxSkeleton": {
     "description": "Auto imported from components/search/SearchBoxSkeleton.vue"
   },
-  "SearchContainer": {
-    "description": "Auto imported from components/search/SearchContainer.vue"
-  },
   "PagesCharacterSearchBox": {
     "description": "Auto imported from components/pages/character/SearchBox.vue"
   },
-  "PagesCompositionSearchBox": {
-    "description": "Auto imported from components/pages/composition/SearchBox.vue"
-  },
   "PagesRankingTable": {
     "description": "Auto imported from components/pages/ranking/Table.vue"
+  },
+  "PagesCompositionSearchBox": {
+    "description": "Auto imported from components/pages/composition/SearchBox.vue"
   }
 }
