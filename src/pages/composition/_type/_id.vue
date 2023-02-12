@@ -5,8 +5,7 @@
         <div class="align-right">
           <composition-search-box
             v-if="compositionItems.length !== 0"
-            :matchingData="compositionItems"
-            :fnSearch="fnSearch"
+            :full-data="compositionItems"
             size="small"
           />
         </div>
@@ -113,8 +112,7 @@ export default {
     ItemTree,
   },
   async asyncData({ store, params }) {
-    await store.dispatch('item/GET_ITEMS')
-    const { item: { items } } = store.state
+    const items = await store.dispatch('item/GET_ITEMS')
     const { id, type } = params
     const compositionItems = items.filter(item => item.ingredients)
     const item = items.find(item => item.id === id && item.type === type)
@@ -128,12 +126,8 @@ export default {
     return {
       itemSelected: null,
       allIngrdnts: [],
-      highRankItems: []
-    }
-  },
-  watch: {
-    itemSelected(crr, prev) {
-      console.log('itemSelected', crr.id)
+      highRankItems: [],
+      compositionItemIds: null,
     }
   },
   computed: {
@@ -165,12 +159,15 @@ export default {
       }
     }
   },
+  created() {
+    this.compositionItemIds = this.compositionItems.map(({id}) => id)
+  },
   mounted() {
-
+    if(!this.itemSelected) this.setPageData(this.itemName)
     // this.mergePVData()
   },
   methods: {
-    fnSearch(result) {
+    setPageData(result) {
       result = typeof(result) === 'string'
         ? this.items.find(item => item.name.includes(result))
         : result

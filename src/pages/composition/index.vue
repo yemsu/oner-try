@@ -6,7 +6,8 @@
       :items="legendItems"
     />
     <composition-search-box
-      :matchingData="compositionItems"
+      v-if="compositionItems"
+      :full-data="compositionItems"
       size="big"
     />
   </section>
@@ -19,7 +20,7 @@ import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from "vuex";
 
 export default {
-  name: 'SearchCharacter',
+  name: 'composition',
   components: {
     CompositionSearchBox,
     ItemCheckerBoard

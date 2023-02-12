@@ -1,14 +1,26 @@
 <template>
   <search-box
-    category="조합 아이템"
-    :matchingData="{type: 'item', data: matchingData}"
-    :rankingList="rankingList"
+    placeholder="조합 아이템"
+    v-if="itemNameList"
+    :matching-data="itemNameList"
+    :ranking-list="rankingNameList"
     :size="size"
-    resultPath="/composition"
-    :paramKey="['type', 'id']"
-    alert-message="해당 아이템이 존재하지 않습니다."
+    :is-item="true"
+    :custom-match-data-item="true"
     @onSearch="fnSearch"
-  />
+  >
+    <template v-slot:matchDataItem="{ props: matchData }">
+      <item-box
+        size="small"
+        type="list"
+        :item="findItem(matchData)"
+        :showBadges="['howGet']"
+        :showTooltip="false"
+        :isLink="false"
+      />
+    </template>
+  </search-box>
+
 </template>
 
 <script>
@@ -16,22 +28,19 @@ import { fillDataAndInsertValue } from '@/plugins/utils/item'
 import { mapGetters, mapActions } from 'vuex';
 export default {
   props: {
-    matchingData: {
+    fullData: {
       type: Array,
-      default: () => null
+      required: true
     },
     size: {
       type: String,
       default: () => "basic"
-    },
-    fnSearch: {
-      type: Function,
-      default: () => {}
     }
   },
   data() {
     return {
-      rankingList: null,
+      rankingNameList: null,
+      itemNameList: null
     }
   },
   computed: {
@@ -42,15 +51,33 @@ export default {
     }),
   },
   async created() {
-    if(this.items.length === 0) await this.getItems()
     if(this.pageViews.length === 0) await this.getPageView(10)
-    this.rankingList = fillDataAndInsertValue(this.items, this.pageViewRanking, 'pageView')
+    this.rankingNameList = fillDataAndInsertValue(this.items, this.pageViewRanking, 'pageView')
+      .map(({ name }) => name)
+    this.setItemNameList()
   },
   methods: {
     ...mapActions({
       getPageView: 'pageView/GET_COMPOSITION',
-      getItems: 'item/GET_ITEMS',
     }),
+    fnSearch(name) {
+      if(!name) {
+        alert('해당 아이템이 존재하지 않습니다.')
+        return
+      }
+      const { id, type } = this.findItem(name)
+      this.$router.push(`/composition/${type}/${id}`)
+    },
+    setItemNameList() {
+      // computed 사용하면 여러번 실행되어 최초 1회만 실행
+      console.log('setItemNameList', this.items.length)
+      if(this.items.length === 0) return []
+      const compositionItems = this.items.filter(({ ingredients }) => ingredients)
+      this.itemNameList = compositionItems.map(({ name }) => name)
+    },
+    findItem(name) {
+      return this.items.find((item) => item.name === name)
+    }
   }
 }
 </script>

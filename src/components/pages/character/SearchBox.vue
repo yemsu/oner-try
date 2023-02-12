@@ -1,38 +1,32 @@
 <template>
   <search-box
-    category="닉네임(대소문자 구분)"
-    :matchingData="{type: 'string', data: matchingData}"
-    :rankingList="rankingList"
+    placeholder="닉네임(대소문자 구분)"
+    v-if="nicknameList"
+    :matching-data="nicknameList"
+    :ranking-list="rankingNameList"
     :size="size"
-    resultPath="/character"
-    :paramKey="['nickname']"
-    :use-param="false"
     :use-auto-enter="false"
-    alert-message="존재하지 않는 닉네임이거나, 보유 캐릭터가 없습니다."
     @onSearch="fnSearch"
   />
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   props: {
-    matchingData: {
+    fullData: {
       type: Array,
-      default: () => []
+      required: true
     },
     size: {
       type: String,
       default: () => "basic"
-    },
-    fnSearch: {
-      type: Function,
-      default: () => {}
     }
   },
   data() {
     return {
-      rankingList: null,
+      rankingNameList: null,
+      nicknameList: null
     }
   },
   computed: {
@@ -44,12 +38,38 @@ export default {
   },
   async created() {
     if(this.pageViews.length === 0) await this.getPageView(10)
-    this.rankingList = this.pageViewRanking.map(data => Object.keys(data)[0])
+    this.rankingNameList = this.pageViewRanking.map(data => Object.keys(data)[0])
+    this.setNicknameList()
   },
   methods: {
+    ...mapMutations({
+      setUserCharacters: 'character/SET_USER_CHARACTERS'
+    }),
     ...mapActions({
+      getUserCharacters: 'character/GET_USER_CHARACTERS',
       getPageView: 'pageView/GET_CHARACTER',
     }),
+    async fnSearch(nickName) {
+      const isExistingUser = this.fullData.find(data => data.nickName === nickName)
+      console.log('isExistingUser', isExistingUser)
+      if(!isExistingUser) {
+        // 존재하지 않는 아이디인 경우 
+        const result = await this.getUserCharacters({ nickName })
+        if(!result) {
+          alert('존재하지 않는 유저입니다.')
+          return
+        }
+      }
+      this.$router.push({
+        name: 'character-result',
+        query: { nickname: nickName }
+      })
+    },
+    setNicknameList() {
+      // computed 사용하면 여러번 실행되어 최초 1회만 실행
+      console.log('setNicknameList', )
+      this.nicknameList = this.fullData.map(({ nickName }) => nickName)
+    },
   }
 }
 </script>

@@ -6,7 +6,7 @@
       :items="pureHeroes"
     />
     <character-search-box
-      :matchingData="gameUsers"
+      :full-data="gameUsers"
       size="big"
     />
   </section>
