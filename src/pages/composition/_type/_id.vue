@@ -113,13 +113,11 @@ export default {
     ItemTree,
   },
   async asyncData({ store, params }) {
+    await store.dispatch('item/GET_ITEMS')
     const { item: { items } } = store.state
     const { id, type } = params
-    const itemsData = items.length === 0
-      ? await store.dispatch('item/GET_ITEMS')
-      : items
-    const compositionItems = await itemsData.filter(item => item.ingredients)
-    const item = itemsData.find(item => item.id === id && item.type === type)
+    const compositionItems = items.filter(item => item.ingredients)
+    const item = items.find(item => item.id === id && item.type === type)
     const itemName = item && item.name
     return {
       compositionItems,
