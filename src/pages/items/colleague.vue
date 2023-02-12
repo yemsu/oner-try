@@ -50,8 +50,7 @@ export default {
     BaseButton
   },
   async asyncData({ store }) {
-    await store.dispatch('item/GET_COLLEAGUES')
-    const { item: { colleagues } } = store.state
+    const colleagues = await store.dispatch('item/GET_COLLEAGUES')
     const commonMenu = { all: 'ALL' }
     const optionMenus =  Object.assign({...commonMenu}, noEquipOptions)
     return {
