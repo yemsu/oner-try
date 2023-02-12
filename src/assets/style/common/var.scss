@@ -28,8 +28,8 @@ $filter-brighter: brightness(120%) saturate(95%);
 $filter-darker: brightness(75%);
 
 // color maker
-$color-point-hsl: (355, 65%, 45%);
-$color-point-sub-hsl: (218, 40%, 45%);
+$color-point-hsl: (248, 42%, 45%);
+$color-point-sub-hsl: (192, 30%, 50%);
 @function colorMaker($hsl, $calcH: 0%, $calcL: 0%, $a: 100%) {
   @return hsla(
     #{nth($hsl, 1)},

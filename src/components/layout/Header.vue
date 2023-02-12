@@ -4,8 +4,8 @@
       <h1 class="logo"><nuxt-link to="/"><main-logo /></nuxt-link></h1>
       <nav>
         <h2 class="ir-hidden">ONER TRY 게임 메뉴</h2>
-        <nuxt-link to="/">원피스 RPG</nuxt-link>
-        <!-- <a href="https://mrpg.onertry.fun">꿈 RPG</a> -->
+        <nuxt-link to="/my/item-tree">꿈 RPG</nuxt-link>
+        <a href="https://onertry.fun">원피스 RPG</a>
       </nav>
       <div class="area-side-menu">
         <google-login-button />
@@ -49,7 +49,11 @@ export default {
         {
           path: '/items',
           menuName: '아이템도감',
-        }
+        },
+        {
+          path: '/my/item-tree',
+          menuName: '아이템 트리',
+        },
       ],
       siteSideMenuList: [
         {
