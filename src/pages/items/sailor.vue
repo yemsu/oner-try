@@ -73,7 +73,6 @@ export default {
   async asyncData({ store }) {
     await store.dispatch('item/GET_SAILORS_SYNERGY')
     const { item: { sailors_synergy } } = store.state
-
     const commonMenu = { all: 'ALL' }
     const gradeMenus = Object.assign({...commonMenu}, gradesDef)
     const optionMenus =  Object.assign({...commonMenu}, noEquipOptions)
