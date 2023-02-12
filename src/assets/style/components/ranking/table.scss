@@ -4,10 +4,10 @@
   th {
     vertical-align: middle;
     padding: 8px 15px;
-    background-color: var(--bg-light-point-100);
+    background-color: var(--bg-light-gray);
     font-size: $font-size-S-pc;
     font-weight: normal;
-    color: var(--color-dark-gray);
+    color: var(--color-gray-40);
   }
   td {
     vertical-align: middle;
@@ -19,7 +19,7 @@
     border-bottom: 1px solid var(--border-light-gray);
     &.tear-0 {
       padding: 10px;
-      background-color: var(--color-black);
+      background-color: var(--color-rank-1-bg);
       td {
         color: var(--color-white);
         > a {
@@ -33,10 +33,10 @@
       }
     }
     &.tear-1 {
-      background-color: $color-point-200;
+      background-color: var(--color-rank-2-bg);
     }
     &.tear-2 {
-      background-color: $color-point-100;
+      background-color: var(--color-rank-3-bg);
     }
     .rank {
       text-align: center;
@@ -44,24 +44,24 @@
       padding-right: 2px;
       .number-rank {
         font-size: $font-size-S-pc;
-        color: var(--color-dark-gray);
+        color: var(--color-gray-40);
       }
       .rank-title {
         &.type-0 {
-          color: $color-rank1;
+          color: var(--color-rank-1);
           .skull {
             font-weight: normal;
             font-size: 2.6em;
           }
         }
         &.type-1 {
-          color: $color-rank2;
+          color: var(--color-rank-2);
           .skull {
             font-size: 2em;
           }
         }
         &.type-2 {
-          color: $color-rank3;
+          color: var(--color-rank-3);
           .skull {
             font-size: 1.4em;
           }

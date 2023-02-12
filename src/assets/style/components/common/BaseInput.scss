@@ -24,7 +24,7 @@
     transform: translateY(-50%);
     font-size: 1.1em;
     path {
-      fill: var(--color-gray);
+      fill: var(--color-gray-65);
     }
   }
   &.basic {
@@ -71,11 +71,11 @@
   }
   &:not(.compact) {
     input {
-      border: 1px solid $color-point;
+      border: 1px solid var(--color-point);
     }
     .svg-icon {
       path {
-        fill: $color-point;
+        fill: var(--color-point);
       }
     }
   }

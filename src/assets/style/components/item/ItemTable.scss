@@ -12,10 +12,10 @@ table {
   th {
     vertical-align: middle;
     padding: 8px 10px;
-    background-color: var(--bg-light-point-100);
+    background-color: var(--bg-light-gray);
     font-size: $font-size-S-pc;
     font-weight: normal;
-    color: var(--color-dark-gray);
+    color: var(--color-gray-40);
     text-align: left;
   }
   td {
@@ -23,7 +23,7 @@ table {
     padding: 15px 10px;
     font-size: $font-size-MS-pc;
     &.td-common {
-      background-color: var(--bg-light-point-50);
+      background-color: var(--bg-light-gray);
     }
     .details .wrap-detail {
       font-size: $font-size-MS-pc;
@@ -72,15 +72,15 @@ table {
 .badge {
   &.buff {
     border-color: #aaa;
-    background-color: $badge-color-orange-light;
+    background-color: var(--badge-color-orange-light);
   }
   &.deBuff {
     border-color: #aaa;
-    background-color: $badge-color-blue-light;
+    background-color: var(--badge-color-blue-light);
   }
   &.self {
     border-color: #aaa;
-    background-color: $badge-color-green-light;
+    background-color: var(--badge-color-green-light);
   }
 } 
 .box-text {

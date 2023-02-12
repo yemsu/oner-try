@@ -36,7 +36,7 @@ $column-num: 2;
     justify-content: center;
     align-items: center;
     padding: 50px 30px 60px;
-    border: 1px solid #fff;
+    border: 1px solid var(--color-white);
     background-color: rgba(255, 255, 255, 0.1);
     &.bg-point {
       background-color: rgba(255, 255, 255, 0.6);
@@ -77,7 +77,7 @@ $column-num: 2;
     }
   }
   .line-neon {
-    border: 5px solid $color-neon;
+    border: 5px solid var(--color-green-neon);
   }
 }
 .wrap-links {

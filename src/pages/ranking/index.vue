@@ -41,6 +41,7 @@
 <script>
 import rankingTable from '@/components/pages/ranking/Table.vue'
 import setMeta from '@/plugins/utils/meta';
+import { mapGetters } from 'vuex';
 
 export default {
   head() {
@@ -53,14 +54,20 @@ export default {
   components: {
     rankingTable
   },
-  async asyncData({ store }) {
-    await store.dispatch('item/GET_HEROES')
-    const { item: { heroes } } = store.state
-    const pureHeroes = heroes.filter(hero => !hero.name.includes('(스킨)'))
+  data() {
     return {
-      pureHeroes
+      pureHeroes: null
     }
   },
+  computed: {
+    ...mapGetters({
+      heroes: 'item/getHeroes'
+    })
+  },
+  async created() {
+    if(this.heroes.length === 0 ) await this.$store.dispatch('item/GET_HEROES')
+    this.pureHeroes = this.heroes.filter(hero => !hero.name.includes('(스킨)'))
+  }
 }
 </script>
 

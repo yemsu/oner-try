@@ -26,7 +26,7 @@
       align-items: center;
       justify-content: center;
       word-break: keep-all;
-      color: var(--color-gray);
+      color: var(--color-gray-65);
       @include blank();
     }
     &.blank,
@@ -37,7 +37,7 @@
     }
     &.no-id,
     &.no-id > button {
-      color: $color-point;
+      color: var(--color-point);
     }
   }
   &.size {
@@ -61,18 +61,18 @@
     border-radius: 100%;
     border: 1px solid var(--color-white);
     &.legend {
-      border: 2px solid $color-legend;
-      box-shadow: 0 0 10px $color-legend-sub;
+      border: 2px solid var(--color-grade-legend);
+      box-shadow: 0 0 10px var(--color-grade-legend-sub);
     }
     &.epic {
-      border: 2px solid $color-epic;
-      box-shadow: 0 0 5px $color-epic-sub;
+      border: 2px solid var(--color-grade-epic);
+      box-shadow: 0 0 5px var(--color-grade-epic-sub);
     }
     &.rare {
-      border: 2px solid $color-rare;
+      border: 2px solid var(--color-grade-rare);
     }
     &.normal {
-      border: 2px solid $color-normal;
+      border: 2px solid var(--color-grade-normal);
     }
     .box-img {
       .img-item {

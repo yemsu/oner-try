@@ -47,22 +47,25 @@ export const setDefaultHeader = (key, value) => {
 }
 
 // page view
-export const getCompositionPageViews = (params) => {
-  if(!params) params = { startDate: '2022-7-9' }
-  return $axios.get(`/compositionPageViews`, { params })
-  .catch(error => errorHandler('getCompositionPageView', error))
+export const getCompositionPageViews = () => {
+  return getApi(`/compositionPageViews`, { params: {
+    startDate: '2023-1-15',
+    length: 10
+  } })
 }
-export const getCharacterPageViews = (params) => {
-  if(!params) params = { startDate: '2022-7-9' }
-  return getApi(`/characterPageViews`, { params })
+export const getCharacterPageViews = () => {
+  return getApi(`/characterPageViews`, { params: {
+    startDate: '2023-1-15',
+    length: 10
+  } })
 }
 
 // register
-export const postItemName = (params) => postApi(`/register/report`, { params })
-export const postMergeCharacterView = (params) => postApi(`/register/murgeCharacterView`, { params })
-export const postMurgeCompositionView = (params) => postApi(`/register/murgeCompositionView`, { params })
-export const postCharacterPageView = (params) => postApi(`/register/characterPageView`, { params })
-export const postCompositionPageView = (params) => postApi(`/register/compositionPageView`, { params })
+export const postItemName = (params) => postApi(`/register/report`, params)
+export const postMergeCharacterView = (params) => postApi(`/register/murgeCharacterView`, params)
+export const postMurgeCompositionView = (params) => postApi(`/register/murgeCompositionView`, params)
+export const postCharacterPageView = (params) => postApi(`/register/characterPageView`, params)
+export const postCompositionPageView = (params) => postApi(`/register/compositionPageView`, params)
 
 // ip
 export const getIpClient = () => {

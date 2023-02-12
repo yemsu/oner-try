@@ -71,16 +71,13 @@ export default {
     ItemTable
   },
   async asyncData({ store }) {
+    await store.dispatch('item/GET_SAILORS_SYNERGY')
     const { item: { sailors_synergy } } = store.state
-    const sailors = sailors_synergy.length === 0
-      ? await store.dispatch('item/GET_SAILORS_SYNERGY')
-      : sailors_synergy
-
     const commonMenu = { all: 'ALL' }
     const gradeMenus = Object.assign({...commonMenu}, gradesDef)
     const optionMenus =  Object.assign({...commonMenu}, noEquipOptions)
     return {
-      sailors,
+      synergySailors: sailors_synergy,
       optionMenus,
       gradeMenus
     }
@@ -101,11 +98,11 @@ export default {
     }
   },
   created() {
-    this.resultSailors = this.sailors
+    this.resultSailors = this.synergySailors
   },
   methods: {
     setResultSailors() {
-      const resultSailors = this.sailors.filter(sailor => {
+      const resultSailors = this.synergySailors.filter(sailor => {
         const { grade, option: options } = sailor
         const isAllGrade = this.gradesSelected.length === 0
         const isAllOption = this.optionsSelected.length === 0

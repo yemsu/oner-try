@@ -29,7 +29,7 @@ header {
       }
     }
     .logo {
-      background-color: $color-point;
+      background-color: var(--color-point);
     }
     nav {
       a {
@@ -37,8 +37,8 @@ header {
         &.nuxt-link-active,
         &.is-active {
           font-weight: 400;
-          color: #fff;
-          background-color: $color-point;
+          color: var(--color-white);
+          background-color: var(--color-point);
         }
       }
     }

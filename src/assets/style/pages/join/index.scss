@@ -10,13 +10,13 @@
     font-weight: 500;
   }
   .text-block {
-    color: $color-ban;
+    color: var(--color-ban);
     &:after {
       content: ' ❌';
     }
   }
   .text-pass {
-    color: $badge-color-green;
+    color: var(--badge-color-green);
     &:after {
       content: ' ✔';
     }
@@ -38,7 +38,7 @@
   }
   .btn-enter {
     font-size: $font-size-B-pc;
-    color: $color-point;
+    color: var(--color-point);
     font-weight: 500;
     animation: enterAni 01s ease infinite;
   }

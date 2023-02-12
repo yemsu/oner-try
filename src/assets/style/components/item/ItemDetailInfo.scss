@@ -63,26 +63,26 @@ $font-small: $font-size-S-pc;
   &.color {
     &-black {
       .title {
-        color: var(--color-gray-200);
+        color: var(--color-gray-50);
       }
       .drop-monster {
         .title {
           &.color-point {
-            color: $color-point;
+            color: var(--color-point);
           }
         }
       }
       .option {
         .title {
           &.color-point {
-            color: $color-point-sub;
+            color: var(--color-point-sub);
           }
         }
       }
     }
     &-white {
       .title {
-        color: var(--color-gray-200);
+        color: var(--color-gray-50);
       }
       dd {
         color: var(--color-white);
@@ -91,14 +91,14 @@ $font-small: $font-size-S-pc;
       .drop-monster {
         .title {
           &.color-point {
-            color: $color-point-bright;
+            color: var(--color-point-bright);
           }
         }
       }
       .option {
         .title {
           &.color-point {
-            color: $color-point-sub-bright;
+            color: var(--color-point-sub-bright);
           }
         }
         dd {
@@ -109,7 +109,7 @@ $font-small: $font-size-S-pc;
   }
   .option-match {
     padding-left: 5px;
-    background-color: $color-mark;
+    background-color: var(--color-text-highlight);
     .title {
       color: var(--color-dark);
     }
@@ -119,6 +119,6 @@ $font-small: $font-size-S-pc;
   }
   .mark {
     // font-weight: bold;
-    color: $color-neon;
+    color: var(--color-green-neon);
   }
 }

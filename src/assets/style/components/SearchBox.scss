@@ -61,12 +61,12 @@
           min-width: 2em;
           padding-left: 10px;
           font-size: $font-size-S-pc;
-          color: var(--color-dark-gray);
+          color: var(--color-gray-40);
         }
         .value-ranking {
           padding-right: 10px;
           font-size: $font-size-S-pc;
-          color: $color-point-sub;
+          color: var(--color-point-sub);
         }
       }
     }

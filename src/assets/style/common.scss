@@ -4,7 +4,7 @@
 $font-family: 'Pretendard Variable', sans-serif;
 
 body {
-  background-color: var(--bg-light-point-200);
+  background-color: var(--color-gray-85);
   font-size: $font-size-M-pc;
   line-height: 1.5;
   color: var(--color-black);
@@ -48,7 +48,7 @@ i {
 //  top bar
 .top-bar {
   padding: 6px 0;
-  background-color: $color-point-400;
+  background-color: var(--color-gray-50);
   > [class*=inner] {
     display: flex;
     > .align-right {
@@ -75,11 +75,11 @@ caption, .ir-hidden {
 .svg-icon path,
 .svg-icon polygon,
 .svg-icon rect {
-  fill: $color-point;
+  fill: var(--color-point);
 }
 
 .svg-icon circle {
-  stroke: $color-point;
+  stroke: var(--color-point);
   stroke-width: 1;
 }
 
@@ -155,11 +155,11 @@ caption, .ir-hidden {
     transform: rotate(45deg) translate(-40%, -30%);
   }
   &.border-neon:before {
-    border-color: $color-neon;
+    border-color: var(--color-green-neon);
   }
   &.border-point {
     &:before {
-      border-color: $color-point;
+      border-color: var(--color-point);
     }
   }
   &.border-black {
@@ -169,7 +169,7 @@ caption, .ir-hidden {
   }
   &.border-dark-gray {
     &:before {
-      border-color: var(--border-dark-gray);
+      border-color: var(--color-gray-40);
     }
   }
 }
@@ -257,21 +257,21 @@ caption, .ir-hidden {
     letter-spacing: 0;
   }
   &.point {
-    background-color: $color-point;
-    border-color: $color-point;
+    background-color: var(--color-point);
+    border-color: var(--color-point);
     font-weight: 300;
     color: #fff;
     letter-spacing: 0;
   }
   &.line-gold {
-    border: 1px solid $color-gold;
+    border: 1px solid var(--border-gold);
   }
   &.line-gray {
-    border: 1px solid var(--border-gray-100);
+    border: 1px solid var(--color-gray-85);
   }
   &.banned {
     margin-left: 5px;
-    background-color: $color-ban;
+    background-color: var(--color-ban);
     font-weight: 300;
     color: #ffc;
   }
@@ -302,7 +302,7 @@ caption, .ir-hidden {
       &:before {
         position: absolute;
         left: 0;
-        color: var(--color-gray);
+        color: var(--color-gray-65);
         transform: translate(-50%, 0);
         content: '|';
       }
@@ -329,16 +329,16 @@ caption, .ir-hidden {
 
 // link
 .text-link {
-  color: $color-point;
+  color: var(--color-point);
 }
 // bar-notice
 .bar-notice {
   width: 100%;
   padding: 10px;
   margin-bottom: 30px;
-  border: 1px solid $color-point;
+  border: 1px solid var(--color-point);
   background-color: rgba(255, 255, 255, 0.5);
-  color: $color-point;
+  color: var(--color-point);
   text-align: center;
   a {
     color: inherit;
@@ -364,7 +364,7 @@ caption, .ir-hidden {
 .box-gray {
   padding: 10px 10px;
   border-radius: 5px;
-  background-color: #f6f6f6;
+  background-color: var(--bg-light-gray);
   & + .box-gray {
     margin-top: 5px;
   }
@@ -377,21 +377,21 @@ caption, .ir-hidden {
 // positive / netavie
 .color {
   &-positive {
-    color: $color-point-sub
+    color: var(--color-point-sub)
   }
   &-negative,
   &-point {
-    color: $color-point;
+    color: var(--color-point);
   }
   &-banned {
-    color: $color-ban;
+    color: var(--color-ban);
   }
 }
 .line {
   &-positive {
-    border-color: $color-point-sub-pale;
+    border-color: var(--color-point-sub-pale);
   }
   &-negative {
-    border-color: $color-point-pale;
+    border-color: var(--color-point-pale);
   }
 }

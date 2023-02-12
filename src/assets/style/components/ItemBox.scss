@@ -157,10 +157,10 @@ $name-space: 5px;
         margin-bottom: 5px;
       }
       .area-img {
-        border: 1px solid $wanted-brown;
+        border: 1px solid var(--wanted-brown);
       }
       .bounty {
-        color: $wanted-brown;
+        color: var(--wanted-brown);
         font-weight: bold;
         white-space: nowrap;
       }
@@ -191,7 +191,7 @@ $name-space: 5px;
     white-space: nowrap;
   }
   .tooltip {
-    $tooltip-bg: var(--bg-dark-dim);
+    $tooltip-bg: var(--bg-tooltip-dim);
     display: none;
     position: absolute;
     z-index: 2;
@@ -221,5 +221,5 @@ $name-space: 5px;
   margin-top: 10px;
 }
 .color-neon {
-  color: $color-neon;
+  color: var(--color-green-neon);
 }

@@ -39,135 +39,134 @@
         </tr>
       </thead>
       <tbody>
-        <template
+        <tr
           v-for="(item, i) in items"
+          :key="`item-tr2-${i}`"
         >
-          <tr :key="`item-tr2-${i}`">
-            <template
-              v-for="(data, i) in tableData"
+          <template
+            v-for="(data, i) in tableData"
+          >
+            <th
+              v-if="data.th"
+              :key="`tr2-th-${i}`"
+              :class="data.align ? `text-${data.align}` : ''"
             >
-              <th
-                v-if="data.th"
-                :key="`tr2-th-${i}`"
-                :class="data.align ? `text-${data.align}` : ''"
+              {{ data.th }}
+            </th>
+            <td
+              v-else
+              :key="`tr2-td-${i}`"
+              :class="[
+                data.align ? `text-${data.align}` : ''
+              ]"
+            >
+              <!-- 아이템 -->
+              <template v-if="data.type === 'item'">
+                <item-box
+                  v-for="(tableItem, i) in tableItems(item)"
+                  :key="`tableItem${i}`"
+                  type="list"
+                  :item="tableItem"
+                  :showBadges="['howGet']"
+                  :showTooltip="false"
+                  buttonTitle="클릭하여 조합 보러가기"
+                  :padding="false"
+                />
+              </template>
+              <!-- 옵션 -->
+              <item-detail-info
+                v-if="data.type === 'option'"
+                :options="item.option"
+                :markOptions="optionsSelected"
+                :highlightTitle="false"
+              />
+              <!-- 인연 / 악연 -->
+              <template v-if="data.type === 'synergy'">
+                <synergy-desc
+                  v-if="item.synergies.length !== 0"
+                  :synergies="item.synergies"
+                />
+                <span v-else>-</span>
+              </template>
+              <!-- 콜로세움 -->
+              <span
+                v-if="data.type === 'coloYn'"
+                :class="`text-center color-${classNegaPosi(item)}`"
               >
-                {{ data.th }}
-              </th>
-              <td
-                v-else
-                :key="`tr2-td-${i}`"
-                :class="[
-                  data.align ? `text-${data.align}` : ''
-                ]"
+                {{ item.coloYn ? '가능' : '불가능' }}
+              </span>
+              <!-- 콜로세움 능력치 -->
+              <template v-if="data.type === 'coloPassive'">
+                <div v-if="item.coloYn" class="columns">
+                  <div class="wrap-options small">
+                    <item-detail-info
+                      :options="item.coloOption"
+                      :highlightTitle="false"
+                      :pureValue="true"
+                    />
+                  </div>
+                  <div v-if="item.coloPassive" class="wrap-passive box-gray">
+                    <p class="title badge-text-wrap">
+                      {{ item.coloPassive[0] }}
+                      <span :class="`badge last ${classColoPassive(item.coloPassive[1])}`">
+                        {{ item.coloPassive[1] }}
+                      </span>
+                    </p>
+                    <p>{{ item.coloPassive[2] }}</p>
+                  </div>
+                </div>
+              </template>
+              <!-- 선박 스택별 옵션 -->
+              <div
+                v-if="data.type.includes('optionsByStack')"
+                class="many-text"
               >
-                <!-- 아이템 -->
-                <template v-if="data.type === 'item'">
-                  <item-box
-                    v-for="(tableItem, i) in tableItems(item)"
-                    :key="`tableItem${i}`"
-                    type="list"
-                    :item="tableItem"
-                    :showBadges="['howGet']"
-                    :showTooltip="false"
-                    buttonTitle="클릭하여 조합 보러가기"
-                    :padding="false"
-                  />
-                </template>
-                <!-- 옵션 -->
+              {{ item.stackNames && item.stackNames[optionIndex(data)] }}
                 <item-detail-info
-                  v-if="data.type === 'option'"
-                  :options="item.option"
+                  :options="item.optionsByStack[optionIndex(data)]"
                   :markOptions="optionsSelected"
                   :highlightTitle="false"
                 />
-                <!-- 인연 / 악연 -->
-                <template v-if="data.type === 'synergy'">
-                  <synergy-desc
-                    v-if="item.synergies.length !== 0"
-                    :synergies="item.synergies"
-                  />
-                  <span v-else>-</span>
-                </template>
-                <!-- 콜로세움 -->
-                <span
-                  v-if="data.type === 'coloYn'"
-                  :class="`text-center color-${classNegaPosi(item)}`"
+                <item-detail-info
+                  v-if="item.gradeOption"
+                  :options="item.gradeOption"
+                  :markOptions="optionsSelected"
+                  :highlightTitle="false"
+                />
+              </div>
+              <!-- 장비 등급별 옵션 -->
+              <dl
+                v-if="data.type.includes('optionsByGrade')"
+                class="grade-option box-text"
+              >
+                <template
+                  v-for="(gradeOption, i) in item.optionsByGrade" 
                 >
-                  {{ item.coloYn ? '가능' : '불가능' }}
-                </span>
-                <!-- 콜로세움 능력치 -->
-                <template v-if="data.type === 'coloPassive'">
-                  <div v-if="item.coloYn" class="columns">
-                    <div class="wrap-options small">
+                  <div
+                    v-if="item.stackNames[i]"
+                    :key="`optionsByGrade${i}`"
+                    class="box-flex"
+                  >
+                    <dt class="title-small left">{{ item.stackNames[i] }}</dt>
+                    <dd>
                       <item-detail-info
-                        :options="item.coloOption"
+                        v-if="gradeOption"
+                        :options="gradeOption"
+                        :markOptions="optionsSelected"
                         :highlightTitle="false"
-                        :pureValue="true"
                       />
-                    </div>
-                    <div v-if="item.coloPassive" class="wrap-passive box-gray">
-                      <p class="title badge-text-wrap">
-                        {{ item.coloPassive[0] }}
-                        <span :class="`badge last ${classColoPassive(item.coloPassive[1])}`">
-                          {{ item.coloPassive[1] }}
-                        </span>
-                      </p>
-                      <p>{{ item.coloPassive[2] }}</p>
-                    </div>
+                      <span v-else> - </span>
+                    </dd>
                   </div>
                 </template>
-                <!-- 선박 스택별 옵션 -->
-                <div
-                  v-if="data.type.includes('optionsByStack')"
-                  class="many-text"
-                >
-                {{ item.stackNames && item.stackNames[optionIndex(data)] }}
-                  <item-detail-info
-                    :options="item.optionsByStack[optionIndex(data)]"
-                    :markOptions="optionsSelected"
-                    :highlightTitle="false"
-                  />
-                  <item-detail-info
-                    v-if="item.gradeOption"
-                    :options="item.gradeOption"
-                    :markOptions="optionsSelected"
-                    :highlightTitle="false"
-                  />
-                </div>
-                <!-- 장비 등급별 옵션 -->
-                <dl
-                  v-if="data.type.includes('optionsByGrade')"
-                  class="grade-option box-text"
-                >
-                  <template
-                    v-for="(gradeOption, i) in item.optionsByGrade" 
-                  >
-                    <div
-                      v-if="item.stackNames[i]"
-                      :key="`optionsByGrade${i}`"
-                      class="box-flex"
-                    >
-                      <dt class="title-small left">{{ item.stackNames[i] }}</dt>
-                      <dd>
-                        <item-detail-info
-                          v-if="gradeOption"
-                          :options="gradeOption"
-                          :markOptions="optionsSelected"
-                          :highlightTitle="false"
-                        />
-                        <span v-else> - </span>
-                      </dd>
-                    </div>
-                  </template>
-                </dl>
-                <!-- string -->
-                <span v-if="data.type === 'string'">
-                  {{ item[data.key] }}
-                </span>
-              </td>
-            </template>
-          </tr>
-        </template>
+              </dl>
+              <!-- string -->
+              <span v-if="data.type === 'string'">
+                {{ item[data.key] }}
+              </span>
+            </td>
+          </template>
+        </tr>
       </tbody>
     </table>
   </section>
