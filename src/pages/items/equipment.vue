@@ -71,9 +71,6 @@ export default {
   created() {
     this.resultEquipments = this.equipments
   },
-  mounted() {
-    console.log('equipments', this.equipments)
-  },
   methods: {
     setResultEquipments() {
       const resultEquipments = this.equipments.filter(equipment => {

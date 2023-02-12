@@ -4,7 +4,8 @@
       <div class="inner-size-basic">
         <div class="align-right">
           <character-search-box
-            :matchingData="gameUsers"
+            v-if="gameUsers"
+            :full-data="gameUsers"
             size="small"
           />
         </div>
@@ -108,7 +109,7 @@ import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageVi
 import { postCharacterPageView, getCharacterPageViews, postMergeCharacterView } from '@/plugins/utils/https'
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  name: 'CharacterResult',
+  name: 'character-result',
   components: {
     VTab,
     TitleContent,
@@ -180,8 +181,13 @@ export default {
       getGameUser: 'character/GET_GAME_USERS'
     }),
     async getUserData(nickName) {
+      const result = await this.getUserCharacters({ nickName })
+      if(!result) {
+        alert('존재하지 않는 유저입니다.')
+        this.$router.push({ name: 'character'})
+        return
+      }
       this.nickname = nickName
-      await this.getUserCharacters({ nickName })
       this.sendPageView()
       console.log('userCharacters', nickName, this.userCharacters)
     },

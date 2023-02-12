@@ -8,15 +8,15 @@
       <base-input
         usage="search"
         :size="size"
-        :category="category"
+        :placeholder="placeholder"
         :value="inputValue"
         :isCompactMode="size === 'small' && !isSearching"
-        :isActive="isSearching && !!matchingData.data"
+        :isActive="isSearching && !!matchingData"
         :focusOnMounted="size === 'big' && true"
         @onUpdateInput="updateInput"
         @onFocusInput="focusInput"
         @onBlurInput="blurInput"
-        @onEnter="routerPush(useAutoEnter ? matchDataSliced[0] : inputValue)"
+        @onEnter="onSearch(useAutoEnter ? matchDataSliced[0] : inputValue)"
       />
       
       <search-box-skeleton 
@@ -24,7 +24,7 @@
         :is-item="isItem"
       />
       <section
-        v-else-if="rankingList && isSearching && matchingData.data"
+        v-else-if="rankingList && isSearching && matchingData"
         class="items-match"
       >
         <h2 v-if="showRankingList" class="title-list"> 검색 순위 <span>TOP 10</span></h2>
@@ -36,19 +36,14 @@
           <p v-if="showRankingList" class="number-ranking">{{ i + 1 }}</p>
           <template>
             <button
-              :class="{'button-keyword': !isItem}"
-              @click="routerPush(data)"
+              @click="onSearch(data)"
             >
-              <item-box
-                v-if="isItem"
-                size="small"
-                type="list"
-                :item="data"
-                :showBadges="['howGet']"
-                :showTooltip="false"
-                :isLink="false"
-              />
-              <p v-else>
+              <slot
+                v-if="customMatchDataItem"
+                name="matchDataItem"
+                :props="data"
+              ></slot>
+              <p v-else class="keyword">
                 {{ data }}
               </p>
             </button>
@@ -70,32 +65,20 @@ export default {
   },
   props: {
     matchingData: {
-      type: Object,
-      default: () => {}
+      type: Array,
+      required: true
     },
-    category: {
+    placeholder: {
       type: String,
-      default: () => ''
+      required: true
     },
-    mode: {
-      type: String,
-      default: () => ''
-    },
-    defaultMatchingList: {
+    isItem: {
       type: Boolean,
-      default: () => true
+      default: () => false
     },
     size: {
       type: String,
       default: () => 'basic'
-    },
-    paramKey: {
-      type: Array,
-      default: () => []
-    },
-    resultPath: {
-      type: String,
-      default: () => '/'
     },
     rankingList: {
       type: Array,
@@ -105,35 +88,21 @@ export default {
       type: Boolean,
       default: () => true
     },
-    alertMessage: {
-      type: String,
-      default: () => '잘못된 검색어 입니다.'
-    },
-    useParam: {
+    customMatchDataItem: {
       type: Boolean,
-      default: true
-    }
+      default: () => false
+    },
   },
   data() {
     return {
       inputValue: '',
-      result: '',
       isSearching: false
     }
   },
   watch: {
-    $route(newVal, oldVal) {
-      const newparams = newVal[this.paramOrQuery]
-      const oldparams = oldVal[this.paramOrQuery]
-      console.log('searchBox route watch', this.paramKey, this.paramKey[0], newparams, newparams[this.paramKey[0]])
-      if(!newparams[this.paramKey[0]]) {
-        // console.log('no params')
-        this.onRemoveSearchResult()
-      } else if(newparams !== oldparams) {
-        this.routeparamsHandler(newparams)
-        this.scrollToTop()
-      }
-    }
+    $route(crr, pre) {
+      if(this.inputValue) this.inputValue = ''
+    },
   },
   computed: {
     ...mapGetters({
@@ -142,137 +111,24 @@ export default {
     showRankingList() {
       return this.rankingList && !this.inputValue
     },
-    noDefaultMatchingList() {
-      return !this.defaultMatchingList && !this.inputValue
-    },
     matchDataSliced() {
-      if(this.noDefaultMatchingList) return []
-      if(this.showRankingList) return this.rankingList
-      const { data, type } = this.matchingData
-      const sliceNum = 10
-      if(!this.inputValue) return data.slice(0, sliceNum)
-      const noBlank = target => {
-        return target.replace(/ /g, '')
-      }
+      if(!this.inputValue && this.showRankingList) return this.rankingList
+      const SLICE_NUM = 10
+      const noBlank = target => target.replace(/ /g, '')
       const value = noBlank(this.inputValue)
-      const dataFiltered = data.filter(dataItem =>  {
-        const targetData = type === 'item' ? dataItem.name : dataItem.nickName
-        const findMatch = noBlank(targetData).toLowerCase().includes(value.toLowerCase())
+      const result = this.matchingData.filter(dataItem =>  {
+        const findMatch = noBlank(dataItem).toLowerCase().includes(value.toLowerCase())
         return findMatch
       })
-      const result = type === 'string' ? dataFiltered.map(({ nickName }) => nickName) : dataFiltered      
-      return result.slice(0, sliceNum)
+      return result.slice(0, SLICE_NUM)
     },
-    isItem() {
-      return this.matchingData?.type === 'item'
-    },
-    paramOrQuery() {
-      return this.useParam ? 'params' : 'query'
-    }
-  },
-  mounted() {
-    this.routeparamsHandler()
-      // console.log('params', this.$router, this.$route,)
   },
   methods: {
-    ...mapMutations({
-      setUserCharacters: 'character/SET_USER_CHARACTERS'
-    }),
     onSearch(value) {
+      console.log('onSearch', value)
       this.$emit('onSearch', value)
       this.inputValue = ''
       this.blurInput()
-    },
-    routerPush(value) {    
-      if(this.matchingData.type === 'string') {
-        this.goCharacterSearchResult(value)
-        return
-      }
-      this.goCompositionSearchResult(value)
-    },
-    async goCharacterSearchResult(value) {
-      this.setUserCharacters([]) // reset 하지 않으면 잘못된 닉네임으로 검색해도 이전 userCharacter 유지한채 화면이 넘어가버림.
-      await this.$store.dispatch('character/GET_USER_CHARACTERS', { nickName: value })
-      console.log('this.userCharacters', this.userCharacters)
-      if(this.userCharacters.length === 0) {
-        alert(this.alertMessage)
-        this.inputValue = ''
-        this.$router.push(`${this.resultPath}`)
-        return
-      }
-      const paramOrQuery = this.useParam ? `/${value}` : `/result?${this.paramKey}=${value}`
-      this.$router.push(`${this.resultPath}${paramOrQuery}`)
-    },
-    goCompositionSearchResult(value) {
-      const params = this.paramKey.reduce((acc, key) => {
-        const checkValue = !value
-          ? this.inputValue
-          : typeof(value) === 'string'
-            ? value : value[key]
-        acc += '/' + checkValue
-        return acc
-      }, '')
-      this.$router.push(`${this.resultPath}${params}`)
-    },
-    routeparamsHandler(params) {
-      params = params || this.$route[this.paramOrQuery]
-      
-      const noparams = Object.keys(params).length === 0
-      if(noparams) return false
-
-      const result = this.findResultByParams(params)
-      // console.log('result', result)
-      if(!result) {
-        alert('잘못된 파라미터 값입니다.')
-      const path0 = '/' + this.$route.path.split('/')[1]
-        this.$router.push(path0)
-        return false
-      }
-      this.onSearch(result)
-    },
-    findResultByParams(params) {
-      if(!params[this.paramKey[0]]) return false
-      const result = this.matchingData.type === 'item'
-        ? this.findMatchItem(params)[0]
-        : params[this.paramKey[0]]
-
-      return this.checkErrorResultParams(params, result) && result
-    },
-    findTotalMatchItem() {
-      const result = this.paramKey.reduce((acc, key) => {
-        const targetArr = acc.length === 0 ? this.matchingData.data : acc
-        const matchparamsData = targetArr.filter(item => item[key] === params[key])
-        acc = matchparamsData
-        return acc
-      }, [])
-
-      return result
-    },
-    findMatchItem(params) {
-      const result = this.paramKey.reduce((acc, key) => {
-        const targetArr = acc.length === 0 ? this.matchingData.data : acc
-        const matchparamsData = targetArr.filter(item => item[key] === params[key])
-        acc = matchparamsData
-        return acc
-      }, [])
-
-      return result
-    },
-    hasResult(params) {
-      const { data } = this.matchingData
-      return data.filter(item => item === params)
-    },
-    checkErrorResultParams(params, result) {
-      if(this.matchingData.data !== 'item') return true
-      if(!result) {
-        alert('params에 해당하는 결과를 찾을 수 없습니다.', params)
-        return false
-      } else if(Array.isArray(result) && result.length > 1) {
-        console.error('SearchBox.vue -> findResultByParams(): result 배열의 갯수는 1개여야 합니다.', result)
-        return false
-      } else {
-        return true
-      }
     },
     focusInput() {
       if(!this.isSearching) this.isSearching = true
@@ -285,9 +141,6 @@ export default {
     updateInput(value) {
       // console.log('updateInput', value)
       this.inputValue = value
-    },
-    onRemoveSearchResult() {
-      this.$emit('onRemoveSearchResult')
     },
     scrollToTop() {
       setTimeout(() => {

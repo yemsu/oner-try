@@ -12,7 +12,7 @@
       ref="baseInput"
       :id="id"
       :type="inputType"
-      :placeholder="isCompactMode ? '' : `${category}${this.usage.includes('search') ? ' 검색' : ''}`"
+      :placeholder="isCompactMode ? '' : placeholder"
       :value="value"
       @input="onUpdateInput"
       @focus="onFocusInput"
@@ -38,7 +38,7 @@ export default {
       type: String,
       default: () => 'text',
     },
-    category: {
+    placeholder: {
       type: String,
       default: () => ''
     },
