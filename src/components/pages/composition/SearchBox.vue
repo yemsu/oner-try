@@ -6,7 +6,6 @@
     :size="size"
     resultPath="/composition"
     :paramKey="['type', 'id']"
-    alert-message="해당 아이템이 존재하지 않습니다."
     @onSearch="fnSearch"
   />
 </template>
@@ -23,10 +22,6 @@ export default {
     size: {
       type: String,
       default: () => "basic"
-    },
-    fnSearch: {
-      type: Function,
-      default: () => {}
     }
   },
   data() {
@@ -51,6 +46,14 @@ export default {
       getPageView: 'pageView/GET_COMPOSITION',
       getItems: 'item/GET_ITEMS',
     }),
+    fnSearch(item) {
+      if(!item) {
+        alert('해당 아이템이 존재하지 않습니다.')
+        return
+      }
+      const { id, type } = item
+      this.$router.push(`/composition/${type}/${id}`)
+    }
   }
 }
 </script>

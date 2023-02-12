@@ -4,17 +4,13 @@
     :matchingData="{type: 'string', data: matchingData}"
     :rankingList="rankingList"
     :size="size"
-    resultPath="/character"
-    :paramKey="['nickname']"
-    :use-param="false"
     :use-auto-enter="false"
-    alert-message="존재하지 않는 닉네임이거나, 보유 캐릭터가 없습니다."
     @onSearch="fnSearch"
   />
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   props: {
     matchingData: {
@@ -24,10 +20,6 @@ export default {
     size: {
       type: String,
       default: () => "basic"
-    },
-    fnSearch: {
-      type: Function,
-      default: () => {}
     }
   },
   data() {
@@ -47,9 +39,29 @@ export default {
     this.rankingList = this.pageViewRanking.map(data => Object.keys(data)[0])
   },
   methods: {
+    ...mapMutations({
+      setUserCharacters: 'character/SET_USER_CHARACTERS'
+    }),
     ...mapActions({
+      getUserCharacters: 'character/GET_USER_CHARACTERS',
       getPageView: 'pageView/GET_CHARACTER',
     }),
+    async fnSearch(nickName) {
+      const isExistingUser = this.matchingData.find(data => data.nickName === nickName)
+      console.log('isExistingUser', isExistingUser)
+      if(!isExistingUser) {
+        // 존재하지 않는 아이디인 경우 
+        const result = await this.getUserCharacters({ nickName })
+        if(!result) {
+          alert('존재하지 않는 유저입니다.')
+          return
+        }
+      }
+      this.$router.push({
+        name: 'character-result',
+        query: { nickname: nickName }
+      })
+    }
   }
 }
 </script>

@@ -60,7 +60,7 @@ export const actions = {
     if(synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
     return getUserCharacters(payload)
       .then(({data}) => {
-        if(!data) return []
+        if(!data) return false
         const newData = data.map(character => {
           // hero
           const heroData = findData(rootState.item.heroes, 'name', character.heroName)

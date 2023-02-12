@@ -113,8 +113,7 @@ export default {
     ItemTree,
   },
   async asyncData({ store, params }) {
-    await store.dispatch('item/GET_ITEMS')
-    const { item: { items } } = store.state
+    const items = await store.dispatch('item/GET_ITEMS')
     const { id, type } = params
     const compositionItems = items.filter(item => item.ingredients)
     const item = items.find(item => item.id === id && item.type === type)
@@ -129,11 +128,6 @@ export default {
       itemSelected: null,
       allIngrdnts: [],
       highRankItems: []
-    }
-  },
-  watch: {
-    itemSelected(crr, prev) {
-      console.log('itemSelected', crr.id)
     }
   },
   computed: {
@@ -166,7 +160,7 @@ export default {
     }
   },
   mounted() {
-
+    if(!this.itemSelected) this.fnSearch(this.itemName)
     // this.mergePVData()
   },
   methods: {

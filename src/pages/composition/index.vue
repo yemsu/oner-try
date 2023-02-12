@@ -19,7 +19,7 @@ import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from "vuex";
 
 export default {
-  name: 'SearchCharacter',
+  name: 'composition',
   components: {
     CompositionSearchBox,
     ItemCheckerBoard
