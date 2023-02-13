@@ -177,6 +177,9 @@ export default {
       return this.useLink ? 'nuxt-link' : 'div'      
     }
   },
+  mounted() {
+    console.log('itembox', this.item)
+  },
   methods: {
     clickItem() {
       const { id, type } = this.item

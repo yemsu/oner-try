@@ -25,7 +25,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import { parserStrData } from '@/plugins/utils/item'
+import { parserStrData, parseItemData } from '@/plugins/utils/item-mrpg'
 
 export default {
   name: 'item-setting',
@@ -63,14 +63,13 @@ export default {
       this.materialNameList = this.getValueList(this.materials, 'name')
     },
     fnSearch(name) {
-      this.selectedItems.push(this.setSelectedItems(name))
+      this.selectedItems.push(this.getItemData(name))
       this.equipmentNameList = this.equipmentNameList.filter((itemName) => itemName !== name)
       console.log('fnsearch', name, this.selectedItems)
     },
-    setSelectedItems(name) {
-      const rawItem = this.equipments.find(item => item.name === name)
-      const item = Object.assign({...rawItem}, {option: parserStrData(rawItem.option)})
-      return item
+    getItemData(name) {
+      const item = this.equipments.find(item => item.name === name)
+      return parseItemData(item)
     },
     setEquipmentTypes() {
       const equipmentTypeValues = this.getValueList(this.equipments, 'type')

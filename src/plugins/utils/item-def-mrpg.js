@@ -1,15 +1,19 @@
 export const equipmentsPropNames = {
-  active: '액티브',
-  dedicatedOption: '직업 전용',
   dropMonster: '드랍',
   grade: '장비등급',
   ingredients: '재료',
   level: 'Lv.',
   name: '아이템명',
   option: '옵션',
+  active: '액티브',
+  dedicatedOption: '직업 전용',
   passive: '패시브',
   type: '유형'
 }
+
+export const itemsHasSubTitle = [
+  'active', 'dedicatedOption', 'passive'
+]
 
 export const itemTypeNames = {
   staff: '[마법]',

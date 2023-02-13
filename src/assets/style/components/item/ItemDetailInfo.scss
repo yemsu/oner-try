@@ -115,6 +115,9 @@ $font-small: $font-size-S-pc;
           font-weight: 400;
         }
       }
+      .title-sub {
+        color: var(--color-info-title-sub);
+      }
     }
   }
   .option-match {

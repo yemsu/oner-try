@@ -25,16 +25,33 @@
         <dt class="title">
           {{ getPropName(infoName) }}
         </dt>
-        <dd class="info">
-          {{ infoName === 'type' ? getItemTypeName(item[infoName]) : item[infoName] }}
-        </dd>
+        <div
+          v-if="infoName === 'ingredients'"
+          class="ingredients"
+        >
+          <dd
+            v-for="({ name, number }, i) in item[infoName]"
+            :key="`ingredient${i}`"
+            class="info"
+          >
+            {{ name }} * {{ number }}
+          </dd>
+        </div>
+        <div
+          v-else-if="itemsHasSubTitle.includes(infoName)"
+          class="has-sub-title"
+        >
+          <dd class="title-sub">{{ item[infoName].subTitle }}</dd>
+          <dd class="desc">{{ item[infoName].desc }}</dd>
+        </div>
+        <dd v-else class="info">{{ item[infoName] }}</dd>
       </div>
     </template>
   </dl>
 </template>
 
 <script>
-import { itemDetailInfoOrder, equipmentsPropNames, percentOptions, totalOptions, itemTypeNames } from '@/plugins/utils/item-def-mrpg'
+import { itemDetailInfoOrder, equipmentsPropNames, percentOptions, totalOptions, itemTypeNames, itemsHasSubTitle } from '@/plugins/utils/item-def-mrpg'
 export default {
   props: {
     item: {
@@ -77,6 +94,9 @@ export default {
   computed: {
     itemDetailInfoOrder() {
       return itemDetailInfoOrder
+    },
+    itemsHasSubTitle() {
+      return itemsHasSubTitle
     }
   },
   methods: {
@@ -120,7 +140,7 @@ export default {
     },
     getItemTypeName(keyName) {
       return itemTypeNames[keyName]
-    },
+    }
   }
 }
 </script>
