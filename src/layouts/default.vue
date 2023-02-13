@@ -23,7 +23,7 @@ export default {
 .container {
   position: relative;
   min-height: 100vh;
-  $header-height: 80px;
+  $header-height: $header-game-menu-height + $header-site-menu-height;
   padding: $header-height 0 100px;
 }
 </style>

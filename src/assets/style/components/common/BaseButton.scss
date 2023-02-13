@@ -31,7 +31,7 @@
         min-width: 50px;
         padding: 0 10px;
         font-size: $font-size-M-pc;
-        line-height: 36px;
+        line-height: $square-btn-medium-line-height;
         text-align: center;
         .text {
           opacity: .8;

@@ -1,5 +1,10 @@
 // layout
 $basic-container-width: 1080px;
+// header
+$top-menu-bar-vtc-pd: 5px;
+$square-btn-medium-line-height: 36px;
+$header-game-menu-height: $square-btn-medium-line-height + ($top-menu-bar-vtc-pd * 2);
+$header-site-menu-height: 32px;
 
 // size
 $font-size-title-B-pc: 30px;
