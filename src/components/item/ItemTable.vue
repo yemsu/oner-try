@@ -100,7 +100,7 @@
                 <div v-if="item.coloYn" class="columns">
                   <div class="wrap-options small">
                     <item-detail-info
-                      :options="item.coloOption"
+                      :item="item"
                       :highlightTitle="false"
                       :pureValue="true"
                     />
@@ -123,13 +123,13 @@
               >
               {{ item.stackNames && item.stackNames[optionIndex(data)] }}
                 <item-detail-info
-                  :options="item.optionsByStack[optionIndex(data)]"
+                  :item="item"
                   :markOptions="optionsSelected"
                   :highlightTitle="false"
                 />
                 <item-detail-info
                   v-if="item.gradeOption"
-                  :options="item.gradeOption"
+                  :item="item"
                   :markOptions="optionsSelected"
                   :highlightTitle="false"
                 />
@@ -151,7 +151,7 @@
                     <dd>
                       <item-detail-info
                         v-if="gradeOption"
-                        :options="gradeOption"
+                        :item="item"
                         :markOptions="optionsSelected"
                         :highlightTitle="false"
                       />

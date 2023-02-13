@@ -4,7 +4,7 @@
       <h1 class="logo"><nuxt-link to="/"><main-logo /></nuxt-link></h1>
       <nav>
         <h2 class="ir-hidden">ONER TRY 게임 메뉴</h2>
-        <nuxt-link to="/my/item-tree">꿈 RPG</nuxt-link>
+        <nuxt-link to="/my/build" class="is-active">꿈 RPG</nuxt-link>
         <a href="https://onertry.fun">원피스 RPG</a>
       </nav>
       <div class="area-side-menu">
@@ -51,8 +51,8 @@ export default {
           menuName: '아이템도감',
         },
         {
-          path: '/my/item-tree',
-          menuName: '아이템 트리',
+          path: '/my/item-setting',
+          menuName: '목표 아이템 설정',
         },
       ],
       siteSideMenuList: [

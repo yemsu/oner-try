@@ -1,23 +1,32 @@
 <template>
   <dl :class="`details type-${type} color-${colorMode} columns-${columns}`">
-    <div v-if="dropMonster" class="wrap-detail drop-monster">
-      <dt :class="['title', {'color-point': highlightTitle}]">획득처</dt>
-      <dd>{{ dropMonster }}</dd>
-    </div>
-    <template v-if="options">
+    <template v-for="infoName in itemDetailInfoOrder">
+      <template v-if="infoName === 'option'">
+        <div
+          v-for="(option, i) in item[infoName]"
+          :key="`itemOption${i}`"
+          :class="{'option-match': isMarkOption(Object.keys(option)[0])}"
+          class="wrap-detail info-option"
+        >
+          <dt class="title">
+            {{ getOption(option, 'title') || option }}
+          </dt>
+          <dd class="info">
+            {{ !plusMinusUnit || pureValue || isMinus(option) ? '' : '+' }}{{ optionValue(option) }} 
+            {{ pureValue ? '' : getOption(option, 'unit') }}
+          </dd>
+        </div>
+      </template>
       <div
-        v-for="(option, i) in options"
-        :key="`itemOption${i}`"
-        :class="{'option-match': isMarkOption(Object.keys(option)[0])}"
-        class="wrap-detail option"
+        v-else-if="item[infoName]"
+        :key="infoName"
+        :class="`wrap-detail info-${infoName}`"
       >
-        <dt :class="['title', {'color-point': highlightTitle}]">
-          {{ getOption(option, 'title') }}
+        <dt class="title">
+          {{ getPropName(infoName) }}
         </dt>
-        <dd>
-          {{ !plusMinusUnit || pureValue || isMinus(option) ? '' : '+' }}
-          {{ optionValue(option) }} 
-          {{ pureValue ? '' : getOption(option, 'unit') }}
+        <dd class="info">
+          {{ infoName === 'type' ? getItemTypeName(item[infoName]) : item[infoName] }}
         </dd>
       </div>
     </template>
@@ -25,16 +34,12 @@
 </template>
 
 <script>
-import { noUnitOptions, optionsMap } from '@/plugins/utils/item-def'
+import { itemDetailInfoOrder, equipmentsPropNames, percentOptions, totalOptions, itemTypeNames } from '@/plugins/utils/item-def-mrpg'
 export default {
   props: {
-    options: {
-      type: Array,
-      default: () => null
-    },
-    dropMonster: {
-      type: String,
-      default: () => null
+    item: {
+      type: Object,
+      required: true
     },
     colorMode: {
       type: String,
@@ -69,6 +74,11 @@ export default {
       default: () => []
     },
   },
+  computed: {
+    itemDetailInfoOrder() {
+      return itemDetailInfoOrder
+    }
+  },
   methods: {
     getOption(option, optionType) {
       const key = Object.keys(option)[0]
@@ -80,11 +90,11 @@ export default {
       }
     },  
     getOptionUnit(key) {
-      return noUnitOptions.includes(key) ? '' : '%'
+      return percentOptions.includes(key) ? '%' : ''
     },
     getOptionTitle(key) {
-      const findKey = [...optionsMap.keys()].find(optionKey => optionKey.toLowerCase() === key.toLowerCase())
-      return optionsMap.get(findKey) 
+      const findKey = [...Object.keys(totalOptions)].find(optionKey => optionKey.toLowerCase() === key.toLowerCase())
+      return totalOptions[findKey]
     },
     isMarkOption(option) {
       if(!this.markOptions) return false
@@ -104,7 +114,13 @@ export default {
         ? Math.floor(value)
         : valueDecimal.toFixed(3)
       return (result * 1).toLocaleString()
-    }
+    },
+    getPropName(keyName) {
+      return equipmentsPropNames[keyName]
+    },
+    getItemTypeName(keyName) {
+      return itemTypeNames[keyName]
+    },
   }
 }
 </script>

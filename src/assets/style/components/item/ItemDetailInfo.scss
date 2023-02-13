@@ -82,27 +82,37 @@ $font-small: $font-size-S-pc;
     }
     &-white {
       .title {
-        color: var(--color-gray-50);
+        color: var(--color-gray-70);
       }
       dd {
         color: var(--color-white);
-        font-weight: 300
+        font-weight: 200
       }
-      .drop-monster {
-        .title {
-          &.color-point {
-            color: var(--color-point-bright);
-          }
+      .info-type,
+      .info-level,
+      .info-grade {
+        .title, .info {
+          color: var(--color-info-stat);
+          font-weight: 400;
         }
       }
-      .option {
+      .info-option {
         .title {
-          &.color-point {
-            color: var(--color-point-sub-bright);
-          }
+          color: var(--color-point-bright);
+          font-weight: 400;
         }
-        dd {
-          letter-spacing: 0;
+      }
+      .info-active,
+      .info-dedicatedOption {
+        .title {
+          color: var(--color-info-active);
+          font-weight: 400;
+        }
+      }
+      .info-passive {
+        .title {
+          color: var(--color-info-passive);
+          font-weight: 400;
         }
       }
     }

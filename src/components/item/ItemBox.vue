@@ -53,8 +53,7 @@
       <div v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
         <item-detail-info 
           :colorMode="visibleDetail ? 'black' : 'white'"
-          :options="item.option"
-          :dropMonster="item.dropMonster"
+          :item="item"
           :type="itemDetailInfoType"
         />
         <div v-if="!visibleDetail && isComp" class="wrap-sub-text">

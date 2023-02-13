@@ -51,7 +51,7 @@ $color-point-sub-hsl: (192, 30%, 50%);
   // point
   --color-point: #{colorMaker($color-point-hsl)};
   --color-point-pale: #{colorMaker($color-point-hsl, -15%, 10%)};
-  --color-point-bright: #{colorMaker($color-point-hsl, 30%, 25%)};
+  --color-point-bright: #{colorMaker($color-point-hsl, 40%, 35%)};
   // point sub
   --color-point-sub: #{colorMaker($color-point-sub-hsl)};
   --color-point-sub-pale: #{colorMaker($color-point-sub-hsl, -15%, 10%)};
@@ -92,6 +92,11 @@ $color-point-sub-hsl: (192, 30%, 50%);
   --color-grade-epic-sub: #ffe945;
   --color-grade-rare: #aaff90;
   --color-grade-normal: #f7efec;
+
+  // 아이템 정보 온션별 컬러
+  --color-info-stat: hsl(48, 97%, 46%);
+  --color-info-active: #91D6BB;
+  --color-info-passive: #87CEFA;
 
   // 뱃지 컬러
   --badge-color-orange-light: hsla(19, 100%, 84%, 0.8); // 조합 아이템, 콜로세움 버프 효과
