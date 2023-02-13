@@ -15,10 +15,10 @@ export const getters = {
 
 export const mutations = {
   SET_EQUIPMENTS(state, data) {
-    state.ryuoes = data
+    state.equipments = data
   },
   SET_MATERIALS(state, data) {
-    state.ryuoes = data
+    state.materials = data
   },
 }
 export const actions = {
