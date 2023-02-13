@@ -5,7 +5,6 @@
       item ? item.grade : '',
       `size-${size}`,
       `type-${type}`,
-      {'wanted-paper': wantedPaper},
       {'round': isRoundImg},
       {'no-padding': !padding},
     ]">
@@ -18,7 +17,6 @@
         :title="linkTitle"
       >
         <div class="item-box-info">
-          <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
           <div class="area-img">
             <item-image 
               :item="itemImageData"
@@ -38,7 +36,7 @@
             />
           </div>
           <div
-            v-if="!wantedPaper && showName"
+            v-if="showName"
             class="area-name"
           >
             <p class="name"><span class="text">{{ item.name }}</span></p>
@@ -48,11 +46,6 @@
               :target="item.id"
             />
           </div>
-          <p v-if="wantedPaper && showBounty" class="bounty"><span class="text">$ {{ item.bounty || 0 }}</span></p>
-          <template v-if="isPirateKing">
-            <span class="crown">👑</span>
-            <span class="money">💰</span>
-          </template>
         </div>
       </nuxt-link>
       
@@ -119,10 +112,6 @@ export default {
       type: Boolean,
       default: () => false
     },
-    wantedPaper: {
-      type: Boolean,
-      default: () => false
-    },
     customBadge: {
       type: String,
       default: () => ''
@@ -130,10 +119,6 @@ export default {
     showBadges: {
       type: Array,
       default: () => []
-    },
-    isPirateKing: {
-      type: Boolean,
-      default: () => false
     },
     isLink: {
       type: Boolean,
