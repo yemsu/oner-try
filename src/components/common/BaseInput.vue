@@ -2,7 +2,7 @@
   <div 
     :class="[
       'wrap-input',
-      size,
+      `size-${size}`,
       {'compact': isCompactMode},
       {'searching': isActive},
       usage
@@ -48,7 +48,7 @@ export default {
     },
     size: {
       type: String,
-      default: () => 'basic' // small, basic, big
+      default: () => 'medium' // small, medium, big
     },
     isCompactMode: {
       type: Boolean,

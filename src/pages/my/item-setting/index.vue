@@ -28,7 +28,7 @@
               id="newSettingTitle"
               :value="newSettingTitle"
               placeholder="제목"
-              size="small"
+              size="medium"
             />
           </div>
           <div>
@@ -44,7 +44,7 @@
             <search-box
               v-if="equipmentNameList"
               id="newSettingSearchInput"
-              size="small"
+              size="medium"
               :matching-data="equipmentNameList"
               :use-auto-enter="true"
               :use-compact-mode="false"

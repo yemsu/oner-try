@@ -1,23 +1,25 @@
 .box-search {
-  &.basic {
-    .wrap-search {
-      width: 280px;
+  .size {
+    &-basic {
+      .wrap-search {
+        width: 280px;
+      }
     }
-  }
-  &.big {
-    display: flex;
-    justify-content: center;
-    margin-top: 16vh;
-    .wrap-search {
-      width: 500px;
+    &-big {
+      display: flex;
+      justify-content: center;
+      margin-top: 16vh;
+      .wrap-search {
+        width: 500px;
+      }
     }
-  }
-  &.small {
-    .wrap-search {
-      width: 250px;
-      ::v-deep {
-        input {
-          font-size: $font-size-M-pc;
+    &-small {
+      .wrap-search {
+        width: 250px;
+        ::v-deep {
+          input {
+            font-size: $font-size-M-pc;
+          }
         }
       }
     }
