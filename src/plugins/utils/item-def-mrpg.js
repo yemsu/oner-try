@@ -17,7 +17,7 @@ export const itemsHasSubTitle = [
 
 export const itemTypeNames = {
   staff: '마법',
-  ring: '반지',
+  accessory: '반지',
   sub: '보조'
 }
 
