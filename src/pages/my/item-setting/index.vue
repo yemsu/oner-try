@@ -60,7 +60,7 @@ import BaseButton from '@/components/common/BaseButton.vue'
 import MakeItemSetting from '@/components/pages/my/item-setting/MakeItemSetting.vue'
 import { getValueList } from '@/plugins/utils'
 import { characterDefs, totalOptions, itemTypeNames } from '@/plugins/utils/item-def-mrpg'
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'item-setting',
@@ -72,7 +72,6 @@ export default {
     return {
       equipMatchingDataList: null,
       equipmentTypes: null,
-      itemSettingList: [],
       characterOptions: [],
       // 아이템 필터
       equipTypeOptions: []
@@ -83,6 +82,7 @@ export default {
       isLogin: 'auth/getIsLogin',
       equipments: 'mrpg/getEquipments',
       materials: 'mrpg/getMaterials',
+      itemSettingList: 'item-setting/getItemSettingList',
     }),
   },
   async created() {
@@ -95,12 +95,18 @@ export default {
     this.setEquipTypeOptions()
   },
   mounted() {
-    this.getSavedItemSetting()
+    this.getItemSettingList()
+
   },
   methods: {
+    ...mapMutations({
+      addItemSetting: 'item-setting/ADD_ITEM_SETTING',
+      deleteItemSetting: 'item-setting/DELETE_ITEM_SETTING'
+    }),
     ...mapActions({
       getEquipments: 'mrpg/GET_EQUIPMENTS',
       getMaterials: 'mrpg/GET_MATERIALS',
+      getItemSettingList: 'item-setting/GET_ITEM_SETTING_LIST',
     }),
     setEquipMatchingDataList() {
       this.equipMatchingDataList = getValueList(this.equipments, 'name')
@@ -129,11 +135,6 @@ export default {
       const equipTypeOptions = [{ title: '타입', options }]
       this.equipTypeOptions = equipTypeOptions
     },
-    getSavedItemSetting() {
-      const savedItemSetting = localStorage.getItem('itemSetting')
-      if(!savedItemSetting) return
-      this.itemSettingList = JSON.parse(savedItemSetting)
-    },
     onUpdateSelectItem(name) {
       console.log('onUpdateSelectItem', name)
       this.equipMatchingDataList = this.equipMatchingDataList.filter((itemName) => itemName !== name)
@@ -155,11 +156,7 @@ export default {
       // send data
       localStorage.setItem('itemSetting', JSON.stringify(resultData))
       // client update
-      this.itemSettingList.push(result)
-    },
-    deleteItemSetting(id) {
-      localStorage.setItem('itemSetting', JSON.stringify(this.itemSettingList))
-      this.itemSettingList = this.itemSettingList.filter(({ id: _id }) => _id !== id)
+      this.addItemSetting(result)
     }
   }
 }
