@@ -135,7 +135,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      equipments: 'mrpg/getEquipments',
+      compositionEquips: 'mrpg/getCompositionEquips',
     }),
   },
   methods: {
@@ -158,7 +158,7 @@ export default {
       this.$emit('updateSelectItem', name)
     },
     getItemData(name) {
-      const item = this.equipments.find(item => item.name === name)
+      const item = this.compositionEquips.find(item => item.name === name)
       return parseItemData(item)
     },
     clickNewItemSetting() {
@@ -169,7 +169,7 @@ export default {
     },
     clickEquipOption(equipName) {
       const equipType = findKeyName(itemTypeNames, equipName)
-      const options = this.equipments
+      const options = this.compositionEquips
         .filter(({type}) => type === equipType)
         .sort((a, b) => b.level - a.level)
         .map(({name, level}) => ({
@@ -204,7 +204,7 @@ export default {
       }
       console.log('submitItemSetting-----------')
       console.table(result)
-      
+
       this.$emit('submit', result)
     },
     checkValidation() {

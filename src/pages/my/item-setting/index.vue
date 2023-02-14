@@ -80,13 +80,13 @@ export default {
   computed: {
     ...mapGetters({
       isLogin: 'auth/getIsLogin',
-      equipments: 'mrpg/getEquipments',
+      compositionEquips: 'mrpg/getCompositionEquips',
       materials: 'mrpg/getMaterials',
       itemSettingList: 'item-setting/getItemSettingList',
     }),
   },
   async created() {
-    if(this.equipments.length === 0) await this.getEquipments()
+    if(this.compositionEquips.length === 0) await this.getEquipments()
     if(this.materials.length === 0) await this.getMaterials()
 
     this.setEquipMatchingDataList()
@@ -109,10 +109,10 @@ export default {
       getItemSettingList: 'item-setting/GET_ITEM_SETTING_LIST',
     }),
     setEquipMatchingDataList() {
-      this.equipMatchingDataList = getValueList(this.equipments, 'name')
+      this.equipMatchingDataList = getValueList(this.compositionEquips, 'name')
     },
     setEquipmentTypes() {
-      const equipmentTypeValues = getValueList(this.equipments, 'type')
+      const equipmentTypeValues = getValueList(this.compositionEquips, 'type')
       this.equipmentTypes = [...new Set(equipmentTypeValues)]
     },
     setCharacterOptions() {
