@@ -63,7 +63,7 @@ export default {
       const 조합재료들 = this.조합재료리스트반환(this.items)
       this.checkboxItems = 조합재료들.length > 0
         ? 조합재료의재료세팅기(this.items, 조합재료들)
-        : this.item
+        : this.items
     },
     조합재료리스트반환(items) {
       // console.log('조합재료리스트반환', items)
