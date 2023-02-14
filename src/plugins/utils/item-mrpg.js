@@ -4,7 +4,6 @@ import { itemTypeNames } from '@/plugins/utils/item-def-mrpg'
 export const parseItemData = (item) => {
   item = deepClone(item)
   const keys = Object.keys(item)
-  console.log('keys', keys)
   for(const key of keys) {
     const parsingData = detailInfoDesc(item, key)
     if(!parsingData) continue
@@ -47,7 +46,7 @@ const detailInfoDesc = (item, key) => {
 }
 
 const parseIngredientsData = (strData) => {
-  console.log('parseIngredientsData', strData)
+  // console.log('parseIngredientsData', strData)
   const toArr = strData.split(',')
   const strValueToObj = toArr.map(item => {
     const [ name, number ] = item.split(':')
@@ -57,7 +56,7 @@ const parseIngredientsData = (strData) => {
 }
 
 const parseSubTitleData = (strData) => {
-  console.log('parseSubTitleData', strData)
+  // console.log('parseSubTitleData', strData)
   const [ subTitle, desc ] = strData.split(':')
   return { subTitle, desc }
 }
