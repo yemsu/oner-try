@@ -32,7 +32,7 @@ export default {
   props: {
     value: {
       type: String,
-      default: () => ''
+      required: true
     },
     inputType: {
       type: String,

@@ -7,10 +7,11 @@
     ]">
       <base-input
         usage="search"
+        :id="id"
         :size="size"
         :placeholder="placeholder"
         :value="inputValue"
-        :isCompactMode="size === 'small' && !isSearching"
+        :isCompactMode="useCompactMode && size === 'small' && !isSearching"
         :isActive="isSearching && !!matchingData"
         :focusOnMounted="size === 'big' && true"
         @onUpdateInput="updateInput"
@@ -57,13 +58,17 @@
 
 <script>
 import BaseInput from '@/components/common/BaseInput.vue'
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
     BaseInput
   },
   props: {
+    id: {
+      type: String,
+      default: () => ''
+    },
     matchingData: {
       type: Array,
       required: true
@@ -92,6 +97,10 @@ export default {
       type: Boolean,
       default: () => false
     },
+    useCompactMode: {
+      type: Boolean,
+      default: () => true
+    }
   },
   data() {
     return {

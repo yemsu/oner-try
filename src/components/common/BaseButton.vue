@@ -32,7 +32,7 @@ export default {
     },
     bg: {
       type: String,
-      default: () => '' //active, inactive...
+      default: () => '' //point, disabled...
     },
     size: {
       type: String,
