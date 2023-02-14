@@ -21,6 +21,11 @@
     &.size {
       &-medium {
         padding: 5px 10px;
+        font-size: $font-size-M-pc;
+      }
+      &-small {
+        padding: 4px 8px;
+        font-size: $font-size-S-pc;
       }
     }
   }
@@ -52,7 +57,7 @@
       background-color: var(--color-point);
       color: var(--color-white);
     }
-    &-disabled {
+    &-light-gray {
       background-color: var(--bg-light-gray);
       color: var(--color-gray-40);
     }

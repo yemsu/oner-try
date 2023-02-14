@@ -32,7 +32,7 @@ export default {
     },
     bg: {
       type: String,
-      default: () => '' //point, disabled...
+      default: () => '' //point, light-gray...
     },
     size: {
       type: String,

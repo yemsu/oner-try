@@ -1,6 +1,6 @@
 <template>
   <section :class="['box-search', {'compact':size === 'small'}, size]">
-    <h2 class="ir-hidden">검색</h2>
+    <h2 class="ir-hidden">{{ placeholder }} 검색</h2>
     <div :class="[
       'wrap-search',
       {'compact': size === 'small' && !isSearching}

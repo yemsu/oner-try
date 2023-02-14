@@ -20,42 +20,56 @@
         목표 아이템 설정
       </base-button>
       <section v-if="showAddItemSetting">
-        <h3>새로운 목표 아이템</h3>
-        <h4><label for="newSettingTitle">제목</label></h4>
-        <base-input
-          id="newSettingTitle"
-          :value="newSettingTitle"
-          placeholder="제목"
-          size="small"
-        />
-        <h4><label for="newSettingSearchInput">목표 아이템 선택</label></h4>
-        <search-box
-          v-if="equipmentNameList"
-          id="newSettingSearchInput"
-          size="small"
-          :matching-data="equipmentNameList"
-          :use-auto-enter="true"
-          :use-compact-mode="false"
-          placeholder="아이템"
-          @onSearch="fnSearch"
-        />
-        <section class="area-item-list">
-          <h3>선택된 아이템</h3>
-          <div
-            v-for="(item, i) in selectedItems"
-            :key="`item${i}`"
-          >
-            <div class="wrap-item">
-              <item-box
-                :item="item"
-                size="small"
-                type="list"
-              >
-              </item-box>
-            </div>
-            <button @click="deleteSelectedItem(item.name)">삭제</button>
+        <h3 class="title-new">새로운 목표 아이템 설정</h3>
+        <div>
+          <div>
+            <h4 class="title-sub-new"><label for="newSettingTitle">제목</label></h4>
+            <base-input
+              id="newSettingTitle"
+              :value="newSettingTitle"
+              placeholder="제목"
+              size="small"
+            />
           </div>
-        </section>
+          <div>
+            <h4 class="title-sub-new">캐릭터</h4>
+            <option-list-bar
+              :data="optionListBarData"
+              size="small"
+              @clickButton="clickJobOption"
+            />
+          </div>
+          <section>
+            <h4 class="title-sub-new"><label for="newSettingSearchInput">아이템 선택</label></h4>
+            <search-box
+              v-if="equipmentNameList"
+              id="newSettingSearchInput"
+              size="small"
+              :matching-data="equipmentNameList"
+              :use-auto-enter="true"
+              :use-compact-mode="false"
+              placeholder="전체 아이템"
+              @onSearch="fnSearch"
+            />
+          </section>
+          <div class="area-item-list">
+            <h4>선택된 아이템</h4>
+            <div
+              v-for="(item, i) in selectedItems"
+              :key="`item${i}`"
+            >
+              <div class="wrap-item">
+                <item-box
+                  :item="item"
+                  size="small"
+                  type="list"
+                >
+                </item-box>
+              </div>
+              <button @click="deleteSelectedItem(item.name)">삭제</button>
+            </div>
+          </div>
+        </div>
         <base-button
           type="square-round"
           bg="point"
@@ -71,14 +85,17 @@
 <script>
 import BaseButton from '@/components/common/BaseButton.vue'
 import BaseInput from '@/components/common/BaseInput.vue'
+import OptionListBar from '@/components/common/OptionListBar.vue'
 import { parseItemData } from '@/plugins/utils/item-mrpg'
+import { characterDefs, totalOptions } from '@/plugins/utils/item-def-mrpg'
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'item-setting',
   components: {
     BaseButton,
-    BaseInput
+    BaseInput,
+    OptionListBar
   },
   data() {
     return {
@@ -88,6 +105,8 @@ export default {
       showAddItemSetting: false,
       newSettingTitle: '',
       itemSettingList: [],
+      optionListBarData: [],
+      selectedJob: null,
       selectedItems: [],
     }
   },
@@ -96,7 +115,7 @@ export default {
       isLogin: 'auth/getIsLogin',
       equipments: 'mrpg/getEquipments',
       materials: 'mrpg/getMaterials',
-    })
+    }),
   },
   async created() {
     if(this.equipments.length === 0) await this.getEquipments()
@@ -104,6 +123,7 @@ export default {
 
     this.setNameList()
     this.setEquipmentTypes()
+    this.setOptionListBarData()
   },
   methods: {
     ...mapActions({
@@ -138,6 +158,25 @@ export default {
     clickNewItemSetting() {
       this.showAddItemSetting = true
     },
+    setOptionListBarData() {
+      const newData = characterDefs.reduce((result, crr) => {
+        const { mainStat, characters } = crr
+        const dataList = characters.map(({ name, job }) => `${name} : ${job}`)
+        result.push(Object.assign({}, { 
+          title: totalOptions[mainStat],
+          dataList
+        }))
+        return result
+      }, [])
+      
+      this.optionListBarData = newData
+    },
+    clickSubmitItemSetting() {
+      console.log('clickSubmitItemSetting')
+    },
+    clickJobOption(characterName) {
+      this.selectedJob = characterName
+    }
   }
 }
 </script>
