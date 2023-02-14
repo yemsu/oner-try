@@ -1,23 +1,23 @@
 <template>
   <dl :class="`option-list-bar size-${size}`">
     <div
-      v-for="({title, dataList}, i) in data"
+      v-for="({title, options}, i) in data"
       :key="`title${i}`"
       class="wrap-category"
     >
       <dt> {{ title }}</dt>
       <div class="wrap-desc">
         <dd
-          v-for="(data, i) in dataList"
-          :key="`data${i}`"
+          v-for="(option, i) in options"
+          :key="`optoin${i}`"
         >
           <base-button
             type="round"
-            :bg="activeData === data ? 'point' : 'light-gray'"
+            :bg="activeData === option.text ? 'point' : 'light-gray'"
             size="small"
-            @click="clickButton(data)"
+            @click="clickButton(option)"
           >
-            {{ data }}
+            {{ option.text }}
           </base-button>
         </dd>
       </div>
@@ -33,6 +33,15 @@ export default {
     BaseButton,
   },
   props: {
+    /** @data obj list
+     * [{
+     *  title: 'dt text',
+     *  options: [{
+     *    id: 'emitted data' // id가 없으면 text를 emit
+     *    text: 'dd text',
+     *  }]
+     * }]
+     */
     data: {
       type: Array,
       required: true,
@@ -40,6 +49,10 @@ export default {
     size: {
       type: String,
       default: () => 'medium' // small, medium
+    },
+    showTitle: {
+      type: Boolean,
+      default: () => true
     }
   },
   data() {
@@ -48,10 +61,10 @@ export default {
     }
   },
   methods: {
-    clickButton(data) {
-      console.log('clickButton', data)
-      this.activeData = data
-      this.$emit('clickButton', data)
+    clickButton(option) {
+      const { id, text } = option
+      this.activeData = text
+      this.$emit('clickButton', id || text)
     }
   }
 }

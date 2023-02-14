@@ -34,9 +34,9 @@
           <div>
             <h4 class="title-sub-new">캐릭터</h4>
             <option-list-bar
-              :data="optionListBarData"
+              :data="characterOptions"
               size="small"
-              @clickButton="clickJobOption"
+              @clickButton="clickCharacterOption"
             />
           </div>
           <section>
@@ -51,6 +51,17 @@
               placeholder="전체 아이템"
               @onSearch="fnSearch"
             />
+            <option-list-bar
+              :data="equipTypeOptions"
+              size="small"
+              @clickButton="clickEquipOption"
+            />
+            <option-list-bar
+              :data="selectedEquipTypeItems"
+              :show-title="false"
+              size="small"
+              @clickButton="clickItemOption"
+            />
           </section>
           <div class="area-item-list">
             <h4>선택된 아이템</h4>
@@ -62,7 +73,6 @@
                 <item-box
                   :item="item"
                   size="small"
-                  type="list"
                 >
                 </item-box>
               </div>
@@ -86,8 +96,9 @@
 import BaseButton from '@/components/common/BaseButton.vue'
 import BaseInput from '@/components/common/BaseInput.vue'
 import OptionListBar from '@/components/common/OptionListBar.vue'
+import { findKeyName, getValueList } from '@/plugins/utils'
 import { parseItemData } from '@/plugins/utils/item-mrpg'
-import { characterDefs, totalOptions } from '@/plugins/utils/item-def-mrpg'
+import { characterDefs, totalOptions, itemTypeNames } from '@/plugins/utils/item-def-mrpg'
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -100,14 +111,16 @@ export default {
   data() {
     return {
       equipmentNameList: null,
-      materialNameList: null,
       equipmentTypes: null,
       showAddItemSetting: false,
       newSettingTitle: '',
       itemSettingList: [],
-      optionListBarData: [],
-      selectedJob: null,
+      characterOptions: [],
+      selectedCharacterName: null,
       selectedItems: [],
+      // 아이템 필터
+      equipTypeOptions: [],
+      selectedEquipTypeItems: [],
     }
   },
   computed: {
@@ -123,7 +136,8 @@ export default {
 
     this.setNameList()
     this.setEquipmentTypes()
-    this.setOptionListBarData()
+    this.setCharacterOptions()
+    this.setEquipTypeOptions()
   },
   methods: {
     ...mapActions({
@@ -131,25 +145,29 @@ export default {
       getMaterials: 'mrpg/GET_MATERIALS',
     }),
     setNameList() {
-      this.equipmentNameList = this.getValueList(this.equipments, 'name')
-      this.materialNameList = this.getValueList(this.materials, 'name')
+      this.equipmentNameList = getValueList(this.equipments, 'name')
     },
     fnSearch(name) {
+      this.addSelectedItems(name)
+      console.log('fnsearch', name, this.selectedItems)
+    },
+    addSelectedItems(name) {
+      const alreadySelect = this.selectedItems.find((item) => item.name === name)
+      if(alreadySelect) {
+        alert('이미 선택된 아이템입니다.')
+        return
+      }
       this.selectedItems.push(this.getItemData(name))
       this.equipmentNameList = this.equipmentNameList.filter((itemName) => itemName !== name)
-      console.log('fnsearch', name, this.selectedItems)
     },
     getItemData(name) {
       const item = this.equipments.find(item => item.name === name)
       return parseItemData(item)
     },
     setEquipmentTypes() {
-      const equipmentTypeValues = this.getValueList(this.equipments, 'type')
+      const equipmentTypeValues = getValueList(this.equipments, 'type')
       this.equipmentTypes = [...new Set(equipmentTypeValues)]
       console.log('this.equipmentTypes', this.equipmentTypes)
-    },
-    getValueList(objList, keyName) {
-      return objList.map((obj) => obj[keyName])
     },
     deleteSelectedItem(name) {
       this.selectedItems = this.selectedItems.filter((item) => item.name !== name)
@@ -158,25 +176,50 @@ export default {
     clickNewItemSetting() {
       this.showAddItemSetting = true
     },
-    setOptionListBarData() {
-      const newData = characterDefs.reduce((result, crr) => {
+    setCharacterOptions() {
+      const characterOptions = characterDefs.reduce((result, crr) => {
         const { mainStat, characters } = crr
-        const dataList = characters.map(({ name, job }) => `${name} : ${job}`)
+        const options = characters.map(({ name, job }) => ({
+          text: `${name} : ${job}`,
+          id: name
+        }))
         result.push(Object.assign({}, { 
           title: totalOptions[mainStat],
-          dataList
+          options
         }))
         return result
       }, [])
       
-      this.optionListBarData = newData
+      this.characterOptions = characterOptions
+    },
+    clickCharacterOption(characterName) {
+      this.selectedCharacterName = characterName
+    },
+    setEquipTypeOptions() {
+      const options = this.equipmentTypes.map(key => ({text: itemTypeNames[key]}))
+      const equipTypeOptions = [{ title: '타입', options }]
+      this.equipTypeOptions = equipTypeOptions
+    },
+    clickEquipOption(equipName) {
+      const equipType = findKeyName(itemTypeNames, equipName)
+      const options = this.equipments
+        .filter(({type}) => type === equipType)
+        .sort((a, b) => b.level - a.level)
+        .map(({name, level}) => ({
+          id: name,
+          text: `Lv.${level} ${name}`
+        }))
+      this.selectedEquipTypeItems = [{
+        title: equipName,
+        options
+      }]
+    },
+    clickItemOption(name) {
+      this.addSelectedItems(name)
     },
     clickSubmitItemSetting() {
       console.log('clickSubmitItemSetting')
     },
-    clickJobOption(characterName) {
-      this.selectedJob = characterName
-    }
   }
 }
 </script>

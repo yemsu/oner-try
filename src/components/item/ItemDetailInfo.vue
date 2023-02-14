@@ -139,7 +139,7 @@ export default {
       return equipmentsPropNames[keyName]
     },
     getItemTypeName(keyName) {
-      return itemTypeNames[keyName]
+      return `[${itemTypeNames[keyName]}]`
     }
   }
 }
