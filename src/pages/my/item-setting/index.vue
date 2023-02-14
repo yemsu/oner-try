@@ -26,7 +26,7 @@
       <section>
         <h2>나의 목표 아이템 세팅</h2>
         <div
-          v-for="({title, character, items}, i) in itemSettingList"
+          v-for="({title, character, items, id}, i) in itemSettingList"
           :key="`itemSetting${i}`"
         >
           <p>{{ title }}</p>
@@ -40,8 +40,12 @@
             </li>
           </ul>
           <base-button
-            type="square-round"
-            color="light-gray"
+            @click="deleteItemSetting(id)"
+          >
+            삭제
+          </base-button>
+          <base-button
+            :link-to="`/my/item-setting/view?id=${id}`"
           >
             자세히 보기
           </base-button>
@@ -135,7 +139,27 @@ export default {
       this.equipMatchingDataList = this.equipMatchingDataList.filter((itemName) => itemName !== name)
     },
     onSubmit(result) {
+      // id setting
+      let resultData = null
+      // get data and check has data
+      const savedItemSetting = localStorage.getItem('itemSetting')
+      if(savedItemSetting) {
+        const data = JSON.parse(savedItemSetting)
+        result.id = data.length // set id 
+        data.push(result)
+        resultData = data
+      } else {
+        result.id = 0 // set id 
+        resultData = [result]
+      }
+      // send data
+      localStorage.setItem('itemSetting', JSON.stringify(resultData))
+      // client update
       this.itemSettingList.push(result)
+    },
+    deleteItemSetting(id) {
+      localStorage.setItem('itemSetting', JSON.stringify(this.itemSettingList))
+      this.itemSettingList = this.itemSettingList.filter(({ id: _id }) => _id !== id)
     }
   }
 }

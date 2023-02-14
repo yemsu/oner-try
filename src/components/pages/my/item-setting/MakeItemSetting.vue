@@ -182,18 +182,10 @@ export default {
       }]
     },
     clickSubmit() {
-      const result = {
-        title: this.newSettingTitle,
-        character: this.selectedCharacter,
-        items: this.selectedItems.map(({ name }) => name)
-      }
-      console.log('clickSubmit-----------')
-      console.table(result)
-
       const checkValidation = this.checkValidation()
       if(!checkValidation) return
       
-      this.submitItemSetting(result)
+      this.submitItemSetting()
       
       this.showAddItemSetting = false
       this.resetSelectDataAll()
@@ -204,17 +196,16 @@ export default {
       this.selectedItems = []
       this.selectedEquipTypeItems = []
     },
-    submitItemSetting(result) {
-      let resultData = [result]
-      const savedItemSetting = localStorage.getItem('itemSetting')
-      if(savedItemSetting) {
-        const data = JSON.parse(savedItemSetting)
-        data.push(result)
-        resultData = data
+    submitItemSetting() {
+      const result = {
+        title: this.newSettingTitle,
+        character: this.selectedCharacter,
+        items: this.selectedItems.map(({ name }) => name)
       }
-      localStorage.setItem('itemSetting', JSON.stringify(resultData))
+      console.log('submitItemSetting-----------')
+      console.table(result)
+      
       this.$emit('submit', result)
-      console.log(localStorage.getItem('itemSetting'))
     },
     checkValidation() {
       const alertMessages = []

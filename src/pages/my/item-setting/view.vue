@@ -1,6 +1,5 @@
 <template>
   <div class="inner-size-basic">
-    
     <div v-if="selectedItems.length > 0" class="area-item-list">
       <div
         v-for="(item, i) in selectedItems"
@@ -44,17 +43,24 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-  name: 'item-setting',
+  name: 'item-setting-view',
   data() {
     return {
       selectedItems: [],
     }
   },
+  computed: {
+    ...mapGetters({
+      equipments: 'mrpg/getEquipments',
+      materials: 'mrpg/getMaterials',
+    }),
+  },
   methods: {
     deleteSelectedItem(name) {
       this.selectedItems = this.selectedItems.filter((item) => item.name !== name)
-      this.equipmentNameList.push(name)
     },
     findDropMonster(itemName) {
       // 재료 아이템인 경우
