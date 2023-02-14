@@ -73,6 +73,13 @@
       </div>
       <base-button
         type="square-round"
+        bg="cancel"
+        @click="showAddItemSetting = false"
+      >
+        취소
+      </base-button>
+      <base-button
+        type="square-round"
         bg="point"
         @click="clickSubmit"
       >
