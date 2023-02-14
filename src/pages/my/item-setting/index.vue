@@ -64,7 +64,8 @@
             />
           </section>
           <div class="area-item-list">
-            <h4>선택된 아이템</h4>
+            <h4>선택된 아이템 ({{ selectedItems.length }})</h4>
+            <p>최대 {{ MAX_SELECTED_ITEM_LENGTH }}개까지 선택 가능합니다.</p>
             <div
               v-for="(item, i) in selectedItems"
               :key="`item${i}`"
@@ -110,6 +111,7 @@ export default {
   },
   data() {
     return {
+      MAX_SELECTED_ITEM_LENGTH: 10,
       equipMatchingDataList: null,
       equipmentTypes: null,
       showAddItemSetting: false,
@@ -152,8 +154,13 @@ export default {
       console.log('fnsearch', name, this.selectedItems)
     },
     addSelectedItems(name) {
-      const alreadySelect = this.selectedItems.find((item) => item.name === name)
-      if(alreadySelect) {
+      const isOverLength = this.selectedItems.length === this.MAX_SELECTED_ITEM_LENGTH
+      if(isOverLength) {
+        alert('최대 10개까지 선택 하실 수 있습니다.')
+        return
+      }
+      const isAlreadySelect = this.selectedItems.find((item) => item.name === name)
+      if(isAlreadySelect) {
         alert('이미 선택된 아이템입니다.')
         return
       }
