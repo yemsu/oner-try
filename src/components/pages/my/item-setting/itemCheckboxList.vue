@@ -79,6 +79,7 @@ export default {
       }
       // 조합/드랍 무기 아이템인 경우
       const equipment = this.equipments.find(({ name }) => name === itemName)
+      if(!equipment) return '❗미등록 아이템'
       if(equipment.ingredients) {
         return '조합 아이템'
       } else {
