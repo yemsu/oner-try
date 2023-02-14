@@ -14,8 +14,8 @@ export const mutations = {
     state.itemSettingList.push(data)
   },
   DELETE_ITEM_SETTING(state, id) {
-    localStorage.setItem('itemSetting', JSON.stringify(this.itemSettingList))
     state.itemSettingList = state.itemSettingList.filter(({ id: _id }) => _id !== id)
+    localStorage.setItem('itemSetting', JSON.stringify(state.itemSettingList))
   },
 }
 
