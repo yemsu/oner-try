@@ -13,33 +13,44 @@
           >
           </item-box>
         </div>
-        <div v-if="item.ingredients" class="area-checkbox">
-          <div 
-            v-for="(ingredient, i) in item.ingredients"
-            :key="`ingredient${i}`"
-            class="wrap-checkbox"
-          >
-            <input
-              type="checkbox"
-              :id="`ingredient-${item.id}-${i}`"
-            />
-            <label :for="`ingredient-${item.id}-${i}`">
-              {{ ingredient.name }} * {{ ingredient.number }}
-              - {{ findDropMonster(ingredient.name) }}
-            </label>
-          </div>
-        </div>
+        
+        <item-checkbox-list
+          v-if="item.ingredients"
+          :items="item.ingredients"
+          :id="`0${i}`"
+        >
+          <template v-slot="{ ingredients: ingredients1, index: index1 }">
+            <item-checkbox-list
+              v-if="ingredients1"
+              :items="ingredients1"
+              :id="`1${index1}`"
+            >
+              <template v-slot="{ ingredients: ingredients2, index: index2 }">
+                <item-checkbox-list
+                  v-if="ingredients2"
+                  :items="ingredients2"
+                  :id="`2${index2}`"
+                >
+                </item-checkbox-list>
+              </template>
+            </item-checkbox-list>
+          </template>
+        </item-checkbox-list>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import itemCheckboxList from '@/components/pages/my/item-setting/itemCheckboxList.vue';
 import { parseItemData } from '@/plugins/utils/item-mrpg'
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'item-setting-view',
+  components: {
+    itemCheckboxList
+  },
   data() {
     return {
       itemSetting: null,
@@ -49,7 +60,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      compositionEquips: 'mrpg/getEquipments',
+      equipments: 'mrpg/getEquipments',
+      compositionEquips: 'mrpg/getCompositionEquips',
       materials: 'mrpg/getMaterials',
       itemSettingList: 'item-setting/getItemSettingList'
     }),
@@ -79,21 +91,7 @@ export default {
         const item = this.compositionEquips.find(({ name: _name }) => name === _name)
         return parseItemData(item)
       })
-      console.log('this.items', this.items)
-    },
-    findDropMonster(itemName) {
-      // 재료 아이템인 경우
-      const material = this.materials.find(({ name }) => name === itemName)
-      if(material) {
-        return `드랍: ${material.dropMonster}`
-      }
-      // 조합/드랍 무기 아이템인 경우
-      const equipment = this.compositionEquips.find(({ name }) => name === itemName)
-      if(equipment.ingredients) {
-        return '조합 아이템'
-      } else {
-        return `드랍: ${equipment.dropMonster}`
-      }
+      console.log("this.items", this.items)
     }
   }
 }

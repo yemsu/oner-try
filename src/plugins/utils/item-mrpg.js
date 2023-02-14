@@ -27,6 +27,21 @@ export const parserStrData = (strData, type = 'object') => { // name: value, nam
   return objList
 }
 
+export const 조합재료의재료세팅기 = (ingredients, 조합재료들) => {
+  const result = deepClone(ingredients)
+  for(const ingredient of result) {
+    // 조합재료를 가진 조합재료
+    const findIngredient = 조합재료들.find(({ name }) => (
+      name === ingredient.name
+    ))
+    if(!findIngredient) continue
+    // 해당 아이템 재료에 조합 재료 세팅
+    ingredient.ingredients = parseIngredientsData(findIngredient.ingredients)
+  }
+
+  return result
+}
+
 const detailInfoDesc = (item, key) => {
   if(!item[key]) return ''
   switch (key) {
@@ -45,7 +60,7 @@ const detailInfoDesc = (item, key) => {
   }
 }
 
-const parseIngredientsData = (strData) => {
+export const parseIngredientsData = (strData) => {
   // console.log('parseIngredientsData', strData)
   const toArr = strData.split(',')
   const strValueToObj = toArr.map(item => {
