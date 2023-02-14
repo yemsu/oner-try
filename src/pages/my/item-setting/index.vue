@@ -42,10 +42,10 @@
           <section>
             <h4 class="title-sub-new"><label for="newSettingSearchInput">아이템 선택</label></h4>
             <search-box
-              v-if="equipmentNameList"
+              v-if="equipMatchingDataList"
               id="newSettingSearchInput"
               size="medium"
-              :matching-data="equipmentNameList"
+              :matching-data="equipMatchingDataList"
               :use-auto-enter="true"
               :use-compact-mode="false"
               placeholder="전체 아이템"
@@ -110,7 +110,7 @@ export default {
   },
   data() {
     return {
-      equipmentNameList: null,
+      equipMatchingDataList: null,
       equipmentTypes: null,
       showAddItemSetting: false,
       newSettingTitle: '',
@@ -134,7 +134,7 @@ export default {
     if(this.equipments.length === 0) await this.getEquipments()
     if(this.materials.length === 0) await this.getMaterials()
 
-    this.setNameList()
+    this.setEquipMatchingDataList()
     this.setEquipmentTypes()
     this.setCharacterOptions()
     this.setEquipTypeOptions()
@@ -144,8 +144,8 @@ export default {
       getEquipments: 'mrpg/GET_EQUIPMENTS',
       getMaterials: 'mrpg/GET_MATERIALS',
     }),
-    setNameList() {
-      this.equipmentNameList = getValueList(this.equipments, 'name')
+    setEquipMatchingDataList() {
+      this.equipMatchingDataList = getValueList(this.equipments, 'name')
     },
     fnSearch(name) {
       this.addSelectedItems(name)
@@ -158,7 +158,7 @@ export default {
         return
       }
       this.selectedItems.push(this.getItemData(name))
-      this.equipmentNameList = this.equipmentNameList.filter((itemName) => itemName !== name)
+      this.equipMatchingDataList = this.equipMatchingDataList.filter((itemName) => itemName !== name)
     },
     getItemData(name) {
       const item = this.equipments.find(item => item.name === name)
@@ -171,7 +171,7 @@ export default {
     },
     deleteSelectedItem(name) {
       this.selectedItems = this.selectedItems.filter((item) => item.name !== name)
-      this.equipmentNameList.push(name)
+      this.equipMatchingDataList.push(name)
     },
     clickNewItemSetting() {
       this.showAddItemSetting = true
