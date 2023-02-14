@@ -25,14 +25,14 @@ export const actions = {
   async GET_EQUIPMENTS({ commit }) {
     console.log('mrpg/GET_EQUIPMENTS')
     const data = await getEquipments()
-    console.log('equipments', data)
+    // console.log('equipments', data)
     commit('SET_EQUIPMENTS', data)
     return data
   },
   async GET_MATERIALS({ commit }) {
     console.log('mrpg/GET_MATERIALS')
     const data = await getMaterials()
-    console.log('materials', data)
+    // console.log('materials', data)
     commit('SET_MATERIALS', data)
     return data
   },
