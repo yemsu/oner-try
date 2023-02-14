@@ -162,7 +162,7 @@ export default {
       return parseItemData(item)
     },
     clickNewItemSetting() {
-      this.showAddItemSetting = true
+      this.showAddItemSetting = !this.showAddItemSetting
       setTimeout(() => {
         this.focusToTitleInput()
       }, 200)
