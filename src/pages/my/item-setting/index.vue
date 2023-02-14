@@ -276,6 +276,12 @@ export default {
       this.submitItemSetting(result)
       
       this.showAddItemSetting = false
+      this.resetSelectDataAll()
+    },
+    resetSelectDataAll() {
+      this.newSettingTitle = ''
+      this.selectedCharacter = ''
+      this.selectedItems = []
     },
     submitItemSetting(result) {
       let resultData = [result]
