@@ -65,6 +65,18 @@ export default {
     id: {
       type: String,
       default: () => ''
+    },
+    // props 값이 true가 되었을때 input에 focus 이동
+    // true 설정 후 사용 컴포넌트에서 해당 props에 지정한 값 reset 필요
+    focusTime: {
+      type: Boolean,
+      default: () => false
+    }
+  },
+  watch: {
+    focusTime(crr, prev) {
+      if(!crr || prev) return
+      this.focusToInput()
     }
   },
   mounted() {

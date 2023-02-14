@@ -28,6 +28,8 @@
               id="newSettingTitle"
               :value="newSettingTitle"
               placeholder="제목"
+              :focus-time="isFocusTitleInput"
+              @onUpdateInput="setNewSettingTitle"
               size="medium"
             />
           </div>
@@ -84,7 +86,7 @@
         <base-button
           type="square-round"
           bg="point"
-          @click="clickSubmitItemSetting"
+          @click="subItemSetting"
         >
           설정 완료
         </base-button>
@@ -120,6 +122,7 @@ export default {
       characterOptions: [],
       selectedCharacterName: null,
       selectedItems: [],
+      isFocusTitleInput: false,
       // 아이템 필터
       equipTypeOptions: [],
       selectedEquipTypeItems: [],
@@ -182,6 +185,9 @@ export default {
     },
     clickNewItemSetting() {
       this.showAddItemSetting = true
+      setTimeout(() => {
+        this.focusToTitleInput()
+      }, 200)
     },
     setCharacterOptions() {
       const characterOptions = characterDefs.reduce((result, crr) => {
@@ -224,9 +230,49 @@ export default {
     clickItemOption(name) {
       this.addSelectedItems(name)
     },
-    clickSubmitItemSetting() {
-      console.log('clickSubmitItemSetting')
+    setNewSettingTitle(value) {
+      this.newSettingTitle = value
     },
+    subItemSetting() {
+      const selectedItemIdList = this.selectedItems.map(({ id }) => id)
+      console.log('subItemSetting-----------')
+      console.table({
+        title: this.newSettingTitle,
+        character: this.selectedCharacterName,
+        items: selectedItemIdList
+      })
+
+      const checkValidation = this.checkValidation()
+      if(!checkValidation) return
+      
+    },
+    checkValidation() {
+      const alertMessages = []
+      if(!this.newSettingTitle) {
+        alertMessages.push('📌 제목을 입력해 주세요!')
+      }
+      if(!this.selectedCharacterName) {
+        alertMessages.push('😎 캐릭터를 선택해 주세요!')
+      }
+      if(this.selectedItems.length === 0) {
+        alertMessages.push('🏹 아이템을 선택해 주세요!')
+      }
+
+      if(alertMessages.length > 0) {
+        alert(alertMessages.join('\n'))
+        if(alertMessages.find(msg => msg.includes('제목'))) {
+          this.focusToTitleInput()
+        } 
+        return false
+      }
+      return true
+    },
+    focusToTitleInput() {
+      this.isFocusTitleInput = true
+      setTimeout(() => {
+        this.isFocusTitleInput = false
+      }, 500)
+    }
   }
 }
 </script>
