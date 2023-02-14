@@ -86,10 +86,36 @@
         <base-button
           type="square-round"
           bg="point"
-          @click="subItemSetting"
+          @click="clickSubmit"
         >
           설정 완료
         </base-button>
+      </section>
+
+      <!-- 리스트 -->
+      <section>
+        <h2>나의 목표 아이템 세팅</h2>
+        <div
+          v-for="({title, character, items}, i) in itemSettingList"
+          :key="`itemSetting${i}`"
+        >
+          <p>{{ title }}</p>
+          <p>{{ character }}</p>
+          <ul>
+            <li
+              v-for="(itemName, i) in items"
+              :key="`savedItem${i}`"
+            > 
+              {{ itemName }}
+            </li>
+          </ul>
+          <base-button
+            type="square-round"
+            color="light-gray"
+          >
+            자세히 보기
+          </base-button>
+        </div>
       </section>
     </div>
   </div>
@@ -120,12 +146,12 @@ export default {
       newSettingTitle: '',
       itemSettingList: [],
       characterOptions: [],
-      selectedCharacterName: null,
+      selectedCharacter: null,
       selectedItems: [],
       isFocusTitleInput: false,
       // 아이템 필터
       equipTypeOptions: [],
-      selectedEquipTypeItems: [],
+      selectedEquipTypeItems: []
     }
   },
   computed: {
@@ -143,6 +169,9 @@ export default {
     this.setEquipmentTypes()
     this.setCharacterOptions()
     this.setEquipTypeOptions()
+  },
+  mounted() {
+    this.getSavedItemSetting()
   },
   methods: {
     ...mapActions({
@@ -193,8 +222,7 @@ export default {
       const characterOptions = characterDefs.reduce((result, crr) => {
         const { mainStat, characters } = crr
         const options = characters.map(({ name, job }) => ({
-          text: `${name} : ${job}`,
-          id: name
+          text: `${name} : ${job}`
         }))
         result.push(Object.assign({}, { 
           title: totalOptions[mainStat],
@@ -206,7 +234,7 @@ export default {
       this.characterOptions = characterOptions
     },
     clickCharacterOption(characterName) {
-      this.selectedCharacterName = characterName
+      this.selectedCharacter = characterName
     },
     setEquipTypeOptions() {
       const options = this.equipmentTypes.map(key => ({text: itemTypeNames[key]}))
@@ -233,25 +261,45 @@ export default {
     setNewSettingTitle(value) {
       this.newSettingTitle = value
     },
-    subItemSetting() {
-      const selectedItemIdList = this.selectedItems.map(({ id }) => id)
-      console.log('subItemSetting-----------')
-      console.table({
+    clickSubmit() {
+      const result = {
         title: this.newSettingTitle,
-        character: this.selectedCharacterName,
-        items: selectedItemIdList
-      })
+        character: this.selectedCharacter,
+        items: this.selectedItems.map(({ name }) => name)
+      }
+      console.log('clickSubmit-----------')
+      console.table(result)
 
       const checkValidation = this.checkValidation()
       if(!checkValidation) return
       
+      this.submitItemSetting(result)
+      
+      this.showAddItemSetting = false
+    },
+    submitItemSetting(result) {
+      let resultData = [result]
+      const savedItemSetting = localStorage.getItem('itemSetting')
+      if(savedItemSetting) {
+        const data = JSON.parse(savedItemSetting)
+        data.push(result)
+        resultData = data
+      }
+      localStorage.setItem('itemSetting', JSON.stringify(resultData))
+      this.itemSettingList.push(result)
+      console.log(localStorage.getItem('itemSetting'))
+    },
+    getSavedItemSetting() {
+      const savedItemSetting = localStorage.getItem('itemSetting')
+      if(!savedItemSetting) return
+      this.itemSettingList = JSON.parse(savedItemSetting)
     },
     checkValidation() {
       const alertMessages = []
       if(!this.newSettingTitle) {
         alertMessages.push('📌 제목을 입력해 주세요!')
       }
-      if(!this.selectedCharacterName) {
+      if(!this.selectedCharacter) {
         alertMessages.push('😎 캐릭터를 선택해 주세요!')
       }
       if(this.selectedItems.length === 0) {
