@@ -35,15 +35,14 @@
             {{ item.name }} - {{ item.dropMonster }}
           </label>
         </div>
-
-        <button @click="deleteSelectedItem(item.name)">삭제</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { parseItemData } from '@/plugins/utils/item-mrpg'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'item-setting-view',
@@ -56,11 +55,31 @@ export default {
     ...mapGetters({
       equipments: 'mrpg/getEquipments',
       materials: 'mrpg/getMaterials',
+      itemSettingList: 'item-setting/getItemSettingList'
     }),
   },
+  async mounted() {
+    if(this.equipments.length === 0) await this.getEquipments()
+    if(this.materials.length === 0) await this.getMaterials()
+
+    this.getItemSettingList()
+    this.setSelectedItems()
+  },
   methods: {
-    deleteSelectedItem(name) {
-      this.selectedItems = this.selectedItems.filter((item) => item.name !== name)
+    ...mapActions({
+      getEquipments: 'mrpg/GET_EQUIPMENTS',
+      getMaterials: 'mrpg/GET_MATERIALS',
+      getItemSettingList: 'item-setting/GET_ITEM_SETTING_LIST',
+    }),
+    setSelectedItems() {
+      const { items } = this.itemSettingList.find(({ id }) => (
+        id === (this.$route.query.id * 1)
+      ))
+      this.selectedItems = items.map(itemName => {
+        const item = this.equipments.find(({ name }) => name === itemName)
+        return parseItemData(item)
+      })
+      console.log('this.selectedItems', this.selectedItems)
     },
     findDropMonster(itemName) {
       // 재료 아이템인 경우
