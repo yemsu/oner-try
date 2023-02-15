@@ -62,7 +62,7 @@ const detailInfoDesc = (item, key) => {
 
 export const parseIngredientsData = (strData) => {
   // console.log('parseIngredientsData', strData)
-  const toArr = strData.split(',')
+  const toArr = strData.split('|')
   const strValueToObj = toArr.map(item => {
     const [ name, number ] = item.split(':')
     return { name, number }

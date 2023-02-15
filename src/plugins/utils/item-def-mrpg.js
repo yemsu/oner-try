@@ -46,10 +46,19 @@ export const totalOptions = {
   agi: '민첩', 
   actd: '물리 치명타 피해량',
   dmg: '피해량',
-  mp: '마나'
+  mp: '마나',
+  fdmg: '최종 피해량',
+  gdmg: '받는 피해량',
+  act: '치명타 확률',
+  sdmg: '스킬 데미지',
+  teamat: '주위 아군의 공격력',
+  cd: '쿨타임',
+  dad: '암흑 속성 피해',
+  iad: '얼음 속성 피해'
+
 }
 
-export const percentOptions = ['as', 'ev', 'pre', 'mre', 'actd', 'dmg']
+export const percentOptions = ['as', 'ev', 'pre', 'mre', 'actd', 'dmg', 'fdmg', 'act', 'sdmg', 'teamat', 'cd', 'dad', 'iad']
 
 export const characterDefs = [
   {
