@@ -1,4 +1,5 @@
 export const deepClone = (data) => {
+  // console.log('data', data)
   return JSON.parse(JSON.stringify(data))
 }
 export const getOnlyText = (str) => {
