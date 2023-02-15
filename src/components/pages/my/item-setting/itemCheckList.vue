@@ -12,6 +12,8 @@
         <input
           type="checkbox"
           :id="`item-${id}${i}`"
+          :checked="checkList.includes(`item-${id}${i}`) ? true : false"
+          @change="(e) => changeCheckBox(e, `item-${id}${i}`)"
         />
         <label :for="`item-${id}${i}`">
           {{ item.name }} * {{ item.number }}
@@ -40,7 +42,9 @@ export default {
   },
   data() {
     return {
-      checkboxItems: []
+      STORAGE_NAME: null,
+      checkboxItems: [],
+      checkList: [],
     }
   },
   computed: {
@@ -51,6 +55,8 @@ export default {
     })
   },
   mounted() {
+    this.setStorageName()
+    this.getCheckList()
     this.setCheckboxItems()
   },
   methods: {
@@ -85,6 +91,55 @@ export default {
       } else {
         return `드랍: ${equipment.dropMonster}`
       }
+    },
+    setStorageName() {
+      this.STORAGE_NAME = `itemSettingCheckListView${this.$route.query.id}`
+    },
+    getStorage() {
+      return localStorage.getItem(this.STORAGE_NAME)
+    },
+    getCheckList() {    
+      console.log('getCheckList')
+      const storage = this.getStorage()
+      if(!storage) return
+      this.checkList = JSON.parse(storage)
+    },
+    changeCheckBox(e, inputId) {
+      const isChecked = e.target.checked
+      // console.log("check", isChecked, this.queryId, inputId)
+      
+      // 체크 여부에 따라 삽입/제거
+      if(isChecked) {
+        this.addCheckListItem(inputId)
+      } else {
+        this.deleteCheckListItem(inputId)
+      }
+    },
+    addCheckListItem(inputId) {
+      // 컴포넌트 데이터 업데이트
+      this.checkList.push(inputId)
+      // 페이지별 데이터 local storage 업데이트
+      const storageData = JSON.parse(this.getStorage())
+      const dataAdded = storageData
+        ? storageData.concat([inputId])
+        : [inputId]
+      this.saveData(dataAdded)
+      console.log('add', inputId, this.checkList)
+    },
+    deleteCheckListItem(inputId) {
+      // 컴포넌트 데이터 업데이트
+      this.checkList = this.checkList.filter(id => inputId !== id)
+      // 페이지별 데이터 local storage 업데이트
+      const storageData = JSON.parse(this.getStorage())
+      const dataDeleted = storageData.filter(id => id !== inputId)
+      this.saveData(dataDeleted)
+      console.log('add', inputId, this.checkList)
+    },
+    saveData(data) {
+      localStorage.setItem(
+        this.STORAGE_NAME,
+        JSON.stringify(data)
+      )
     }
   }
 }

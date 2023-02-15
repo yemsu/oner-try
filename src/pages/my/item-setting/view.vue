@@ -55,7 +55,6 @@ export default {
     return {
       itemSetting: null,
       items: [],
-      checkList: [],
     }
   },
   computed: {
