@@ -14,42 +14,42 @@
           </item-box>
         </div>
         
-        <item-checkbox-list
+        <item-check-list
           v-if="item.ingredients"
           :items="item.ingredients"
           :id="`0${i}`"
         >
           <template v-slot="{ ingredients: ingredients1, index: index1 }">
-            <item-checkbox-list
+            <item-check-list
               v-if="ingredients1"
               :items="ingredients1"
               :id="`1${index1}`"
             >
               <template v-slot="{ ingredients: ingredients2, index: index2 }">
-                <item-checkbox-list
+                <item-check-list
                   v-if="ingredients2"
                   :items="ingredients2"
                   :id="`2${index2}`"
                 >
-                </item-checkbox-list>
+                </item-check-list>
               </template>
-            </item-checkbox-list>
+            </item-check-list>
           </template>
-        </item-checkbox-list>
+        </item-check-list>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import itemCheckboxList from '@/components/pages/my/item-setting/itemCheckboxList.vue';
+import itemCheckList from '@/components/pages/my/item-setting/itemCheckList.vue';
 import { parseItemData } from '@/plugins/utils/item-mrpg'
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'item-setting-view',
   components: {
-    itemCheckboxList
+    itemCheckList
   },
   data() {
     return {
