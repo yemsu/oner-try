@@ -1,8 +1,14 @@
 export const gradesDef = {
-  legend: '레전드',
-  epic: '에픽',
-  rare: '레어',
-  normal: '노말',
+  normal: '일반',
+  grand: '고급',
+  rare: '희귀',
+  heroic: '영웅',
+  divine: '성물',
+  legendary: '전설',
+  epic: '서사',
+  celestial: '유물',
+  arcane: '고대',
+  mythic: '신화'
 }
 export const heroDefaultHp = {
   tashigi: 90,
