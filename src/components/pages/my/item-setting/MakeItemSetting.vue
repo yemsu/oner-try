@@ -11,116 +11,125 @@
         </base-button>
       </div>
     </div>
-    <div
-      v-if="showAddItemSetting"
-      class="content-item-setting "
-    >
-      <div class="inner-size-basic">
-        <section class="wrap-categories">
-          <h3 class="ir-hidden">새로운 목표 아이템 설정</h3>
-          <div class="wrap-option-category category-title">
-            <div class="area-title-sub">
-              <h4 class="title-sub-new"><label for="newSettingTitle">제목</label></h4>
-            </div>
-            <base-input
-              id="newSettingTitle"
-              :value="newSettingTitle"
-              :focus-time="isFocusTitleInput"
-              size="small"
-              placeholder="제목"
-              @onUpdateInput="(value) => newSettingTitle = value"
-            />
-          </div>
-          <div class="wrap-option-category category-character">
-            <div class="area-title-sub">
-              <h4 class="title-sub-new">캐릭터</h4>
-            </div>
-            <option-list-bar
-              :data="characterOptions"
-              size="small"
-              @selectOption="(characterName) => selectedCharacter = characterName"
-            />
-          </div>
-          <section class="wrap-option-category category-search-item">
-            <div class="area-title-sub">
-              <h4 class="title-sub-new"><label for="newSettingSearchInput">아이템 검색</label></h4>
-            </div>
-            <search-box
-              v-if="equipMatchingDataList"
-              id="newSettingSearchInput"
-              size="small"
-              :matching-data="equipMatchingDataList"
-              :use-auto-enter="true"
-              :use-compact-mode="false"
-              placeholder="전체 아이템"
-              @onSearch="fnSearch"
-            />
-          </section>
-          <div class="wrap-option-category category-items">
-            <div class="area-title-sub">
-              <h4 class="title-sub-new">아이템</h4>
-              <p class="text-refer"><small>* 조합 아이템</small></p>
-            </div>
-            <option-list-bar
-              :data="equipTypeOptions"
-              :default-select="true"
-              size="small"
-              @selectOption="clickEquipOption"
-            />
-            <div class="content-items">
-              <option-list-bar
-                :data="selectedEquipTypeItems"
-                :show-title="false"
+    <Transition name="slideUp">
+      <div
+        v-if="showAddItemSetting"
+        class="content-item-setting"
+      >
+        <div class="inner-size-basic">
+          <section class="wrap-categories">
+            <h3 class="ir-hidden">새로운 목표 아이템 설정</h3>
+            <div class="wrap-option-category category-title">
+              <div class="area-title-sub">
+                <h4 class="title-sub-new"><label for="newSettingTitle">제목</label></h4>
+              </div>
+              <base-input
+                id="newSettingTitle"
+                :value="newSettingTitle"
+                :focus-time="isFocusTitleInput"
                 size="small"
-                @selectOption="(name) => addSelectedItems(name)"
+                placeholder="제목"
+                @onUpdateInput="(value) => newSettingTitle = value"
               />
             </div>
-          </div>
-          <div class="wrap-option-category category-selected-item">
-            <div class="area-title-sub">
-              <h4 class="title-sub-new">목표 아이템 ({{ selectedItems.length }})</h4>
-              <p class="text-refer"><small>* 최대 {{ MAX_SELECTED_ITEM_LENGTH }}개까지 선택 가능합니다.</small></p>
+            <div class="wrap-option-category category-character">
+              <div class="area-title-sub">
+                <h4 class="title-sub-new">캐릭터</h4>
+              </div>
+              <option-list-bar
+                :data="characterOptions"
+                size="small"
+                @selectOption="(characterName) => selectedCharacter = characterName"
+              />
             </div>
-            <div class="content-selected-item">
-              <template v-if="selectedItems.length > 0">
-                <div
-                  v-for="(item, i) in selectedItems"
-                  :key="`item${i}`"
-                >
-                  <div class="wrap-item">
-                    <item-box
-                      :item="item"
-                      size="small"
-                    >
-                    </item-box>
-                  </div>
-                  <button @click="deleteSelectedItem(item.name)">삭제</button>
-                </div>
-              </template>
-              <div v-else class="area-blank-text">
-                <p>선택된 아이템이 없습니다.</p>
+            <section class="wrap-option-category category-search-item">
+              <div class="area-title-sub">
+                <h4 class="title-sub-new"><label for="newSettingSearchInput">아이템 검색</label></h4>
+              </div>
+              <search-box
+                v-if="equipMatchingDataList"
+                id="newSettingSearchInput"
+                size="small"
+                :matching-data="equipMatchingDataList"
+                :use-auto-enter="true"
+                :use-compact-mode="false"
+                placeholder="전체 아이템"
+                @onSearch="fnSearch"
+              />
+            </section>
+            <div class="wrap-option-category category-items">
+              <div class="area-title-sub">
+                <h4 class="title-sub-new">아이템</h4>
+                <p class="text-refer"><small>* 조합 아이템</small></p>
+              </div>
+              <option-list-bar
+                :data="equipTypeOptions"
+                :default-select="true"
+                size="small"
+                @selectOption="clickEquipOption"
+              />
+              <div class="content-items">
+                <option-list-bar
+                  :data="selectedEquipTypeItems"
+                  :show-title="false"
+                  size="small"
+                  @selectOption="(name) => addSelectedItems(name)"
+                />
               </div>
             </div>
+            <div class="wrap-option-category category-selected-item">
+              <div class="area-title-sub">
+                <h4 class="title-sub-new">목표 아이템 ({{ selectedItems.length }})</h4>
+                <p class="text-refer"><small>* 최대 {{ MAX_SELECTED_ITEM_LENGTH }}개까지 선택 가능합니다.</small></p>
+              </div>
+              <div class="content-selected-item">
+                <template v-if="selectedItems.length > 0">
+                  <div
+                    v-for="(item, i) in selectedItems"
+                    :key="`item${i}`"
+                  >
+                    <div class="wrap-item">
+                      <item-box
+                        :item="item"
+                        size="small"
+                      >
+                      </item-box>
+                    </div>
+                    <button @click="deleteSelectedItem(item.name)">삭제</button>
+                  </div>
+                </template>
+                <div v-else class="area-blank-text">
+                  <p>선택된 아이템이 없습니다.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="wrap-btns">
+            <base-button
+              type="square-round"
+              bg="cancel"
+              @click="showAddItemSetting = false"
+            >
+              취소
+            </base-button>
+            <base-button
+              type="square-round"
+              bg="point"
+              @click="clickSubmit"
+            >
+              설정 완료
+            </base-button>
           </div>
-        </section>
-        <div class="wrap-btns">
-          <base-button
-            type="square-round"
-            bg="cancel"
-            @click="showAddItemSetting = false"
-          >
-            취소
-          </base-button>
-          <base-button
-            type="square-round"
-            bg="point"
-            @click="clickSubmit"
-          >
-            설정 완료
-          </base-button>
         </div>
       </div>
-    </div>
+    </Transition>
+    <Transition name="fade">
+      <div
+        v-if="showAddItemSetting"
+        class="dim"
+        @click="showAddItemSetting = false"
+      ></div>
+    </Transition>
   </div>
 </template>
 

@@ -42,6 +42,10 @@ $list-gap-basic: 10px;
 $filter-brighter: brightness(120%) saturate(95%);
 $filter-darker: brightness(75%);
 
+// z index
+$dim-z-index: 9;
+$popup-z-index: 10;
+
 // color maker
 $color-point-hsl: (248, 42%, 45%);
 $color-point-sub-hsl: (192, 30%, 50%);
@@ -97,7 +101,8 @@ $color-point-sub-hsl: (192, 30%, 50%);
   --text-no-data:var(--color-gray-80);
 
   // tooltip bg
-  --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
+  --bg-tooltip-dim: hsla(248, 5%, 5%, 0.8);
+  --bg-popup-dim: hsla(248, 10%, 10%, 0.5);
 
   // 아이템 등급 컬러
   --color-grade-legend: #70dbbb;

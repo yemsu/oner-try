@@ -3,7 +3,7 @@
   padding: 10px 0;
   .content-item-setting {
     position: absolute;
-    z-index: 1;
+    z-index: $popup-z-index;
     top: 0;
     width: 100%;
     padding: 20px 0 30px;
