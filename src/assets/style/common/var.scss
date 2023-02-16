@@ -46,9 +46,23 @@ $filter-darker: brightness(75%);
 $dim-z-index: 9;
 $popup-z-index: 10;
 
+// grade list
+$item-grade-colors: (
+  'normal': (210 1% 47%),
+  'grand': (120 64% 58%),
+  'rare': (220 100% 70%),
+  'heroic': (270 50% 60%),
+  'divine': (359 61% 60%),
+  'legendary': (20 58% 59%),
+  'epic': (42 100% 50%),
+  'celestial': (28 100% 50%),
+  'arcane': (47 49% 66%),
+  'mythic': (300 99% 48%),
+);
+
 // color maker
 $color-point-hsl: (248, 42%, 45%);
-$color-point-sub-hsl: (192, 35%, 50%);
+$color-point-sub-hsl: (192, 42%, 50%);
 @function colorMaker($hsl, $calcH: 0%, $calcL: 0%, $a: 100%) {
   @return hsla(
     #{nth($hsl, 1)},
@@ -57,7 +71,6 @@ $color-point-sub-hsl: (192, 35%, 50%);
     $a
   )
 };
-
 :root {
   --point-h: #{nth($color-point-hsl, 1)};
   // pallette
@@ -112,18 +125,6 @@ $color-point-sub-hsl: (192, 35%, 50%);
   // tooltip bg
   --bg-tooltip-dim: hsla(248, 5%, 5%, 0.8);
   --bg-popup-dim: hsla(248, 10%, 10%, 0.5);
-
-  // 아이템 등급 컬러
-  --color-grade-normal: #78797A; //일반
-  --color-grade-grand: #4FD950; //고급
-  --color-grade-rare: #6699FF; //희귀
-  --color-grade-heroic: #9966CC; //영웅
-  --color-grade-divine: #D7595B; //성물
-  --color-grade-legendary: #D3825A; //전설
-  --color-grade-epic: #FFB400; //서사
-  --color-grade-celestial: #FD7700; //유물
-  --color-grade-arcane: #D3C07E; //고대
-  --color-grade-mythic: #F501F6; //신화
 
   // 아이템 정보 온션별 컬러
   --color-info-stat: hsl(48, 97%, 46%);

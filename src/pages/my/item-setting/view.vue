@@ -85,13 +85,13 @@ export default {
       ))
     },
     setItems() {
-      const { items: itemNames } = this.itemSetting
-      this.items = itemNames.map(name => {
+      const { items } = this.itemSetting
+      this.items = items.map(({name}) => {
         const item = this.compositionEquips.find(({ name: _name }) => name === _name)
         return parseItemData(item)
       })
       console.log("this.items", this.items)
-    }
+    },
   }
 }
 </script>

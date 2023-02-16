@@ -237,7 +237,7 @@ export default {
       const result = {
         title: this.newSettingTitle,
         character: this.selectedCharacter,
-        items: this.selectedItems.map(({ name }) => name)
+        items: this.selectedItems.map(({ name, grade }) => ({ name, grade }))
       }
       console.log('submitItemSetting-----------')
       console.table(result)
