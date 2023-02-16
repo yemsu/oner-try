@@ -54,6 +54,9 @@ i {
     > .align-right {
       margin-left: auto;
     }
+    ::v-deep .box-search {
+      width: 250px;
+    }
   }
 }
 

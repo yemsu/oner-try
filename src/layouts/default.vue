@@ -21,9 +21,10 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  position: relative;
-  min-height: 100vh;
   $header-height: $header-game-menu-height + $header-site-menu-height;
-  padding: $header-height 0 100px;
+  position: relative;
+  top: $header-height;
+  min-height: 100vh;
+  padding-bottom: 100px;
 }
 </style>

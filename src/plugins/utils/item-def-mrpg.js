@@ -18,7 +18,14 @@ export const itemsHasSubTitle = [
 export const itemTypeNames = {
   staff: '마법',
   accessory: '반지',
-  sub: '보조'
+  sub: '보조',
+  stone: '마법석',
+  helmet: '투구',
+  bandana: '두건',
+  bow: '활',
+  lightArmor: '경갑',
+  heavyArmor: '중갑',
+  clothes: '천옷',
 }
 
 export const itemDetailInfoOrder = [

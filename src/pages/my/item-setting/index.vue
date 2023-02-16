@@ -1,17 +1,21 @@
 <template>
-  <div class="inner-size-basic">
+  <section>
     <h2 class="ir-hidden">목표 아이템 설정</h2>
     <div
       v-if="!isLogin || itemSettingList.length === 0"
-      class=""
+      class="inner-size-basic"
     >
-      <p><span v-if="!isLogin">구글 로그인 후, </span>목표 아이템을 설정하고 하나씩 달성해 나가보세요!</p>
-      <p>아이템 선택하면, 필요한 재료 아이템을 확인할 수 있습니다.</p>
-      <p>재료 아이템이 조합아이템이라면, 해당 아이템의 재료 아이템까지 확인하실 수 있어요!</p>
-      <p>재료 아이템을 습득했다면, 체크! 해주세요.</p>
-      <p>목표 아이템을 위해 필요한 재료아이템 총합도 확인할 수 있습니다. 체크한 아이템은 계산에서 제외됩니다!</p>
+      <div
+        class=""
+      >
+        <p><span v-if="!isLogin">구글 로그인 후, </span>목표 아이템을 설정하고 하나씩 달성해 나가보세요!</p>
+        <p>아이템 선택하면, 필요한 재료 아이템을 확인할 수 있습니다.</p>
+        <p>재료 아이템이 조합아이템이라면, 해당 아이템의 재료 아이템까지 확인하실 수 있어요!</p>
+        <p>재료 아이템을 습득했다면, 체크! 해주세요.</p>
+        <p>목표 아이템을 위해 필요한 재료아이템 총합도 확인할 수 있습니다. 체크한 아이템은 계산에서 제외됩니다!</p>
+      </div>
     </div>
-    <div v-if="isLogin">
+    <div v-else-if="isLogin">
       <make-item-setting
         v-if="equipTypeOptions && characterOptions && equipmentTypes && equipMatchingDataList"
         :equip-type-options="equipTypeOptions"
@@ -21,38 +25,39 @@
         @onUpdateSelectItem="onUpdateSelectItem"
         @submit="onSubmit"
       />
-
-      <!-- 리스트 -->
-      <section>
-        <h2>나의 목표 아이템 세팅</h2>
-        <div
-          v-for="({title, character, items, id}, i) in itemSettingList"
-          :key="`itemSetting${i}`"
-        >
-          <p>{{ title }}</p>
-          <p>{{ character }}</p>
-          <ul>
-            <li
-              v-for="(itemName, i) in items"
-              :key="`savedItem${i}`"
-            > 
-              {{ itemName }}
-            </li>
-          </ul>
-          <base-button
-            @click="deleteItemSetting(id)"
+      <div class="inner-size-basic">
+        <!-- 리스트 -->
+        <section>
+          <h2>나의 목표 아이템 세팅</h2>
+          <div
+            v-for="({title, character, items, id}, i) in itemSettingList"
+            :key="`itemSetting${i}`"
           >
-            삭제
-          </base-button>
-          <base-button
-            :link-to="`/my/item-setting/view?id=${id}`"
-          >
-            자세히 보기
-          </base-button>
-        </div>
-      </section>
+            <p>{{ title }}</p>
+            <p>{{ character }}</p>
+            <ul>
+              <li
+                v-for="(itemName, i) in items"
+                :key="`savedItem${i}`"
+              >
+                {{ itemName }}
+              </li>
+            </ul>
+            <base-button
+              @click="deleteItemSetting(id)"
+            >
+              삭제
+            </base-button>
+            <base-button
+              :link-to="`/my/item-setting/view?id=${id}`"
+            >
+              자세히 보기
+            </base-button>
+          </div>
+        </section>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

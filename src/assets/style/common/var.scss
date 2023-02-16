@@ -18,6 +18,16 @@ $font-size-MS-pc: 14px;
 $font-size-S-pc: 13px;
 $font-size-XS-pc: 12px;
 
+// title style
+$titleSub1: (
+  "weight": 500,
+  "size": $font-size-title-M-pc,
+);
+$titleSub2: (
+  "weight": 500,
+  "size": $font-size-title-S-pc,
+);
+
 // item img size
 $item-image-xsmall: 30px;
 $item-image-small: 40px;
@@ -81,6 +91,10 @@ $color-point-sub-hsl: (192, 30%, 50%);
   --bg-dark-gray: var(--color-gray-40);
   --bg-gray: var(--color-gray-80);
   --bg-light-gray: var(--color-gray-95);
+
+  // text color
+  --text-refer:var(--color-gray-50);
+  --text-no-data:var(--color-gray-80);
 
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);

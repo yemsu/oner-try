@@ -15,7 +15,7 @@
             type="round"
             :bg="activeData === option.text ? 'point' : 'light-gray'"
             size="small"
-            @click="clickButton(option)"
+            @click="selectOption(option)"
           >
             {{ option.text }}
           </base-button>
@@ -53,6 +53,10 @@ export default {
     showTitle: {
       type: Boolean,
       default: () => true
+    },
+    defaultSelect: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {
@@ -60,11 +64,16 @@ export default {
       activeData: null,
     }
   },
+  mounted() {
+    if(this.defaultSelect) {
+      this.selectOption(this.data[0].options[0])
+    }
+  },
   methods: {
-    clickButton(option) {
+    selectOption(option) {
       const { id, text } = option
       this.activeData = text
-      this.$emit('clickButton', id || text)
+      this.$emit('selectOption', id || text)
     }
   }
 }

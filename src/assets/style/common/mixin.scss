@@ -29,6 +29,22 @@
   }
 }
 
+
+@mixin fontCall($fontRule, $color:#000) {
+  font-size: map-get($fontRule, size);
+  font-weight: map-get($fontRule, weight);
+  @if map-get($fontRule, linegap) {
+    line-height: map-get($fontRule, linegap);
+  }    
+  @if map-get($fontRule, spacing) {
+    letter-spacing: (map-get($fontRule, spacing) / 1000) * 16px;
+  }
+  @if $color {
+    color: $color;
+  }
+}
+
+
 @mixin scrollBar(
   $thumbColor: var(--color-gray-85), 
   $hoverThumbColor: var(--color-gray-65)

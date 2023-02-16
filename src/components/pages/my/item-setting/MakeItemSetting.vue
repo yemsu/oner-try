@@ -1,91 +1,126 @@
 <template>
-  <div>
-    <base-button
-      type="square-round"
-      bg="point"
-      @click="clickNewItemSetting"
+  <div class="create-item-setting">
+    <div class="inner-size-basic">
+      <div class="wrap-button">
+        <base-button
+          type="square-round"
+          bg="point"
+          @click="clickNewItemSetting"
+        >
+          목표 아이템 설정 추가
+        </base-button>
+      </div>
+    </div>
+    <div
+      v-if="showAddItemSetting"
+      class="content-item-setting "
     >
-      목표 아이템 설정
-    </base-button>
-    <section v-if="showAddItemSetting">
-      <h3 class="title-new">새로운 목표 아이템 설정</h3>
-      <div>
-        <div>
-          <h4 class="title-sub-new"><label for="newSettingTitle">제목</label></h4>
-          <base-input
-            id="newSettingTitle"
-            :value="newSettingTitle"
-            placeholder="제목"
-            :focus-time="isFocusTitleInput"
-            @onUpdateInput="(value) => newSettingTitle = value"
-            size="medium"
-          />
-        </div>
-        <div>
-          <h4 class="title-sub-new">캐릭터</h4>
-          <option-list-bar
-            :data="characterOptions"
-            size="small"
-            @clickButton="(characterName) => selectedCharacter = characterName"
-          />
-        </div>
-        <section>
-          <h4 class="title-sub-new"><label for="newSettingSearchInput">아이템 선택</label></h4>
-          <search-box
-            v-if="equipMatchingDataList"
-            id="newSettingSearchInput"
-            size="medium"
-            :matching-data="equipMatchingDataList"
-            :use-auto-enter="true"
-            :use-compact-mode="false"
-            placeholder="전체 아이템"
-            @onSearch="fnSearch"
-          />
-          <option-list-bar
-            :data="equipTypeOptions"
-            size="small"
-            @clickButton="clickEquipOption"
-          />
-          <option-list-bar
-            :data="selectedEquipTypeItems"
-            :show-title="false"
-            size="small"
-            @clickButton="(name) => addSelectedItems(name)"
-          />
-        </section>
-        <div class="area-item-list">
-          <h4>선택된 아이템 ({{ selectedItems.length }})</h4>
-          <p>최대 {{ MAX_SELECTED_ITEM_LENGTH }}개까지 선택 가능합니다.</p>
-          <div
-            v-for="(item, i) in selectedItems"
-            :key="`item${i}`"
-          >
-            <div class="wrap-item">
-              <item-box
-                :item="item"
-                size="small"
-              >
-              </item-box>
+      <div class="inner-size-basic">
+        <section class="wrap-categories">
+          <h3 class="ir-hidden">새로운 목표 아이템 설정</h3>
+          <div class="wrap-option-category category-title">
+            <div class="area-title-sub">
+              <h4 class="title-sub-new"><label for="newSettingTitle">제목</label></h4>
             </div>
-            <button @click="deleteSelectedItem(item.name)">삭제</button>
+            <base-input
+              id="newSettingTitle"
+              :value="newSettingTitle"
+              :focus-time="isFocusTitleInput"
+              size="medium"
+              placeholder="제목"
+              @onUpdateInput="(value) => newSettingTitle = value"
+            />
           </div>
+          <div class="wrap-option-category category-character">
+            <div class="area-title-sub">
+              <h4 class="title-sub-new">캐릭터</h4>
+            </div>
+            <option-list-bar
+              :data="characterOptions"
+              size="small"
+              @selectOption="(characterName) => selectedCharacter = characterName"
+            />
+          </div>
+          <section class="wrap-option-category category-search-item">
+            <div class="area-title-sub">
+              <h4 class="title-sub-new"><label for="newSettingSearchInput">아이템 검색</label></h4>
+            </div>
+            <search-box
+              v-if="equipMatchingDataList"
+              id="newSettingSearchInput"
+              size="medium"
+              :matching-data="equipMatchingDataList"
+              :use-auto-enter="true"
+              :use-compact-mode="false"
+              placeholder="전체 아이템"
+              @onSearch="fnSearch"
+            />
+          </section>
+          <div class="wrap-option-category category-items">
+            <div class="area-title-sub">
+              <h4 class="title-sub-new">아이템</h4>
+              <p class="text-refer"><small>* 조합 아이템</small></p>
+            </div>
+            <option-list-bar
+              :data="equipTypeOptions"
+              :default-select="true"
+              size="small"
+              @selectOption="clickEquipOption"
+            />
+            <div class="content-items">
+              <option-list-bar
+                :data="selectedEquipTypeItems"
+                :show-title="false"
+                size="small"
+                @selectOption="(name) => addSelectedItems(name)"
+              />
+            </div>
+          </div>
+          <div class="wrap-option-category category-selected-item">
+            <div class="area-title-sub">
+              <h4 class="title-sub-new">목표 아이템 ({{ selectedItems.length }})</h4>
+              <p class="text-refer"><small>* 최대 {{ MAX_SELECTED_ITEM_LENGTH }}개까지 선택 가능합니다.</small></p>
+            </div>
+            <div class="content-selected-item">
+              <template v-if="selectedItems.length > 0">
+                <div
+                  v-for="(item, i) in selectedItems"
+                  :key="`item${i}`"
+                >
+                  <div class="wrap-item">
+                    <item-box
+                      :item="item"
+                      size="small"
+                    >
+                    </item-box>
+                  </div>
+                  <button @click="deleteSelectedItem(item.name)">삭제</button>
+                </div>
+              </template>
+              <div v-else class="area-blank-text">
+                <p>선택된 아이템이 없습니다.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="wrap-btns">
+          <base-button
+            type="square-round"
+            bg="cancel"
+            @click="showAddItemSetting = false"
+          >
+            취소
+          </base-button>
+          <base-button
+            type="square-round"
+            bg="point"
+            @click="clickSubmit"
+          >
+            설정 완료
+          </base-button>
         </div>
       </div>
-      <base-button
-        type="square-round"
-        bg="cancel"
-        @click="showAddItemSetting = false"
-      >
-        취소
-      </base-button>
-      <base-button
-        type="square-round"
-        bg="point"
-        @click="clickSubmit"
-      >
-        설정 완료
-      </base-button>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -242,4 +277,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import '@/assets/style/pages/my/item-setting/MakeItemSetting.scss';
+</style>
