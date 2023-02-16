@@ -178,7 +178,7 @@ export default {
     }
   },
   mounted() {
-    console.log('itembox', this.item)
+    // console.log('itembox', this.item)
   },
   methods: {
     clickItem() {
