@@ -30,31 +30,10 @@
               목표 아이템 설정 추가
             </base-button>
           </div>
-          <div
-            v-for="({title, character, items, id}, i) in itemSettingList"
-            :key="`itemSetting${i}`"
-          >
-            <p>{{ title }}</p>
-            <p>{{ character }}</p>
-            <ul>
-              <li
-                v-for="(itemName, i) in items"
-                :key="`savedItem${i}`"
-              >
-                {{ itemName }}
-              </li>
-            </ul>
-            <base-button
-              @click="deleteItemSetting(id)"
-            >
-              삭제
-            </base-button>
-            <base-button
-              :link-to="`/my/item-setting/view?id=${id}`"
-            >
-              자세히 보기
-            </base-button>
-          </div>
+          <item-setting-list
+            v-if="itemSettingList"
+            :item-setting-list="itemSettingList"
+          />
         </section>
       </div>
     </div>
@@ -75,6 +54,7 @@
 <script>
 import BaseButton from '@/components/common/BaseButton.vue'
 import MakeItemSetting from '@/components/pages/my/item-setting/MakeItemSetting.vue'
+import ItemSettingList from '@/components/pages/my/item-setting/ItemSettingList.vue'
 import { getValueList } from '@/plugins/utils'
 import { characterDefs, totalOptions, itemTypeNames } from '@/plugins/utils/item-def-mrpg'
 import { mapGetters, mapActions, mapMutations } from 'vuex';
@@ -83,7 +63,8 @@ export default {
   name: 'item-setting',
   components: {
     BaseButton,
-    MakeItemSetting
+    MakeItemSetting,
+    ItemSettingList
   },
   data() {
     return {
@@ -120,7 +101,6 @@ export default {
   methods: {
     ...mapMutations({
       addItemSetting: 'item-setting/ADD_ITEM_SETTING',
-      deleteItemSetting: 'item-setting/DELETE_ITEM_SETTING'
     }),
     ...mapActions({
       getEquipments: 'mrpg/GET_EQUIPMENTS',
