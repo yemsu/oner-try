@@ -42,14 +42,14 @@
 </template>
 
 <script>
-import itemCheckList from '@/components/pages/my/item-setting/itemCheckList.vue';
+import ItemCheckList from '@/components/pages/my/item-setting/ItemCheckList.vue';
 import { parseItemData } from '@/plugins/utils/item-mrpg'
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'item-setting-view',
   components: {
-    itemCheckList
+    ItemCheckList
   },
   data() {
     return {
