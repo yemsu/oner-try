@@ -14,6 +14,7 @@
       :type="inputType"
       :placeholder="isCompactMode ? '' : placeholder"
       :value="value"
+      maxlength="100"
       @input="onUpdateInput"
       @focus="onFocusInput"
       @keydown="onEnter"

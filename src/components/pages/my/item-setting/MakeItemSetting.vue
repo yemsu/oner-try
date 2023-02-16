@@ -26,7 +26,7 @@
               id="newSettingTitle"
               :value="newSettingTitle"
               :focus-time="isFocusTitleInput"
-              size="medium"
+              size="small"
               placeholder="제목"
               @onUpdateInput="(value) => newSettingTitle = value"
             />
@@ -48,7 +48,7 @@
             <search-box
               v-if="equipMatchingDataList"
               id="newSettingSearchInput"
-              size="medium"
+              size="small"
               :matching-data="equipMatchingDataList"
               :use-auto-enter="true"
               :use-compact-mode="false"

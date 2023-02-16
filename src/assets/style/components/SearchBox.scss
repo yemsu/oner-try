@@ -1,8 +1,13 @@
 .box-search {
   &.size {
-    &-basic {
+    &-medium {
       .wrap-search {
         width: 280px;
+        ::v-deep {
+          input {
+            padding-left: 45px;
+          }
+        }
       }
     }
     &-big {
@@ -11,13 +16,9 @@
       margin-top: 16vh;
       .wrap-search {
         width: 500px;
-      }
-    }
-    &-small {
-      .wrap-search {
         ::v-deep {
           input {
-            font-size: $font-size-M-pc;
+            padding-left: 60px;
           }
         }
       }

@@ -1,5 +1,9 @@
 <template>
-  <section :class="['box-search', {'compact':size === 'small'}, `size-${size}`]">
+  <section :class="[
+    'box-search',
+    {'compact': size === 'small'},
+    `size-${size}`
+  ]">
     <h2 class="ir-hidden">{{ placeholder }} 검색</h2>
     <div :class="[
       'wrap-search',
@@ -83,7 +87,7 @@ export default {
     },
     size: {
       type: String,
-      default: () => 'medium'
+      default: () => 'medium' //small, medium, big
     },
     rankingList: {
       type: Array,
