@@ -2,7 +2,7 @@
   <section>
     <h2 class="ir-hidden">목표 아이템 설정</h2>
     <div
-      v-if="!isLogin || itemSettingList.length === 0"
+      v-if="!isLogin"
       class="inner-size-basic"
     >
       <div
@@ -15,7 +15,7 @@
         <p>목표 아이템을 위해 필요한 재료아이템 총합도 확인할 수 있습니다. 체크한 아이템은 계산에서 제외됩니다!</p>
       </div>
     </div>
-    <div v-else-if="isLogin">
+    <div v-else>
       <div class="inner-size-basic pd-top-medium">
         <!-- 리스트 -->
         <section>
