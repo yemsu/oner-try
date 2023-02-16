@@ -1,19 +1,8 @@
 <template>
   <div class="create-item-setting">
-    <div class="inner-size-basic">
-      <div class="wrap-button">
-        <base-button
-          type="square-round"
-          bg="point"
-          @click="clickNewItemSetting"
-        >
-          목표 아이템 설정 추가
-        </base-button>
-      </div>
-    </div>
     <Transition name="slideUp">
-      <div
-        v-if="showAddItemSetting"
+      <div 
+        v-if="show"
         class="content-item-setting"
       >
         <div class="inner-size-basic">
@@ -108,7 +97,7 @@
             <base-button
               type="square-round"
               bg="cancel"
-              @click="showAddItemSetting = false"
+              @click="close()"
             >
               취소
             </base-button>
@@ -125,9 +114,9 @@
     </Transition>
     <Transition name="fade">
       <div
-        v-if="showAddItemSetting"
+        v-if="show"
         class="dim"
-        @click="showAddItemSetting = false"
+        @click="close()"
       ></div>
     </Transition>
   </div>
@@ -149,6 +138,10 @@ export default {
     OptionListBar,
   },
   props: {
+    show: {
+      type: Boolean,
+      required: true
+    },
     equipTypeOptions: {
       type: Array,
       required: true
@@ -171,7 +164,6 @@ export default {
       MAX_SELECTED_ITEM_LENGTH: 10,
       selectedItems: [],
       newSettingTitle: '',
-      showAddItemSetting: false,
       selectedCharacter: null,
       selectedEquipTypeItems: [],
       isFocusTitleInput: false,
@@ -181,6 +173,11 @@ export default {
     ...mapGetters({
       compositionEquips: 'mrpg/getCompositionEquips',
     }),
+  },
+  mounted() {    
+    setTimeout(() => {
+      this.focusToTitleInput()
+    }, 200)
   },
   methods: {
     fnSearch(name) {
@@ -205,12 +202,6 @@ export default {
       const item = this.compositionEquips.find(item => item.name === name)
       return parseItemData(item)
     },
-    clickNewItemSetting() {
-      this.showAddItemSetting = !this.showAddItemSetting
-      setTimeout(() => {
-        this.focusToTitleInput()
-      }, 200)
-    },
     clickEquipOption(equipName) {
       const equipType = findKeyName(itemTypeNames, equipName)
       const options = this.compositionEquips
@@ -229,10 +220,12 @@ export default {
       const checkValidation = this.checkValidation()
       if(!checkValidation) return
       
-      this.submitItemSetting()
-      
-      this.showAddItemSetting = false
+      this.submitItemSetting()      
+      this.close()
       this.resetSelectDataAll()
+    },
+    close() {
+      this.$emit('close')
     },
     resetSelectDataAll() {
       this.newSettingTitle = ''

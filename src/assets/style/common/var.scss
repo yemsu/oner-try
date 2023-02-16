@@ -48,7 +48,7 @@ $popup-z-index: 10;
 
 // color maker
 $color-point-hsl: (248, 42%, 45%);
-$color-point-sub-hsl: (192, 30%, 50%);
+$color-point-sub-hsl: (192, 35%, 50%);
 @function colorMaker($hsl, $calcH: 0%, $calcL: 0%, $a: 100%) {
   @return hsla(
     #{nth($hsl, 1)},
@@ -85,6 +85,7 @@ $color-point-sub-hsl: (192, 30%, 50%);
 
   // border color
   // 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
+  --border-dark-gray: var(--color-gray-60);
   --border-gray: var(--color-gray-80);
   --border-light-gray: var(--color-gray-95);
   // 아이템 스택 뱃지 라인

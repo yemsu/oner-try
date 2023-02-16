@@ -16,19 +16,20 @@
       </div>
     </div>
     <div v-else-if="isLogin">
-      <make-item-setting
-        v-if="equipTypeOptions && characterOptions && equipmentTypes && equipMatchingDataList"
-        :equip-type-options="equipTypeOptions"
-        :character-options="characterOptions"
-        :equipment-types="equipmentTypes"
-        :equip-matching-data-list="equipMatchingDataList"
-        @onUpdateSelectItem="onUpdateSelectItem"
-        @submit="onSubmit"
-      />
-      <div class="inner-size-basic">
+      <div class="inner-size-basic pd-top-medium">
         <!-- 리스트 -->
         <section>
-          <h2>나의 목표 아이템 세팅</h2>
+          <div class="area-page-title">
+            <h2 class="title">😎 {{ nickname }}님이 설정한 목표 아이템</h2>
+            <base-button
+              type="square-round"
+              bg="point-sub"
+              class="btn-create-setting"
+              @click="showAddItemSetting = !showAddItemSetting"
+            >
+              목표 아이템 설정 추가
+            </base-button>
+          </div>
           <div
             v-for="({title, character, items, id}, i) in itemSettingList"
             :key="`itemSetting${i}`"
@@ -57,6 +58,17 @@
         </section>
       </div>
     </div>
+    <make-item-setting
+      v-if="equipTypeOptions && characterOptions && equipmentTypes && equipMatchingDataList"
+      :show="showAddItemSetting"
+      :equip-type-options="equipTypeOptions"
+      :character-options="characterOptions"
+      :equipment-types="equipmentTypes"
+      :equip-matching-data-list="equipMatchingDataList"
+      @onUpdateSelectItem="onUpdateSelectItem"
+      @submit="onSubmit"
+      @close="showAddItemSetting = false"
+    />
   </section>
 </template>
 
@@ -75,6 +87,7 @@ export default {
   },
   data() {
     return {
+      showAddItemSetting: false,
       equipMatchingDataList: null,
       equipmentTypes: null,
       characterOptions: [],
@@ -85,6 +98,7 @@ export default {
   computed: {
     ...mapGetters({
       isLogin: 'auth/getIsLogin',
+      nickname: 'auth/getNickname',
       compositionEquips: 'mrpg/getCompositionEquips',
       materials: 'mrpg/getMaterials',
       itemSettingList: 'item-setting/getItemSettingList',

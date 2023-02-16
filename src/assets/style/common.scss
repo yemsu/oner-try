@@ -34,6 +34,9 @@ i {
 .mrg-top-small {
   margin-top: 10px;
 }
+.pd-top-medium {
+  padding-top: 30px;
+}
 [class*=inner-size] {
   position: relative;
   transition: width 0.5s;
@@ -53,6 +56,9 @@ i {
     display: flex;
     > .align-right {
       margin-left: auto;
+    }
+    > .align-center {
+      margin: 0 auto;
     }
     ::v-deep .box-search {
       width: 250px;
@@ -318,12 +324,19 @@ caption, .ir-hidden {
 
 // title
 .area-page-title {
-  border-bottom: 1px solid #aaa;
+  display: flex;
+  // justify-content: space-between;
   margin-bottom: 10px;
   padding-bottom: 2px;
   letter-spacing: 0.01em;
+  &.line {
+    border-bottom: 1px solid var(--border-dark-gray);
+  }
   > .title {
     font-weight: bold;
+  }
+  > .btn.square-round.size-medium {
+    margin-left: 20px;
   }
   .skull {
     font-size: 1.1em;

@@ -58,6 +58,10 @@
       background-color: var(--color-point);
       color: var(--color-white);
     }
+    &-point-sub {
+      background-color: var(--color-point-sub);
+      color: var(--color-white);
+    }
     &-disabled,
     &-light-gray {
       background-color: var(--bg-light-gray);

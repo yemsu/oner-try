@@ -8,6 +8,7 @@ export const state = () => ({
 export const getters = {
   getIsLogin: (state) => state.isLogin,
   getUserInfo: (state) => state.userInfo,
+  getNickname: (state) => state.userInfo.siteNick,
 }
 
 export const mutations = {
