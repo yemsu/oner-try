@@ -1,25 +1,33 @@
 <template>
   <nuxt-link
     v-if="isNuxtLink"
-    :class="`btn ${type} bg-${bg} size-${size}`"
+    :class="[
+      `btn ${type} size-${size}`,
+      {[`bg-${bg}`]: bg},
+      {[`color-${color}`]: color},
+    ]"
     :to="linkTo"
   >
     <span class="text"><slot></slot></span>
   </nuxt-link>
   <button
     v-else
-    :class="`btn ${type} bg-${bg} size-${size}`"
+    :class="[
+      `btn ${type || 'btn-text'} size-${size}`,
+      {[`bg-${bg}`]: bg},
+      {[`color-${color}`]: color},
+    ]"
     @click="clickHandler"
     :is="tagName"
     :href="isOuterLink && linkTo"
     :target="isOuterLink ? '_blank' : '_self'"
     :title="isOuterLink ? '새창' : buttonTitle"
   >
-    <span class="text"><slot></slot></span>
     <template v-if="type.includes('mode-wide')">
       <i :class="`icon-bar-arrow ${ toggleData ? 'right' : 'left' }`"></i>
       <i :class="`icon-bar-arrow ${ toggleData ? 'left' : 'right' }`"></i>
     </template>
+    <span v-else class="text"><slot></slot></span>
   </button>
 </template>
 
@@ -47,6 +55,10 @@ export default {
       default: () => ''
     },
     buttonTitle: {
+      type: String,
+      default: () => ''
+    },
+    color: {
       type: String,
       default: () => ''
     },

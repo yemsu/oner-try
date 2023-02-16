@@ -1,34 +1,39 @@
 <template>
-  <div>
+  <div class="item-setting-list">
     <div
       v-for="({title, character, items, id}, i) in itemSettingList"
       :key="`itemSetting${i}`"
+      class="box-item-setting"
     >
-      <p>{{ title }}</p>
-      <p>{{ character }}</p>
-      <ul>
-        <li
-          v-for="(itemName, i) in items"
-          :key="`savedItem${i}`"
+      <nuxt-link :to="`/my/item-setting/view?id=${id}`">
+        <div class="wrap-info">
+          <p class="title">{{ title }}</p>
+          <p class="character">{{ character }}</p>
+          <ul class="list-item-name">
+            <li
+              v-for="(itemName, i) in items"
+              :key="`savedItem${i}`"
+              class="item-name"
+            >
+              {{ itemName }}
+            </li>
+          </ul>
+        </div>
+      </nuxt-link>
+        
+        <base-button
+          size="small"
+          color="cancel"
+          @click="deleteItemSetting(id)"
         >
-          {{ itemName }}
-        </li>
-      </ul>
-      <base-button
-        @click="deleteItemSetting(id)"
-      >
-        삭제
-      </base-button>
-      <base-button
-        :link-to="`/my/item-setting/view?id=${id}`"
-      >
-        자세히 보기
-      </base-button>
+          삭제
+        </base-button>
     </div>
   </div>
 </template>
 
 <script>
+import BaseButton from '../../../common/BaseButton.vue';
 import { mapMutations } from 'vuex';
 
 export default {
@@ -37,6 +42,9 @@ export default {
       type: Array,
       required: true 
     }
+  },
+  components: {
+    BaseButton
   },
   data() {
     return {
@@ -50,4 +58,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import '@/assets/style/pages/my/item-setting/ItemSettingList.scss';
+</style>

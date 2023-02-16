@@ -19,15 +19,15 @@
       <div class="inner-size-basic pd-top-medium">
         <!-- 리스트 -->
         <section>
-          <div class="area-page-title">
-            <h2 class="title">😎 {{ nickname }}님이 설정한 목표 아이템</h2>
+          <div class="area-page-title mb-big">
+            <h2 class="title">🔥 {{ nickname }}님이 설정한 목표 아이템</h2>
             <base-button
               type="square-round"
               bg="point-sub"
               class="btn-create-setting"
               @click="showAddItemSetting = !showAddItemSetting"
             >
-              목표 아이템 설정 추가
+              + NEW
             </base-button>
           </div>
           <item-setting-list

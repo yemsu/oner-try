@@ -59,9 +59,10 @@ $color-point-sub-hsl: (192, 35%, 50%);
 };
 
 :root {
+  --point-h: #{nth($color-point-hsl, 1)};
   // pallette
-  --color-white: hsl(0, 20%, 99%);
-  --color-black: hsl(0, 4%, 20%);
+  --color-white: hsl(var(--point-h), 20%, 99%);
+  --color-black: hsl(var(--point-h), 4%, 20%);
   // point
   --color-point: #{colorMaker($color-point-hsl)};
   --color-point-pale: #{colorMaker($color-point-hsl, -15%, 10%)};
@@ -71,7 +72,6 @@ $color-point-sub-hsl: (192, 35%, 50%);
   --color-point-sub-pale: #{colorMaker($color-point-sub-hsl, -15%, 10%)};
   --color-point-sub-bright: #{colorMaker($color-point-sub-hsl, 30%, 25%)};
   // gray
-  --point-h: #{nth($color-point-hsl, 1)};
   --color-gray-30: hsl(var(--point-h), 4%, 30%);
   --color-gray-40: hsl(var(--point-h), 4%, 40%);
   --color-gray-50: hsl(var(--point-h), 4%, 50%);
@@ -83,6 +83,11 @@ $color-point-sub-hsl: (192, 35%, 50%);
   --color-gray-90: hsl(var(--point-h), 12%, 90%);
   --color-gray-95: hsl(var(--point-h), 20%, 95%);
 
+  // common color
+  --darker-10: hsla(var(--point-h), 4%, 30%, 10%);
+  --darker-20: hsla(var(--point-h), 4%, 30%, 20%);
+  --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
+
   // border color
   // 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
   --border-dark-gray: var(--color-gray-60);
@@ -93,13 +98,16 @@ $color-point-sub-hsl: (192, 35%, 50%);
 
   // bg color
   --bg-dark: var(--color-black);
-  --bg-dark-gray: var(--color-gray-40);
+  --bg-dark-gray: var(--color-gray-50);
   --bg-gray: var(--color-gray-80);
   --bg-light-gray: var(--color-gray-95);
 
   // text color
   --text-refer:var(--color-gray-50);
   --text-no-data:var(--color-gray-80);
+  --text-light-gray: var(--color-gray-90);
+  --text-gray: var(--color-gray-70);
+  --text-dark-gray: var(--color-gray-50);
 
   // tooltip bg
   --bg-tooltip-dim: hsla(248, 5%, 5%, 0.8);

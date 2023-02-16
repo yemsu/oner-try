@@ -4,7 +4,7 @@
 $font-family: 'Pretendard Variable', sans-serif;
 
 body {
-  background-color: var(--color-gray-85);
+  background-color: var(--color-gray-90);
   font-size: $font-size-M-pc;
   line-height: 1.5;
   color: var(--color-black);
@@ -13,6 +13,9 @@ body {
 }
 small {
   font-size: $font-size-XS-pc;
+}
+button {
+  font-size: $font-size-M-pc;
 }
 button, a, input {
   font-family: $font-family;
@@ -325,12 +328,15 @@ caption, .ir-hidden {
 // title
 .area-page-title {
   display: flex;
-  // justify-content: space-between;
+  justify-content: space-between;
   margin-bottom: 10px;
   padding-bottom: 2px;
   letter-spacing: 0.01em;
   &.line {
     border-bottom: 1px solid var(--border-dark-gray);
+  }
+  &.mb-big {
+    margin-bottom: 20px;
   }
   > .title {
     font-weight: bold;

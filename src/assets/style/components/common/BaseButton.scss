@@ -7,6 +7,14 @@
     background-color: var(--color-black);
     color: var(--color-white);
   }
+  &.size {
+    &-medium {
+      font-size: $font-size-M-pc;
+    }
+    &-small {
+      font-size: $font-size-S-pc;
+    }
+  }
   &.icon {
     display: flex;
     align-items: center;
@@ -21,23 +29,20 @@
     &.size {
       &-medium {
         padding: 5px 10px;
-        font-size: $font-size-M-pc;
       }
       &-small {
         padding: 4px 8px;
-        font-size: $font-size-S-pc;
       }
     }
   }
   &.square-round {
-    border-radius: 5px;
     &.size {
       &-medium {
         min-width: 50px;
         padding: 0 10px;
-        font-size: $font-size-M-pc;
         line-height: $square-btn-medium-line-height;
         text-align: center;
+        border-radius: 5px;
         .text {
           opacity: .8;
         }
@@ -49,6 +54,11 @@
             opacity: 1;
           }
         }
+      }
+      &-small {
+        padding: 0 8px;
+        line-height: 26px;
+        border-radius: 3px;
       }
     }
   }
@@ -70,6 +80,19 @@
     &-cancel {
       background-color: var(--bg-dark-gray);
       color: var(--color-white);
+    }
+  }
+  &.color {
+    &-point {
+      color: var(--color-point);
+      font-weight: 600;
+    }
+    &-point-sub {
+      color: var(--color-point-sub);
+      font-weight: 600;
+    }
+    &-cancel {
+      color: var(--text-dark-gray);
     }
   }
 }
