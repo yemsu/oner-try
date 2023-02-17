@@ -10,6 +10,7 @@ export const getMaterials = () => getApi('/materials')
 // item setting
 export const getItemSettings = () => getApi('/itemSettings')
 export const postItemSetting = (data) => postApi('/itemSetting', data)
+export const deleteItemSetting = (id) => deleteApi(`/itemSetting/${id}`)
 export const updateItemSettingCheckList = (data) => patchApi('/itemSetting', data)
 
 // login
@@ -22,13 +23,19 @@ function getApi(url = '', params = {}) {
 function postApi(url = '', data) {
   console.log('postApi', data)
   return $axios.post(url, data)
+    .then(({ data }) => data)
+    .catch(error => errorHandler('url', error))
+}
+function deleteApi(url = '', params) {
+  console.log('deleteApi', params )
+  return $axios.delete(url, { params })
     .then(res => res)
     .catch(error => errorHandler('url', error))
 }
 function patchApi(url = '', data) {
   console.log('postApi', data)
   return $axios.patch(url, data)
-    .then(res => res)
+    .then(({ data }) => data)
     .catch(error => errorHandler('url', error))
 }
 

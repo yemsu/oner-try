@@ -33,6 +33,7 @@
           <item-setting-list
             v-if="itemSettingList"
             :item-setting-list="itemSettingList"
+            @delete="onDeleteItemSetting"
           />
         </section>
       </div>
@@ -107,6 +108,7 @@ export default {
       getMaterials: 'mrpg/GET_MATERIALS',
       getItemSettingList: 'item-setting/GET_ITEM_SETTING_LIST',
       postItemSetting: 'item-setting/POST_ITEM_SETTING',
+      deleteItemSetting: 'item-setting/DELETE_ITEM_SETTING',
     }),
     setEquipMatchingDataList() {
       this.equipMatchingDataList = getValueList(this.compositionEquips, 'name')
@@ -140,9 +142,11 @@ export default {
       this.equipMatchingDataList = this.equipMatchingDataList.filter((itemName) => itemName !== name)
     },
     async onSubmit(result) {
-      // client update
-      this.addItemSetting(result)
       this.postItemSetting(result)
+    },
+    onDeleteItemSetting(id) {
+      console.log('onDeleteItemSetting', id)
+      this.deleteItemSetting(id)
     }
   }
 }

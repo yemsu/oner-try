@@ -39,7 +39,6 @@
 import BaseButton from '../../../common/BaseButton.vue';
 import { findKeyName } from '@/plugins/utils'
 import { gradesDef } from '@/plugins/utils/item-def'
-import { mapMutations } from 'vuex';
 
 export default {
   props: {
@@ -56,11 +55,11 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({
-      deleteItemSetting: 'item-setting/DELETE_ITEM_SETTING',
-    }),
     gradeCode(name) {
       return findKeyName(gradesDef, name)
+    },
+    deleteItemSetting(id) {
+      this.$emit('delete', id)
     }
   }
 }
