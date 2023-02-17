@@ -143,19 +143,6 @@ export default {
       // client update
       this.addItemSetting(result)
       this.postItemSetting(result)
-      // id setting
-      // let resultData = null
-      // get data and check has data
-      // const savedItemSetting = localStorage.getItem('itemSetting')
-      // if(savedItemSetting) {
-      //   const data = JSON.parse(savedItemSetting)
-      //   data.push(result)
-      //   resultData = data
-      // } else {
-      //   resultData = [result]
-      // }
-      // send data
-      // localStorage.setItem('itemSetting', JSON.stringify(resultData))
     }
   }
 }

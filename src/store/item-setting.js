@@ -24,24 +24,29 @@ export const mutations = {
 export const actions = {
   async GET_ITEM_SETTING_LIST({ commit }) {    
     try {
-      const res = await getItemSettings()
-      console.log('res', res)
-      if(!data) console.error('GET_ITEM_SETTING_LIST', err)
-      const itemSettingList = data
+      const { result } = await getItemSettings()
+      console.log('GET_ITEM_SETTING_LIST: result:', result)
+      const itemSettingList = result
         .filter(({items}) => items)
       for(const itemSetting of itemSettingList) {
         itemSetting.items = JSON.parse(itemSetting.items)
       }
-      // console.log('GET_ITEM_SETTING_LIST', itemSettingList)
       commit('SET_ITEM_SETTING_LIST', itemSettingList)
     } catch (e) {
       console.error('SET_ITEM_SETTING_LIST', e)
     }
   },
-  async POST_ITEM_SETTING(data) {
-    const stringifiedItems = JSON.parse(JSON.stringify(data))
-    data.items = JSON.stringify(data.items)
-    const res = await postItemSetting(stringifiedItems)
-    console.log('POST_ITEM_SETTING res', res)
+  async POST_ITEM_SETTING(context, data) {
+    if(!data.items) {
+      throw new Error('POST_ITEM_SETTING: no items data!')
+    }
+    try {
+      const stringifiedItems = JSON.parse(JSON.stringify(data))
+      stringifiedItems.items = JSON.stringify(data.items)
+      const res = await postItemSetting(stringifiedItems)
+      console.log('POST_ITEM_SETTING: result:', res)
+    } catch(e) {
+      console.error('POST_ITEM_SETTING', e)
+    }
   }
 }
