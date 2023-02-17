@@ -39,3 +39,7 @@ export const getValueList = (objList, keyName) => {
    */
   return objList.map((obj) => obj[keyName])
 }
+
+export const asyncErrorHandler = () => {
+
+}

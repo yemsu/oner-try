@@ -106,6 +106,7 @@ export default {
       getEquipments: 'mrpg/GET_EQUIPMENTS',
       getMaterials: 'mrpg/GET_MATERIALS',
       getItemSettingList: 'item-setting/GET_ITEM_SETTING_LIST',
+      postItemSetting: 'item-setting/POST_ITEM_SETTING',
     }),
     setEquipMatchingDataList() {
       this.equipMatchingDataList = getValueList(this.compositionEquips, 'name')
@@ -138,24 +139,23 @@ export default {
       console.log('onUpdateSelectItem', name)
       this.equipMatchingDataList = this.equipMatchingDataList.filter((itemName) => itemName !== name)
     },
-    onSubmit(result) {
-      // id setting
-      let resultData = null
-      // get data and check has data
-      const savedItemSetting = localStorage.getItem('itemSetting')
-      if(savedItemSetting) {
-        const data = JSON.parse(savedItemSetting)
-        result.id = data.length // set id 
-        data.push(result)
-        resultData = data
-      } else {
-        result.id = 0 // set id 
-        resultData = [result]
-      }
-      // send data
-      localStorage.setItem('itemSetting', JSON.stringify(resultData))
+    async onSubmit(result) {
       // client update
       this.addItemSetting(result)
+      this.postItemSetting(result)
+      // id setting
+      // let resultData = null
+      // get data and check has data
+      // const savedItemSetting = localStorage.getItem('itemSetting')
+      // if(savedItemSetting) {
+      //   const data = JSON.parse(savedItemSetting)
+      //   data.push(result)
+      //   resultData = data
+      // } else {
+      //   resultData = [result]
+      // }
+      // send data
+      // localStorage.setItem('itemSetting', JSON.stringify(resultData))
     }
   }
 }

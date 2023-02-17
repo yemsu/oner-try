@@ -42,7 +42,8 @@ export const getUserBookmarks = ({ category }) => getApiReturnData(
 )
 
 // common
-export const setDefaultHeader = (key, value) => {
+export const setDefaultHeaderOner = (key, value) => {
+  console.log('setDefaultHeader', key, value)
   $axios.defaults.headers.common[key] = value
 }
 

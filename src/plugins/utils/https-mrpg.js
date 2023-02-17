@@ -7,11 +7,36 @@ const $axios = axios.create({
 export const getEquipments = () => getApi('/equipments')
 export const getMaterials = () => getApi('/materials')
 
-function getApi(url = '', params = { params: {} }) {
-  return $axios.get(url, params)
+// item setting
+export const getItemSettings = () => getApi('/itemSettings')
+export const postItemSetting = (data) => postApi('/itemSetting', data)
+export const updateItemSettingCheckList = (data) => patchApi('/itemSetting', data)
+
+// login
+
+function getApi(url = '', params = {}) {
+  return $axios.get(url, { params })
     .then(({ data }) => data)
     .catch(error => errorHandler(url, error))
 }
+function postApi(url = '', data) {
+  console.log('postApi', data)
+  return $axios.post(url, data)
+    .then(res => res)
+    .catch(error => errorHandler('url', error))
+}
+function patchApi(url = '', data) {
+  console.log('postApi', data)
+  return $axios.patch(url, data)
+    .then(res => res)
+    .catch(error => errorHandler('url', error))
+}
+
+// common
+export const setDefaultHeader = (key, value) => {
+  $axios.defaults.headers.common[key] = value
+}
+
 
 const errorHandler = (actionName, error) => {
   const { response, request, message, config } = error

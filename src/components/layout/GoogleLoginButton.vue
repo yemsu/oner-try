@@ -17,7 +17,8 @@
 </template>
 
 <script>
-import { postGoogleCredential, setDefaultHeader, deleteUser } from "@/plugins/utils/https"
+import { postGoogleCredential, setDefaultHeaderOner, deleteUser } from "@/plugins/utils/https"
+import { setDefaultHeader } from "@/plugins/utils/https-mrpg"
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
@@ -126,6 +127,7 @@ export default {
         this.jToken = sessionStorage.getItem('JUID')
       }
       setDefaultHeader('Authorization', this.jToken)
+      setDefaultHeaderOner('Authorization', this.jToken)
       const userInfo = await this.getUserInfo()
       console.log('fnLogin userInfo', { userInfo }, this.isLogin)
       if(userInfo === 'not found token') {

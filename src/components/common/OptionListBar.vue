@@ -71,6 +71,10 @@ export default {
   },
   methods: {
     selectOption(option) {
+      if(!option) {
+        console.error('selectOption: no option!', option)
+        return
+      }
       const { id, text } = option
       this.activeData = text
       this.$emit('selectOption', id || text)
