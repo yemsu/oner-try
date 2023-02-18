@@ -53,8 +53,6 @@ const detailInfoDesc = (item, key) => {
       return parserStrData(item[key])
     case 'ingredients':
       return parseIngredientsData(item[key])
-    case 'type':
-      return itemTypeNames[item[key]]
     default:
       return null
   }

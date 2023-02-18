@@ -15,14 +15,13 @@
           :key="`item${i}`"
           class="box-grid"
         >
-          <div :class="`area-target-item grade-${gradeCode(item.grade)}`">
-            <item-box
-              :item="item"
-              size="small"
-              type="list"
-            >
-            </item-box>
-          </div>
+          <p :class="`box-target-item grade-${gradeCode(item.grade)}`">
+            <span class="wrap-badge">
+              <span class="badge target-grade">{{ item.grade }}</span>
+              <span class="badge black target-type"> {{ itemTypeName(item.type) }}</span>
+            </span>
+            <span class="target-name">{{ item.name }}</span>
+          </p>
       
           <div class="area-check-list">
             <item-check-list
@@ -69,7 +68,7 @@
 <script>
 import ItemCheckList from '@/components/pages/my/item-setting/ItemCheckList.vue';
 import { parseItemData } from '@/plugins/utils/item-mrpg'
-import { gradesDef } from '@/plugins/utils/item-def'
+import { gradesDef, itemTypeNames } from '@/plugins/utils/item-def-mrpg'
 import { findKeyName } from '@/plugins/utils'
 import { mapActions, mapGetters } from 'vuex';
 
@@ -129,6 +128,9 @@ export default {
     gradeCode(name) {
       return findKeyName(gradesDef, name)
     },
+    itemTypeName(type) {
+        return itemTypeNames[type]
+    }
   }
 }
 </script>

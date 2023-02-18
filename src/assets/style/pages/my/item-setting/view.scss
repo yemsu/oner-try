@@ -4,18 +4,59 @@
   grid-template-columns: repeat(auto-fill, 360px);
   gap: 10px;
   .box-grid {
-    padding: 10px;
+    padding: 5px;
     background-color: var(--bg-light-gray);
   }
-  .area-target-item {
-    padding: 5px;
-    background-color: var(--darker-10);
-    border-radius: 5px;
+  .box-target-item {
+    position: relative;
+    background-color: var(--bg-light-gray);
+    text-align: center;
+    line-height: 35px;
+    letter-spacing: 0.01em;
+    .wrap-badge {
+      display: flex;
+      flex-direction: column;
+      height: calc(100% + 2px);
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      > * {
+        flex: 1;
+        padding: 3px 5px 0;
+
+      }
+    }
+    .target-type {
+      color: var(--color-white);
+      font-weight: 300;
+    }
+    .target-grade {
+      font-weight: 600;
+      color: #000;
+    }
+    .target-name {
+      flex: 1;
+    }
     @each $key in map-keys($item-grade-colors) {
       $hsl:hsl(map-get($item-grade-colors, #{$key}));
       &.grade-#{$key} {
-        background-color: hslac($hsl, .3);
-        border: 1px solid hslac($hsl);
+        background-color: hslac($hsl, .15);
+        // border: 1px solid var(--border-dark-gray);
+        border: 1px solid hslac($hsl, .5);
+        .target-grade {
+          background-color: hslac($hsl, 0.7);
+          border: 1px solid hslac($hsl);
+        }
+        .target-type {
+          // background-color: hslac($hsl);
+          // background-color: var(--bg-dark);
+        }
+        .target-name {
+          color: hslac($hsl);
+          // color: #fff;
+          filter: brightness(50%) saturate(150%);
+          // filter: brightness(160%) saturate(150%);
+        }
       }
     }
   }

@@ -16,7 +16,7 @@ export const itemsHasSubTitle = [
 ]
 
 export const itemTypeNames = {
-  staff: '마법',
+  staff: '지팡이',
   accessory: '반지',
   sub: '보조',
   stone: '마법석',
@@ -26,6 +26,19 @@ export const itemTypeNames = {
   lightArmor: '경갑',
   heavyArmor: '중갑',
   clothes: '천옷',
+}
+
+export const gradesDef = {
+  normal : '일반',
+  grand : '고급',
+  rare : '희귀',
+  heroic : '영웅',
+  divine : '성물',
+  legendary : '전설',
+  epic : '서사',
+  celestial : '유물',
+  arcane : '고대',
+  mythic : '신화',
 }
 
 export const itemDetailInfoOrder = [
