@@ -72,6 +72,7 @@ export const actions = {
       const { result } = await postItemSetting(stringifiedItems)
       console.log('POST_ITEM_SETTING: result:', result)
       const newResult = valueParser(result)
+      commit('ADD_ITEM_SETTING', newResult)
     } catch(e) {
       console.error('POST_ITEM_SETTING', e)
     }
