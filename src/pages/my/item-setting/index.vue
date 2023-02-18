@@ -39,13 +39,9 @@
       </div>
     </div>
     <make-item-setting
-      v-if="showMakeItemSetting"
+      v-if="compositionEquips.length > 0"
       :show="showAddItemSetting"
-      :equip-type-options="equipTypeOptions"
-      :character-options="characterOptions"
       :equipment-types="equipmentTypes"
-      :equip-matching-data-list="equipMatchingDataList"
-      @onUpdateSelectItem="onUpdateSelectItem"
       @submit="onSubmit"
       @close="showAddItemSetting = false"
     />
@@ -56,8 +52,6 @@
 import BaseButton from '@/components/common/BaseButton.vue'
 import MakeItemSetting from '@/components/pages/my/item-setting/MakeItemSetting.vue'
 import ItemSettingList from '@/components/pages/my/item-setting/ItemSettingList.vue'
-import { getValueList } from '@/plugins/utils'
-import { characterDefs, totalOptions, itemTypeNames } from '@/plugins/utils/item-def-mrpg'
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
@@ -72,9 +66,6 @@ export default {
       showAddItemSetting: false,
       equipMatchingDataList: null,
       equipmentTypes: null,
-      characterOptions: [],
-      // 아이템 필터
-      equipTypeOptions: []
     }
   },
   watch: {
@@ -94,19 +85,11 @@ export default {
       materials: 'mrpg/getMaterials',
       itemSettingList: 'item-setting/getItemSettingList',
     }),
-    showMakeItemSetting() {
-      return this.equipTypeOptions && this.characterOptions && this.equipmentTypes && this.equipMatchingDataList
-    }
   },
   async created() {
     if(this.compositionEquips.length === 0) await this.getEquipments()
     if(this.materials.length === 0) await this.getMaterials()
     this.isLogin && await this.getItemSettingList()
-
-    this.setEquipMatchingDataList()
-    this.setEquipmentTypes()
-    this.setCharacterOptions()
-    this.setEquipTypeOptions()
   },
   methods: {
     ...mapMutations({
@@ -120,37 +103,6 @@ export default {
       postItemSetting: 'item-setting/POST_ITEM_SETTING',
       deleteItemSetting: 'item-setting/DELETE_ITEM_SETTING',
     }),
-    setEquipMatchingDataList() {
-      this.equipMatchingDataList = getValueList(this.compositionEquips, 'name')
-    },
-    setEquipmentTypes() {
-      const equipmentTypeValues = getValueList(this.compositionEquips, 'type')
-      this.equipmentTypes = [...new Set(equipmentTypeValues)]
-    },
-    setCharacterOptions() {
-      const characterOptions = characterDefs.reduce((result, crr) => {
-        const { mainStat, characters } = crr
-        const options = characters.map(({ name, job }) => ({
-          text: `${name} : ${job}`
-        }))
-        result.push(Object.assign({}, { 
-          title: totalOptions[mainStat],
-          options
-        }))
-        return result
-      }, [])
-      
-      this.characterOptions = characterOptions
-    },
-    setEquipTypeOptions() {
-      const options = this.equipmentTypes.map(key => ({text: itemTypeNames[key]}))
-      const equipTypeOptions = [{ title: '타입', options }]
-      this.equipTypeOptions = equipTypeOptions
-    },
-    onUpdateSelectItem(name) {
-      console.log('onUpdateSelectItem', name)
-      this.equipMatchingDataList = this.equipMatchingDataList.filter((itemName) => itemName !== name)
-    },
     async onSubmit(result) {
       this.postItemSetting(result)
     },

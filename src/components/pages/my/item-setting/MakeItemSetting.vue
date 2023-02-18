@@ -55,11 +55,11 @@
                 :data="equipTypeOptions"
                 :default-select="true"
                 size="small"
-                @selectOption="clickEquipOption"
+                @selectOption="setEquipTypeItems"
               />
               <div class="content-items">
                 <option-list-bar
-                  :data="selectedEquipTypeItems"
+                  :data="equipTypeItems"
                   :show-title="false"
                   size="small"
                   @selectOption="(name) => addSelectedItems(name)"
@@ -126,8 +126,8 @@
 import BaseButton from '@/components/common/BaseButton.vue'
 import BaseInput from '@/components/common/BaseInput.vue'
 import OptionListBar from '@/components/common/OptionListBar.vue'
-import { findKeyName } from '@/plugins/utils'
-import { itemTypeNames } from '@/plugins/utils/item-def-mrpg'
+import { findKeyName, getValueList } from '@/plugins/utils'
+import { characterDefs, totalOptions, itemTypeNames } from '@/plugins/utils/item-def-mrpg'
 import { parseItemData } from '@/plugins/utils/item-mrpg'
 import { mapGetters } from 'vuex'
 
@@ -141,23 +141,7 @@ export default {
     show: {
       type: Boolean,
       required: true
-    },
-    equipTypeOptions: {
-      type: Array,
-      required: true
-    },
-    characterOptions: {
-      type: Array,
-      required: true
-    },
-    equipmentTypes: {
-      type: Array,
-      required: true
-    },
-    equipMatchingDataList: {
-      type: Array,
-      required: true
-    },
+    }
   },
   data() {
     return {
@@ -165,7 +149,10 @@ export default {
       selectedItems: [],
       newSettingTitle: '',
       selectedCharacter: null,
-      selectedEquipTypeItems: [],
+      characterOptions: [],
+      equipTypeOptions: [],
+      equipTypeItems: [],
+      equipMatchingDataList: [],
       isFocusTitleInput: false,
     }
   },
@@ -173,6 +160,11 @@ export default {
     ...mapGetters({
       compositionEquips: 'mrpg/getCompositionEquips',
     }),
+  },
+  created() {
+    this.setCharacterOptions()    
+    this.setEquipTypeOptions()    
+    this.setEquipMatchingDataList()
   },
   mounted() {    
     setTimeout(() => {
@@ -196,23 +188,51 @@ export default {
         return
       }
       this.selectedItems.push(this.getItemData(name))
-      this.$emit('updateSelectItem', name)
+      this.equipMatchingDataList = this.equipMatchingDataList.filter((itemName) => itemName !== name)
     },
     getItemData(name) {
       const item = this.compositionEquips.find(item => item.name === name)
       return parseItemData(item)
     },
-    clickEquipOption(equipName) {
-      const equipType = findKeyName(itemTypeNames, equipName)
+    setCharacterOptions() {
+      const characterOptions = characterDefs.reduce((result, crr) => {
+        const { mainStat, characters } = crr
+        const options = characters.map(({ name, job }) => ({
+          text: `${name} : ${job}`
+        }))
+        result.push(Object.assign({}, { 
+          title: totalOptions[mainStat],
+          options
+        }))
+        return result
+      }, [])
+      
+      this.characterOptions = characterOptions
+    },
+    setEquipTypeOptions() {
+      const equipmentTypeValues = getValueList(this.compositionEquips, 'type')
+      const equipmentTypes = [...new Set(equipmentTypeValues)]
+
+      const options = equipmentTypes.map(key => ({
+        id: key,
+        text: itemTypeNames[key]
+      }))
+      const equipTypeOptions = [{ title: '타입', options }]
+      this.equipTypeOptions = equipTypeOptions
+    },
+    setEquipMatchingDataList() {
+      this.equipMatchingDataList = getValueList(this.compositionEquips, 'name')
+    },
+    setEquipTypeItems(equipKey) {
       const options = this.compositionEquips
-        .filter(({type}) => type === equipType)
+        .filter(({type}) => type === equipKey)
         .sort((a, b) => b.level - a.level)
         .map(({name, level}) => ({
           id: name,
           text: `Lv.${level} ${name}`
         }))
-      this.selectedEquipTypeItems = [{
-        title: equipName,
+      this.equipTypeItems = [{
+        title: itemTypeNames[equipKey],
         options
       }]
     },
@@ -231,7 +251,7 @@ export default {
       this.newSettingTitle = ''
       this.selectedCharacter = ''
       this.selectedItems = []
-      this.selectedEquipTypeItems = []
+      this.equipTypeItems = []
     },
     submitItemSetting() {
       const result = {

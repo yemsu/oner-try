@@ -115,7 +115,7 @@ export default {
       return this.isNoDataItem && !this.isRoundImg
     },
     linkItemComposition() {
-      return `/composition/${this.item.type}/${this.item.id}`
+      return `/mrpg/item-type/${this.item.type}.png`
     },
   },
   mounted() {
