@@ -11,7 +11,8 @@ export const getMaterials = () => getApi('/materials')
 export const getItemSettings = () => getApi('/itemSettings')
 export const postItemSetting = (data) => postApi('/itemSetting', data)
 export const deleteItemSetting = (id) => deleteApi(`/itemSetting/${id}`)
-export const updateItemSettingCheckList = (data) => patchApi('/itemSetting', data)
+export const updateItemSettingCheckList = ({ id, checks }) => patchApi(`/itemSetting/${id}`, { checks })
+export const putItemSetting = (itemSetting) => putApi(`/itemSetting/${itemSetting.id}`, itemSetting)
 
 // login
 
@@ -33,9 +34,16 @@ function deleteApi(url = '', params) {
     .catch(error => errorHandler('url', error))
 }
 function patchApi(url = '', data) {
-  console.log('postApi', data)
+  console.log('patchApi', data)
   return $axios.patch(url, data)
-    .then(({ data }) => data)
+    .then((res) => res)
+    .catch(error => errorHandler('url', error))
+}
+
+function putApi(url = '', data) {
+  console.log('putApi', data)
+  return $axios.put(url, data)
+    .then((res) => res)
     .catch(error => errorHandler('url', error))
 }
 

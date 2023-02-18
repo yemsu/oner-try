@@ -11,7 +11,7 @@
         <input
           type="checkbox"
           :id="idName(id, i)"
-          :checked="checkList.includes(idName(id, i))"
+          :checked="checksForView.includes(idName(id, i))"
           @change="(e) => changeCheckBox(e, idName(id, i))"
         />
         <label :for="idName(id, i)">
@@ -39,7 +39,7 @@
 
 <script>
 import { 조합재료의재료세팅기 } from '@/plugins/utils/item-mrpg'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   props: {
@@ -60,8 +60,8 @@ export default {
     return {
       STORAGE_NAME: null,
       checkboxItems: [],
-      checkList: [],
-      toggleOffChildren: []
+      toggleOffChildren: [],
+      itemSetting: null
     }
   },
   computed: {
@@ -69,14 +69,28 @@ export default {
       equipments: 'mrpg/getEquipments',
       compositionEquips: 'mrpg/getCompositionEquips',
       materials: 'mrpg/getMaterials',
+      itemSettingList: 'item-setting/getItemSettingList',
+      checksForView: 'item-setting/getChecksForView'
     })
   },
   mounted() {
     this.setStorageName()
-    this.getCheckList()
     this.setCheckboxItems()
+    this.itemSetting = this.itemSettingList.find(({id}) => (
+      id === (this.$route.query.id*1)
+    ))
+    this.setChecksForView(this.itemSetting.checks || [])
   },
   methods: {
+    ...mapMutations({
+      updateCheckList: 'item-setting/UPDATE_CHECK_LIST',
+      setChecksForView: 'item-setting/SET_CHECKS_FOR_VIEW',
+      addChecksForView: 'item-setting/ADD_CHECKS_FOR_VIEW',
+      deleteChecksForView: 'item-setting/DELETE_CHECKS_FOR_VIEW',
+    }),
+    ...mapActions({
+       putItemSetting: 'item-setting/PUT_ITEM_SETTING'
+    }),
     setCheckboxItems() {
       /**
        * item의 ingredients 중 조합 아이템이 있지 체크하여
@@ -112,15 +126,6 @@ export default {
     setStorageName() {
       this.STORAGE_NAME = `itemSettingCheckListView${this.$route.query.id}`
     },
-    getStorage() {
-      return localStorage.getItem(this.STORAGE_NAME)
-    },
-    getCheckList() {    
-      console.log('getCheckList')
-      const storage = this.getStorage()
-      if(!storage) return
-      this.checkList = JSON.parse(storage)
-    },
     changeCheckBox(e, inputId) {
       const isChecked = e.target.checked
       // console.log("check", isChecked, this.queryId, inputId)
@@ -134,29 +139,20 @@ export default {
     },
     addCheckListItem(inputId) {
       // 컴포넌트 데이터 업데이트
-      this.checkList.push(inputId)
-      // 페이지별 데이터 local storage 업데이트
-      const storageData = JSON.parse(this.getStorage())
-      const dataAdded = storageData
-        ? storageData.concat([inputId])
-        : [inputId]
-      this.saveData(dataAdded)
-      console.log('add', inputId, this.checkList)
+      this.addChecksForView(inputId)
+      this.saveData()
     },
     deleteCheckListItem(inputId) {
       // 컴포넌트 데이터 업데이트
-      this.checkList = this.checkList.filter(id => inputId !== id)
-      // 페이지별 데이터 local storage 업데이트
-      const storageData = JSON.parse(this.getStorage())
-      const dataDeleted = storageData.filter(id => id !== inputId)
-      this.saveData(dataDeleted)
-      console.log('add', inputId, this.checkList)
+      this.deleteChecksForView(inputId)
+      this.saveData()
     },
-    saveData(data) {
-      localStorage.setItem(
-        this.STORAGE_NAME,
-        JSON.stringify(data)
-      )
+    async saveData() {
+      this.updateCheckList({
+        target: this.itemSetting,
+        checkList: this.checksForView
+      })
+      this.putItemSetting(this.itemSetting)
     },
     textToggle(i) {
       const isShow = !this.toggleOffChildren.includes(i)

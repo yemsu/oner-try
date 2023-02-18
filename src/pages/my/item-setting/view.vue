@@ -30,7 +30,6 @@
               :items="item.ingredients"
               :id="`${i}`"
               depth="0"
-              @sava="saveCheckList"
             >
               <template v-slot="{ ingredients: ingredients1, index: index1 }">
                 <item-check-list
@@ -38,7 +37,6 @@
                   :items="ingredients1"
                   :id="`${i}${index1}`"
                   depth="1"
-                  @sava="saveCheckList"
                 >
                   <template v-slot="{ ingredients: ingredients2, index: index2 }">
                     <item-check-list
@@ -46,7 +44,6 @@
                       :items="ingredients2"
                       :id="`${i}${index1}${index2}`"
                       depth="2"
-                      @sava="saveCheckList"
                     >
                       <template v-slot="{ ingredients: ingredients3, index: index3 }">
                         <item-check-list
@@ -54,7 +51,6 @@
                           :items="ingredients3"
                           :id="`${i}${index1}${index2}${index3}`"
                           depth="3"
-                          @sava="saveCheckList"
                         >
                         </item-check-list>
                       </template>
@@ -115,7 +111,7 @@ export default {
     ...mapActions({
       getEquipments: 'mrpg/GET_EQUIPMENTS',
       getMaterials: 'mrpg/GET_MATERIALS',
-      getItemSettingList: 'item-setting/GET_ITEM_SETTING_LIST',
+      getItemSettingList: 'item-setting/GET_ITEM_SETTING_LIST'
     }),
     setItemSetting() {
       this.itemSetting = this.itemSettingList.find(({ id }) => (
@@ -129,13 +125,6 @@ export default {
         return parseItemData(item)
       })
       console.log("this.items", this.items)
-    },
-    saveCheckList(checklist) {
-      console.log('saveCheckList', checklist)
-      // updateItemSettingCheckList({
-      //   id: this.itemSetting.id,
-      //   checks: checklist
-      // })
     },
     gradeCode(name) {
       return findKeyName(gradesDef, name)
