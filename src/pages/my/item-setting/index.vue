@@ -39,7 +39,7 @@
       </div>
     </div>
     <make-item-setting
-      v-if="equipTypeOptions && characterOptions && equipmentTypes && equipMatchingDataList"
+      v-if="showMakeItemSetting"
       :show="showAddItemSetting"
       :equip-type-options="equipTypeOptions"
       :character-options="characterOptions"
@@ -77,24 +77,6 @@ export default {
       equipTypeOptions: []
     }
   },
-  computed: {
-    ...mapGetters({
-      isLogin: 'auth/getIsLogin',
-      nickname: 'auth/getNickname',
-      compositionEquips: 'mrpg/getCompositionEquips',
-      materials: 'mrpg/getMaterials',
-      itemSettingList: 'item-setting/getItemSettingList',
-    }),
-  },
-  async created() {
-    if(this.compositionEquips.length === 0) await this.getEquipments()
-    if(this.materials.length === 0) await this.getMaterials()
-
-    this.setEquipMatchingDataList()
-    this.setEquipmentTypes()
-    this.setCharacterOptions()
-    this.setEquipTypeOptions()
-  },
   watch: {
     isLogin(crr, prev) {
       if(crr && crr !== prev) {
@@ -104,8 +86,27 @@ export default {
       }
     }
   },
-  created() {
-    this.isLogin && this.getItemSettingList()
+  computed: {
+    ...mapGetters({
+      isLogin: 'auth/getIsLogin',
+      nickname: 'auth/getNickname',
+      compositionEquips: 'mrpg/getCompositionEquips',
+      materials: 'mrpg/getMaterials',
+      itemSettingList: 'item-setting/getItemSettingList',
+    }),
+    showMakeItemSetting() {
+      return this.equipTypeOptions && this.characterOptions && this.equipmentTypes && this.equipMatchingDataList
+    }
+  },
+  async created() {
+    if(this.compositionEquips.length === 0) await this.getEquipments()
+    if(this.materials.length === 0) await this.getMaterials()
+    this.isLogin && await this.getItemSettingList()
+
+    this.setEquipMatchingDataList()
+    this.setEquipmentTypes()
+    this.setCharacterOptions()
+    this.setEquipTypeOptions()
   },
   methods: {
     ...mapMutations({
@@ -154,7 +155,6 @@ export default {
       this.postItemSetting(result)
     },
     onDeleteItemSetting(id) {
-      console.log('onDeleteItemSetting', id)
       this.deleteItemSetting(id)
     },
   }
