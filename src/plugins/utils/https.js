@@ -49,13 +49,13 @@ export const setDefaultHeader = (key, value) => {
 // page view
 export const getCompositionPageViews = () => {
   return getApi(`/compositionPageViews`, { params: {
-    startDate: '2023-1-15',
+    startDate: '2022-7-9',
     length: 10
   } })
 }
 export const getCharacterPageViews = () => {
   return getApi(`/characterPageViews`, { params: {
-    startDate: '2023-1-15',
+    startDate: '2022-7-9',
     length: 10
   } })
 }
