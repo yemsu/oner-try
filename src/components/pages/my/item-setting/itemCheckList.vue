@@ -1,26 +1,38 @@
 <template>
   <div
-    class="wrap-ingredients"
-    style="margin-top: 10px; border: 1px solid #aaa"
+    :class="`list-check depth-${depth}`"
   >
     <div
       v-for="(item, i) in checkboxItems"
       :key="`item${i}`"
-      class="item"
+      class="box-item"
     >
-      <div class="wrap-checkbox">
+      <div :class="`box-checkbox`">
         <input
           type="checkbox"
-          :id="`item-${id}${i}`"
-          :checked="checkList.includes(`item-${id}${i}`) ? true : false"
-          @change="(e) => changeCheckBox(e, `item-${id}${i}`)"
+          :id="idName(id, i)"
+          :checked="checkList.includes(idName(id, i))"
+          @change="(e) => changeCheckBox(e, idName(id, i))"
         />
-        <label :for="`item-${id}${i}`">
+        <label :for="idName(id, i)">
           {{ item.name }} * {{ item.number }}
-          - {{ findDropMonster(item.name) }}
+          <span class="drop-monster">- {{ findDropMonster(item.name) }}</span>
         </label>
+        <button
+          v-if="item.ingredients"
+          class="button-toggle"
+          @click="onToggleOffChildren(i)"
+          :title="textToggle(i).title"
+        >
+          <i :class="`icon-arrow small border-black ${textToggle(i).arrow}`"></i>
+        </button>
       </div>
-      <slot :ingredients="item.ingredients" :index="i"></slot>
+      <div v-show="!toggleOffChildren.includes(i)">
+        <slot
+          :ingredients="item.ingredients"
+          :index="i"
+        ></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -38,13 +50,18 @@ export default {
     id: {
       type: String,
       required: true
-    }
+    },
+    depth: {
+      type: String,
+      required: true
+    },
   },
   data() {
     return {
       STORAGE_NAME: null,
       checkboxItems: [],
       checkList: [],
+      toggleOffChildren: []
     }
   },
   computed: {
@@ -81,7 +98,7 @@ export default {
       // 재료 아이템인 경우
       const material = this.materials.find(({ name }) => name === itemName)
       if(material) {
-        return `드랍: ${material.dropMonster}`
+        return `${material.dropMonster}`
       }
       // 조합/드랍 무기 아이템인 경우
       const equipment = this.equipments.find(({ name }) => name === itemName)
@@ -89,7 +106,7 @@ export default {
       if(equipment.ingredients) {
         return '조합 아이템'
       } else {
-        return `드랍: ${equipment.dropMonster}`
+        return `${equipment.dropMonster}`
       }
     },
     setStorageName() {
@@ -140,9 +157,31 @@ export default {
         this.STORAGE_NAME,
         JSON.stringify(data)
       )
+    },
+    textToggle(i) {
+      const isShow = !this.toggleOffChildren.includes(i)
+      const data = {
+        title: `조합 ${isShow ? '닫기' : '보기'}`,
+        arrow: isShow ? 'up' : 'down'
+      }
+      return data
+    },
+    onToggleOffChildren(i) {
+      console.log('ontoggle1', [...this.toggleOffChildren], i)
+      if(this.toggleOffChildren.includes(i)) {
+        this.toggleOffChildren = this.toggleOffChildren.filter(index => index !== i)
+      } else {
+        this.toggleOffChildren.push(i)
+      }
+      console.log('ontoggle2', [...this.toggleOffChildren], i)
+    },
+    idName(id, i) {
+      return `item-${id}${i}`
     }
   }
 }
 </script>
 
-<style lang="scss" scoped></style>1
+<style lang="scss" scoped>
+@import '@/assets/style/pages/my/item-setting/ItemCheckList.scss';
+</style>

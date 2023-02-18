@@ -1,49 +1,80 @@
 <template>
-  <div class="inner-size-basic">
-    <div v-if="items.length > 0" class="area-item-list">
+  <section class="inner-size-wide mrg-top-medium">
+    <div class="grid-check-list">
       <div
-        v-for="(item, i) in items"
-        :key="`item${i}`"
+        v-if="itemSetting"
+        class="box-grid"
       >
-        <div class="wrap-item">
-          <item-box
-            :item="item"
-            size="small"
-            type="list"
-          >
-          </item-box>
-        </div>
-        
-        <item-check-list
-          v-if="item.ingredients"
-          :items="item.ingredients"
-          :id="`0${i}`"
+        <h2>{{ itemSetting.title }}</h2>
+        <p>{{ itemSetting.character }}</p>
+        <p>{{ itemSetting.regDt }}</p>
+      </div>
+      <template v-if="items.length > 0">
+        <div
+          v-for="(item, i) in items"
+          :key="`item${i}`"
+          class="box-grid"
         >
-          <template v-slot="{ ingredients: ingredients1, index: index1 }">
-            <item-check-list
-              v-if="ingredients1"
-              :items="ingredients1"
-              :id="`1${index1}`"
+          <div :class="`area-target-item grade-${gradeCode(item.grade)}`">
+            <item-box
+              :item="item"
+              size="small"
+              type="list"
             >
-              <template v-slot="{ ingredients: ingredients2, index: index2 }">
+            </item-box>
+          </div>
+      
+          <div class="area-check-list">
+            <item-check-list
+              v-if="item.ingredients"
+              :items="item.ingredients"
+              :id="`${i}`"
+              depth="0"
+              @sava="saveCheckList"
+            >
+              <template v-slot="{ ingredients: ingredients1, index: index1 }">
                 <item-check-list
-                  v-if="ingredients2"
-                  :items="ingredients2"
-                  :id="`2${index2}`"
+                  v-if="ingredients1"
+                  :items="ingredients1"
+                  :id="`${i}${index1}`"
+                  depth="1"
+                  @sava="saveCheckList"
                 >
+                  <template v-slot="{ ingredients: ingredients2, index: index2 }">
+                    <item-check-list
+                      v-if="ingredients2"
+                      :items="ingredients2"
+                      :id="`${i}${index1}${index2}`"
+                      depth="2"
+                      @sava="saveCheckList"
+                    >
+                      <template v-slot="{ ingredients: ingredients3, index: index3 }">
+                        <item-check-list
+                          v-if="ingredients3"
+                          :items="ingredients3"
+                          :id="`${i}${index1}${index2}${index3}`"
+                          depth="3"
+                          @sava="saveCheckList"
+                        >
+                        </item-check-list>
+                      </template>
+                    </item-check-list>
+                  </template>
                 </item-check-list>
               </template>
             </item-check-list>
-          </template>
-        </item-check-list>
-      </div>
+          </div>
+        </div>
+      </template>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
 import ItemCheckList from '@/components/pages/my/item-setting/ItemCheckList.vue';
 import { parseItemData } from '@/plugins/utils/item-mrpg'
+import { gradesDef } from '@/plugins/utils/item-def'
+import { findKeyName } from '@/plugins/utils'
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -99,9 +130,20 @@ export default {
       })
       console.log("this.items", this.items)
     },
+    saveCheckList(checklist) {
+      console.log('saveCheckList', checklist)
+      // updateItemSettingCheckList({
+      //   id: this.itemSetting.id,
+      //   checks: checklist
+      // })
+    },
+    gradeCode(name) {
+      return findKeyName(gradesDef, name)
+    },
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/style/pages/my/item-setting/view.scss';
 </style>

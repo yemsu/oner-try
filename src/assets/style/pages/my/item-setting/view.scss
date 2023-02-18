@@ -1,0 +1,25 @@
+.grid-check-list {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 360px);
+  gap: 10px;
+  .box-grid {
+    padding: 10px;
+    background-color: var(--bg-light-gray);
+  }
+  .area-target-item {
+    padding: 5px;
+    background-color: var(--darker-10);
+    border-radius: 5px;
+    @each $key in map-keys($item-grade-colors) {
+      $hsl:hsl(map-get($item-grade-colors, #{$key}));
+      &.grade-#{$key} {
+        background-color: hslac($hsl, .3);
+        border: 1px solid hslac($hsl);
+      }
+    }
+  }
+  .area-check-list {
+    margin-top: 5px;
+  }
+}
