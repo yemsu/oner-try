@@ -59,17 +59,24 @@ export default {
   },
   computed: {
     ...mapGetters({
+      isLogin: 'auth/getIsLogin',
       equipments: 'mrpg/getEquipments',
       compositionEquips: 'mrpg/getCompositionEquips',
       materials: 'mrpg/getMaterials',
       itemSettingList: 'item-setting/getItemSettingList'
     }),
   },
-  async mounted() {
+  watch: {
+    isLogin(crr, prev) {
+      if (!crr && crr !== prev) {
+        this.$router.push({name: 'my-item-setting'})
+      }
+    }
+  },
+  async created() {
     if(this.compositionEquips.length === 0) await this.getEquipments()
     if(this.materials.length === 0) await this.getMaterials()
-
-    this.getItemSettingList()
+    if(this.itemSettingList.length === 0) await this.getItemSettingList()
     this.setItemSetting()
     this.setItems()
   },

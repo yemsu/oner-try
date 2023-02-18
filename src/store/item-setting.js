@@ -12,6 +12,9 @@ export const mutations = {
   SET_ITEM_SETTING_LIST(state, data) {
     state.itemSettingList = data
   },
+  RESET_ITEM_SETTING_LIST(state) {
+    state.itemSettingList = []
+  },
   ADD_ITEM_SETTING(state, data) {
     console.log('ADD_ITEM_SETTING', data)
     state.itemSettingList.push(data)
@@ -23,6 +26,16 @@ export const mutations = {
 
 export const actions = {
   async GET_ITEM_SETTING_LIST({ commit }) {    
+    try {
+      const { result } = await getItemSettings()
+      console.log('GET_ITEM_SETTING_LIST: result:', result)
+      const newResult = itemsParser(result)
+      commit('SET_ITEM_SETTING_LIST', newResult)
+    } catch (e) {
+      console.error('SET_ITEM_SETTING_LIST', e)
+    }
+  },
+  async GET_ITEM_SETTING({ commit }) {    
     try {
       const { result } = await getItemSettings()
       console.log('GET_ITEM_SETTING_LIST: result:', result)

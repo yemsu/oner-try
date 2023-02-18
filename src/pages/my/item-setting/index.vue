@@ -95,13 +95,22 @@ export default {
     this.setCharacterOptions()
     this.setEquipTypeOptions()
   },
-  mounted() {
-    this.getItemSettingList()
-
+  watch: {
+    isLogin(crr, prev) {
+      if(crr && crr !== prev) {
+        this.getItemSettingList()
+      } else if (!crr && crr !== prev) {
+        this.resetItemSettingList()
+      }
+    }
+  },
+  created() {
+    this.isLogin && this.getItemSettingList()
   },
   methods: {
     ...mapMutations({
       addItemSetting: 'item-setting/ADD_ITEM_SETTING',
+      resetItemSettingList: 'item-setting/RESET_ITEM_SETTING_LIST',
     }),
     ...mapActions({
       getEquipments: 'mrpg/GET_EQUIPMENTS',
@@ -147,7 +156,7 @@ export default {
     onDeleteItemSetting(id) {
       console.log('onDeleteItemSetting', id)
       this.deleteItemSetting(id)
-    }
+    },
   }
 }
 </script>
