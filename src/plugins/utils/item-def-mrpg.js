@@ -26,6 +26,10 @@ export const itemTypeNames = {
   lightArmor: '경갑',
   heavyArmor: '중갑',
   clothes: '천옷',
+  sword: '근접',
+  flag: '휘장',
+  accessory: '장신구',
+  tool: '도구',
 }
 
 export const gradesDef = {
@@ -50,11 +54,23 @@ export const optionOrder = [
 ]
 
 export const totalOptions = {
+  actd: '물리 치명타 피해량',
+  mctd: '마법 치명타 피해량',
+  ctd: '치명타 피해량',
+  teamat: '주위 아군의 공격력',
+  mons: '주위 적의 속도',
+  teams: '주위 아군의 속도',
+  teammre: '주변 아군의 마법 저항력',
+  allad: '모든 속성 피해량',
   at: '공격력',
+  ha: '치유량',
   int: '지능',
   hp: '생명력',
+  mp: '마나',
   as: '공격속도',
   all: '올스탯',
+  all: '모든능력치',
+  ps: '주 능력치',
   df: '방어력',
   hr: '생명 회복속도',
   mr: '마나 회복속도',
@@ -64,18 +80,23 @@ export const totalOptions = {
   mre: '마법 저항력',
   str: '힘',
   agi: '민첩', 
-  actd: '물리 치명타 피해량',
-  dmg: '피해량',
-  mp: '마나',
   fdmg: '최종 피해량',
   gdmg: '받는 피해량',
+  gh: '받는 회복량',
+  dmg: '피해량',
+  pct: '물리 치명타 확률',
+  mct: '마법 치명타 확률',
   act: '치명타 확률',
   sdmg: '스킬 데미지',
-  teamat: '주위 아군의 공격력',
   cd: '쿨타임',
   dad: '암흑 속성 피해',
-  iad: '얼음 속성 피해'
-
+  iad: '얼음 속성 피해',
+  fad: '화염 속성 피해',
+  tad: '번개 속성 피해',
+  lad: '빛 속성 피해',
+  ft:'낚는 시간',
+  fp:'낚을 확률',
+  mt:'채광'
 }
 
 export const percentOptions = ['as', 'ev', 'pre', 'mre', 'actd', 'dmg', 'fdmg', 'act', 'sdmg', 'teamat', 'cd', 'dad', 'iad']
