@@ -4,16 +4,14 @@
     "path": "/character",
     "component": "E:\\\\devdevdev\\\\oner-try\\\\src\\\\pages\\\\character\\\\index.vue",
     "chunkName": "pages/character/index",
-    "url": "/character",
-    "_name": "_0080c705"
+    "url": "/character"
   },
   {
     "name": "composition",
     "path": "/composition",
     "component": "E:\\\\devdevdev\\\\oner-try\\\\src\\\\pages\\\\composition\\\\index.vue",
     "chunkName": "pages/composition/index",
-    "url": "/composition",
-    "_name": "_31c8e4e4"
+    "url": "/composition"
   },
   {
     "name": "items",
@@ -26,73 +24,63 @@
         "path": "colleague",
         "component": "E:\\\\devdevdev\\\\oner-try\\\\src\\\\pages\\\\items\\\\colleague.vue",
         "chunkName": "pages/items/colleague",
-        "url": "/items/colleague",
-        "_name": "_e81fcb2a"
+        "url": "/items/colleague"
       },
       {
         "name": "items-equipment",
         "path": "equipment",
         "component": "E:\\\\devdevdev\\\\oner-try\\\\src\\\\pages\\\\items\\\\equipment.vue",
         "chunkName": "pages/items/equipment",
-        "url": "/items/equipment",
-        "_name": "_bfc9766c"
+        "url": "/items/equipment"
       },
       {
         "name": "items-sailor",
         "path": "sailor",
         "component": "E:\\\\devdevdev\\\\oner-try\\\\src\\\\pages\\\\items\\\\sailor.vue",
         "chunkName": "pages/items/sailor",
-        "url": "/items/sailor",
-        "_name": "_addf05f0"
+        "url": "/items/sailor"
       },
       {
         "name": "items-ship",
         "path": "ship",
         "component": "E:\\\\devdevdev\\\\oner-try\\\\src\\\\pages\\\\items\\\\ship.vue",
         "chunkName": "pages/items/ship",
-        "url": "/items/ship",
-        "_name": "_273034b0"
+        "url": "/items/ship"
       }
-    ],
-    "_name": "_f5517c18"
+    ]
   },
   {
     "name": "join",
     "path": "/join",
     "component": "E:\\\\devdevdev\\\\oner-try\\\\src\\\\pages\\\\join\\\\index.vue",
     "chunkName": "pages/join/index",
-    "url": "/join",
-    "_name": "_1f008e1c"
+    "url": "/join"
   },
   {
     "name": "ranking",
     "path": "/ranking",
     "component": "E:\\\\devdevdev\\\\oner-try\\\\src\\\\pages\\\\ranking\\\\index.vue",
     "chunkName": "pages/ranking/index",
-    "url": "/ranking",
-    "_name": "_38c2e4d8"
+    "url": "/ranking"
   },
   {
     "name": "character-result",
     "path": "/character/result",
     "component": "E:\\\\devdevdev\\\\oner-try\\\\src\\\\pages\\\\character\\\\result.vue",
     "chunkName": "pages/character/result",
-    "url": "/character/result",
-    "_name": "_78cbda0c"
+    "url": "/character/result"
   },
   {
     "name": "composition-type-id",
     "path": "/composition/:type/:id?",
     "component": "E:\\\\devdevdev\\\\oner-try\\\\src\\\\pages\\\\composition\\\\_type\\\\_id.vue",
-    "chunkName": "pages/composition/_type/_id",
-    "_name": "_f8bd8cc2"
+    "chunkName": "pages/composition/_type/_id"
   },
   {
     "name": "index",
     "path": "/",
     "component": "E:\\\\devdevdev\\\\oner-try\\\\src\\\\pages\\\\index.vue",
     "chunkName": "pages/index",
-    "url": "/",
-    "_name": "_586cabf4"
+    "url": "/"
   }
 ]
