@@ -102,4 +102,8 @@ export default {
       return itemRoutes
     }
  },
+ 
+ static: {
+   prefix: false
+ },
 }
