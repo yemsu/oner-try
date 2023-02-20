@@ -38,6 +38,7 @@ export default {
         innerHTML: `if(!wcs_add) var wcs_add = {}; wcs_add['wa'] = '1501b3ca5e1f000'; if(window.wcs) { wcs_do(); }`
       },
       { type: 'text/javascript', src: 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js', async: true },
+      { type: 'text/javascript', src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4052679554213032', async: true, crossorigin: 'anonymous' },
       { type: 'text/javascript', src: 'https://accounts.google.com/gsi/client' },
     ]
   },
