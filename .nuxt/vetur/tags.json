@@ -1,28 +1,4 @@
 {
-  "CommonBaseButton": {
-    "description": "Auto imported from components/common/BaseButton.vue"
-  },
-  "CommonBaseInput": {
-    "description": "Auto imported from components/common/BaseInput.vue"
-  },
-  "CommonBaseSkeleton": {
-    "description": "Auto imported from components/common/BaseSkeleton.vue"
-  },
-  "CommonBookmarkButton": {
-    "description": "Auto imported from components/common/BookmarkButton.vue"
-  },
-  "CommonMainLogo": {
-    "description": "Auto imported from components/common/MainLogo.vue"
-  },
-  "CommonTitleContent": {
-    "description": "Auto imported from components/common/TitleContent.vue"
-  },
-  "CommonTopMenuBar": {
-    "description": "Auto imported from components/common/TopMenuBar.vue"
-  },
-  "CommonVTab": {
-    "description": "Auto imported from components/common/VTab.vue"
-  },
   "ItemBadges": {
     "description": "Auto imported from components/item/itemBadges.vue"
   },
@@ -58,6 +34,30 @@
   },
   "ItemSynergyDesc": {
     "description": "Auto imported from components/item/SynergyDesc.vue"
+  },
+  "CommonBaseButton": {
+    "description": "Auto imported from components/common/BaseButton.vue"
+  },
+  "CommonBaseInput": {
+    "description": "Auto imported from components/common/BaseInput.vue"
+  },
+  "CommonBaseSkeleton": {
+    "description": "Auto imported from components/common/BaseSkeleton.vue"
+  },
+  "CommonBookmarkButton": {
+    "description": "Auto imported from components/common/BookmarkButton.vue"
+  },
+  "CommonMainLogo": {
+    "description": "Auto imported from components/common/MainLogo.vue"
+  },
+  "CommonTitleContent": {
+    "description": "Auto imported from components/common/TitleContent.vue"
+  },
+  "CommonTopMenuBar": {
+    "description": "Auto imported from components/common/TopMenuBar.vue"
+  },
+  "CommonVTab": {
+    "description": "Auto imported from components/common/VTab.vue"
   },
   "LayoutFloatingMenu": {
     "description": "Auto imported from components/layout/FloatingMenu.vue"
