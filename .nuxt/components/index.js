@@ -24,8 +24,8 @@ export const LayoutGoogleLoginButton = () => import('../..\\src\\components\\lay
 export const LayoutHeader = () => import('../..\\src\\components\\layout\\Header.vue' /* webpackChunkName: "components/layout-header" */).then(c => wrapFunctional(c.default || c))
 export const SearchBox = () => import('../..\\src\\components\\search\\SearchBox.vue' /* webpackChunkName: "components/search-box" */).then(c => wrapFunctional(c.default || c))
 export const SearchBoxSkeleton = () => import('../..\\src\\components\\search\\SearchBoxSkeleton.vue' /* webpackChunkName: "components/search-box-skeleton" */).then(c => wrapFunctional(c.default || c))
-export const PagesCompositionSearchBox = () => import('../..\\src\\components\\pages\\composition\\SearchBox.vue' /* webpackChunkName: "components/pages-composition-search-box" */).then(c => wrapFunctional(c.default || c))
 export const PagesCharacterSearchBox = () => import('../..\\src\\components\\pages\\character\\SearchBox.vue' /* webpackChunkName: "components/pages-character-search-box" */).then(c => wrapFunctional(c.default || c))
+export const PagesCompositionSearchBox = () => import('../..\\src\\components\\pages\\composition\\SearchBox.vue' /* webpackChunkName: "components/pages-composition-search-box" */).then(c => wrapFunctional(c.default || c))
 export const PagesRankingTable = () => import('../..\\src\\components\\pages\\ranking\\Table.vue' /* webpackChunkName: "components/pages-ranking-table" */).then(c => wrapFunctional(c.default || c))
 
 // nuxt/nuxt.js#8607

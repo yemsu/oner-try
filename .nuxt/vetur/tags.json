@@ -77,11 +77,11 @@
   "SearchBoxSkeleton": {
     "description": "Auto imported from components/search/SearchBoxSkeleton.vue"
   },
-  "PagesCompositionSearchBox": {
-    "description": "Auto imported from components/pages/composition/SearchBox.vue"
-  },
   "PagesCharacterSearchBox": {
     "description": "Auto imported from components/pages/character/SearchBox.vue"
+  },
+  "PagesCompositionSearchBox": {
+    "description": "Auto imported from components/pages/composition/SearchBox.vue"
   },
   "PagesRankingTable": {
     "description": "Auto imported from components/pages/ranking/Table.vue"
