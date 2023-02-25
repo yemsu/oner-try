@@ -1,6 +1,3 @@
 {
-  "cSpell.words": [
-    "mrpg",
-    "onertry"
-  ]
+  "nuxt.isNuxtApp": true
 }
