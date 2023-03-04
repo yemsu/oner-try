@@ -26,6 +26,7 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'format-detection', content: 'telephone=no' },
+      { name: 'naver-site-verification', content: 'e6b1b8d06d65ff0afc03dda3fde036c9bc0d22f6' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2284%22>💀</text></svg>' }
