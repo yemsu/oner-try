@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const $axios = axios.create({
-  baseURL: process.env.CONT_PATH + '/api'
+  baseURL: process.env.API_PATH + '/api'
 })
 
 // item

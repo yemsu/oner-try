@@ -8,10 +8,10 @@ export const imgSrc = (type, id) => {
   if(!type || !id) return ''
   const imgNameUseId = ['ship', 'hero', 'ryuo']
   const imgName = imgNameUseId.includes(type) ? id : type[0] + id
-  const path = `/static/image/${type}/${imgName}.png`
+  const path = `/${type}/${imgName}.png`
   // const url = process.env.NODE_ENV === 'production'
   //   ? process.env.CONT_PATH : ''
-  return process.env.CONT_PATH  + path
+  return `${process.env.BASE_URL}/images/items` + path
 }
 export const getGradeScore = (key) => {
   return gradeScoresDef[key]
