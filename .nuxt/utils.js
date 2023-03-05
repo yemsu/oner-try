@@ -200,7 +200,7 @@ export async function setContext (app, context) {
       payload: context.payload,
       error: context.error,
       base: app.router.options.base,
-      env: {"APP_TITLE":"ONER TRY","BASE_URL":"https://onertry.fun","CONT_PATH":"https://onerapi.xyz","AuthClientId":"899883406328-71437rt8e2ba6v8ivtkglju4k23jc5af.apps.googleusercontent.com"}
+      env: {"APP_TITLE":"ONER TRY","LOCAL_PORT":"8082","BASE_URL":"https://onertry.fun","API_PATH":"https://onerapi.xyz","AuthClientId":"899883406328-71437rt8e2ba6v8ivtkglju4k23jc5af.apps.googleusercontent.com"}
     }
     // Only set once
 
