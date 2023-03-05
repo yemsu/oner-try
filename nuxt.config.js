@@ -1,10 +1,12 @@
 const axios = require('axios')
+const isDevMode = process.env.NODE_ENV === 'development'
 
 export default {
   env: {
     APP_TITLE: 'ONER TRY',
-    BASE_URL: process.env.BASE_URL,
-    CONT_PATH: process.env.CONT_PATH,
+    LOCAL_PORT: process.env.LOCAL_PORT,
+    BASE_URL: isDevMode ? `http://localhost:${process.env.LOCAL_PORT}` : process.env.BASE_URL,
+    API_PATH: process.env.CONT_PATH,
     AuthClientId: process.env.OAUTH_CLIENT_ID
   },
   // Target: https://go.nuxtjs.dev/config-target
@@ -13,7 +15,7 @@ export default {
   srcDir: 'src',
 
   server: {
-    port: process.env.NODE_ENV === 'development' ? 8082 : 80
+    port: isDevMode ? process.env.LOCAL_PORT : 80
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head

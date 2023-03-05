@@ -27,8 +27,8 @@ const setMeta = (metaObj = {}) => {
   
   // image
   const imgContent = metaObj?.imageUrl
-    ? `${process.env.CONT_PATH}${metaObj.imageUrl}`
-    : `${process.env.CONT_PATH}/static/image/sailor/s1227899974.png`
+    ? `${process.env.BASE_URL}/images${metaObj.imageUrl}`
+    : `${process.env.BASE_URL}/images/items/static/image/sailor/s1227899974.png`
   resultMeta.push({ hid: 'og-image-value', property: 'og:image', content: imgContent })
   
   return { title: titleContent, meta: resultMeta } || []
