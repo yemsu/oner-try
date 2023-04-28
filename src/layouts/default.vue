@@ -4,8 +4,8 @@
     <div class="container">
       <nuxt />
     </div>
-    <FloatingMenu />
-    <LayoutFooter />
+    <!-- <FloatingMenu /> -->
+    <!-- <LayoutFooter /> -->
  </div>
 </template>
 
@@ -23,7 +23,8 @@ export default {
 .container {
   position: relative;
   min-height: 100vh;
-  $header-height: $header-game-menu-height + $header-site-menu-height;
-  padding: $header-height 0 100px;
+  /* $header-height: $header-game-menu-height + $header-site-menu-height;
+  padding: $header-height 0 100px; */
+  padding-top: $header-site-menu-height;
 }
 </style>
