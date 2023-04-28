@@ -1,8 +1,12 @@
 export const gradesDef = {
-  legend: '레전드',
-  epic: '에픽',
-  rare: '레어',
-  normal: '노말',
+  special: '스페셜',
+  uncommon: '언커먼',
+  common: '커먼'
+}
+export const gradeScoresDef = {
+  special: 3,
+  uncommon: 2,
+  common: 1,
 }
 export const heroDefaultHp = {
   tashigi: 90,
@@ -14,9 +18,6 @@ export const heroDefaultHp = {
   baby: 80,
   nami: 90
 }
-export const optionOrder = [
-  'adt', 'maxD', 'ct', 'dr', 'minD', 'dct', 'ctD', 'ss', 'ms', 'cd', 'df', 'ev', 'str', 'dex', 'int', 'hp'
-]
 export const equipDropOrder = [
   '후지토라', '클리크 해적단', '쿠로네코 해적단', '유령선', '부들 조합', '버기', '모건', '알비다', '반 더 데켄', '어인섬', '해군', '딜러형 전용무기', '파괴형 전용무기', '밸런스형 전용무기'
 ]
@@ -27,6 +28,9 @@ export const equipmentGradeTypes = [
   ['잡검', '예검', '양검', '명검'],
 ]
 export const equipmentGradeTypeExceptions = ['황금빛']
+export const optionOrder = [
+  'adt', 'maxD', 'ct', 'dr', 'minD', 'dct', 'ctD', 'ss', 'ms', 'cd', 'df', 'ev', 'str', 'dex', 'int', 'hp'
+]
 export const optionDefaultValue = {
   hp: 110,
   adt: 0,
@@ -44,19 +48,6 @@ export const optionDefaultValue = {
   str: 1,
   dex: 9,
   int: 1,
-}
-export const gradeScoresDef = {
-  legend: 4,
-  epic: 3,
-  rare: 2,
-  normal: 1,
-}
-export const slotNumbers = {
-  sailors: 6,
-  equipments: 6,
-  colleagues: 3,
-  ship: 1,
-  ryuo: 1
 }
 export const equipOnlyOptionsDef = {
   str: '견문색',
@@ -82,6 +73,13 @@ export const noEquipOptions = {
   cd: '쿨타임 감소',
   po: '생활포인트 획득량',
   ms: '이동속도'
+}
+export const slotNumbers = {
+  sailors: 6,
+  equipments: 6,
+  colleagues: 3,
+  ship: 1,
+  ryuo: 1
 }
 export const noUnitOptions = ['hp', 'po', 'ms', 'str', 'dex', 'int']
 export const gradesMap = new Map(Object.entries(gradesDef))
