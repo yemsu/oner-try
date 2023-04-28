@@ -91,8 +91,7 @@ export const actions = {
   GET_ITEMS({ commit }) {
     console.log('store: item/GET_ITEMS')
     return getItems()
-      .then(({data}) => {
-        // console.log('GET_SAILORS',data)
+      .then((data) => {
         const newData = data.map(dataItem => Object.assign(dataItem, {option: parserStrData(dataItem.option)}))
         commit(`SET_ITEMS`, {data: dataTyped(newData), type: 'items'})
         return data
@@ -101,7 +100,7 @@ export const actions = {
   },
   GET_SAILORS({ commit }) {
     return getSailors()
-      .then(({data}) => {
+      .then((data) => {
         // console.log('GET_SAILORS',data)
         const newData = data.map(dataItem => Object.assign(dataItem, {option: parserStrData(dataItem.option)}))
 
@@ -112,7 +111,7 @@ export const actions = {
   },
   GET_COLLEAGUES({ commit }, payload) {
     return getColleagues(payload)
-      .then(({data}) => {
+      .then((data) => {
         // console.log('GET_COLLEAGUES', data)
         const newData = data.map(dataItem => {
           const { option, coloOption, coloPassive } = dataItem
@@ -132,7 +131,7 @@ export const actions = {
   },
   GET_ETC_ITEMS({ commit }) {
     return getEtcItems()
-      .then(({data}) => {
+      .then((data) => {
         // console.log('SET_ETC_ITEMS', data)
         commit(`SET_ETC_ITEMS`, {data, type: 'etcItems'})
         return data
@@ -141,7 +140,7 @@ export const actions = {
   },
   GET_EQUIPMENTS({ commit }) {
     return getEquipments()
-      .then(({data}) => {
+      .then((data) => {
         const newData = data.map(dataItem => {
           const { option, gradeOption } = dataItem
           const optionObj = {option: parserStrData(option)}
@@ -234,7 +233,7 @@ export const actions = {
   },
   GET_SHIPS({ commit }) {
     return getShips()
-      .then(({data}) => {
+      .then((data) => {
         const newData = data.map(dataItem => {
           const { option } = dataItem
           const optionObj = {option: parserStrData(option)}
@@ -268,7 +267,7 @@ export const actions = {
   },
   GET_HEROES({ commit }, payload) {
     return getHeroes(payload)
-      .then(({data}) => {
+      .then((data) => {
         // console.log('GET_HEROES', data)
         commit(`SET_HEROS`, {data, type: 'heroes'})
         return data
@@ -277,7 +276,7 @@ export const actions = {
   },
   GET_SYNERGIES({ commit }) {
     return getSynergies()
-      .then(({data}) => {
+      .then((data) => {
         const newData = data.map(dataItem => {
           const option = parserStrData(dataItem.option)
           const sailors = parserStrData(dataItem.sailors, 'list')
@@ -307,7 +306,7 @@ export const actions = {
   },
   GET_RYUOES({ commit }) {
     return getRyuoList()
-      .then(({data}) => {
+      .then((data) => {
         const newData = data.map(dataItem => {
           const option = parserStrData(dataItem.option)
           const name = `${dataItem.name}차 류오`

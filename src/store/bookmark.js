@@ -27,7 +27,7 @@ export const mutations = {
 export const actions = {
   async GET_USER_ITEM_BOOKMARKS({ commit, rootState, dispatch }) {
     const { item: { items } } = rootState
-    if(items.length === 0) await dispatch('item/GET_ITEMS','', { root: true })
+    if(items.length === 0) await dispatch('item/GET_ITEMS', '', { root: true })
 
     const bookmarkTargets = await getUserBookmarks({ category: 'item' })
     if(!bookmarkTargets) return // for local server hot loading error 처리

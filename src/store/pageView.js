@@ -36,7 +36,7 @@ export const mutations = {
 export const actions = {
   GET_COMPOSITION({ commit }, searchRankingNum) {
     return getCompositionPageViews()
-      .then(({data}) => {
+      .then((data) => {
         // console.log('GET_COMPOSITION',data)
         const newData = data
           .sort((a, b) => a.pageView - b.pageView).reverse()
@@ -53,7 +53,7 @@ export const actions = {
   },
   GET_CHARACTER({ commit }, searchRankingNum) {
     return getCharacterPageViews()
-      .then(({data}) => {
+      .then((data) => {
         // console.log('GET_Character',data)
         const newData = data
           .sort((a, b) => a.pageView - b.pageView).reverse()

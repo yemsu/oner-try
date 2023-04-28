@@ -139,6 +139,7 @@ const errorHandler = (actionName, error) => {
 
 function getApi(url = '', params = { params: {} }) {
   return $axios.get(url, params)
+    .then(({ data }) => data.result)
     .catch(error => errorHandler(url, error))
 }
 function getApiReturnData(url = '', params = {}) {
