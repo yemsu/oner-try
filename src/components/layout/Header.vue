@@ -7,16 +7,16 @@
         <nuxt-link to="/">원피스 RPG</nuxt-link>
         <!-- <a href="https://mrpg.onertry.fun">꿈 RPG</a> -->
       </nav>
-      <div class="area-side-menu">
+      <!-- <div class="area-side-menu">
         <google-login-button />
-      </div>
+      </div> -->
     </div>
-    <top-menu-bar
+    <!-- <top-menu-bar
       title="원피스 RPG 사이트 메뉴"
       :menuList="siteMenuList"
       :sideMenuList="siteSideMenuList"
       class="game-menu"
-    />
+    /> -->
   </header>
 </template>
 
