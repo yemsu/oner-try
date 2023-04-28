@@ -58,8 +58,7 @@ export default {
 @import '@/assets/style/pages/index.scss';
 img {
   display: block;
-  width: 100vw;
+  margin: 0 auto;
   height: calc(100vh - $header-site-menu-height);
-  object-fit: cover;
 }
 </style>
