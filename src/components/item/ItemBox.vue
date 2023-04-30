@@ -21,7 +21,7 @@
           <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
           <div class="area-img">
             <item-image 
-              :item="itemImageData"
+              :item="item"
               :isRoundImg="isRoundImg"
               :isNoDataItem="isNoDataItem"
               :size="size"
@@ -169,10 +169,6 @@ export default {
     noTooltip() {
       const noData = !this.item.dropMonster && !this.item.option
       return !this.showTooltip || noData
-    },
-    itemImageData() {
-      const { type, id, groupName, name, grade } = this.item
-      return { type, id, groupName, name, grade }
     },
     itemDetailInfoType() {
       return this.visibleDetail && this.size === 'big' ? 'list-main' : 'basic'
