@@ -92,7 +92,7 @@ export const noEquipOptions = {
   maxD: '최대 피해량',
   ct: '피해치명타 확률',
   ctD: '치명타 피해량',
-  dr: '추가 파괴량,',
+  dr: '추가 파괴량',
   maxDr: '최대 파괴량',
   dct: '파괴치명타 확률',
   ctDr: '치명타 파괴량',
