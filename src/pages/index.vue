@@ -19,7 +19,7 @@
           </div>
         </div>
       </section> -->
-      <section class="quick-menu column">
+      <!-- <section class="quick-menu column">
         <div class="area-text">
           <h3 class="title">캐릭터 검색</h3>
           <p>다른 유저의 빌드를 참고해 보세요. 😎</p>
@@ -29,7 +29,7 @@
             :full-data="gameUsers"
           />
         </div>
-      </section>
+      </section> -->
       <section class="quick-menu column">
         <div class="area-text">
           <h3 class="title">조합법 검색 👀</h3>
@@ -101,7 +101,7 @@
           </p>
         </div>
       </section>
-      <section class="quick-menu column-full">
+      <!-- <section class="quick-menu column-full">
         <div class="area-text">
           <h3 class="title">랭킹 TOP 5</h3>
           <p>오늘의 해적왕..🥶 원피스는 어디에 있나요..? 💎 </p>
@@ -121,7 +121,7 @@
             :useInfiniteScroll="false"
           />
         </div>
-      </section>
+      </section> -->
     </div>
   </div>
 </template>
@@ -154,24 +154,24 @@ export default {
   },
   computed: {
     ...mapGetters({
-      heroes:  'item/getHeroes',
+      // heroes:  'item/getHeroes',
       items:  'item/getItems',
-      gameUsers: 'character/getGameUsers',
+      // gameUsers: 'character/getGameUsers',
       isLogin: 'auth/getIsLogin',
       userInfo: 'auth/getUserInfo'
     }),   
   },
   async created() {
-    if(this.gameUsers.length === 0) await this.getGameUsers()  
+    // if(this.gameUsers.length === 0) await this.getGameUsers()  
+    // if(this.heroes.length === 0) await this.getHeroes()
     if(this.items.length === 0) await this.getItems()
-    if(this.heroes.length === 0) await this.getHeroes()
     this.compositionItems = this.items.filter(item => item.ingredients)
   },
   methods: {
     ...mapActions({
-      getGameUsers: 'character/GET_GAME_USERS',
+      // getGameUsers: 'character/GET_GAME_USERS',
+      // getHeroes: 'item/GET_HEROES'
       getItems: 'item/GET_ITEMS',
-      getHeroes: 'item/GET_HEROES'
     }),
   }
 }
