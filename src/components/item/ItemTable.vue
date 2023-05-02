@@ -270,24 +270,28 @@ export default {
         {
           title: '장비',
           type: 'item',
-          width: '20%'
+          width: '50%'
         },
         {
-          title: '공통 옵션',
-          type: 'option',
-          width: '30%'
-        },
-        {
-          title: '등급별 추가 옵션',
-          type: 'optionsByGrade',
-          width: '35%'
-        },
-        {
-          title: '획득처',
-          type: 'string',
-          key: 'dropMonster',
-          width: '15%'
-        },
+          title: '옵션',
+          type: 'option'
+        }
+        // {
+        //   title: '공통 옵션',
+        //   type: 'option',
+        //   width: '30%'
+        // },
+        // {
+        //   title: '등급별 추가 옵션',
+        //   type: 'optionsByGrade',
+        //   width: '35%'
+        // },
+        // {
+        //   title: '획득처',
+        //   type: 'string',
+        //   key: 'dropMonster',
+        //   width: '15%'
+        // },
       ],
     }
   },

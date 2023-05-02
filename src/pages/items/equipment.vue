@@ -69,6 +69,7 @@ export default {
     }
   },
   created() {
+    console.log('this.equipments', this.equipments)
     this.resultEquipments = this.equipments
   },
   methods: {
@@ -78,9 +79,10 @@ export default {
         const isAllOption = this.optionsSelected.length === 0
 // console.log('optionsByGrade', optionsByGrade)
 //       if(!optionsByGrade) return equipment
-        const checkOptionsByGrade = optionsByGrade[5] || optionsByGrade[4] || optionsByGrade[3] || optionsByGrade[2] || optionsByGrade[1] || optionsByGrade[0] || []
-      if(!checkOptionsByGrade) return equipment
-        const optionKeys = [...checkOptionsByGrade, ...option].map(option => Object.keys(option)[0])
+        // const checkOptionsByGrade = optionsByGrade[5] || optionsByGrade[4] || optionsByGrade[3] || optionsByGrade[2] || optionsByGrade[1] || optionsByGrade[0] || []
+      // if(!checkOptionsByGrade) return equipment
+        // const optionKeys = [...checkOptionsByGrade, ...option].map(option => Object.keys(option)[0])
+        const optionKeys = [...option].map(option => Object.keys(option)[0])
         const checkListOptions = this.optionsSelected.map(optionsSelected => optionKeys.includes(optionsSelected))
 
 // console.log('optionKeys', optionKeys, checkListOptions)

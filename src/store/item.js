@@ -184,10 +184,10 @@ export const actions = {
         const { name, option, gradeOption, type, id, dropMonster } = data
         const groupData = groupDataList.find(group => name.includes(group.name))
         if(!groupData) {
-          console.error('no groupData', name, groupData)
+          // console.error('no groupData', name, groupData)
           return acc
         }
-        const { name:groupName, gradeTypeIndex } = groupData
+        const { name: groupName, gradeTypeIndex } = groupData
         const itemObj = () => ({ id, name: groupName, type })
 
         // 전용무기 예외 처리 - 같은 전용무기는 같은 item 배열에 삽입
@@ -228,8 +228,8 @@ export const actions = {
         return acc
       }, [])
     // console.log('newData', newData)
-    commit(`SET_EQUIPMENTS_TABLE`, {data: newData})
-    return newData
+    commit(`SET_EQUIPMENTS_TABLE`, {data: state.equipments})
+    return state.equipments
   },
   GET_SHIPS({ commit }) {
     return getShips()
