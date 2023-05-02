@@ -34,18 +34,18 @@ export default {
   data() {
     return {
       siteMenuList: [
-        {
-          path: '/character',
-          menuName: '캐릭터',
-        },
+        // {
+        //   path: '/character',
+        //   menuName: '캐릭터',
+        // },
         {
           path: '/composition',
           menuName: '조합법',
         },
-        {
-          path: '/ranking',
-          menuName: '랭킹',
-        },
+        // {
+        //   path: '/ranking',
+        //   menuName: '랭킹',
+        // },
         {
           path: '/items',
           menuName: '아이템도감',
