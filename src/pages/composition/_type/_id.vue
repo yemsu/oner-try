@@ -137,6 +137,7 @@ export default {
     totalIngrdnts() {
       const sailors = []
       const etcItems = []
+      console.log('allIngrdnts', this.allIngrdnts)
       this.allIngrdnts.forEach((item) => {
         const newItem = JSON.parse(JSON.stringify(item))
         const target = item.type === 'sailor' ? sailors : etcItems
@@ -222,7 +223,7 @@ export default {
     dataSetters() {
       const setterIngrdnts = (item, allIngrdnts) => {
 
-        const ingredients = fillDataAndInsertValue(this.items, parserStrData(item.ingredients), 'requiredNumber')
+        const ingredients = fillDataAndInsertValue(this.items, parserStrData(item.ingredients), 'requiredNumber', true)
         ingredients.forEach(data => Object.assign(data, { requiredNumber: data.requiredNumber*1}))
         item.ingredients = ingredients
         allIngrdnts.push(...this.itemsHasKey(item.ingredients, 'ingredients'))
