@@ -2,8 +2,8 @@
   <section class="wrap-search">
     <h2 class="ir-hidden">조합법</h2>
     <item-checker-board
-      v-if="legendItems"
-      :items="legendItems"
+      v-if="specialItems"
+      :items="specialItems"
     />
     <composition-search-box
       v-if="compositionItems"
@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       compositionItems: null,
-      legendItems: null,
+      specialItems: null,
     }
   },
   computed: {
@@ -46,7 +46,7 @@ export default {
   async created() {
     if(this.items.length === 0) await this.$store.dispatch('item/GET_ITEMS')
     this.compositionItems = this.items.filter(item => item.ingredients)
-    this.legendItems = this.compositionItems.filter(item => item.grade === 'legend')
+    this.specialItems = this.items.filter(item => item.grade === 'special')
   },
 }
 </script>

@@ -247,19 +247,22 @@ export const actions = {
   async GET_SHIPS_TABLE({ commit, state, dispatch }) {
     if(state.ships.length === 0) await dispatch('GET_SHIPS')
 
+    console.log(state.ships)
     const newData = deepClone(state.ships)
       .reduce((acc, data) => {
-        const { groupName, name, option, type } = data
-        const sameShipAccData = acc.find(data => data.groupName === groupName)
+        const { groupName, name, option, type, imageName } = data
+        // const sameShipAccData = acc.find(data => data.groupName === groupName)
         const nameData = name.split(' +')[0]
         const stack = name.split(' +')[1]
-        if(!sameShipAccData) {
+        console.log('data', data, )
+        // console.log('sameShipAccData', sameShipAccData, )
+        // if(!sameShipAccData) {
           const optionsByStack = new Array(5)
           optionsByStack[stack] = option
-          acc.push({ groupName, name: nameData, optionsByStack, type })
-        } else {
-          sameShipAccData.optionsByStack[stack] = option
-        }
+          acc.push({ groupName, name: nameData, optionsByStack, type, imageName })
+        // } else {
+        //   sameShipAccData.optionsByStack[stack] = option
+        // }
         return acc
       }, [])
     commit(`SET_SHIPS_TABLE`, {data: newData})

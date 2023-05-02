@@ -71,6 +71,7 @@ export default {
   },
   created() {
     this.resultShips = this.ships
+    console.log('resultShips', this.resultShips)
   },
   methods: {
     setResultShips() {

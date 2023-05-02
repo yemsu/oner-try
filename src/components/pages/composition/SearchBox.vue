@@ -3,7 +3,6 @@
     placeholder="조합 아이템"
     v-if="itemNameList"
     :matching-data="itemNameList"
-    :ranking-list="rankingNameList"
     :size="size"
     :is-item="true"
     :custom-match-data-item="true"
@@ -51,9 +50,9 @@ export default {
     }),
   },
   async created() {
-    if(this.pageViews.length === 0) await this.getPageView(10)
-    this.rankingNameList = fillDataAndInsertValue(this.items, this.pageViewRanking, 'pageView')
-      .map(({ name }) => name)
+    // if(this.pageViews.length === 0) await this.getPageView(10)
+    // this.rankingNameList = fillDataAndInsertValue(this.items, this.pageViewRanking, 'pageView')
+    //   .map(({ name }) => name)
     this.setItemNameList()
   },
   methods: {

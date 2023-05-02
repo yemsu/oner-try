@@ -109,7 +109,7 @@ export default {
       userCharacters: 'character/getUserCharacters'
     }),
     showRankingList() {
-      return this.rankingList && !this.inputValue
+      return this.rankingList.length > 0 && !this.inputValue
     },
     matchDataSliced() {
       if(!this.inputValue && this.showRankingList) return this.rankingList

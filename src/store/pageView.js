@@ -37,7 +37,9 @@ export const actions = {
   GET_COMPOSITION({ commit }, searchRankingNum) {
     return getCompositionPageViews()
       .then((data) => {
-        // console.log('GET_COMPOSITION',data)
+        if(!data) {
+          return []
+        }
         const newData = data
           .sort((a, b) => a.pageView - b.pageView).reverse()
           .map(({ name, pageView }) => ({ [name]: pageView }))
