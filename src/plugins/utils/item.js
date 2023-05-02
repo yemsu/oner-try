@@ -35,13 +35,12 @@ export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey,
     const data = targetDataList[i]
     if(isBlank(name)) return null
     const fullData = findData(fullDataList, 'name', name)
-    if(!fullData && useDefaultData) {
-      return { name }
-    } else if(!fullData) {
+    if(!fullData) {
       console.error(`NO ITEM: ${name} - CHECK DB!`)
-      return false
-    }  
-    const fullDataClone = deepClone(fullData)
+      if(!useDefaultData) return false
+    }
+    const defaultData = { name }
+    const fullDataClone = deepClone(fullData || defaultData)
 
     if(fullDataClone.option && typeof(fullDataClone.option) === 'string') {
       fullDataClone.option = parserStrData(fullDataClone.option)
