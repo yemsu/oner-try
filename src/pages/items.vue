@@ -25,7 +25,7 @@ export default {
     return {
       subMenus: [
         { menuName: '선원', path: '/items/sailor' },
-        { menuName: '동료', path: '/items/colleague' },
+        // { menuName: '동료', path: '/items/colleague' },
         { menuName: '선박', path: '/items/ship'},
         { menuName: '장비', path: '/items/equipment'},
       ]
