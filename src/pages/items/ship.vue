@@ -75,10 +75,11 @@ export default {
   methods: {
     setResultShips() {
       const resultShips = this.ships.filter(ship => {
-        const { optionsByStack } = ship
+        const { optionsByStack, option } = ship
+        const targetOptions = optionsByStack ? optionsByStack[4] : option
         const isAllOption = this.optionsSelected.length === 0
 
-        const optionKeys = optionsByStack[4].map(option => Object.keys(option)[0])
+        const optionKeys = targetOptions.map(option => Object.keys(option)[0])
         const checkListOptions = this.optionsSelected.map(optionsSelected => optionKeys.includes(optionsSelected))
 
         const checkOptions = [...new Set(checkListOptions)]
@@ -86,7 +87,7 @@ export default {
         const filteringOptions = isAllOption ? true
           : checkOptions.length === 1 && checkOptions[0]
         if(filteringOptions === true) return true
-        else if(filteringOptions.length === optionsByStack[4].length) return true
+        else if(filteringOptions.length === targetOptions.length) return true
       })
       
       this.resultShips = resultShips

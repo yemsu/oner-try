@@ -239,28 +239,32 @@ export default {
         {
           title: '선박',
           type: 'item',
-          width: '14%'
+          width: '50%'
         },
         {
-          title: '+0',
-          type: 'optionsByStack0'
-        },
-        {
-          title: '+1',
-          type: 'optionsByStack1'
-        },
-        {
-          title: '+2',
-          type: 'optionsByStack2'
-        },
-        {
-          title: '+3',
-          type: 'optionsByStack3'
-        },
-        {
-          title: '+4',
-          type: 'optionsByStack4'
-        },
+          title: '옵션',
+          type: 'option'
+        }
+        // {
+        //   title: '+0',
+        //   type: 'optionsByStack0'
+        // },
+        // {
+        //   title: '+1',
+        //   type: 'optionsByStack1'
+        // },
+        // {
+        //   title: '+2',
+        //   type: 'optionsByStack2'
+        // },
+        // {
+        //   title: '+3',
+        //   type: 'optionsByStack3'
+        // },
+        // {
+        //   title: '+4',
+        //   type: 'optionsByStack4'
+        // },
       ],
       equipmentTableData: [
         {
