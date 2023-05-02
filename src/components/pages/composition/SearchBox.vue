@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { fillDataAndInsertValue } from '@/plugins/utils/item'
 import { mapGetters, mapActions } from 'vuex';
 export default {
   props: {
@@ -50,10 +49,10 @@ export default {
       pageViewRanking: 'pageView/getCompositionSearchRanking',
     }),
   },
-  async created() {
-    if(this.pageViews.length === 0) await this.getPageView(10)
-    this.rankingNameList = fillDataAndInsertValue(this.items, this.pageViewRanking, 'pageView')
-      .map(({ name }) => name)
+  created() {
+    // if(this.pageViews.length === 0) await this.getPageView(10)
+    // this.rankingNameList = fillDataAndInsertValue(this.items, this.pageViewRanking, 'pageView')
+    //   .map(({ name }) => name)
     this.setItemNameList()
   },
   methods: {
