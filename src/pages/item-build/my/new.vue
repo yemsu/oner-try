@@ -4,12 +4,36 @@
       <h2 class="title badge-text-wrap">빌드 만들기</h2>        
     </div>
     <item-search-box 
-      v-if="searchBoxFullData.length > 0"
+      v-if="searchBoxFullData.length > 0 && items.length > 0"
       :full-data="searchBoxFullData"
-      :fn-after-search="fnAfterSearch"
+      :fn-after-search="selectItem"
       size="small"
       placeholder="추가할 아이템 검색"
     />
+    <v-tab :tabs="itemTypeDefs">
+      <template v-slot:tab="{ tab: { data } }">
+        {{ data.title }}
+        {{ data.type }}
+      </template>
+      <template v-slot:content="{ activeTab }">
+        <item-list
+          :items="itemListData(activeTab.type)"
+          :type="activeTab.type"
+          column-num="8"
+        >
+          <template v-slot="{ item }">
+            <item-box
+              :item="item"
+              :is-link="false"
+              type="list"
+              size="xsmall"
+              :has-click-event="true"
+              @click="selectItem"
+            />
+          </template>
+        </item-list>
+      </template>
+    </v-tab>
     <section>
       <h2 class="ir-hidden">선택한 아이템빌드</h2>
       <item-build 
@@ -24,7 +48,9 @@
 import setMeta from '@/plugins/utils/meta';
 import ItemBuild from '@/components/item/ItemBuild.vue'
 import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
+import VTab from '@/components/common/VTab.vue';
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
+import { itemTypeDefs } from '@/plugins/utils/item-def';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -32,6 +58,7 @@ export default {
   components: {
     ItemBuild,
     ItemSearchBox,
+    VTab,
   },
   head() {
     return setMeta({
@@ -59,7 +86,10 @@ export default {
     ...mapGetters({
       items: 'item/getItems',
       synergies: 'item/getSynergies'
-    })
+    }),
+    itemTypeDefs() {
+      return itemTypeDefs
+    }
   },
   async created() {
     if(this.items.length === 0) await this.getItems()
@@ -84,7 +114,7 @@ export default {
     setTotalOption() {
       this.buildInfo.totalOption = getTotalOption(this.buildInfo, this.buildInfo.synergy)
     },
-    fnAfterSearch(name) {
+    selectItem(name) {
       const item = this.items.find((item) => item.name === name)
 
       let blankSlotIndex = 0
@@ -101,6 +131,12 @@ export default {
       this.setTotalOption()
       this.setBuildInfoString()
     },
+    itemListData(activeTabType) {
+      return this.items.filter(({type}) => type === activeTabType)
+    },
+    onClickItem(name) {
+      this.selectItem(name)
+    }
   },
 }
 </script>
