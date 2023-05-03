@@ -37,9 +37,9 @@ $column-num: 2;
     align-items: center;
     padding: 50px 30px 60px;
     border: 1px solid var(--color-white);
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: hsla(var(--hsl-white), 10%);
     &.bg-point {
-      background-color: rgba(255, 255, 255, 0.6);
+      background-color: hsla(var(--hsl-white), 30%);
     }
     &.item-bookmarks {
       overflow: hidden;

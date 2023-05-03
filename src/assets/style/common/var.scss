@@ -35,6 +35,7 @@ $filter-darker: brightness(75%);
 // color maker
 $color-point-hsl: (355, 65%, 45%);
 $color-point-sub-hsl: (218, 40%, 45%);
+$color-point: hsl(355, 65%, 45%);
 @function colorMaker($hsl, $calcH: 0%, $calcL: 0%, $a: 100%) {
   @return hsla(
     #{nth($hsl, 1)},
@@ -44,10 +45,17 @@ $color-point-sub-hsl: (218, 40%, 45%);
   )
 };
 
+$color-white: hsl(0, 20%, 99%);
+$color-black: hsl(0, 3%, 16%);
+$hsl-white: 0, 0%, 100%;
+$hsl-black: 0, 0%, 0%;
+
 :root {
   // pallette
-  --color-white: hsl(0, 20%, 99%);
-  --color-black: hsl(0, 4%, 20%);
+  --color-white: #{$color-white};
+  --color-black: #{$color-black};
+  --hsl-white: #{$hsl-white};
+  --hsl-black: #{$hsl-black};
   // point
   --color-point: #{colorMaker($color-point-hsl)};
   --color-point-pale: #{colorMaker($color-point-hsl, -15%, 10%)};
@@ -58,29 +66,43 @@ $color-point-sub-hsl: (218, 40%, 45%);
   --color-point-sub-bright: #{colorMaker($color-point-sub-hsl, 30%, 25%)};
   // gray
   --point-h: #{nth($color-point-hsl, 1)};
+  --color-gray-20: hsl(var(--point-h), 4%, 20%);
+  --color-gray-25: hsl(var(--point-h), 4%, 25%);
   --color-gray-30: hsl(var(--point-h), 4%, 30%);
   --color-gray-40: hsl(var(--point-h), 4%, 40%);
   --color-gray-50: hsl(var(--point-h), 4%, 50%);
-  --color-gray-60: hsl(var(--point-h), 6%, 60%);
-  --color-gray-65: hsl(var(--point-h), 6%, 65%);
-  --color-gray-70: hsl(var(--point-h), 6%, 70%);
-  --color-gray-80: hsl(var(--point-h), 7%, 80%);
-  --color-gray-85: hsl(var(--point-h), 8%, 85%);
+  --color-gray-55: hsl(var(--point-h), 4%, 55%);
+  --color-gray-60: hsl(var(--point-h), 5%, 60%);
+  --color-gray-65: hsl(var(--point-h), 5%, 65%);
+  --color-gray-70: hsl(var(--point-h), 5%, 70%);
+  --color-gray-80: hsl(var(--point-h), 5%, 80%);
+  --color-gray-85: hsl(var(--point-h), 5%, 85%);
   --color-gray-90: hsl(var(--point-h), 12%, 90%);
   --color-gray-95: hsl(var(--point-h), 20%, 95%);
 
   // border color
   // 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
   --border-gray: var(--color-gray-80);
-  --border-light-gray: var(--color-gray-95);
+  --border-light-gray: var(--color-gray-90);
   // 아이템 스택 뱃지 라인
   --border-gold: #cfa61f;
 
   // bg color
+  --bg-body: var(--color-gray-85);
   --bg-dark: var(--color-black);
   --bg-dark-gray: var(--color-gray-40);
   --bg-gray: var(--color-gray-80);
   --bg-light-gray: var(--color-gray-95);
+
+  // font color
+  --font-dark: var(--color-gray-20);
+  --font-dark-gray: var(--color-gray-30);
+  --font-gray: var(--color-gray-40);
+  --font-light-gray: var(--color-gray-50);
+
+  // font weight  
+  --font-weight-N: 400;
+  --font-weight-B: 500;
 
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
@@ -113,4 +135,79 @@ $color-point-sub-hsl: (218, 40%, 45%);
   --color-text-highlight: #f2fdcb;
   --color-green-neon: #5fee27;
   --color-ban: #d00;
+}
+
+@media (prefers-color-scheme: dark) {
+:root {
+  // pallette
+  --color-white: #{$color-black};
+  --color-black: #{$color-white};
+  --hsl-white: #{$hsl-black};
+  --hsl-black: #{$hsl-white};
+  // point
+  --color-point: #{colorMaker($color-point-hsl, 15%, 18%)};
+  --color-point-pale: #{colorMaker($color-point-hsl, -15%, 10%)};
+  --color-point-bright: #{colorMaker($color-point-hsl, 30%, 25%)};
+  // point sub
+  --color-point-sub: #{colorMaker($color-point-sub-hsl, 30%, 18%)};
+  --color-point-sub-pale: #{colorMaker($color-point-sub-hsl, 5%, 18%)};
+  --color-point-sub-bright: #{colorMaker($color-point-sub-hsl, 30%, 30%)};
+
+  // border color
+  // 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
+  --border-dark-gray: var(--color-gray-40);
+  --border-gray: var(--color-gray-30);
+  --border-light-gray: var(--color-gray-25);
+  // 아이템 스택 뱃지 라인
+  --border-gold: #cfa61f;
+
+  // bg color
+  --bg-body: hsl(var(--point-h), 4%, 24%);
+  --bg-dark: var(--color-white);
+  --bg-dark-gray: var(--color-gray-80);
+  --bg-gray: var(--color-gray-40);
+  --bg-light-gray: var(--color-gray-20);
+
+  // font color
+  --font-dark: var(--color-gray-85);
+  --font-dark-gray: var(--color-gray-65);
+  --font-gray: var(--color-gray-55);
+  --font-light-gray: ;
+
+  // font weight
+  --font-weight-N: 300;
+  --font-weight-B: 400;
+
+  // tooltip bg
+  --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
+
+  // 아이템 등급 컬러
+  --color-grade-legend: #70dbbb;
+  --color-grade-legend-sub: #eeeea0;
+  --color-grade-epic: #fd8329;
+  --color-grade-epic-sub: #ffe945;
+  --color-grade-rare: #aaff90;
+  --color-grade-normal: #f7efec;
+
+  // 뱃지 컬러
+  --badge-color-orange-light: hsla(19, 100%, 84%, 0.8); // 조합 아이템, 콜로세움 버프 효과
+  --badge-color-green-light: hsla(157, 100%, 88%, 0.8); // 영입 아이템, 콜로세움 자신 효과
+  --badge-color-blue-light: hsla(231, 100%, 88%, 0.8); // 콜로세움 디버프 효과
+  --badge-color-blue: hsl(225, 73%, 57%); // 선원 타입
+  --badge-color-green: hsl(120, 100%, 25%); // 동료 타입
+
+  // 랭크 등급 표시 컬러
+  --color-rank-1: hsl(14, 100%, 50%);
+  --color-rank-1-bg: var(--color-black);
+  --color-rank-2: hsl(273, 77%, 38%);
+  --color-rank-2-bg: var(--color-gray-80);
+  --color-rank-3: hsl(229, 65%, 41%);
+  --color-rank-3-bg:  var(--color-gray-90);
+
+  // 기타 컬러
+  --wanted-brown: #5a352d;
+  --color-text-highlight: #f2fdcb;
+  --color-green-neon: #5fee27;
+  --color-ban: #d00;
+}
 }

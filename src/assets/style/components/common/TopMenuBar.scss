@@ -7,7 +7,7 @@
       align-items: center;
     }
     a {
-      color: var(--color-white);
+      color: $color-white;
     }
     nav {
       display: flex;
@@ -33,7 +33,7 @@
     }
     &.color {
       &-point {
-        background-color: var(--color-point);
+        background-color: $color-point;
         nav {
           a {
             &.nuxt-link-active,
@@ -45,6 +45,9 @@
       }
       &-point-400 {
         background-color: var(--color-gray-50);
+        @media (prefers-color-scheme: dark) {
+          background-color: var(--color-gray-40);
+        }
         nav {
           a {
             &.nuxt-link-active,

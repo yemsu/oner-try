@@ -8,7 +8,7 @@ header {
     font-size: 18px;
     a {
       padding: $menu-padding-v 10px $menu-padding-v 15px;
-      color: var(--color-white);
+      color: $color-white;
       font-weight: 500;
     }
   }
@@ -21,7 +21,7 @@ header {
     display: flex;
     align-items: center;
     padding-right: 15px;
-    background-color: var(--bg-dark);
+    background-color: $color-black;
     ::v-deep {
       a, button {
         color: rgba(255, 255, 255, 0.8);
@@ -29,7 +29,7 @@ header {
       }
     }
     .logo {
-      background-color: var(--color-point);
+      background-color: $color-point;
     }
     nav {
       a {
@@ -37,8 +37,8 @@ header {
         &.nuxt-link-active,
         &.is-active {
           font-weight: 400;
-          color: var(--color-white);
-          background-color: var(--color-point);
+          color: $color-white;
+          background-color: $color-point;
         }
       }
     }

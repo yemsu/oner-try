@@ -71,7 +71,7 @@
   }
   &:not(.compact) {
     input {
-      border: 1px solid var(--color-point);
+      border: 1px solid $color-point;
     }
     .svg-icon {
       path {

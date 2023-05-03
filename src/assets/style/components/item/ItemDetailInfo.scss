@@ -24,7 +24,7 @@ $font-small: $font-size-S-pc;
       height: 100%;
       margin-left: 40px;
       > .wrap-detail {
-        border-left: 2px solid rgba(0, 0, 0, 0.1);
+        border-left: 2px solid var(--border-dark-gray);
         padding-left: 8px;
         &:nth-child(n+2) {
           margin-left: 20px;
@@ -63,12 +63,15 @@ $font-small: $font-size-S-pc;
   &.color {
     &-black {
       .title {
-        color: var(--color-gray-50);
+        color: var(--font-dark-gray);
       }
       .drop-monster {
         .title {
           &.color-point {
             color: var(--color-point);
+            @media (prefers-color-scheme: dark) {
+              font-weight: var(--font-weight-B);
+            }
           }
         }
       }
@@ -76,13 +79,16 @@ $font-small: $font-size-S-pc;
         .title {
           &.color-point {
             color: var(--color-point-sub);
+            @media (prefers-color-scheme: dark) {
+              font-weight: var(--font-weight-B);
+            }
           }
         }
       }
     }
     &-white {
       .title {
-        color: var(--color-gray-50);
+        color: var(--font-dark-gray);
       }
       dd {
         color: var(--color-white);

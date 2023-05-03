@@ -1,6 +1,6 @@
 
 @mixin treeLine($type) {
-  $border-style: 1px solid var(--color-gray-70);
+  $border-style: 1px solid var(--border-light-gray);
   position: relative;
   &:before {
     display: block;
@@ -83,7 +83,7 @@
     }
     > .wrap-items {
       flex-shrink: 0;
-      border-right: 1px solid var(--color-white);
+      border-right: 1px solid var(--border-light-gray);
       > .item-main {
         display: flex;
         justify-content: center;

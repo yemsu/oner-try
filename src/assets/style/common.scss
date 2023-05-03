@@ -4,11 +4,12 @@
 $font-family: 'Pretendard Variable', sans-serif;
 
 body {
-  background-color: var(--color-gray-85);
+  background-color: var(--bg-body);
   font-size: $font-size-M-pc;
   line-height: 1.5;
   color: var(--color-black);
   font-family: $font-family;
+  font-weight: var(--font-weight-N);
   letter-spacing: -0.05em;
 }
 small {
@@ -238,6 +239,7 @@ caption, .ir-hidden {
   padding: 0 1px 1px;
   border: 1px solid #333;
   background-color: rgba(255, 255, 255, 0.8);
+  color: $color-black;
   font-size: 11px;
   font-weight: 500;
   line-height: 1;
@@ -386,6 +388,11 @@ caption, .ir-hidden {
   &-banned {
     color: var(--color-ban);
   }
+}
+[class*="line-"] {
+  background-color: hsla(var(--hsl-white), 80%);
+  color: var(--color-black);
+  font-weight: var(--font-weight-N);
 }
 .line {
   &-positive {
