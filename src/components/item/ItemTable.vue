@@ -227,7 +227,7 @@ export default {
         {
           title: '선박',
           type: 'item',
-          width: '50%'
+          width: '40%'
         },
         {
           title: '옵션',
@@ -281,7 +281,7 @@ export default {
         {
           title: '포션',
           type: 'item',
-          width: '50%'
+          width: '40%'
         },
         {
           title: '옵션',
