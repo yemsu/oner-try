@@ -304,6 +304,24 @@ export default {
           type: 'option'
         }
       ],
+      etcItemTableData: [
+        {
+          title: '재료',
+          type: 'item',
+          width: '30%'
+        },
+        {
+          title: '설명',
+          type: 'option',
+          width: '30%'
+        },
+        {
+          title: '획득처',
+          type: 'string',
+          key: 'dropMonster',
+          width: '40%'
+        }
+      ],
     }
   },
   computed: {

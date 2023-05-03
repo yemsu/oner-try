@@ -143,6 +143,17 @@ export const actions = {
       })
       .catch(error => console.error('GET_ETC_ITEMS', error))
   },
+  async GET_ETC_ITEMS_TABLE({ commit, state, dispatch }) {
+    if(state.etcItems.length === 0) await dispatch('GET_ETC_ITEMS')
+    const newData = deepClone(state.etcItems)
+      .reduce((acc, data) => {
+        const { name } = data
+        acc.push({ ...data, name: name.split(' +')[0] })
+        return acc
+      }, [])
+    commit(`GET_ETC_ITEMS_TABLE`, {data: newData})
+    return newData
+  },
   GET_EQUIPMENTS({ commit }) {
     return getEquipments()
       .then((data) => {
