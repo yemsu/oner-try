@@ -34,7 +34,6 @@ export default {
   methods: {
     imgSrc(item) {
       const { type, imageName } = item
-      console.log("item", item)
       return imgSrc(type, imageName)
     }
   }
