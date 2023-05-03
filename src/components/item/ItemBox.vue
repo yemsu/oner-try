@@ -16,6 +16,7 @@
         :target="linkTarget"
         :is="linkTagName"
         :title="linkTitle || (useLink && '클릭하여 조합 보러가기')"
+        @click="$emit('click', item.name)"
       >
         <div class="item-box-info">
           <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
@@ -65,7 +66,7 @@
           :type="itemDetailInfoType"
           :description="item.description"
         />
-        <div v-if="!visibleDetail && isComp" class="wrap-sub-text">
+        <div v-if="!visibleDetail && isComp && isLink" class="wrap-sub-text">
           <p class="color-neon">
             <small>클릭하여 조합 보러가기 </small>
             <i class="icon-arrow right small border-neon" />
@@ -90,7 +91,7 @@ export default {
     },
     size: {
       type: String,
-      default: () => 'basic' // small, big
+      default: () => 'basic' // xsmall, small, big
     },
     type: {
       type: String,
@@ -155,7 +156,11 @@ export default {
     useBookmark: {
       type: Boolean,
       default: () => false
-    }
+    },
+    hasClickEvent: {
+      type: Boolean,
+      default: () => false
+    },
   },
   components: {
     BookmarkButton
@@ -187,7 +192,9 @@ export default {
       return this.useLink && this.isBlankLink && '_blank'
     },
     linkTagName() {
-      return this.useLink ? 'nuxt-link' : 'div'      
+      return this.useLink ? 'nuxt-link'
+        : this.hasClickEvent ? 'button'
+          : 'div'      
     }
   },
   methods: {
