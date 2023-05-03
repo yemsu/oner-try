@@ -1,30 +1,20 @@
 <template>
-  <search-box
-    placeholder="조합 아이템"
-    v-if="itemNameList"
-    :matching-data="itemNameList"
+  <item-search-box 
+    :full-data="fullData"
     :size="size"
-    :is-item="true"
-    :custom-match-data-item="true"
-    @onSearch="fnSearch"
-  >
-    <template v-slot:matchDataItem="{ props: matchData }">
-      <item-box
-        size="small"
-        type="list"
-        :item="findItem(matchData)"
-        :showBadges="['howGet']"
-        :showTooltip="false"
-        :isLink="false"
-      />
-    </template>
-  </search-box>
-
+    :fn-after-search="fnAfterSearch"
+    placeholder="조합 아이템"
+  />
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import ItemSearchBox from '../../item/ItemSearchBox.vue';
+import { mapActions } from 'vuex';
+
 export default {
+  components: {
+    ItemSearchBox
+  },
   props: {
     fullData: {
       type: Array,
@@ -41,43 +31,14 @@ export default {
       itemNameList: null
     }
   },
-  computed: {
-    ...mapGetters({
-      items: 'item/getItems',
-      pageViews: 'pageView/getComposition',
-      pageViewRanking: 'pageView/getCompositionSearchRanking',
-    }),
-  },
-  async created() {
-    // if(this.pageViews.length === 0) await this.getPageView(10)
-    // this.rankingNameList = fillDataAndInsertValue(this.items, this.pageViewRanking, 'pageView')
-    //   .map(({ name }) => name)
-    if(this.items.length === 0) await this.getItems()
-    this.setItemNameList()
-  },
   methods: {
     ...mapActions({
       getPageView: 'pageView/GET_COMPOSITION',
-      getItems: 'item/GET_ITEMS',
     }),
-    fnSearch(name) {
-      if(!name) {
-        alert('해당 아이템이 존재하지 않습니다.')
-        return
-      }
-      const { id, type } = this.findItem(name)
+    fnAfterSearch(name) {
+      const { id, type } = this.fullData.find((item) => item.name === name)
       this.$router.push(`/composition/${type}/${id}`)
     },
-    setItemNameList() {
-      // computed 사용하면 여러번 실행되어 최초 1회만 실행
-      console.log('setItemNameList', this.items.length)
-      if(this.items.length === 0) return []
-      const compositionItems = this.items.filter(({ ingredients }) => ingredients)
-      this.itemNameList = compositionItems.map(({ name }) => name)
-    },
-    findItem(name) {
-      return this.items.find((item) => item.name === name)
-    }
   }
 }
 </script>
