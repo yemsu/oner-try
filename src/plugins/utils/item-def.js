@@ -7,10 +7,10 @@ export const itemTypeDefs = [
     title: "선원",
     type: "sailor",    
   },
-  {
-    title: "동료",
-    type: "colleague",
-  },
+  // {
+  //   title: "동료",
+  //   type: "colleague",
+  // },
   {
     title: "선박",
     type: "ship",
