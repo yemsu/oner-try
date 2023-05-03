@@ -1,10 +1,10 @@
 <template>
-  <dl :class="`details type-${type} color-${colorMode} columns-${columns}`">
+  <span v-if="description">{{ description }}</span>
+  <dl v-else :class="`details type-${type} color-${colorMode} columns-${columns}`">
     <div v-if="dropMonster" class="wrap-detail drop-monster">
       <dt :class="['title', {'color-point': highlightTitle}]">획득처</dt>
       <dd>{{ dropMonster }}</dd>
     </div>
-    <p v-if="description">{{ description }}</p>
     <template v-if="options">
       <div
         v-for="(option, i) in options"
