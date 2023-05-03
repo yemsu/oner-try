@@ -4,6 +4,7 @@
       <dt :class="['title', {'color-point': highlightTitle}]">획득처</dt>
       <dd>{{ dropMonster }}</dd>
     </div>
+    <p v-if="description">{{ description }}</p>
     <template v-if="options">
       <div
         v-for="(option, i) in options"
@@ -68,6 +69,10 @@ export default {
       type: Array,
       default: () => []
     },
+    description: {
+      type: String,
+      default: () => ''
+    }
   },
   methods: {
     getOption(option, optionType) {

@@ -14,6 +14,7 @@ export const getShips = (params) => getApi(`/ships`, { params })
 export const getHeroes = (params) => getApi(`/heroes`, { params })
 export const getSynergies = () => getApi(`/synergies`)
 export const getRyuoList = () => getApi(`/ryuoList`)
+export const getPotions = () => getApi(`/potions`)
 
 // character
 export const getRanking = () => getApi(`/ranking`)

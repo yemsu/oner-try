@@ -10,7 +10,8 @@ import {
   getColleagues,
   getSynergies,
   getShips,
-  getRyuoList
+  getRyuoList,
+  getPotions
 } from '@/plugins/utils/https'
 
 export const state = () => ({
@@ -26,6 +27,7 @@ export const state = () => ({
   colleagues: [],
   synergies: [],
   ryuoes: [],
+  potions: [],
 })
 
 export const getters = {
@@ -78,6 +80,9 @@ export const mutations = {
   },
   SET_RYUOES(state, {data}) {
     state.ryuoes = data
+  },
+  SET_POTIONS(state, {data}) {
+    state.potions = data
   },
 }
 const dataTyped = (data) => {
@@ -246,8 +251,6 @@ export const actions = {
   },
   async GET_SHIPS_TABLE({ commit, state, dispatch }) {
     if(state.ships.length === 0) await dispatch('GET_SHIPS')
-
-    console.log(state.ships)
     const newData = deepClone(state.ships)
       .reduce((acc, data) => {
         const { groupName, name, option, type, imageName } = data
@@ -319,5 +322,29 @@ export const actions = {
         return newData
       })
       .catch(error => console.error('GET_RYUOES', error))
+  },
+  GET_POTIONS({ commit }) {
+    return getPotions()
+      .then((data) => {
+        commit(`SET_POTIONS`, {data})
+        return data
+      })
+      .catch(error => console.error('GET_POTIONS', error))
+  },
+  async GET_POTIONS_TABLE({ commit, state, dispatch }) {
+    if(state.potions.length === 0) await dispatch('GET_POTIONS')
+    const newData = deepClone(state.potions)
+      .reduce((acc, data) => {
+        const { name } = data
+        acc.push({ ...data, name: name.split(' +')[0] })
+        return acc
+      }, [])
+      .sort((a, b) => {
+        const aLevel = a.name.match(/\d/)[0]
+        const bLevel = b.name.match(/\d/)[0]
+        return bLevel - aLevel
+      })
+    commit(`GET_POTIONS_TABLE`, {data: newData})
+    return newData
   },
 }

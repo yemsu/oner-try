@@ -63,6 +63,7 @@
           :options="item.option"
           :dropMonster="item.dropMonster"
           :type="itemDetailInfoType"
+          :description="item.description"
         />
         <div v-if="!visibleDetail && isComp" class="wrap-sub-text">
           <p class="color-neon">

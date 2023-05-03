@@ -77,6 +77,7 @@
               <item-detail-info
                 v-if="data.type === 'option'"
                 :options="item.option"
+                :description="item.description"
                 :markOptions="optionsSelected"
                 :highlightTitle="false"
               />
@@ -293,6 +294,17 @@ export default {
         //   width: '15%'
         // },
       ],
+      potionTableData: [
+        {
+          title: '포션',
+          type: 'item',
+          width: '50%'
+        },
+        {
+          title: '옵션',
+          type: 'option'
+        }
+      ],
     }
   },
   computed: {
@@ -304,6 +316,7 @@ export default {
         sailor: '2022.06.12',
         colleague: '2022.06.13',
         ship: '2022.06.12',
+        potion: '2022.06.12',
       }
       return dataDate[this.type]
     }
