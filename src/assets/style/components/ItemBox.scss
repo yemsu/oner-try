@@ -36,6 +36,7 @@ $name-space: 5px;
       position: relative;
     }
     .name {
+      font-weight: var(--font-weight-N);
       line-height: 1.2;
       word-break: keep-all;
     }
