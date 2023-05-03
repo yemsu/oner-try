@@ -47,34 +47,12 @@
           <p>등급 및 옵션을 필터링하고 <br>원하는 아이템 정보를 확인해보세요. </p>
           <p class="wrap-links">
             <router-link
-              to="/items/sailor"
+              v-for="({ pageName, text }) in itemPageLinks"
+              :key="`itemPageLink${pageName}`"
+              :to="`/items/${pageName}`"
               class="text-link wrap-icon-text"
             >
-              선원 도감
-              <i class="icon-arrow right small border-point"></i>
-            </router-link>
-            <router-link
-              to="/items/colleague"
-              class="text-link wrap-icon-text"
-            >
-              동료 도감
-              <i class="icon-arrow right small border-point"></i>
-            </router-link>
-            <router-link
-              to="/items/ship"
-              class="text-link wrap-icon-text"
-            >
-              선박 도감
-              <i class="icon-arrow right small border-point"></i>
-            </router-link>
-            <router-link
-              to="/items/equipment"
-              class="text-link wrap-icon-text"
-            >
-              <span class="badge-text-wrap">
-                <!-- <span class="badge point">new</span>  -->
-                장비 도감
-              </span>
+              {{ text }}
               <i class="icon-arrow right small border-point"></i>
             </router-link>
           </p>
@@ -149,7 +127,29 @@ export default {
   },
   data() {
     return {
-      compositionItems: []
+      compositionItems: [],
+      itemPageLinks: [
+        {
+          pageName: 'sailor',
+          text: '선원'
+        },
+        {
+          pageName: 'ship',
+          text: '선박'
+        },
+        {
+          pageName: 'equipment',
+          text: '장비'
+        },
+        {
+          pageName: 'potion',
+          text: '포션'
+        },
+        {
+          pageName: 'etcItem',
+          text: '기타'
+        },
+      ]
     }
   },
   computed: {
