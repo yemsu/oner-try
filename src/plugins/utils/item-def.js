@@ -72,6 +72,10 @@ export const optionDefaultValue = {
   str: 1,
   dex: 9,
   int: 1,
+  gdr: 0,
+  maxDr: 0,
+  mcd: 0,
+  ctDr: 0,
 }
 export const equipOnlyOptionsDef = {
   str: '견문색',
