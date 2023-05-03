@@ -136,29 +136,17 @@
               </div>
               <!-- 장비 등급별 옵션 -->
               <dl
-                v-if="data.type.includes('optionsByGrade')"
+                v-if="data.type.includes('optionsByGrade') && item.gradeOption && item.gradeOption.length > 0"
                 class="grade-option box-text"
               >
-                <template
-                  v-for="(gradeOption, i) in item.optionsByGrade" 
+                <div
+                  v-for="(gradeOptionItem, i) in item.gradeOption"
+                  :key="`gradeOption${i}`"
+                  class="box-flex"
                 >
-                  <div
-                    v-if="item.stackNames[i]"
-                    :key="`optionsByGrade${i}`"
-                    class="box-flex"
-                  >
-                    <dt class="title-small left">{{ item.stackNames[i] }}</dt>
-                    <dd>
-                      <item-detail-info
-                        v-if="gradeOption"
-                        :options="gradeOption"
-                        :markOptions="optionsSelected"
-                        :highlightTitle="false"
-                      />
-                      <span v-else> - </span>
-                    </dd>
-                  </div>
-                </template>
+                  <dt class="title-small left">등급 {{ i }}.</dt>
+                  <dd>{{ Object.keys(gradeOptionItem)[0] }}</dd>
+                </div>
               </dl>
               <!-- string -->
               <span v-if="data.type === 'string'">
@@ -270,28 +258,24 @@ export default {
         {
           title: '장비',
           type: 'item',
-          width: '50%'
+          width: '18%'
         },
         {
           title: '옵션',
-          type: 'option'
-        }
-        // {
-        //   title: '공통 옵션',
-        //   type: 'option',
-        //   width: '30%'
-        // },
-        // {
-        //   title: '등급별 추가 옵션',
-        //   type: 'optionsByGrade',
-        //   width: '35%'
-        // },
-        // {
-        //   title: '획득처',
-        //   type: 'string',
-        //   key: 'dropMonster',
-        //   width: '15%'
-        // },
+          type: 'option',
+          width: '18%'
+        },
+        {
+          title: '등급별 추가 옵션',
+          type: 'optionsByGrade',
+          width: '34%'
+        },
+        {
+          title: '획득처',
+          type: 'string',
+          key: 'dropMonster',
+          width: '30%'
+        },
       ],
       potionTableData: [
         {

@@ -104,7 +104,11 @@ table {
       margin-top: 0.8em;
     }
     .title-small {
-      width: 3em;
+      flex-shrink: 0;
+      width: 2.5em;
+      font-size: $font-size-XS-pc;
+      color: var(--color-gray-60);
+      font-weight: normal;
     }
   }
 }
