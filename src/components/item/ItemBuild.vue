@@ -2,7 +2,7 @@
 <div>
   <div class="text-refer top">
     <p class="align-right">
-      <p v-if="buildInfo.saveDate">최근 세이브: {{ buildInfo.saveDate }}</p>
+      <span v-if="buildData.saveDate">최근 세이브: {{ buildData.saveDate }}</span>
       <span class="badge-text-wrap">
         <span class="badge black line-gold" data-v-21f97cac="">숫자</span>
         : 초월 수치
@@ -17,7 +17,7 @@
       :type="itemGridInfo.type"
     >
       <item-list
-        :items="buildInfo[itemGridInfo.type]"
+        :items="buildData[itemGridInfo.type]"
         :type="itemGridInfo.type"
         :columnNum="itemGridInfo.columnNum"
       >
@@ -29,20 +29,19 @@
         </template>
       </item-list>
     </title-content>
-    <div class="area-synergies">
+    <div v-if="buildData.synergy.length > 0" class="area-synergies">
       <synergy-desc
-        v-if="buildInfo.synergies.length !== 0"
-        :synergies="buildInfo.synergies"
+        :synergies="buildData.synergy"
       />
     </div>
-    <template v-if="buildInfo.totalOption.length > 0">
+    <template v-if="buildData.totalOption.length > 0">
       <section class="all-options-main">
         <h2 class="ir-hidden">빌드 총 스탯</h2>
         <item-detail-info
           type="total"
           columns="3"
           colorMode="white"
-          :options="buildInfo.totalOption.slice(0,12)"
+          :options="buildData.totalOption.slice(0,12)"
           :plusMinusUnit="false"
           :showValueDecimal="true"
         />
@@ -53,7 +52,7 @@
           type="total"
           columns="1"
           colorMode="white"
-          :options="buildInfo.totalOption.slice(12)"
+          :options="buildData.totalOption.slice(12)"
           :plusMinusUnit="false"
           :showValueDecimal="true"
         />
@@ -74,17 +73,9 @@ export default {
   },
   props: {
     buildInfo: {
-      type: Object,
-      default: {
-        equipments: new Array(6),
-        sailors: new Array(6),
-        colleagues: new Array(3),
-        ship: new Array(1),
-        ryuo: new Array(1),
-        synergies: [],
-        totalOption: []
-      },
-      required: true
+      type: String, // stringify json
+      default: () => '{}',
+      required: true,
     }
   },
   data() {
@@ -92,17 +83,17 @@ export default {
       itemGridInfoList: [
         {
           title: "장비",
-          type: "equipments",
+          type: "equipment",
           columnNum: "2",
         },
         {
           title: "선원",
-          type: "sailors",
+          type: "sailor",
           columnNum: "2",
         },
         {
           title: "동료",
-          type: "colleagues",
+          type: "colleague",
           columnNum: "3",
         },
         {
@@ -117,6 +108,11 @@ export default {
           rowNum: "1",
         },
       ],
+    }
+  },
+  computed: {
+    buildData() {
+      return JSON.parse(this.buildInfo)
     }
   }
 }

@@ -88,7 +88,9 @@ export default {
       return noUnitOptions.includes(key) ? '' : '%'
     },
     getOptionTitle(key) {
-      const findKey = [...optionsMap.keys()].find(optionKey => optionKey.toLowerCase() === key.toLowerCase())
+      const findKey = [...optionsMap.keys()].find(optionKey => {
+        return optionKey.toLowerCase() === key.toLowerCase()
+      })
       return optionsMap.get(findKey) 
     },
     isMarkOption(option) {

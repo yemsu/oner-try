@@ -2,15 +2,15 @@
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   gap: $list-gap-basic;
-  .area-equipments {
+  .area-equipment {
+    grid-column: auto / span 2;
+    grid-row: 1 / span 3;    
+  }
+  .area-sailor {
     grid-column: auto / span 2;
     grid-row: auto / span 3;    
   }
-  .area-sailors {
-    grid-column: auto / span 2;
-    grid-row: auto / span 3;    
-  }
-  .area-colleagues {
+  .area-colleague {
     grid-column: auto / span 3;
     grid-row: auto / span 1;    
   }
@@ -26,6 +26,7 @@
     grid-column: 5 / span 3;
     grid-row: 2 / span 2;    
     .text-notice {
+      margin-top: $list-gap-basic;
       font-size: $font-size-S-pc;
       text-align: center;
     }
