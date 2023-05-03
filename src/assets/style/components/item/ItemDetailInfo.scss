@@ -91,7 +91,7 @@ $font-small: $font-size-S-pc;
         color: var(--font-dark-gray);
       }
       dd {
-        color: var(--color-white);
+        color: $color-white;
         font-weight: 300
       }
       .drop-monster {
