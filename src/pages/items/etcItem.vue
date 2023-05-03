@@ -19,8 +19,8 @@ export default {
   head() {
     return setMeta({
       url: this.$route.fullPath,
-      title: `포션 아이템 도감`,
-      description: `포션 아이템 정보를 확인해보세요`,
+      title: `기타 아이템 도감`,
+      description: `기타 아이템 정보를 확인해보세요`,
     })
   },
   components: {
