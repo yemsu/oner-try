@@ -25,7 +25,8 @@ export default {
   props: {
     tabs: {
       type: Array,
-      default: () => []
+      default: () => [],
+      required: true
     },
   },
   data() {
