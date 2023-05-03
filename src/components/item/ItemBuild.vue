@@ -9,7 +9,7 @@
       </span>
     </p>
   </div>
-  <div class="wrap-items-info">
+  <div v-if="itemGridInfoList" class="wrap-items-info">
     <title-content
       v-for="(itemGridInfo, i) in itemGridInfoList"
       :key="`itemGridInfo${i}`"
@@ -65,6 +65,7 @@
 <script>
 import TitleContent from '@/components/common/TitleContent.vue'
 import SynergyDesc from '@/components/item/SynergyDesc.vue'
+import { itemTypeDefs } from '@/plugins/utils/item-def'
 
 export default {
   components: {
@@ -80,35 +81,31 @@ export default {
   },
   data() {
     return {
-      itemGridInfoList: [
-        {
-          title: "장비",
-          type: "equipment",
-          columnNum: "2",
+      gridInfos: {
+        equipment: {
+          columnNum: '2'
         },
-        {
-          title: "선원",
-          type: "sailor",
-          columnNum: "2",
+        sailor: {
+          columnNum: '2'
         },
-        {
-          title: "동료",
-          type: "colleague",
-          columnNum: "3",
+        colleague: {
+          columnNum: '3'
         },
-        {
-          title: "선박",
-          type: "ship",
-          columnNum: "1",
+        ship: {
+          columnNum: '1'
         },
-        {
-          title: "류오",
-          type: "ryuo",
-          columnNum: "1",
-          rowNum: "1",
-        },
-      ],
+        ryuo: {
+          columnNum: '1',
+          rowNum: '1'
+        }
+      },
+      itemGridInfoList: null,
     }
+  },
+  created() {
+    this.itemGridInfoList = itemTypeDefs.map(itemType => (
+      {...itemType, ...this.gridInfos[itemType.type]}
+    ))
   },
   computed: {
     buildData() {

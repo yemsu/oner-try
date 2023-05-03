@@ -1,3 +1,25 @@
+export const itemTypeDefs = [
+  {
+    title: "장비",
+    type: "equipment",    
+  },
+  {
+    title: "선원",
+    type: "sailor",    
+  },
+  {
+    title: "동료",
+    type: "colleague",
+  },
+  {
+    title: "선박",
+    type: "ship",
+  },
+  {
+    title: "류오",
+    type: "ryuo",
+  },
+]
 export const gradesDef = {
   special: '스페셜',
   uncommon: '언커먼',
