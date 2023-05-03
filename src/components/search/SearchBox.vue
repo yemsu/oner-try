@@ -1,6 +1,6 @@
 <template>
   <section :class="['box-search', {'compact':size === 'small'}, size]">
-    <h2 class="ir-hidden">검색</h2>
+    <h2 class="ir-hidden">{{ searchBoxTitle }}</h2>
     <div :class="[
       'wrap-search',
       {'compact': size === 'small' && !isSearching}
@@ -57,7 +57,7 @@
 
 <script>
 import BaseInput from '@/components/common/BaseInput.vue'
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -92,6 +92,10 @@ export default {
       type: Boolean,
       default: () => false
     },
+    searchBoxTitle: {
+      type: String,
+      default: () => '검색'
+    }
   },
   data() {
     return {
