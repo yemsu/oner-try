@@ -15,7 +15,7 @@
         :to="useLink && linkItemComposition()"
         :target="linkTarget"
         :is="linkTagName"
-        :title="linkTitle"
+        :title="linkTitle || (useLink && '클릭하여 조합 보러가기')"
       >
         <div class="item-box-info">
           <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
