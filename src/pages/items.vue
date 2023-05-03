@@ -29,7 +29,7 @@ export default {
         { menuName: '선박', path: '/items/ship'},
         { menuName: '장비', path: '/items/equipment'},
         { menuName: '포션', path: '/items/potion'},
-        { menuName: '재료', path: '/items/etcItem'},
+        { menuName: '기타', path: '/items/etcItem'},
       ]
     }
   },
