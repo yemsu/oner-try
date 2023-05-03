@@ -66,34 +66,6 @@ export default {
   },
   data() {
     return {
-      itemAreas: [
-        {
-          title: "장비",
-          type: "equipments",
-          columnNum: "2",
-        },
-        {
-          title: "선원",
-          type: "sailors",
-          columnNum: "2",
-        },
-        {
-          title: "동료",
-          type: "colleagues",
-          columnNum: "3",
-        },
-        {
-          title: "선박",
-          type: "ship",
-          columnNum: "1",
-        },
-        {
-          title: "류오",
-          type: "ryuo",
-          columnNum: "1",
-          rowNum: "1",
-        },
-      ],
       nickname: ''
     }
   },
