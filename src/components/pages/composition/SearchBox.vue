@@ -3,7 +3,7 @@
     :full-data="fullData"
     :size="size"
     :fn-after-search="fnAfterSearch"
-    placeholder="조합 아이템"
+    placeholder="조합 아이템 검색"
   />
 </template>
 
