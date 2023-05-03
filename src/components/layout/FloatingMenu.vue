@@ -1,6 +1,6 @@
 <template>
   <aside class="floating-menu">
-    <h2 class="ir-hidden">우측 상단 플로팅 메뉴</h2>
+    <h2 class="ir-hidden">우측 하단 플로팅 메뉴</h2>
     <section
       class="wrapper item-bookmarks"
       :class="showItemBookmarks && 'is-toggle-on'"
