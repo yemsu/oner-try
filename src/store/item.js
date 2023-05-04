@@ -137,8 +137,10 @@ export const actions = {
   GET_ETC_ITEMS({ commit }) {
     return getEtcItems()
       .then((data) => {
-        // console.log('SET_ETC_ITEMS', data)
-        commit(`SET_ETC_ITEMS`, {data, type: 'etcItems'})
+        const newData = data.map(etcItem => (
+          { ...etcItem, type: 'etcItem' }
+        ))
+        commit(`SET_ETC_ITEMS`, {data: newData, type: 'etcItems'})
         return data
       })
       .catch(error => console.error('GET_ETC_ITEMS', error))
