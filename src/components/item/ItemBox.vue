@@ -64,6 +64,7 @@
           :options="item.option"
           :dropMonster="item.dropMonster"
           :type="itemDetailInfoType"
+          :item="item"
           :description="item.description"
         />
         <div v-if="!visibleDetail && isComp && isLink" class="wrap-sub-text">
