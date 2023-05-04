@@ -97,7 +97,11 @@ export const actions = {
     console.log('store: item/GET_ITEMS')
     return getItems()
       .then((data) => {
-        const newData = data.map(dataItem => Object.assign(dataItem, {option: parserStrData(dataItem.option)}))
+        const newData = data
+          .map(dataItem => (
+            Object.assign(dataItem, {option: parserStrData(dataItem.option)})
+          ))
+          .filter(checkNoOptionSailor)
         commit(`SET_ITEMS`, {data: dataTyped(newData), type: 'items'})
         return data
       })
@@ -107,7 +111,11 @@ export const actions = {
     return getSailors()
       .then((data) => {
         // console.log('GET_SAILORS',data)
-        const newData = data.map(dataItem => Object.assign(dataItem, {option: parserStrData(dataItem.option)}))
+        const newData = data
+          .map(dataItem => (
+            Object.assign(dataItem, {option: parserStrData(dataItem.option)})
+          ))          
+          .filter(checkNoOptionSailor)
 
         commit(`SET_SAILORS`, {data: newData, type: 'sailors'})
         return data
@@ -362,3 +370,5 @@ export const actions = {
     return newData
   },
 }
+
+const checkNoOptionSailor = ({type, option}) => !(type === 'sailor' && option.length === 0)
