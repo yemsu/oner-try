@@ -1,5 +1,7 @@
 <template>
-  <span v-if="description">{{ description }}</span>
+  <div v-if="description" class="details">
+    <p>{{ description }}</p>
+  </div>
   <dl v-else :class="`details type-${type} color-${colorMode} columns-${columns}`">
     <div v-if="dropMonster" class="wrap-detail drop-monster">
       <dt :class="['title', {'color-point': highlightTitle}]">획득처</dt>
@@ -79,6 +81,7 @@ export default {
   },
   computed: {    
     showRangeValue() {
+      if(!this.item) return false
       const commonCase = ['sailor', 'ship'].includes(this.item.type)
       const falseCase1 = this.item.name !== '통통배'
       const trueCase1 = this.item.grade === 'dedicated'

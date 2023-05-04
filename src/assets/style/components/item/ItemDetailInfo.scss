@@ -1,6 +1,7 @@
 $font-small: $font-size-S-pc;
 
 .details {
+  font-size: $font-small;
   .title {
     word-break: keep-all;
   }
@@ -30,7 +31,6 @@ $font-small: $font-size-S-pc;
           margin-left: 20px;
         }
         .title {
-          font-size: $font-small;
         }
         dd {
           font-size: $font-size-M-pc;
