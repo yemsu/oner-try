@@ -59,7 +59,7 @@ export const actions = {
     if(ryuoes.length === 0) await dispatch('item/GET_RYUOES','', { root: true })
     if(synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
     return getUserCharacters(payload)
-      .then(({data}) => {
+      .then((data) => {
         if(!data) return false
         const newData = data.map(character => {
           // hero
@@ -105,7 +105,7 @@ export const actions = {
   },
   GET_GAME_USERS({ commit }, payload) {
     return getGameUsers(payload)
-      .then(({data}) => {
+      .then((data) => {
         // console.log('GET_GAME_USERS', data)
         commit(`SET_GAME_USERS`, data)
         return data
@@ -118,7 +118,7 @@ export const actions = {
     if(colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
 
     return getRanking(payload)
-      .then(({data}) => {
+      .then((data) => {
         const { item: { sailors, colleagues } } = rootState
         const newData = data.map(user => {
           const userSailors = user.sailors !== '[]'

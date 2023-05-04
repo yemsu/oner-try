@@ -1,9 +1,45 @@
-$column-num: 2;
+$column-num: 3;
+.main {
+  max-width: 1420px;
+  margin: 0 auto;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: contain;
+  .area-main-text {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: clamp(100px, 38vw, 550px);
+    // padding: ;
+    font-size: clamp(20px, 6vw, 115px);
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      p {
+        word-break: break-all;
+        padding: 0 ;
+        text-shadow: 0 0 20px hsla(var(--hsl-white), 90%);
+        font-weight: bold;
+        line-height: 1;
+        text-align: center;
+        letter-spacing: 0.03em;
+        &.color-point {
+          color: var(--color-white);
+          text-shadow: 0 0 20px hsla(var(--hsl-black), 90%);
+        }
+      }
+    }
+  }
+}
 .wrap-quick-menu {
   display: grid;
   grid-template-columns: repeat($column-num, 1fr);
-  gap: 20px;
+  gap: 10px;
   padding-top: 50px;
+  word-break: keep-all;
+  @include mobile {
+    grid-template-columns: repeat(1, 1fr);
+  }
   [class*=column] {
     border-radius: 15px;
     &.column-full {
@@ -35,12 +71,9 @@ $column-num: 2;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 50px 30px 60px;
+    padding: 30px 20px 40px;
     border: 1px solid var(--color-white);
-    background-color: rgba(255, 255, 255, 0.1);
-    &.bg-point {
-      background-color: rgba(255, 255, 255, 0.6);
-    }
+    background-color: hsla(var(--hsl-white), 50%);
     &.item-bookmarks {
       overflow: hidden;
       .area-contents {
@@ -82,5 +115,7 @@ $column-num: 2;
 }
 .wrap-links {
   display: inline-flex;
-  gap: 20px;
+  gap: 10px 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 }

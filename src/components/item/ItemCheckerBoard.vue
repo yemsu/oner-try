@@ -33,9 +33,8 @@ export default {
   },
   methods: {
     imgSrc(item) {
-      const { type, id, groupName } = item
-      const imgName = groupName || id
-      return imgSrc(type, imgName)
+      const { type, imageName } = item
+      return imgSrc(type, imageName)
     }
   }
 }

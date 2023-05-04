@@ -24,8 +24,13 @@
         overflow-x: auto;
         flex: 1;
         background-color: var(--bg-light-gray);
-        border-top: 1px solid var(--color-white);
-        border-bottom: 1px solid var(--color-white);
+        border-top: 1px solid var(--border-light-gray);
+        border-bottom: 1px solid var(--border-light-gray);
+      }
+      .wrap-items + .wrap-items {
+        .wrap-scroll {
+          border-top: none;
+        }
       }
     }
   }

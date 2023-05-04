@@ -1,0 +1,126 @@
+<template>
+<div>
+  <div class="text-refer top">
+    <p class="align-right">
+      <span v-if="buildData.saveDate">최근 세이브: {{ buildData.saveDate }}</span>
+      <span class="badge-text-wrap">
+        <span class="badge black line-gold" data-v-21f97cac="">숫자</span>
+        : 초월 수치
+      </span>
+    </p>
+  </div>
+  <div v-if="itemGridInfoList" class="wrap-items-info">
+    <title-content
+      v-for="(itemGridInfo, i) in itemGridInfoList"
+      :key="`itemGridInfo${i}`"
+      :title="itemGridInfo.title"
+      :type="itemGridInfo.type"
+    >
+      <item-list
+        :items="buildData[itemGridInfo.type]"
+        :type="itemGridInfo.type"
+        :columnNum="itemGridInfo.columnNum"
+      >
+        <template v-slot="{ item }">
+          <item-box
+            :item="item"
+            :showBadges="['howGet', 'stack']"
+          ></item-box>
+        </template>
+      </item-list>
+    </title-content>
+    <div v-if="buildData.synergy.length > 0" class="area-synergies">
+      <synergy-desc
+        :synergies="buildData.synergy"
+      />
+    </div>
+    <template v-if="buildData.totalOption.length > 0">
+      <section class="all-options-main">
+        <h2 class="ir-hidden">빌드 총 스탯</h2>
+        <item-detail-info
+          type="total"
+          columns="3"
+          colorMode="white"
+          :options="buildData.totalOption.slice(0,12)"
+          :plusMinusUnit="false"
+          :showValueDecimal="!showRangeValue"
+          :showRangeValue="showRangeValue"
+        />
+        <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
+      </section>
+      <div class="all-options-sub">
+        <item-detail-info
+          type="total"
+          columns="1"
+          colorMode="white"
+          :options="buildData.totalOption.slice(12)"
+          :plusMinusUnit="false"
+          :showValueDecimal="!showRangeValue"
+          :showRangeValue="showRangeValue"
+        />
+      </div>
+    </template>
+  </div>
+</div>
+</template>
+
+<script>
+import TitleContent from '@/components/common/TitleContent.vue'
+import SynergyDesc from '@/components/item/SynergyDesc.vue'
+import { itemTypeDefs } from '@/plugins/utils/item-def'
+
+export default {
+  components: {
+    TitleContent,
+    SynergyDesc
+  },
+  props: {
+    buildInfo: {
+      type: String, // stringify json
+      default: () => '{}',
+      required: true,
+    },
+    showRangeValue: {
+      type: Boolean,
+      default: () => false
+    }
+  },
+  data() {
+    return {
+      gridInfos: {
+        equipment: {
+          columnNum: '2'
+        },
+        sailor: {
+          columnNum: '2'
+        },
+        colleague: {
+          columnNum: '3'
+        },
+        ship: {
+          columnNum: '1'
+        },
+        ryuo: {
+          columnNum: '1',
+          rowNum: '1'
+        }
+      },
+      itemGridInfoList: null,
+    }
+  },
+  created() {
+    this.itemGridInfoList = itemTypeDefs.map(itemType => (
+      {...itemType, ...this.gridInfos[itemType.type]}
+    ))
+  },
+  computed: {
+    buildData() {
+      return JSON.parse(this.buildInfo)
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/assets/style/components/item/ItemBuild.scss';
+</style>

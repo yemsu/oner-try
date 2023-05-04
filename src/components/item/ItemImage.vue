@@ -97,19 +97,8 @@ export default {
   },
   computed: {  
     imgSrc() {
-      if(this.item.name && this.item.name.includes('류오')) {
-        return imgSrc('ryuo', 'ryuo')
-      }
-      const { type, id, groupName } = this.item
-      
-      const data = [type, id]
-      data.forEach(key => {
-        this.checkData(key) 
-        return ''
-      })
-      const imgName = groupName || id
-      // return ``
-      return imgSrc(type, imgName)
+      const { type, imageName } = this.item
+      return imgSrc(type, imageName)
     },
     isReportButton() {
       return this.isNoDataItem && !this.isRoundImg

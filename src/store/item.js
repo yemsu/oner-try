@@ -1,6 +1,6 @@
 import { isSameText, deepClone } from '@/plugins/utils'
 import { parserStrData, sortByGrade } from '@/plugins/utils/item'
-import { equipmentGradeTypes, equipmentGradeTypeExceptions, equipDropOrder } from '@/plugins/utils/item-def'
+import { equipmentGradeTypes, equipmentGradeTypeExceptions, EquipmentGradeScoresDef } from '@/plugins/utils/item-def'
 import {
   getItems,
   getSailors,
@@ -10,7 +10,8 @@ import {
   getColleagues,
   getSynergies,
   getShips,
-  getRyuoList
+  getRyuoList,
+  getPotions
 } from '@/plugins/utils/https'
 
 export const state = () => ({
@@ -26,6 +27,7 @@ export const state = () => ({
   colleagues: [],
   synergies: [],
   ryuoes: [],
+  potions: [],
 })
 
 export const getters = {
@@ -79,6 +81,9 @@ export const mutations = {
   SET_RYUOES(state, {data}) {
     state.ryuoes = data
   },
+  SET_POTIONS(state, {data}) {
+    state.potions = data
+  },
 }
 const dataTyped = (data) => {
   const newData = data.map(item =>{
@@ -91,9 +96,12 @@ export const actions = {
   GET_ITEMS({ commit }) {
     console.log('store: item/GET_ITEMS')
     return getItems()
-      .then(({data}) => {
-        // console.log('GET_SAILORS',data)
-        const newData = data.map(dataItem => Object.assign(dataItem, {option: parserStrData(dataItem.option)}))
+      .then((data) => {
+        const newData = data
+          .map(dataItem => (
+            Object.assign(dataItem, {option: parserStrData(dataItem.option)})
+          ))
+          .filter(checkNoOptionSailor)
         commit(`SET_ITEMS`, {data: dataTyped(newData), type: 'items'})
         return data
       })
@@ -101,9 +109,13 @@ export const actions = {
   },
   GET_SAILORS({ commit }) {
     return getSailors()
-      .then(({data}) => {
+      .then((data) => {
         // console.log('GET_SAILORS',data)
-        const newData = data.map(dataItem => Object.assign(dataItem, {option: parserStrData(dataItem.option)}))
+        const newData = data
+          .map(dataItem => (
+            Object.assign(dataItem, {option: parserStrData(dataItem.option)})
+          ))          
+          .filter(checkNoOptionSailor)
 
         commit(`SET_SAILORS`, {data: newData, type: 'sailors'})
         return data
@@ -112,7 +124,7 @@ export const actions = {
   },
   GET_COLLEAGUES({ commit }, payload) {
     return getColleagues(payload)
-      .then(({data}) => {
+      .then((data) => {
         // console.log('GET_COLLEAGUES', data)
         const newData = data.map(dataItem => {
           const { option, coloOption, coloPassive } = dataItem
@@ -132,27 +144,40 @@ export const actions = {
   },
   GET_ETC_ITEMS({ commit }) {
     return getEtcItems()
-      .then(({data}) => {
-        // console.log('SET_ETC_ITEMS', data)
-        commit(`SET_ETC_ITEMS`, {data, type: 'etcItems'})
+      .then((data) => {
+        const newData = data.map(etcItem => (
+          { ...etcItem, type: 'etcItem' }
+        ))
+        commit(`SET_ETC_ITEMS`, {data: newData, type: 'etcItems'})
         return data
       })
       .catch(error => console.error('GET_ETC_ITEMS', error))
   },
+  async GET_ETC_ITEMS_TABLE({ commit, state, dispatch }) {
+    if(state.etcItems.length === 0) await dispatch('GET_ETC_ITEMS')
+    const newData = deepClone(state.etcItems)
+      .reduce((acc, data) => {
+        const { name } = data
+        acc.push({ ...data, name: name.split(' +')[0] })
+        return acc
+      }, [])
+    commit(`GET_ETC_ITEMS_TABLE`, {data: newData})
+    return newData
+  },
   GET_EQUIPMENTS({ commit }) {
     return getEquipments()
-      .then(({data}) => {
+      .then((data) => {
         const newData = data.map(dataItem => {
           const { option, gradeOption } = dataItem
           const optionObj = {option: parserStrData(option)}
-          const gradeOptionObj = gradeOption
-            ? {gradeOption: parserStrData(gradeOption)}
-            : null
-          return Object.assign(dataItem, {...optionObj, ...gradeOptionObj})
+          // const gradeOptionObj = gradeOption
+          //   ? {gradeOption: parserStrData(gradeOption)}
+          //   : null
+          return Object.assign(dataItem, {...optionObj, gradeOption})
         })
         const sortData = newData.sort((a, b) => {
-          const checkDrop = data => equipDropOrder.indexOf(data.dropMonster)
-          return checkDrop(a) - checkDrop(b)
+          const gradeScore = data => EquipmentGradeScoresDef[data.grade]
+          return gradeScore(b) - gradeScore(a)
         })
 
         commit(`SET_EQUIPMENTS`, {data: sortData})
@@ -185,10 +210,10 @@ export const actions = {
         const { name, option, gradeOption, type, id, dropMonster } = data
         const groupData = groupDataList.find(group => name.includes(group.name))
         if(!groupData) {
-          console.error('no groupData', name, groupData)
+          // console.error('no groupData', name, groupData)
           return acc
         }
-        const { name:groupName, gradeTypeIndex } = groupData
+        const { name: groupName, gradeTypeIndex } = groupData
         const itemObj = () => ({ id, name: groupName, type })
 
         // 전용무기 예외 처리 - 같은 전용무기는 같은 item 배열에 삽입
@@ -229,12 +254,12 @@ export const actions = {
         return acc
       }, [])
     // console.log('newData', newData)
-    commit(`SET_EQUIPMENTS_TABLE`, {data: newData})
-    return newData
+    commit(`SET_EQUIPMENTS_TABLE`, {data: state.equipments})
+    return state.equipments
   },
   GET_SHIPS({ commit }) {
     return getShips()
-      .then(({data}) => {
+      .then((data) => {
         const newData = data.map(dataItem => {
           const { option } = dataItem
           const optionObj = {option: parserStrData(option)}
@@ -247,20 +272,20 @@ export const actions = {
   },
   async GET_SHIPS_TABLE({ commit, state, dispatch }) {
     if(state.ships.length === 0) await dispatch('GET_SHIPS')
-
     const newData = deepClone(state.ships)
       .reduce((acc, data) => {
-        const { groupName, name, option, type } = data
-        const sameShipAccData = acc.find(data => data.groupName === groupName)
+        const { groupName, name, option, type, imageName } = data
+        // const sameShipAccData = acc.find(data => data.groupName === groupName)
         const nameData = name.split(' +')[0]
         const stack = name.split(' +')[1]
-        if(!sameShipAccData) {
-          const optionsByStack = new Array(5)
-          optionsByStack[stack] = option
-          acc.push({ groupName, name: nameData, optionsByStack, type })
-        } else {
-          sameShipAccData.optionsByStack[stack] = option
-        }
+        // console.log('sameShipAccData', sameShipAccData, )
+        // if(!sameShipAccData) {
+          // const optionsByStack = new Array(5)
+          // optionsByStack[stack] = option
+          acc.push({ ...data, name: nameData })
+        // } else {
+        //   sameShipAccData.optionsByStack[stack] = option
+        // }
         return acc
       }, [])
     commit(`SET_SHIPS_TABLE`, {data: newData})
@@ -268,7 +293,7 @@ export const actions = {
   },
   GET_HEROES({ commit }, payload) {
     return getHeroes(payload)
-      .then(({data}) => {
+      .then((data) => {
         // console.log('GET_HEROES', data)
         commit(`SET_HEROS`, {data, type: 'heroes'})
         return data
@@ -277,7 +302,7 @@ export const actions = {
   },
   GET_SYNERGIES({ commit }) {
     return getSynergies()
-      .then(({data}) => {
+      .then((data) => {
         const newData = data.map(dataItem => {
           const option = parserStrData(dataItem.option)
           const sailors = parserStrData(dataItem.sailors, 'list')
@@ -307,7 +332,7 @@ export const actions = {
   },
   GET_RYUOES({ commit }) {
     return getRyuoList()
-      .then(({data}) => {
+      .then((data) => {
         const newData = data.map(dataItem => {
           const option = parserStrData(dataItem.option)
           const name = `${dataItem.name}차 류오`
@@ -319,4 +344,31 @@ export const actions = {
       })
       .catch(error => console.error('GET_RYUOES', error))
   },
+  GET_POTIONS({ commit }) {
+    return getPotions()
+      .then((data) => {
+        const newData = data
+          .sort((a, b) => {
+            const aLevel = a.name.match(/\d/)[0]
+            const bLevel = b.name.match(/\d/)[0]
+            return aLevel - bLevel
+          })
+        commit(`SET_POTIONS`, {data: newData})
+        return data
+      })
+      .catch(error => console.error('GET_POTIONS', error))
+  },
+  async GET_POTIONS_TABLE({ commit, state, dispatch }) {
+    if(state.potions.length === 0) await dispatch('GET_POTIONS')
+    const newData = deepClone(state.potions)
+      .reduce((acc, data) => {
+        const { name } = data
+        acc.push({ ...data, name: name.split(' +')[0] })
+        return acc
+      }, [])
+    commit(`GET_POTIONS_TABLE`, {data: newData})
+    return newData
+  },
 }
+
+const checkNoOptionSailor = ({type, option}) => !(type === 'sailor' && option.length === 0)

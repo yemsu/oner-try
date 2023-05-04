@@ -1,8 +1,48 @@
+export const itemTypeDefs = [
+  {
+    title: "장비",
+    type: "equipment",    
+  },
+  {
+    title: "선원",
+    type: "sailor",    
+  },
+  // {
+  //   title: "동료",
+  //   type: "colleague",
+  // },
+  {
+    title: "선박",
+    type: "ship",
+  },
+  {
+    title: "류오",
+    type: "ryuo",
+  },
+]
 export const gradesDef = {
+  special: '스페셜',
+  uncommon: '언커먼',
+  common: '커먼',
   legend: '레전드',
-  epic: '에픽',
-  rare: '레어',
+  // epic: '에픽',
+  // rare: '레어',
   normal: '노말',
+  dedicated: '전용무기',
+}
+export const sailorGrades = ['special', 'uncommon', 'common']
+export const equipmentGrades = ['legend', 'normal', 'dedicated']
+export const gradeScoresDef = {
+  special: 3,
+  uncommon: 2,
+  common: 1,
+}
+export const EquipmentGradeScoresDef = {
+  legend: 4,
+  epic: 3,
+  rare: 2,
+  normal: 1,
+  dedicated: 0,
 }
 export const heroDefaultHp = {
   tashigi: 90,
@@ -14,9 +54,6 @@ export const heroDefaultHp = {
   baby: 80,
   nami: 90
 }
-export const optionOrder = [
-  'adt', 'maxD', 'ct', 'dr', 'minD', 'dct', 'ctD', 'ss', 'ms', 'cd', 'df', 'ev', 'str', 'dex', 'int', 'hp'
-]
 export const equipDropOrder = [
   '후지토라', '클리크 해적단', '쿠로네코 해적단', '유령선', '부들 조합', '버기', '모건', '알비다', '반 더 데켄', '어인섬', '해군', '딜러형 전용무기', '파괴형 전용무기', '밸런스형 전용무기'
 ]
@@ -27,6 +64,33 @@ export const equipmentGradeTypes = [
   ['잡검', '예검', '양검', '명검'],
 ]
 export const equipmentGradeTypeExceptions = ['황금빛']
+
+/*
+hp: 체력
+gdr: 받는 피해 감소
+df: 막기 확률
+ev: 회피 확률
+평타 속도
+ss: 스킬 속도
+adt: 추가 피해량
+maxD: 최대 피해량
+ct: 피해치명타 확률
+ctD: 치명타 피해량
+피해량 증폭
+dr: 추가 파괴량,
+maxDr: 최대 파괴량
+dct: 파괴치명타 확률
+ctDr: 치명타 파괴량
+파괴량 증폭
+cd: 스킬 쿨타임 감소
+mcd: 이동기 쿨타임 감소
+ms: 이동속도
+*/
+
+export const optionOrder = [
+  'hp', 'gdr', 'df', 'ev', 'ss', 'adt', 'maxD', 'ct', 'ctD', 'dr', 'maxDr', 'dct', 'ctDr', 'cd', 'mcd', 'ms'
+]
+
 export const optionDefaultValue = {
   hp: 110,
   adt: 0,
@@ -44,19 +108,10 @@ export const optionDefaultValue = {
   str: 1,
   dex: 9,
   int: 1,
-}
-export const gradeScoresDef = {
-  legend: 4,
-  epic: 3,
-  rare: 2,
-  normal: 1,
-}
-export const slotNumbers = {
-  sailors: 6,
-  equipments: 6,
-  colleagues: 3,
-  ship: 1,
-  ryuo: 1
+  gdr: 0,
+  maxDr: 0,
+  mcd: 0,
+  ctDr: 0,
 }
 export const equipOnlyOptionsDef = {
   str: '견문색',
@@ -68,20 +123,29 @@ export const colosseumOptions = {
  as: '공격속도'
 }
 export const noEquipOptions = {
-  ct: '치명타 확률',
-  ctD: '치명타 피해량',
-  dct: '파괴치명타 확률',
+  hp: '체력',
+  gdr: '받는 피해 감소',
+  df: '막기 확률',
+  ev: '회피 확률',
   ss: '스킬 속도',
   adt: '추가 피해량',
-  minD: '최소 피해량',
   maxD: '최대 피해량',
-  df: '막기 확률',
-  hp: '체력',
-  ev: '회피 확률',
-  dr: '추가 룬파괴량',
-  cd: '쿨타임 감소',
-  po: '생활포인트 획득량',
-  ms: '이동속도'
+  ct: '피해치명타 확률',
+  ctD: '치명타 피해량',
+  dr: '추가 파괴량',
+  maxDr: '최대 파괴량',
+  dct: '파괴치명타 확률',
+  ctDr: '치명타 파괴량',
+  cd: '스킬 쿨타임 감소',
+  mcd: '이동기 쿨타임 감소',
+  ms: '이동속도',
+}
+export const slotNumbers = {
+  sailors: 6,
+  equipments: 6,
+  colleagues: 3,
+  ship: 1,
+  ryuo: 1
 }
 export const noUnitOptions = ['hp', 'po', 'ms', 'str', 'dex', 'int']
 export const gradesMap = new Map(Object.entries(gradesDef))

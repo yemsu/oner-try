@@ -1,6 +1,6 @@
 <template>
   <section :class="['box-search', {'compact':size === 'small'}, size]">
-    <h2 class="ir-hidden">검색</h2>
+    <h2 class="ir-hidden">{{ searchBoxTitle }}</h2>
     <div :class="[
       'wrap-search',
       {'compact': size === 'small' && !isSearching}
@@ -20,11 +20,11 @@
       />
       
       <search-box-skeleton 
-        v-if="!rankingList && isSearching"
+        v-if="rankingList && rankingList.length === 0 && isSearching"
         :is-item="isItem"
       />
       <section
-        v-else-if="rankingList && isSearching && matchingData"
+        v-else-if="((rankingList && rankingList.length > 0) || matchingData) && isSearching"
         class="items-match"
       >
         <h2 v-if="showRankingList" class="title-list"> 검색 순위 <span>TOP 10</span></h2>
@@ -57,7 +57,7 @@
 
 <script>
 import BaseInput from '@/components/common/BaseInput.vue'
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -92,6 +92,10 @@ export default {
       type: Boolean,
       default: () => false
     },
+    searchBoxTitle: {
+      type: String,
+      default: () => '검색'
+    }
   },
   data() {
     return {
@@ -109,7 +113,7 @@ export default {
       userCharacters: 'character/getUserCharacters'
     }),
     showRankingList() {
-      return this.rankingList && !this.inputValue
+      return this.rankingList && this.rankingList.length > 0 && !this.inputValue
     },
     matchDataSliced() {
       if(!this.inputValue && this.showRankingList) return this.rankingList

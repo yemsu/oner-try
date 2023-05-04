@@ -4,14 +4,9 @@ import { gradeScoresDef } from '@/plugins/utils/item-def'
 export const findData = (dataList, key, checkValue) => {
   return dataList.find(data => getOnlyText(data[key]) === getOnlyText(checkValue))
 }
-export const imgSrc = (type, id) => {
-  if(!type || !id) return ''
-  const imgNameUseId = ['ship', 'hero', 'ryuo']
-  const imgName = imgNameUseId.includes(type) ? id : type[0] + id
-  const path = `/${type}/${imgName}.png`
-  // const url = process.env.NODE_ENV === 'production'
-  //   ? process.env.CONT_PATH : ''
-  return `${process.env.BASE_URL}/images/items` + path
+export const imgSrc = (type, imageName) => {
+  if(!type) return ''
+  return `https://oner-image.s3.ap-northeast-2.amazonaws.com/${type}/${imageName}.png`
 }
 export const getGradeScore = (key) => {
   return gradeScoresDef[key]
@@ -40,13 +35,12 @@ export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey,
     const data = targetDataList[i]
     if(isBlank(name)) return null
     const fullData = findData(fullDataList, 'name', name)
-    if(!fullData && useDefaultData) {
-      return { name }
-    } else if(!fullData) {
+    if(!fullData) {
       console.error(`NO ITEM: ${name} - CHECK DB!`)
-      return false
-    }  
-    const fullDataClone = deepClone(fullData)
+      if(!useDefaultData) return false
+    }
+    const defaultData = { name }
+    const fullDataClone = deepClone(fullData || defaultData)
 
     if(fullDataClone.option && typeof(fullDataClone.option) === 'string') {
       fullDataClone.option = parserStrData(fullDataClone.option)

@@ -12,7 +12,7 @@
       ref="baseInput"
       :id="id"
       :type="inputType"
-      :placeholder="isCompactMode ? '' : placeholder"
+      :placeholder="placeholder"
       :value="value"
       @input="onUpdateInput"
       @focus="onFocusInput"

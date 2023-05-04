@@ -27,6 +27,8 @@ a {
 input {
   appearance: none;
   border: none;
+  background: var(--color-white);
+  color: var(--color-black);
 }
 table {
   border-spacing: 0px;

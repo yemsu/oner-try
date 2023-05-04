@@ -49,12 +49,12 @@
   }
   &.bg {
     &-active {
-      background-color: var(--color-point);
-      color: var(--color-white);
+      background-color: $color-point;
+      color: $color-white;
     }
     &-inActive {
       background-color: var(--bg-light-gray);
-      color: var(--color-gray-40);
+      color: var(--font-gray);
     }
   }
 }

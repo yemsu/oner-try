@@ -42,7 +42,7 @@ export default {
     padding: 10px 10px;
   }
   &:not(.dark) {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: var(--color-white);
   }
   &.dark {
     background-color: rgba(0, 0, 0, 0.2);

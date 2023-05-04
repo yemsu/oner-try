@@ -1,6 +1,7 @@
 import { optionDefaultValue, optionOrder, heroDefaultHp } from '@/plugins/utils/item-def'
 export const getCharacterSynergies = (sailors, synergies) => {
-  const sailorNames = sailors.filter(sailor => sailor).map(sailor => sailor.name)
+  const sailorNames = sailors.filter(sailor => sailor).map(sailor => sailor?.name)
+
   return synergies.filter(synergy => {
     const checkArr = synergy.sailors.map(synergySailor => sailorNames.includes(synergySailor))
     const checkSet = new Set(checkArr)
@@ -10,15 +11,15 @@ export const getCharacterSynergies = (sailors, synergies) => {
   })
 }
 export const getTotalOption = (character, characterSynergies) => {
-  const { equipments, sailors, colleagues, ship, ryuo } = character
+  const { equipment, sailor, colleague, ship, ryuo } = character
   
-  const allItem = [...equipments, ...sailors, ...colleagues, ...ship, ...ryuo, ...characterSynergies]
+  const allItem = [...equipment, ...sailor, ...colleague, ...ship, ...ryuo, ...characterSynergies]
   // console.log('allItem', allItem)
   const allOption = getOptions(allItem)
   // console.log('allOption', allOption)
   const totalOption = Object.keys(optionDefaultValue).reduce((result, key) => {
     const checkOption = allOption[key] || 0
-    return Object.assign(result, {[key]: checkOption + defaultOptionBy(character)[key]})
+    return Object.assign(result, {[key]: checkOption + optionDefaultValue[key]})
   }, {})
   // console.log('totalOption', totalOption)      
   // ev는 str 수치를 더한다.
@@ -29,11 +30,6 @@ export const getTotalOption = (character, characterSynergies) => {
 
   const result = optionOrder.map(key => ({[key]: totalOption[key]}))
   return result
-}
-const defaultOptionBy = (character) => {
-  const newObj = {...optionDefaultValue}
-  newObj.hp = heroDefaultHp[character.hero.groupName]
-  return newObj
 }
 const getOptions =  (allOption) => {
   const options = allOption

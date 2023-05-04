@@ -57,7 +57,7 @@
 import ItemTable from '@/components/item/ItemTable.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
 import setMeta from '@/plugins/utils/meta';
-import { noEquipOptions, gradesDef } from '@/plugins/utils/item-def'
+import { noEquipOptions, gradesDef, sailorGrades } from '@/plugins/utils/item-def'
 export default {
   head() {
     return setMeta({
@@ -73,8 +73,12 @@ export default {
   async asyncData({ store }) {
     const synergySailors =  await store.dispatch('item/GET_SAILORS_SYNERGY')
     const commonMenu = { all: 'ALL' }
-    const gradeMenus = Object.assign({...commonMenu}, gradesDef)
-    const optionMenus =  Object.assign({...commonMenu}, noEquipOptions)
+    const gradeMaps = sailorGrades.reduce((result, keyName) => {
+      result[keyName] = gradesDef[keyName]
+      return result
+    }, {})
+    const gradeMenus = {...commonMenu, ...gradeMaps}
+    const optionMenus =  {...commonMenu, ...noEquipOptions}
     return {
       synergySailors,
       optionMenus,

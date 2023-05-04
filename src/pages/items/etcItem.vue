@@ -1,32 +1,10 @@
 <template>
   <section>
-    <h2 class="ir-hidden">선박 아이템 도감</h2>
-    <section>
-      <h2 class="ir-hidden">필터 선택</h2>
-      <dl class="list-menu-filter">
-        <dt class="title">옵션</dt>
-        <div class="wrap-menu list-button-common">
-          <dd
-            v-for="(optionTitle, key) in optionMenus"
-            :key="`optionTitle${key}`"
-            :class="['menu-filter', {'active': isActiveMenu(key, 'option')}]"
-          >
-            <base-button
-              @click="toggleMenu(key, 'option')"
-              class="button-filter"
-              type="round"
-              :bg="isActiveMenu(key, 'option') ? 'active': 'inActive'"
-            >
-              {{ optionTitle }}
-            </base-button>
-          </dd>
-        </div>
-      </dl>
-    </section>
+    <h2 class="ir-hidden">포션 아이템 도감</h2>
     <div class="mrg-top-medium">  
       <item-table
-        type="ship"
-        :items="resultShips"
+        type="etcItem"
+        :items="resultPotions"
         :optionsSelected="optionsSelected"
       />
     </div>
@@ -34,7 +12,6 @@
 </template>
 
 <script>
-// import { mapGetters, mapActions, mapMutations } from 'vuex'
 import BaseButton from '@/components/common/BaseButton.vue'
 import setMeta from '@/plugins/utils/meta';
 import { noEquipOptions } from '@/plugins/utils/item-def'
@@ -42,40 +19,41 @@ export default {
   head() {
     return setMeta({
       url: this.$route.fullPath,
-      title: `선박 아이템 도감`,
-      description: `원하는 옵션을 선택하고 강화 수치별 선박 아이템 정보를 확인해보세요`,
+      title: `기타 아이템 도감`,
+      description: `기타 아이템 정보를 확인해보세요`,
     })
   },
   components: {
     BaseButton
   },
   async asyncData({ store }) {
-    const ships = await store.dispatch('item/GET_SHIPS_TABLE')
+    const etcItems = await store.dispatch('item/GET_ETC_ITEMS_TABLE')
     const commonMenu = { all: 'ALL' }
     const optionMenus =  Object.assign({...commonMenu}, noEquipOptions)
     return {
-      ships,
+      etcItems,
       optionMenus,
     }
   },
   data() {
     return {
       optionsSelected: [],
-      resultShips: null
+      resultPotions: null
     }
   },
   watch: {
     optionsSelected(crr, pre) {
-      this.setResultShips()
+      this.setResultPotions()
     }
   },
   created() {
-    this.resultShips = this.ships
+    console.log('this.etcItems', this.etcItems)
+    this.resultPotions = this.etcItems
   },
   methods: {
-    setResultShips() {
-      const resultShips = this.ships.filter(ship => {
-        const { optionsByStack, option } = ship
+    setResultPotions() {
+      const resultPotions = this.etcItems.filter(etcItem => {
+        const { optionsByStack, option } = etcItem
         const targetOptions = optionsByStack ? optionsByStack[4] : option
         const isAllOption = this.optionsSelected.length === 0
 
@@ -90,7 +68,7 @@ export default {
         else if(filteringOptions.length === targetOptions.length) return true
       })
       
-      this.resultShips = resultShips
+      this.resultPotions = resultPotions
     },
     isActiveMenu(key, type) {
       const selectList = this[`${type}sSelected`]
@@ -113,8 +91,8 @@ export default {
         this[dataName].push(key)
       }     
     },
-    classNegaPosi(ship) {
-      return ship.coloYn ? 'positive' : 'negative'
+    classNegaPosi(etcItem) {
+      return etcItem.coloYn ? 'positive' : 'negative'
     },
     classColoPassive(coloPassive) {
       switch (coloPassive) {

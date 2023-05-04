@@ -15,7 +15,7 @@
           <span class="badge deBuff">디버프</span>
           는 효과 중첩가능
         </p>
-        <p v-if="dataDate">{{ dataDate }} 도감 기준</p>
+        <!-- <p v-if="dataDate">{{ dataDate }} 도감 기준</p> -->
       </div>
     </div>
     <table :class="`table-${type}`">
@@ -69,7 +69,6 @@
                   :item="tableItem"
                   :showBadges="['howGet']"
                   :showTooltip="false"
-                  buttonTitle="클릭하여 조합 보러가기"
                   :padding="false"
                 />
               </template>
@@ -77,8 +76,10 @@
               <item-detail-info
                 v-if="data.type === 'option'"
                 :options="item.option"
+                :item="item"
+                :description="item.description"
                 :markOptions="optionsSelected"
-                :highlightTitle="false"
+                :highlight-title="false"
               />
               <!-- 인연 / 악연 -->
               <template v-if="data.type === 'synergy'">
@@ -136,30 +137,22 @@
               </div>
               <!-- 장비 등급별 옵션 -->
               <dl
-                v-if="data.type.includes('optionsByGrade')"
+                v-if="data.type.includes('optionsByGrade') && item.gradeOption && item.gradeOption.length > 0"
                 class="grade-option box-text"
               >
-                <template
-                  v-for="(gradeOption, i) in item.optionsByGrade" 
+                <div
+                  v-for="(gradeOptionItem, i) in item.gradeOption"
+                  :key="`gradeOption${i}`"
+                  class="box-flex"
                 >
-                  <div
-                    v-if="item.stackNames[i]"
-                    :key="`optionsByGrade${i}`"
-                    class="box-flex"
-                  >
-                    <dt class="title-small left">{{ item.stackNames[i] }}</dt>
-                    <dd>
-                      <item-detail-info
-                        v-if="gradeOption"
-                        :options="gradeOption"
-                        :markOptions="optionsSelected"
-                        :highlightTitle="false"
-                      />
-                      <span v-else> - </span>
-                    </dd>
-                  </div>
-                </template>
+                  <dt class="title-small left">등급 {{ i }}.</dt>
+                  <dd>{{ gradeOptionItem }}</dd>
+                </div>
               </dl>
+              <!-- string -->
+              <span v-else-if="data.type === 'grade'">
+                {{ getGradeName(item.grade) }}
+              </span>
               <!-- string -->
               <span v-if="data.type === 'string'">
                 {{ item[data.key] }}
@@ -174,6 +167,7 @@
 
 <script>
 import SynergyDesc from '@/components/item/SynergyDesc.vue'
+import { gradesDef } from '@/plugins/utils/item-def.js'
 
 export default {
   props: {
@@ -199,17 +193,22 @@ export default {
         {
           title: '선원',
           type: 'item',
-          width: '25%'
+          width: '22%'
+        },
+        {
+          title: '등급',
+          type: 'grade',
+          width: '10%'
         },
         {
           title: '옵션',
           type: 'option',
-          width: '30%'
+          width: '24%'
         },
         {
           title: '인연 / 악연',
           type: 'synergy',
-          width: '45%'
+          width: '43%'
         },
       ],
       colleagueTableData: [
@@ -239,51 +238,90 @@ export default {
         {
           title: '선박',
           type: 'item',
-          width: '14%'
+          width: '40%'
         },
         {
-          title: '+0',
-          type: 'optionsByStack0'
-        },
-        {
-          title: '+1',
-          type: 'optionsByStack1'
-        },
-        {
-          title: '+2',
-          type: 'optionsByStack2'
-        },
-        {
-          title: '+3',
-          type: 'optionsByStack3'
-        },
-        {
-          title: '+4',
-          type: 'optionsByStack4'
-        },
+          title: '옵션',
+          type: 'option'
+        }
+        // {
+        //   title: '+0',
+        //   type: 'optionsByStack0'
+        // },
+        // {
+        //   title: '+1',
+        //   type: 'optionsByStack1'
+        // },
+        // {
+        //   title: '+2',
+        //   type: 'optionsByStack2'
+        // },
+        // {
+        //   title: '+3',
+        //   type: 'optionsByStack3'
+        // },
+        // {
+        //   title: '+4',
+        //   type: 'optionsByStack4'
+        // },
       ],
       equipmentTableData: [
         {
           title: '장비',
           type: 'item',
-          width: '20%'
+          width: '16%'
         },
         {
-          title: '공통 옵션',
+          title: '등급',
+          type: 'grade',
+          width: '6%'
+        },
+        {
+          title: '옵션',
           type: 'option',
-          width: '30%'
+          width: '18%'
         },
         {
-          title: '등급별 추가 옵션',
-          type: 'optionsByGrade',
-          width: '35%'
+          title: '추가 옵션',
+          type: 'string',
+          key: 'gradeOption',
+          width: '32%'
         },
         {
           title: '획득처',
           type: 'string',
           key: 'dropMonster',
-          width: '15%'
+          width: '28%'
         },
+      ],
+      potionTableData: [
+        {
+          title: '포션',
+          type: 'item',
+          width: '40%'
+        },
+        {
+          title: '옵션',
+          type: 'option'
+        }
+      ],
+      etcItemTableData: [
+        {
+          title: '재료',
+          type: 'item',
+          width: '30%'
+        },
+        {
+          title: '설명',
+          type: 'option',
+          width: '30%'
+        },
+        {
+          title: '획득처',
+          type: 'string',
+          key: 'dropMonster',
+          width: '40%'
+        }
       ],
     }
   },
@@ -296,9 +334,10 @@ export default {
         sailor: '2022.06.12',
         colleague: '2022.06.13',
         ship: '2022.06.12',
+        potion: '2022.06.12',
       }
       return dataDate[this.type]
-    }
+    },
   },
   methods: {
     tableItems(item) {
@@ -322,6 +361,9 @@ export default {
     optionIndex(data) {
       const str = 'optionsByStack'
       return data.type.split(str)[1]
+    },
+    getGradeName(gradeEng) {
+      return gradesDef[gradeEng]
     }
   }
 }

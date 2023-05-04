@@ -36,8 +36,10 @@ export const mutations = {
 export const actions = {
   GET_COMPOSITION({ commit }, searchRankingNum) {
     return getCompositionPageViews()
-      .then(({data}) => {
-        // console.log('GET_COMPOSITION',data)
+      .then((data) => {
+        if(!data) {
+          return []
+        }
         const newData = data
           .sort((a, b) => a.pageView - b.pageView).reverse()
           .map(({ name, pageView }) => ({ [name]: pageView }))
@@ -53,7 +55,7 @@ export const actions = {
   },
   GET_CHARACTER({ commit }, searchRankingNum) {
     return getCharacterPageViews()
-      .then(({data}) => {
+      .then((data) => {
         // console.log('GET_Character',data)
         const newData = data
           .sort((a, b) => a.pageView - b.pageView).reverse()
