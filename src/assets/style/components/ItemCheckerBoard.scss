@@ -3,8 +3,8 @@
   $header-height: 41px;
   $img-size: 58px;
   $img-area-padding: 20px;
-  $img-number-vtc: 9;
-  $img-number-hrz: 15;
+  $img-number-vtc: 3;
+  $img-number-hrz: 10;
   $img-gap-vtc: calc(((100vh - ($img-area-padding * 2) - $header-height) - ($img-size * $img-number-vtc)) / ($img-number-vtc - 1));
   $img-gap-hrz: calc(((100vw - ($img-area-padding * 2)) - ($img-size * $img-number-hrz)) / ($img-number-hrz - 1));
 
@@ -12,14 +12,16 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: $img-gap-vtc $img-gap-hrz;
+  gap: 40px 30px;
+  // gap: $img-gap-vtc $img-gap-hrz;
   align-items: center;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  padding: ($header-height + $img-area-padding) $img-area-padding $img-area-padding;
+  padding: 45vh 80px;
+  // padding: ($header-height + $img-area-padding) $img-area-padding $img-area-padding;
   > .img-bg {
     width: $img-size;
     height: $img-size;
