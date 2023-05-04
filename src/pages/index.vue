@@ -46,6 +46,7 @@
           </div>
           <div class="area-contents">
             <composition-search-box
+              v-if="compositionItems"
               :full-data="compositionItems"
             />
           </div>
@@ -137,7 +138,7 @@ export default {
   },
   data() {
     return {
-      compositionItems: [],
+      compositionItems: null,
       itemPageLinks: [
         {
           pageName: 'sailor',
