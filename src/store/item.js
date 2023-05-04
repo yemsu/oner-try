@@ -337,7 +337,13 @@ export const actions = {
   GET_POTIONS({ commit }) {
     return getPotions()
       .then((data) => {
-        commit(`SET_POTIONS`, {data})
+        const newData = data
+          .sort((a, b) => {
+            const aLevel = a.name.match(/\d/)[0]
+            const bLevel = b.name.match(/\d/)[0]
+            return aLevel - bLevel
+          })
+        commit(`SET_POTIONS`, {data: newData})
         return data
       })
       .catch(error => console.error('GET_POTIONS', error))
@@ -350,11 +356,6 @@ export const actions = {
         acc.push({ ...data, name: name.split(' +')[0] })
         return acc
       }, [])
-      .sort((a, b) => {
-        const aLevel = a.name.match(/\d/)[0]
-        const bLevel = b.name.match(/\d/)[0]
-        return bLevel - aLevel
-      })
     commit(`GET_POTIONS_TABLE`, {data: newData})
     return newData
   },
