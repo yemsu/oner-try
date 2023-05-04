@@ -50,10 +50,10 @@ export default {
           path: '/items',
           menuName: '아이템도감',
         },
-        {
-          path: '/item-build/my',
-          menuName: 'MY 빌드',
-        },
+        // {
+        //   path: '/item-build/my',
+        //   menuName: 'MY 빌드',
+        // },
       ],
       siteSideMenuList: [
         {
