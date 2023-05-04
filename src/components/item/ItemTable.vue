@@ -76,9 +76,10 @@
               <item-detail-info
                 v-if="data.type === 'option'"
                 :options="item.option"
+                :item="item"
                 :description="item.description"
                 :markOptions="optionsSelected"
-                :highlightTitle="false"
+                :highlight-title="false"
               />
               <!-- 인연 / 악연 -->
               <template v-if="data.type === 'synergy'">
@@ -336,7 +337,7 @@ export default {
         potion: '2022.06.12',
       }
       return dataDate[this.type]
-    }
+    },
   },
   methods: {
     tableItems(item) {

@@ -17,8 +17,7 @@
         </dt>
         <dd>
           {{ !plusMinusUnit || pureValue || isMinus(option) ? '' : '+' }}
-          {{ optionValue(option) }} 
-          {{ pureValue ? '' : getOption(option, 'unit') }}
+          {{ optionValue(option) }}{{ getUnit(option) }}
         </dd>
       </div>
     </template>
@@ -72,6 +71,24 @@ export default {
     description: {
       type: String,
       default: () => ''
+    },
+    item: {
+      type: Object,
+      default: () => null
+    },
+  },
+  computed: {    
+    showRangeValue() {
+      const commonCase = ['sailor', 'ship'].includes(this.item.type)
+      const falseCase1 = this.item.name !== '통통배'
+      const trueCase1 = this.item.grade === 'dedicated'
+
+      return (commonCase && falseCase1) || trueCase1
+    },
+    maxStack() {
+      return this.item.name === '고잉 메리호' ? 10 
+        : this.item.grade === 'dedicated' ? 100
+        : 50
     }
   },
   methods: {
@@ -104,6 +121,7 @@ export default {
     optionValue(option) {
       const value = Object.values(option)[0]
       const key = Object.keys(option)[0]
+      if(this.showRangeValue) return this.getRangeValue(option)
       if(!this.showValueDecimal) return value
 
       const valueDecimal = value
@@ -111,7 +129,17 @@ export default {
         ? Math.floor(value)
         : valueDecimal.toFixed(3)
       return (result * 1).toLocaleString()
-    }
+    },
+    getUnit(option) {
+      return this.pureValue ? '' : this.getOption(option, 'unit')
+    },
+    getRangeValue(option) {
+      const value = Object.values(option)[0] * 1
+      const valueByEachStack = this.item.grade === 'dedicated'
+        ? 0.5 : (value / 20)
+      const max = value + (valueByEachStack * this.maxStack)
+      return `${value}${this.getUnit(option)} ~ ${(Math.round(max * 1000) / 1000)}`
+    },
   }
 }
 </script>

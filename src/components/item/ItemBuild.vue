@@ -43,7 +43,8 @@
           colorMode="white"
           :options="buildData.totalOption.slice(0,12)"
           :plusMinusUnit="false"
-          :showValueDecimal="true"
+          :showValueDecimal="!showRangeValue"
+          :showRangeValue="showRangeValue"
         />
         <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
       </section>
@@ -54,7 +55,8 @@
           colorMode="white"
           :options="buildData.totalOption.slice(12)"
           :plusMinusUnit="false"
-          :showValueDecimal="true"
+          :showValueDecimal="!showRangeValue"
+          :showRangeValue="showRangeValue"
         />
       </div>
     </template>
@@ -77,6 +79,10 @@ export default {
       type: String, // stringify json
       default: () => '{}',
       required: true,
+    },
+    showRangeValue: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {
