@@ -192,17 +192,22 @@ export default {
         {
           title: '선원',
           type: 'item',
-          width: '25%'
+          width: '22%'
+        },
+        {
+          title: '등급',
+          type: 'grade',
+          width: '10%'
         },
         {
           title: '옵션',
           type: 'option',
-          width: '30%'
+          width: '24%'
         },
         {
           title: '인연 / 악연',
           type: 'synergy',
-          width: '45%'
+          width: '43%'
         },
       ],
       colleagueTableData: [
