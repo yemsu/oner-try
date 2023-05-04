@@ -4,6 +4,25 @@
     <section>
       <h2 class="ir-hidden">필터 선택</h2>
       <dl class="list-menu-filter">
+        <dt class="title">등급</dt>
+        <div class="wrap-menu list-button-common">
+          <dd
+            v-for="(gradeTitle, key) in gradeMenus"
+            :key="`gradeTitle${key}`"
+            :class="['menu-filter', {'active': isActiveMenu(key, 'grade')}]"
+          >
+            <base-button
+              @click="toggleMenu(key, 'grade')"
+              class="button-filter"
+              type="round"
+              :bg="isActiveMenu(key, 'grade') ? 'active': 'inActive'"
+            >
+              {{ gradeTitle }}
+            </base-button>
+          </dd>
+        </div>
+      </dl>
+      <dl class="list-menu-filter">
         <dt class="title">옵션</dt>
         <div class="wrap-menu list-button-common">
           <dd
@@ -36,7 +55,7 @@
 <script>
 import BaseButton from '@/components/common/BaseButton.vue'
 import setMeta from '@/plugins/utils/meta';
-import { noEquipOptions } from '@/plugins/utils/item-def'
+import { noEquipOptions, gradesDef, equipmentGrades } from '@/plugins/utils/item-def'
 export default {
   head() {
     return setMeta({
@@ -51,20 +70,30 @@ export default {
   async asyncData({ store }) {
     const equipments = await store.dispatch('item/GET_EQUIPMENTS_TABLE')
     const commonMenu = { all: 'ALL' }
+    const gradeMaps = equipmentGrades.reduce((result, keyName) => {
+      result[keyName] = gradesDef[keyName]
+      return result
+    }, {})
+    const gradeMenus = {...commonMenu, ...gradeMaps}
     const optionMenus =  Object.assign({...commonMenu}, noEquipOptions)
     return {
       equipments,
       optionMenus,
+      gradeMenus
     }
   },
   data() {
     return {
+      gradesSelected: [],
       optionsSelected: [],
       resultEquipments: null
     }
   },
   watch: {
     optionsSelected(crr, pre) {
+      this.setResultEquipments()
+    },
+    gradesSelected(crr, pre) {
       this.setResultEquipments()
     }
   },
@@ -75,13 +104,12 @@ export default {
   methods: {
     setResultEquipments() {
       const resultEquipments = this.equipments.filter(equipment => {
-        const { optionsByGrade, option } = equipment
+        const { grade, option } = equipment
+        const isAllGrade = this.gradesSelected.length === 0
         const isAllOption = this.optionsSelected.length === 0
-// console.log('optionsByGrade', optionsByGrade)
-//       if(!optionsByGrade) return equipment
-        // const checkOptionsByGrade = optionsByGrade[5] || optionsByGrade[4] || optionsByGrade[3] || optionsByGrade[2] || optionsByGrade[1] || optionsByGrade[0] || []
-      // if(!checkOptionsByGrade) return equipment
-        // const optionKeys = [...checkOptionsByGrade, ...option].map(option => Object.keys(option)[0])
+        const filteringGrade = isAllGrade ? true
+          : this.gradesSelected.includes(grade)
+        if(!filteringGrade) return false
         const optionKeys = [...option].map(option => Object.keys(option)[0])
         const checkListOptions = this.optionsSelected.map(optionsSelected => optionKeys.includes(optionsSelected))
 
