@@ -23,12 +23,24 @@ export const itemTypeDefs = [
 export const gradesDef = {
   special: '스페셜',
   uncommon: '언커먼',
-  common: '커먼'
+  common: '커먼',
+  legend: '레전드',
+  epic: '에픽',
+  rare: '레어',
+  normal: '노말',
+  dedicated: '전용무기',
 }
 export const gradeScoresDef = {
   special: 3,
   uncommon: 2,
   common: 1,
+}
+export const EquipmentGradeScoresDef = {
+  legend: 4,
+  epic: 3,
+  rare: 2,
+  normal: 1,
+  dedicated: 0,
 }
 export const heroDefaultHp = {
   tashigi: 90,

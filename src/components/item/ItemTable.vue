@@ -149,6 +149,10 @@
                 </div>
               </dl>
               <!-- string -->
+              <span v-else-if="data.type === 'grade'">
+                {{ getGradeName(item.grade) }}
+              </span>
+              <!-- string -->
               <span v-if="data.type === 'string'">
                 {{ item[data.key] }}
               </span>
@@ -162,6 +166,7 @@
 
 <script>
 import SynergyDesc from '@/components/item/SynergyDesc.vue'
+import { gradesDef } from '@/plugins/utils/item-def.js'
 
 export default {
   props: {
@@ -258,7 +263,12 @@ export default {
         {
           title: '장비',
           type: 'item',
-          width: '18%'
+          width: '16%'
+        },
+        {
+          title: '등급',
+          type: 'grade',
+          width: '6%'
         },
         {
           title: '옵션',
@@ -269,13 +279,13 @@ export default {
           title: '추가 옵션',
           type: 'string',
           key: 'gradeOption',
-          width: '34%'
+          width: '32%'
         },
         {
           title: '획득처',
           type: 'string',
           key: 'dropMonster',
-          width: '30%'
+          width: '28%'
         },
       ],
       potionTableData: [
@@ -345,6 +355,9 @@ export default {
     optionIndex(data) {
       const str = 'optionsByStack'
       return data.type.split(str)[1]
+    },
+    getGradeName(gradeEng) {
+      return gradesDef[gradeEng]
     }
   }
 }

@@ -1,6 +1,6 @@
 import { isSameText, deepClone } from '@/plugins/utils'
 import { parserStrData, sortByGrade } from '@/plugins/utils/item'
-import { equipmentGradeTypes, equipmentGradeTypeExceptions, equipDropOrder } from '@/plugins/utils/item-def'
+import { equipmentGradeTypes, equipmentGradeTypeExceptions, EquipmentGradeScoresDef } from '@/plugins/utils/item-def'
 import {
   getItems,
   getSailors,
@@ -166,8 +166,8 @@ export const actions = {
           return Object.assign(dataItem, {...optionObj, gradeOption})
         })
         const sortData = newData.sort((a, b) => {
-          const checkDrop = data => equipDropOrder.indexOf(data.dropMonster)
-          return checkDrop(a) - checkDrop(b)
+          const gradeScore = data => EquipmentGradeScoresDef[data.grade]
+          return gradeScore(b) - gradeScore(a)
         })
 
         commit(`SET_EQUIPMENTS`, {data: sortData})
