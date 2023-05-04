@@ -191,9 +191,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/style/pages/index.scss';
+
 img {
   display: block;
-  margin: 0 auto;
+  width: 100vw;
   height: calc(100vh - $header-site-menu-height);
+  object-fit: cover;
 }
 </style>
