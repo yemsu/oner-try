@@ -4,8 +4,8 @@
     <div class="container">
       <nuxt />
     </div>
-    <!-- <FloatingMenu /> -->
-    <!-- <LayoutFooter /> -->
+    <FloatingMenu />
+    <LayoutFooter />
  </div>
 </template>
 
