@@ -15,7 +15,7 @@
           <span class="badge deBuff">디버프</span>
           는 효과 중첩가능
         </p>
-        <p v-if="dataDate">{{ dataDate }} 도감 기준</p>
+        <!-- <p v-if="dataDate">{{ dataDate }} 도감 기준</p> -->
       </div>
     </div>
     <table :class="`table-${type}`">
