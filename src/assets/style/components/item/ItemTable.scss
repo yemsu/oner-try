@@ -22,6 +22,7 @@ table {
     vertical-align: middle;
     padding: 15px 10px;
     font-size: $font-size-MS-pc;
+    word-break: keep-all;
     &.td-common {
       background-color: var(--bg-light-gray);
     }

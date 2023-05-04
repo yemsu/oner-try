@@ -145,7 +145,7 @@
                   class="box-flex"
                 >
                   <dt class="title-small left">등급 {{ i }}.</dt>
-                  <dd>{{ Object.keys(gradeOptionItem)[0] }}</dd>
+                  <dd>{{ gradeOptionItem }}</dd>
                 </div>
               </dl>
               <!-- string -->
@@ -266,8 +266,9 @@ export default {
           width: '18%'
         },
         {
-          title: '등급별 추가 옵션',
-          type: 'optionsByGrade',
+          title: '추가 옵션',
+          type: 'string',
+          key: 'gradeOption',
           width: '34%'
         },
         {

@@ -160,10 +160,10 @@ export const actions = {
         const newData = data.map(dataItem => {
           const { option, gradeOption } = dataItem
           const optionObj = {option: parserStrData(option)}
-          const gradeOptionObj = gradeOption
-            ? {gradeOption: parserStrData(gradeOption)}
-            : null
-          return Object.assign(dataItem, {...optionObj, ...gradeOptionObj})
+          // const gradeOptionObj = gradeOption
+          //   ? {gradeOption: parserStrData(gradeOption)}
+          //   : null
+          return Object.assign(dataItem, {...optionObj, gradeOption})
         })
         const sortData = newData.sort((a, b) => {
           const checkDrop = data => equipDropOrder.indexOf(data.dropMonster)
