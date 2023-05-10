@@ -58,7 +58,8 @@
       </nuxt-link>
       
       <!-- tooltip -->
-      <div v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
+      <section v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
+        <h2 v-if="!visibleDetail" class="tooltip-title">{{ item.name }}</h2>
         <item-detail-info 
           :colorMode="visibleDetail ? 'black' : 'white'"
           :options="item.option"
@@ -73,7 +74,7 @@
             <i class="icon-arrow right small border-neon" />
           </p>
         </div>
-      </div>
+      </section>
     </template>
     <div v-else class="item-blank"></div>
   </div>

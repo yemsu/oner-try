@@ -201,6 +201,9 @@ $name-space: 5px;
     background-color: $tooltip-bg;
     text-align: left;
     transform: translateX(100%);
+    .tooltip-title {
+      font-size: $font-size-S-pc;
+    }
     &:before {
       display: block;
       position: absolute;

@@ -13,7 +13,7 @@
           <th scope="col">유저명</th>
           <th scope="col">현상금</th>
           <th scope="col">선원</th>
-          <th scope="col">동료</th>
+          <!-- <th scope="col">동료</th> -->
         </tr>
       </thead>
       <tbody>
@@ -64,7 +64,7 @@
               </li>
             </ul>
           </td>
-          <td class="colleagues">
+          <!-- <td class="colleagues">
             <ul class="list-items">
               <li
                 v-for="(colleague, i) in user.colleagues"
@@ -79,7 +79,7 @@
                 />
               </li>
             </ul>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>

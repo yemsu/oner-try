@@ -15,10 +15,10 @@ export const itemTypeDefs = [
     title: "선박",
     type: "ship",
   },
-  {
-    title: "류오",
-    type: "ryuo",
-  },
+  // {
+  //   title: "류오",
+  //   type: "ryuo",
+  // },
 ]
 export const gradesDef = {
   special: '스페셜',
@@ -92,22 +92,22 @@ export const optionOrder = [
 ]
 
 export const optionDefaultValue = {
-  hp: 110,
+  hp: 90,
   adt: 0,
-  maxD: 100,
-  ct: 1,
+  maxD: 0,
+  ct: 0,
   dr: 0,
-  minD: 100,
-  dct: 1,
-  ctD: 200,
-  ss: 100,
-  ms: 500,
+  minD: 0,
+  dct: 0,
+  ctD: 0,
+  ss: 0,
+  ms: 0,
   cd: 0,
-  df: 1,
+  df: 0,
   ev: 0,
-  str: 1,
-  dex: 9,
-  int: 1,
+  str: 0,
+  dex: 0,
+  int: 0,
   gdr: 0,
   maxDr: 0,
   mcd: 0,
@@ -141,9 +141,9 @@ export const noEquipOptions = {
   ms: '이동속도',
 }
 export const slotNumbers = {
-  sailors: 6,
-  equipments: 6,
-  colleagues: 3,
+  sailor: 6,
+  equipment: 6,
+  colleague: 3,
   ship: 1,
   ryuo: 1
 }

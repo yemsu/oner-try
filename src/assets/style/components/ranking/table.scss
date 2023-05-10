@@ -8,6 +8,7 @@
     font-size: $font-size-S-pc;
     font-weight: normal;
     color: var(--font-gray);
+    text-align: center;
   }
   td {
     vertical-align: middle;
@@ -21,9 +22,9 @@
       padding: 10px;
       background-color: var(--color-rank-1-bg);
       td {
-        color: var(--color-white);
+        color: $color-white;
         > a {
-          color: var(--color-white);
+          color: $color-white;
           font-size: 1.2em;
         }
       }
@@ -47,10 +48,15 @@
         color: var(--color-gray-40);
       }
       .rank-title {
+        font-weight: var(--font-weight-B);
+        .skull {
+          display: block;
+          font-weight: 400;
+          line-height: 1;
+        }
         &.type-0 {
           color: var(--color-rank-1);
           .skull {
-            font-weight: normal;
             font-size: 2.6em;
           }
         }
@@ -65,11 +71,6 @@
           .skull {
             font-size: 1.4em;
           }
-        }
-        .skull {
-          display: block;
-          font-weight: bold;
-          line-height: 1;
         }
       }
     }

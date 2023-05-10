@@ -11,9 +11,8 @@ export const getCharacterSynergies = (sailors, synergies) => {
   })
 }
 export const getTotalOption = (character, characterSynergies) => {
-  const { equipment, sailor, colleague, ship, ryuo } = character
-  
-  const allItem = [...equipment, ...sailor, ...colleague, ...ship, ...ryuo, ...characterSynergies]
+  const { equipment, sailor, colleague, ship } = character
+  const allItem = [...equipment, ...sailor, ...colleague, ...ship, ...characterSynergies]
   // console.log('allItem', allItem)
   const allOption = getOptions(allItem)
   // console.log('allOption', allOption)
@@ -36,8 +35,8 @@ const getOptions =  (allOption) => {
     .reduce((result, data) => { 
       if(!data?.option) return result
       // 여기: 데이터 없으면 기본값 뱉도록 수정 필요
-      const { option: options, gradeOption: gradeOptions, stack } = data
-      for(const option of [...options, ...(gradeOptions || [])]) {
+      const { option: options, stack } = data
+      for(const option of [...options]) {
         const key = Object.keys(option)[0]
         const resultValue = result[key] || 0
         const newValue = resultValue + calcOptionByStack(option, stack)

@@ -1,43 +1,23 @@
-.wrap-items-info {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.all-options-main {
+  .text-notice {
+    margin-top: $list-gap-basic;
+    font-size: $font-size-S-pc;
+    text-align: center;
+  }
+}
+.wrap-item-build {
+  display: flex;
   gap: $list-gap-basic;
-  .area-equipment {
-    grid-column: auto / span 2;
-    grid-row: 1 / span 3;    
-  }
-  .area-sailor {
-    grid-column: auto / span 2;
-    grid-row: auto / span 3;    
-  }
-  .area-colleague {
-    grid-column: auto / span 3;
-    grid-row: auto / span 1;    
-  }
-  .area-ship {
-    grid-column: auto / span 1;
-    grid-row: auto / span 1;    
-  }
-  .area-ryuo {
-    grid-column: auto / span 1;
-    grid-row: auto / span 1;    
-  }
-  .all-options-main {
-    grid-column: 5 / span 3;
-    grid-row: 2 / span 2;    
-    .text-notice {
-      margin-top: $list-gap-basic;
-      font-size: $font-size-S-pc;
-      text-align: center;
-    }
-  }
-  .all-options-sub {
-    grid-column: 8 / span 1;
-    grid-row: 2 / span 2;    
-  }
-  .area-synergies {
-    grid-column: 3 / span 2;
-    grid-row: 4 / span 1;    
+  .wrap-title-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 192px;
   }
   ::v-deep {
     .area-item-list {

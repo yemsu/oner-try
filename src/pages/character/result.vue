@@ -34,7 +34,7 @@
         <template v-slot:content="{ activeTab }">
           <section>
             <h2 class="ir-hidden">캐릭터 빌드 - {{ activeTab.heroName }} (레벨:{{ activeTab.lv }}) </h2>
-            <ItemBuild :buildInfo="activeTab" />
+            <ItemBuild :build-info="JSON.stringify(activeTab)" />
           </section>
         </template>
       </v-tab>

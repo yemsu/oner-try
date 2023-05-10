@@ -57,7 +57,7 @@ export default {
       ],
       siteSideMenuList: [
         {
-          path: 'https://cafe.naver.com/onepiecerpg/595',
+          path: 'https://m16tool.xyz/Game/ONERPG/Download/Index',
           menuName: '맵/확장팩 다운로드'
         }
       ]
