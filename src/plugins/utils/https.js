@@ -70,7 +70,7 @@ export const postCompositionPageView = (params) => postApi(`/register/compositio
 
 // ip
 export const getIpClient = () => {
-  return axios.get(`https://api.ipify.org?format=json`)
+  return axios.get(`https://api.ip.pe.kr/`)
   .then(res => res)
   .catch(error => errorHandler('getIpClient', error))
 }

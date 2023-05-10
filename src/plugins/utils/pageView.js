@@ -28,12 +28,12 @@ const setStoragePageView = (storageName, data) => {
   window.sessionStorage.setItem(storageName, JSON.stringify(data))
 }
 const adminIpList = [
-  '1.235.236.132', // 수진 집
+  '1.227.192.84', // 수진 집
   '218.153.37.253' // 수진 회사
 ]
 export const checkUpdatePageView = async (type, name) => {
-  const { data: ipData } = await getIpClient()
-  if(adminIpList.includes(ipData.ip)) return false
+  const { data: ip } = await getIpClient()
+  if(adminIpList.includes(ip)) return false
   if(process.env.NODE_ENV !== 'production') return false
 
   const storageName = `oner_try_${type}_page_view`
