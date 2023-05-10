@@ -100,10 +100,10 @@ export default {
         ship: {
           columnNum: '1'
         },
-        ryuo: {
-          columnNum: '1',
-          rowNum: '1'
-        }
+        // ryuo: {
+        //   columnNum: '1',
+        //   rowNum: '1'
+        // }
       },
       itemGridInfoList: null,
     }

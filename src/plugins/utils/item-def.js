@@ -15,10 +15,10 @@ export const itemTypeDefs = [
     title: "선박",
     type: "ship",
   },
-  {
-    title: "류오",
-    type: "ryuo",
-  },
+  // {
+  //   title: "류오",
+  //   type: "ryuo",
+  // },
 ]
 export const gradesDef = {
   special: '스페셜',

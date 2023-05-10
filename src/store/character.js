@@ -50,13 +50,13 @@ export const mutations = {
 }
 export const actions = {
   async GET_USER_CHARACTERS({ commit, rootState, dispatch }, payload) {
-    const { item: { heroes, equipments, sailors, colleagues, ships, ryuoes, synergies }} = rootState
+    const { item: { heroes, equipments, sailors, colleagues, ships, synergies }} = rootState
     if(heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
     if(equipments.length === 0) await dispatch('item/GET_EQUIPMENTS','', { root: true })
     if(sailors.length === 0) await dispatch('item/GET_SAILORS','', { root: true })
     if(colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
     if(ships.length === 0) await dispatch('item/GET_SHIPS','', { root: true })
-    if(ryuoes.length === 0) await dispatch('item/GET_RYUOES','', { root: true })
+    // if(ryuoes.length === 0) await dispatch('item/GET_RYUOES','', { root: true })
     if(synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
     return getUserCharacters(payload)
       .then((data) => {
@@ -84,12 +84,12 @@ export const actions = {
           const colleague = new Array(3).fill(null)
           // const colleague = dataParser(character, 'colleague')
           const ship = dataParser(character, 'ship')
-          const characterRyuo = rootState.item.ryuoes.find(ryuo => ryuo.name.includes(`${character.ryuo}차`))
-          const ryuo = characterRyuo ? [{
-            name: characterRyuo.name,
-            option: characterRyuo.option
-          }] : [null]
-          Object.assign(character, { hero, equipment, sailor, colleague , ship, ryuo})
+          // const characterRyuo = rootState.item.ryuoes.find(ryuo => ryuo.name.includes(`${character.ryuo}차`))
+          // const ryuo = characterRyuo ? [{
+          //   name: characterRyuo.name,
+          //   option: characterRyuo.option
+          // }] : [null]
+          Object.assign(character, { hero, equipment, sailor, colleague , ship })
 
           const characterSynergies = getCharacterSynergies(sailor, rootState.item.synergies)
           const totalOption = getTotalOption(character, characterSynergies)

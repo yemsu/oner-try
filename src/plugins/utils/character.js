@@ -11,8 +11,8 @@ export const getCharacterSynergies = (sailors, synergies) => {
   })
 }
 export const getTotalOption = (character, characterSynergies) => {
-  const { equipment, sailor, colleague, ship, ryuo } = character
-  const allItem = [...equipment, ...sailor, ...colleague, ...ship, ...ryuo, ...characterSynergies]
+  const { equipment, sailor, colleague, ship } = character
+  const allItem = [...equipment, ...sailor, ...colleague, ...ship, ...characterSynergies]
   // console.log('allItem', allItem)
   const allOption = getOptions(allItem)
   // console.log('allOption', allOption)
