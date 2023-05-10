@@ -46,4 +46,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/style/components/SearchBox.scss';
+.item-match {
+  padding: 8px 0;
+}
 </style>
