@@ -58,9 +58,8 @@ export const actions = {
       .then((data) => {
         // console.log('GET_Character',data)
         const newData = data
-          .sort((a, b) => a.pageView - b.pageView).reverse()
+          .sort((a, b) => b.pageView - a.pageView)
           .map(({ name, pageView }) => ({ [name]: pageView }))
-
         commit(`SET_CHARACTER`, {data: newData})
         if(searchRankingNum) {
           const newDataSearchRanking = [...newData].splice(0, searchRankingNum)
