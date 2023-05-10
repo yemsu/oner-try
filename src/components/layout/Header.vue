@@ -34,10 +34,10 @@ export default {
   data() {
     return {
       siteMenuList: [
-        // {
-        //   path: '/character',
-        //   menuName: '캐릭터',
-        // },
+        {
+          path: '/character',
+          menuName: '캐릭터',
+        },
         {
           path: '/composition',
           menuName: '조합법',
