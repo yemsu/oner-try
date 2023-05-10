@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { canEnhance } from '@/plugins/utils/item-def'
+
 export default {
   props: {
     item: {
@@ -111,7 +113,9 @@ export default {
   },
   methods: {
     showBadge(type) {
-      return this.showBadges.includes(type)
+      const showBadge = this.showBadges.includes(type)
+      if(type === 'stack') return canEnhance(this.item) && showBadge
+      return showBadge
     }
   }
 }
