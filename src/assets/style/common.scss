@@ -324,7 +324,7 @@ caption, .ir-hidden {
   letter-spacing: 0.01em;
   font-weight: var(--font-weight-N);
   > .title {
-    font-weight: bold;
+    font-weight: var(font-weight-B);
   }
   .skull {
     font-size: 1.1em;
@@ -373,7 +373,7 @@ caption, .ir-hidden {
     margin-top: 5px;
   }
   > .title {
-    font-weight: bold;
+    font-weight: var(font-weight-B);
     margin-bottom: 0.5em;
   }
 }

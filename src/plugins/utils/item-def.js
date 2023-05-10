@@ -147,6 +147,20 @@ export const slotNumbers = {
   ship: 1,
   ryuo: 1
 }
+export const canEnhance = (item) => {
+  if(!item) return false
+  const commonCase = ['sailor', 'ship'].includes(item.type)
+  const falseCase1 = item.name !== '통통배'
+  const trueCase1 = item.grade === 'dedicated'
+
+  return (commonCase && falseCase1) || trueCase1
+}
+export const maxStack = (item) => {
+  return item.name === '고잉 메리호' ? 10 
+    : item.grade === 'dedicated' ? 100
+    : 50
+}
+
 export const noUnitOptions = ['hp', 'po', 'ms', 'str', 'dex', 'int']
 export const gradesMap = new Map(Object.entries(gradesDef))
 export const equipmentsOnlyOptionsMap = new Map(Object.entries(equipOnlyOptionsDef))

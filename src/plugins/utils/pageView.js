@@ -28,22 +28,22 @@ const setStoragePageView = (storageName, data) => {
   window.sessionStorage.setItem(storageName, JSON.stringify(data))
 }
 const adminIpList = [
-  '1.235.236.132', // 수진 집
+  '1.227.192.84', // 수진 집
   '218.153.37.253' // 수진 회사
 ]
 export const checkUpdatePageView = async (type, name) => {
-  const { data: ipData } = await getIpClient()
-  if(adminIpList.includes(ipData.ip)) return false
+  const { data: ip } = await getIpClient()
+  if(adminIpList.includes(ip)) return false
   if(process.env.NODE_ENV !== 'production') return false
 
   const storageName = `oner_try_${type}_page_view`
   const sessionData = JSON.parse(window.sessionStorage.getItem(storageName)) || []
-  console.log('sessionData', sessionData)
+  // console.log('sessionData', sessionData)
   const nowDateStr = returnNowDateStr()
-  console.log('nowDateStr', nowDateStr)
+  // console.log('nowDateStr', nowDateStr)
   const sameNameData = sessionData.find(data => data.name === name)
   if(sameNameData) {
-    if(!checkMoreThan30Minutes(nowDateStr, sameNameData)) return
+    if(!checkMoreThan30Minutes(nowDateStr, sameNameData)) return false
     const newSessionData = sessionData.reduce((acc, data) => {
       const newData = data.name === name
         ? Object.assign(data, {date: nowDateStr})
@@ -51,13 +51,14 @@ export const checkUpdatePageView = async (type, name) => {
       acc.push(newData)
       return acc
     }, [])
-    console.log('after 30 newSessionData', newSessionData.date, newSessionData)
+    // console.log('after 30 newSessionData', newSessionData.date, newSessionData)
     setStoragePageView(storageName, newSessionData)
   } else {
     const newSessionData = sessionData.concat([newPageViewData(name, nowDateStr)])
-    console.log('newSessionData', newSessionData)
+    // console.log('newSessionData', newSessionData)
     setStoragePageView(storageName, newSessionData)
   }
+  return true
 }
 
 export const totalPageViewGAData = async (nameChecker, DbPageViews) => {

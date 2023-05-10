@@ -50,13 +50,13 @@ export const setDefaultHeader = (key, value) => {
 // page view
 export const getCompositionPageViews = () => {
   return getApi(`/compositionPageViews`, { params: {
-    startDate: '2022-7-9',
+    startDate: '2022-5-10',
     length: 10
   } })
 }
 export const getCharacterPageViews = () => {
   return getApi(`/characterPageViews`, { params: {
-    startDate: '2022-7-9',
+    startDate: '2023-5-10',
     length: 10
   } })
 }
@@ -70,7 +70,7 @@ export const postCompositionPageView = (params) => postApi(`/register/compositio
 
 // ip
 export const getIpClient = () => {
-  return axios.get(`https://api.ipify.org?format=json`)
+  return axios.get(`https://api.ip.pe.kr/`)
   .then(res => res)
   .catch(error => errorHandler('getIpClient', error))
 }
