@@ -5,7 +5,7 @@
     <p class="align-right">
       <span class="badge-text-wrap">
         <span class="badge black line-gold" data-v-21f97cac="">숫자</span>
-        : 초월 수치
+        : 강화 수치
       </span>
     </p>
   </div>
