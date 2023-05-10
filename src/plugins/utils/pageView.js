@@ -38,12 +38,12 @@ export const checkUpdatePageView = async (type, name) => {
 
   const storageName = `oner_try_${type}_page_view`
   const sessionData = JSON.parse(window.sessionStorage.getItem(storageName)) || []
-  console.log('sessionData', sessionData)
+  // console.log('sessionData', sessionData)
   const nowDateStr = returnNowDateStr()
-  console.log('nowDateStr', nowDateStr)
+  // console.log('nowDateStr', nowDateStr)
   const sameNameData = sessionData.find(data => data.name === name)
   if(sameNameData) {
-    if(!checkMoreThan30Minutes(nowDateStr, sameNameData)) return
+    if(!checkMoreThan30Minutes(nowDateStr, sameNameData)) return false
     const newSessionData = sessionData.reduce((acc, data) => {
       const newData = data.name === name
         ? Object.assign(data, {date: nowDateStr})
@@ -51,13 +51,14 @@ export const checkUpdatePageView = async (type, name) => {
       acc.push(newData)
       return acc
     }, [])
-    console.log('after 30 newSessionData', newSessionData.date, newSessionData)
+    // console.log('after 30 newSessionData', newSessionData.date, newSessionData)
     setStoragePageView(storageName, newSessionData)
   } else {
     const newSessionData = sessionData.concat([newPageViewData(name, nowDateStr)])
-    console.log('newSessionData', newSessionData)
+    // console.log('newSessionData', newSessionData)
     setStoragePageView(storageName, newSessionData)
   }
+  return true
 }
 
 export const totalPageViewGAData = async (nameChecker, DbPageViews) => {
