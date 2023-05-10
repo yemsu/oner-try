@@ -158,7 +158,11 @@ $name-space: 5px;
         margin-bottom: 5px;
       }
       .area-img {
+        overflow: hidden;
         border: 1px solid var(--wanted-brown);
+        img {
+          object-fit: contain;
+        }
       }
       .bounty {
         color: var(--wanted-brown);
