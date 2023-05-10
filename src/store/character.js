@@ -74,28 +74,27 @@ export const actions = {
               const result = dataTypeArray.map(data => parserDefaultData(data))
               return parserStrData(result.join(','))
             }
-            const typeState = type === 'ship' ? 'ships' : type
-            const newData = fillDataAndInsertValue(rootState.item[typeState], data(), 'stack', true)
-
+            const newData = fillDataAndInsertValue(rootState.item.items, data(), 'stack', true)
             const result = fillDefaultList(newData, slotNumbers[type])
 
             return result
           }
-          const equipments = dataParser(character, 'equipments')
-          const sailors = dataParser(character, 'sailors')
-          const colleagues = dataParser(character, 'colleagues')
+          const equipment = dataParser(character, 'equipment')
+          const sailor = dataParser(character, 'sailor')
+          const colleague = new Array(3).fill(null)
+          // const colleague = dataParser(character, 'colleague')
           const ship = dataParser(character, 'ship')
           const characterRyuo = rootState.item.ryuoes.find(ryuo => ryuo.name.includes(`${character.ryuo}차`))
           const ryuo = characterRyuo ? [{
             name: characterRyuo.name,
             option: characterRyuo.option
           }] : [null]
-          Object.assign(character, { hero, equipments, sailors, colleagues , ship, ryuo})
+          Object.assign(character, { hero, equipment, sailor, colleague , ship, ryuo})
 
-          const characterSynergies = getCharacterSynergies(sailors, rootState.item.synergies)
+          const characterSynergies = getCharacterSynergies(sailor, rootState.item.synergies)
           const totalOption = getTotalOption(character, characterSynergies)
 
-          return Object.assign(character, { totalOption, synergies: characterSynergies })
+          return Object.assign(character, { totalOption, synergy: characterSynergies })
         })
         
         commit(`SET_USER_CHARACTERS`, sortRank(newData))

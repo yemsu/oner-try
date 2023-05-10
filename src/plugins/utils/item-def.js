@@ -141,9 +141,9 @@ export const noEquipOptions = {
   ms: '이동속도',
 }
 export const slotNumbers = {
-  sailors: 6,
-  equipments: 6,
-  colleagues: 3,
+  sailor: 6,
+  equipment: 6,
+  colleague: 3,
   ship: 1,
   ryuo: 1
 }
