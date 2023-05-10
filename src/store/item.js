@@ -349,7 +349,7 @@ export const actions = {
       .then((data) => {
         const newData = data
           .sort((a, b) => {
-            const getLevel = (name) => name.match(/\d/) ?  a.name.match(/\d/)[0] : 999
+            const getLevel = (name) => name.match(/\d/) ? name.match(/\d/)[0]*1 : 999
             return getLevel(a.name) - getLevel(b.name)
           })
         commit(`SET_POTIONS`, {data: newData})
