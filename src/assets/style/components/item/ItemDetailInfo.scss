@@ -37,17 +37,18 @@ $font-small: $font-size-S-pc;
         }
       }
     }
-    &-total {
-      display: grid;
-      justify-content: center;
-      align-items: center;
+    &-total,
+    &-character-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
       min-width: 180px;
+      margin-bottom: auto;
       padding: 15px 20px;
       background-color: rgba(0, 0, 0, 0.8);
-      border-radius: 10px;
       text-align: center;
-      gap: 6px;
       font-size: $font-small;
+      border-radius: 10px;
       .wrap-detail {
         display: flex;
         gap: 10px;
@@ -55,9 +56,11 @@ $font-small: $font-size-S-pc;
       dd {
         font-weight: 300;
       }
-      @for $i from 1 to 5 {
-        &.columns-#{$i} {
-          grid-template-columns: repeat(#{$i}, 1fr);
+      &.color-white {
+        .option {
+          .title.color-point {
+            color: $color-total-option;
+          }
         }
       }
     }

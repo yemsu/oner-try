@@ -1,7 +1,9 @@
+$common-gap: 10px;
+
 .wrapper {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: $common-gap;
 }
 .all-options-main {
   .text-notice {
@@ -18,7 +20,7 @@
   .wrap-title-content {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: $common-gap;
     max-width: 192px;
   }
   ::v-deep {
@@ -33,4 +35,8 @@
       margin-bottom: 32px;
     }
   }
+}
+.wrap-stat-box {
+  display: flex;
+  gap: $common-gap;
 }

@@ -139,6 +139,11 @@ export const noEquipOptions = {
   cd: '스킬 쿨타임 감소',
   mcd: '이동기 쿨타임 감소',
   ms: '이동속도',
+  균열숙련도: '균열 숙련도',
+  대균열숙련도: '대균열 숙련도',
+  악마의열매숙련도: '악마의 열매 숙련도',
+  에피소드숙련도: '에피소드 숙련도',
+  위험도: '위험도',
 }
 export const slotNumbers = {
   sailor: 6,
@@ -169,7 +174,7 @@ export const valueByStack = (item, value, stack) => {
   return (value*1) + (valueByEachStack * (stack - 1))
 } 
 
-export const noUnitOptions = ['hp', 'po', 'ms', 'str', 'dex', 'int']
+export const noUnitOptions = ['hp', 'po', 'ms', 'str', 'dex', 'int', '균열숙련도', '대균열숙련도', '악마의열매숙련도', '에피소드숙련도', '위험도']
 export const gradesMap = new Map(Object.entries(gradesDef))
 export const equipmentsOnlyOptionsMap = new Map(Object.entries(equipOnlyOptionsDef))
 export const noEquipOptionsMap = new Map(Object.entries(noEquipOptions))
