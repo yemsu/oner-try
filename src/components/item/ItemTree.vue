@@ -3,6 +3,9 @@
     <div class="area-tree" v-show="item.ingredients">
       <div class="text-refer top inner-size-basic">
         <h4>조합 트리</h4>
+        <p class="text-notice">
+          <strong>* 재료로 사용되는 선원의 강화 요구 수치는 10 입니다.</strong> (강화에 필요한 비브르카드 개수는 조합법에 포함되어 있지 않습니다.)
+        </p>
         <div class="align-right">
           <base-button
             type="icon mode-wide"

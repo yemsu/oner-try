@@ -291,6 +291,7 @@ caption, .ir-hidden {
 .text-refer {
   display: flex;
   align-items: center;
+  gap: 10px;
   font-size: $font-size-MS-pc;
   &.top {
     margin-bottom: 6px;
