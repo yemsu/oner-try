@@ -160,6 +160,10 @@ export const maxStack = (item) => {
     : item.grade === 'dedicated' ? 100
     : 50
 }
+export const valueByStack = (item, value, stack) => {
+  const valueByEachStack = item.grade === 'dedicated' ? 0.5 : (value / 20)
+  return value + (valueByEachStack * stack)
+} 
 
 export const noUnitOptions = ['hp', 'po', 'ms', 'str', 'dex', 'int']
 export const gradesMap = new Map(Object.entries(gradesDef))
