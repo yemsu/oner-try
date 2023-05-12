@@ -1,4 +1,4 @@
-import { optionDefaultValue, optionOrder, heroDefaultHp } from '@/plugins/utils/item-def'
+import { optionDefaultValue, optionOrder, valueByStack } from '@/plugins/utils/item-def'
 export const getCharacterSynergies = (sailors, synergies) => {
   const sailorNames = sailors.filter(sailor => sailor).map(sailor => sailor?.name)
 
@@ -30,31 +30,19 @@ export const getTotalOption = (character, characterSynergies) => {
   const result = optionOrder.map(key => ({[key]: totalOption[key]}))
   return result
 }
-const getOptions =  (allOption) => {
-  const options = allOption
-    .reduce((result, data) => { 
-      if(!data?.option) return result
+const getOptions =  (allItem) => {
+  const options = allItem
+    .reduce((result, item) => { 
+      if(!item?.option) return result
       // 여기: 데이터 없으면 기본값 뱉도록 수정 필요
-      const { option: options, stack } = data
+      const { option: options, stack } = item
       for(const option of [...options]) {
         const key = Object.keys(option)[0]
         const resultValue = result[key] || 0
-        const newValue = resultValue + calcOptionByStack(option, stack)
+        const newValue = resultValue + valueByStack(item, option[key], (stack*1))
         Object.assign(result, {[key]: newValue})
       }
       return result
     }, {})
   return options
-} 
-const calcOptionByStack = (option, stack) => {
-  const key = Object.keys(option)[0]
-  const value = option[key]
-  if(typeof(value) === 'string' && !value.includes('~')) return value*1
-
-  const optionValueMin = value.split('~')[0]*1
-  const optionValueMax = value.split('~')[1]*1
-  const stackValue = stack ? stack*1 : 1
-  const optionEachStack = (optionValueMax - optionValueMin) / 100
-  const optionValueResult = (optionEachStack * stackValue) + optionValueMin
-  return optionValueResult
 }

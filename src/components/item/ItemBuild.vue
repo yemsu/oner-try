@@ -46,7 +46,7 @@
         </div>
       </div>
     </div>
-    <!-- <section
+    <section
       v-if="buildData.totalOption.length > 0"
       class="all-options-main"
     >
@@ -60,8 +60,8 @@
         :showValueDecimal="!showRangeValue"
         :showRangeValue="showRangeValue"
       />
-      <p class="text-notice">실제 스탯과 <br>약간의 오차가 있을 수 있습니다.</p>
-    </section> -->
+      <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
+    </section>
   </div>
 </div>
 </template>

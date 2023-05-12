@@ -5,9 +5,11 @@
 }
 .all-options-main {
   .text-notice {
-    margin-top: $list-gap-basic;
-    font-size: $font-size-S-pc;
+    margin-top: 5px;
+    font-size: $font-size-XS-pc;
+    color: var(--font-dark-gray);
     text-align: center;
+    word-break: keep-all;
   }
 }
 .wrap-item-build {

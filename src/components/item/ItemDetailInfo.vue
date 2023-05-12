@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { noUnitOptions, optionsMap, canEnhance, maxStack } from '@/plugins/utils/item-def'
+import { noUnitOptions, optionsMap, canEnhance, maxStack, valueByStack } from '@/plugins/utils/item-def'
 
 export default {
   props: {
@@ -124,10 +124,8 @@ export default {
     },
     getRangeValue(option) {
       const value = Object.values(option)[0] * 1
-      const valueByEachStack = this.item.grade === 'dedicated'
-        ? 0.5 : (value / 20)
-      const max = value + (valueByEachStack * maxStack(this.item))
-      return `${value}${this.getUnit(option)} ~ ${(Math.round(max * 1000) / 1000)}`
+      const maxValue = valueByStack(this.item, value, maxStack(this.item))
+      return `${value}${this.getUnit(option)} ~ ${(Math.round(maxValue * 1000) / 1000)}`
     },
   }
 }
