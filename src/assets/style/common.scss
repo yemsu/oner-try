@@ -247,7 +247,7 @@ caption, .ir-hidden {
     gap: 5px;
   }
   &:not(.badge-gap) {
-    .badges {
+    .badge {
       &:not([class*=line-]):nth-child(n+2) {
         border-left: none;
       }
@@ -265,9 +265,6 @@ caption, .ir-hidden {
   line-height: 1;
   text-align: center;
   word-spacing: -0.1em;
-  &:nth-child(n+2) {
-    border-left: none;
-  }
   &.type-round {
     padding: 2px 5px 3px 5px;
     border-radius: 5px;
