@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { canEnhance } from '@/plugins/utils/item-def'
+import { canEnhance, gradesDef } from '@/plugins/utils/item-def'
 
 export default {
   props: {
@@ -66,7 +66,7 @@ export default {
       }
     },
     badgesInfo() {
-      const { type, stack, requiredNumber, dropMonster, ingredients } = this.item
+      const { type, stack, grade, requiredNumber, dropMonster, ingredients } = this.item
       const howGetItemList = {
         'recruit': '영입',
         'composition': '조합',
@@ -82,6 +82,12 @@ export default {
           condition: type,
           text: this.typeName,
           className: `type ${type}`,
+        },
+        {
+          name: 'grade',
+          condition: grade,
+          text: gradesDef[grade],
+          className: `grade ${grade}`,
         },
         {
           name: 'howGet',
@@ -107,7 +113,6 @@ export default {
           text: this.customBadge,
           className: 'black'
         },
-
       ]
     }
   },
@@ -144,6 +149,17 @@ export default {
     }
     &.colleague {
       background-color: var(--badge-color-green);
+    }
+  }
+  &.grade {
+    &.common {
+      background-color: var(--color-grade-common);
+    }
+    &.uncommon {
+      background-color: var(--color-grade-uncommon);
+    }
+    &.special {
+      background-color: var(--color-grade-special);
     }
   }
 }

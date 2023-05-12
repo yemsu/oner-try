@@ -19,7 +19,7 @@
             :item="itemSelected"
             type="list"
             size="big"
-            :showBadges="['type', 'howGet']"
+            :showBadges="['type', 'grade']"
             :visibleDetail="true"
             :isLink="false"
             :use-bookmark="true"
