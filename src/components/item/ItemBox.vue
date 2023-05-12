@@ -15,7 +15,7 @@
         :to="useLink && linkItemComposition()"
         :target="linkTarget"
         :is="linkTagName"
-        :title="linkTitle || (useLink && '클릭하여 조합 보러가기')"
+        :title="linkTitle || (useLink && noTooltip && '클릭하여 조합 보러가기')"
         @click="$emit('click', item.name)"
       >
         <div class="item-box-info">
