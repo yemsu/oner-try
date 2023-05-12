@@ -67,6 +67,7 @@
           :type="itemDetailInfoType"
           :item="item"
           :description="item.description"
+          :show-grade-option="true"
         />
         <div v-if="!visibleDetail && isComp && isLink" class="wrap-sub-text">
           <p class="color-neon">
