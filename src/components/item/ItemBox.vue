@@ -59,7 +59,7 @@
       
       <!-- tooltip -->
       <section v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
-        <h2 v-if="!visibleDetail" class="tooltip-title">{{ item.name }}</h2>
+        <h2 v-if="!visibleDetail && !showName" class="tooltip-title">{{ item.name }}</h2>
         <item-detail-info 
           :colorMode="visibleDetail ? 'black' : 'white'"
           :options="item.option"
