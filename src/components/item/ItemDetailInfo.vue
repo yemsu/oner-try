@@ -15,7 +15,7 @@
         class="wrap-detail option"
       >
         <dt :class="['title', {'color-point': highlightTitle}]">
-          {{ getOption(option, 'title') }}
+          {{ getOptionTitle(keyOf(option)) }}
         </dt>
         <dd>
           {{ !plusMinusUnit || pureValue || isMinus(option) ? '' : '+' }}
@@ -45,7 +45,7 @@ export default {
     },
     type: {
       type: String,
-      default: () => 'basic' // basic, list-main, total
+      default: () => 'basic' // basic, list-main, total, character-info
     },
     columns: {
       type: String,
@@ -80,17 +80,16 @@ export default {
       default: () => null
     },
   },
+  computed: {
+    isCharacterInfo() {
+      return this.type === 'character-info'
+    }
+  },
   methods: {
-    getOption(option, optionType) {
-      const key = Object.keys(option)[0]
-      switch (optionType) {
-        case 'title':
-          return this.getOptionTitle(key);
-        case 'unit':
-          return this.getOptionUnit(key);      
-      }
-    },  
     getOptionUnit(key) {
+      if(this.isCharacterInfo) {
+        return key === '위험도' ? '/LV' : '/p'
+      }
       return noUnitOptions.includes(key) ? '' : '%'
     },
     getOptionTitle(key) {
@@ -108,19 +107,21 @@ export default {
       return Object.values(option)[0].includes('-')
     },
     optionValue(option) {
-      const value = Object.values(option)[0]
       const key = Object.keys(option)[0]
+      const value = Object.values(option)[0] * 1
       if(canEnhance(this.item)) return this.getRangeValue(option)
       if(!this.showValueDecimal) return value
 
-      const valueDecimal = value
-      const result = noUnitOptions.includes(key)
-        ? Math.floor(value)
-        : valueDecimal.toFixed(3)
-      return (result * 1).toLocaleString()
+      const result = this.isCharacterInfo && key !== '위험도'
+        ? value.toFixed(2)
+        : value
+      return result.toLocaleString()
     },
     getUnit(option) {
-      return this.pureValue ? '' : this.getOption(option, 'unit')
+      return this.pureValue ? '' : this.getOptionUnit(this.keyOf(option))
+    },
+    keyOf(option) {
+      return Object.keys(option)[0]
     },
     getRangeValue(option) {
       const value = Object.values(option)[0] * 1

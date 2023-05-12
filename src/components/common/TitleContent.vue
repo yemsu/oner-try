@@ -1,12 +1,12 @@
 <template>
-  <div :class="`area-title-content area-${type}`">
+  <section :class="`area-title-content area-${type}`">
     <div class="area-item-list">
       <h4 class="title">{{ title }}</h4>
       <div class="contents">
         <slot></slot>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

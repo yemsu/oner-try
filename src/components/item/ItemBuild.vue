@@ -46,22 +46,31 @@
         </div>
       </div>
     </div>
-    <section
-      v-if="buildData.totalOption.length > 0"
-      class="all-options-main"
-    >
-      <h2 class="ir-hidden">빌드 총 스탯</h2>
+    
+    <div class="wrap-stat-box">
       <item-detail-info
-        type="total"
-        columns="1"
+        v-if="buildData.information"
+        type="character-info"
         colorMode="white"
-        :options="buildData.totalOption"
+        :options="buildData.information"
         :plusMinusUnit="false"
-        :showValueDecimal="!showRangeValue"
-        :showRangeValue="showRangeValue"
+        :showValueDecimal="true"
       />
-      <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
-    </section>
+      <section
+        v-if="buildData.totalOption.length > 0"
+        class="all-options-main"
+      >
+        <h2 class="ir-hidden">빌드 총 스탯</h2>
+        <item-detail-info
+          type="total"
+          colorMode="white"
+          :options="buildData.totalOption"
+          :plusMinusUnit="false"
+          :showValueDecimal="true"
+        />
+        <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
+      </section>
+    </div>
   </div>
 </div>
 </template>
@@ -117,6 +126,7 @@ export default {
   },
   computed: {
     buildData() {
+      console.log('JSON.parse(this.buildInfo)',JSON.parse(this.buildInfo))
       return JSON.parse(this.buildInfo)
     }
   }
