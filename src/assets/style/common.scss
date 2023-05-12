@@ -246,6 +246,9 @@ caption, .ir-hidden {
   line-height: 1;
   text-align: center;
   word-spacing: -0.1em;
+  &:nth-child(n+2) {
+    border-left: none;
+  }
   &.type-round {
     padding: 2px 5px 3px 5px;
     border-radius: 5px;
@@ -288,6 +291,7 @@ caption, .ir-hidden {
 .text-refer {
   display: flex;
   align-items: center;
+  gap: 10px;
   font-size: $font-size-MS-pc;
   &.top {
     margin-bottom: 6px;

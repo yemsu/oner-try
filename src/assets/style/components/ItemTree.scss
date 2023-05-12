@@ -1,4 +1,8 @@
 .item-tree {
+  .text-notice {
+    color: var(--font-dark-gray);
+    font-size: $font-size-XS-pc;
+  }
   .area-tree {
     flex: 1;
     .area-depth {

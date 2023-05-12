@@ -9,7 +9,7 @@
         <item-box
           :item="item"
           :size="itemSize"
-          :showBadges="['howGet', 'requiredNumber']"
+          :showBadges="['grade', 'requiredNumber']"
         />
       </div>
       <slot :props="{ ingredients: item && item.ingredients, index: i }"></slot>

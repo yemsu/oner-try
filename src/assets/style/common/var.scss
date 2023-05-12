@@ -102,6 +102,7 @@ $hsl-black: 0, 0%, 0%;
   --font-light-gray: var(--color-gray-50);
 
   // font weight  
+  --font-weight-L: 300;
   --font-weight-N: 400;
   --font-weight-B: 600;
 
@@ -109,12 +110,9 @@ $hsl-black: 0, 0%, 0%;
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
 
   // 아이템 등급 컬러
-  --color-grade-legend: #70dbbb;
-  --color-grade-legend-sub: #eeeea0;
-  --color-grade-epic: #fd8329;
-  --color-grade-epic-sub: #ffe945;
-  --color-grade-rare: #aaff90;
-  --color-grade-normal: #f7efec;
+  --color-grade-common: #fff;
+  --color-grade-uncommon: #b7fffe;
+  --color-grade-special: #fff51e;
 
   // 뱃지 컬러
   --badge-color-orange-light: hsla(19, 100%, 84%, 0.8); // 조합 아이템, 콜로세움 버프 효과
@@ -176,6 +174,7 @@ $hsl-black: 0, 0%, 0%;
   --font-light-gray: ;
 
   // font weight
+  --font-weight-L: 200;
   --font-weight-N: 300;
   --font-weight-B: 400;
 
