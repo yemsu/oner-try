@@ -139,6 +139,8 @@ export const noEquipOptions = {
   cd: '스킬 쿨타임 감소',
   mcd: '이동기 쿨타임 감소',
   ms: '이동속도',
+}
+export const characterInfos = {
   균열숙련도: '균열 숙련도',
   대균열숙련도: '대균열 숙련도',
   악마의열매숙련도: '악마의 열매 숙련도',
@@ -179,8 +181,9 @@ export const gradesMap = new Map(Object.entries(gradesDef))
 export const equipmentsOnlyOptionsMap = new Map(Object.entries(equipOnlyOptionsDef))
 export const noEquipOptionsMap = new Map(Object.entries(noEquipOptions))
 export const colosseumOptionsMap = new Map(Object.entries(colosseumOptions))
+export const characterInfosMap = new Map(Object.entries(characterInfos))
 const totalOptions = () => {
-  const totalOptions = new Map([...noEquipOptionsMap, ...colosseumOptionsMap])
+  const totalOptions = new Map([...noEquipOptionsMap, ...colosseumOptionsMap, ...characterInfosMap])
   for(const [key, value] of equipmentsOnlyOptionsMap) {
     totalOptions.set(key, value)
   }
