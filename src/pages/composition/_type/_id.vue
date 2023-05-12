@@ -42,7 +42,7 @@
           <p class="align-right">
             <span class="badge-text-wrap">
               <span class="badge black" data-v-21f97cac="">숫자</span>
-                : 필요 아이템 갯수
+                : 필요 아이템 개수
             </span>
           </p>
         </div>
