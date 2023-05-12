@@ -45,9 +45,6 @@ export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey,
     if(fullDataClone.option && typeof(fullDataClone.option) === 'string') {
       fullDataClone.option = parserStrData(fullDataClone.option)
     }
-    if(fullDataClone.gradeOption &&  typeof(fullDataClone.gradeOption) === 'string') {
-      fullDataClone.gradeOption = parserStrData(fullDataClone.gradeOption)
-    }
 
     const itemValue = Object.values(data)[0]
     const isString = typeof(itemValue) === 'string'

@@ -23,6 +23,10 @@
         </dd>
       </div>
     </template>
+    <div v-if="showGradeOption && item.gradeOption" class="wrap-detail grade-option">
+      <dt :class="['title', {'color-point': highlightTitle}]">추가 옵션</dt>
+      <dd>{{ item.gradeOption }}</dd>
+    </div>
   </dl>
 </template>
 
@@ -79,6 +83,10 @@ export default {
       type: Object,
       default: () => null
     },
+    showGradeOption: {
+      type: Boolean,
+      default: () => false
+    }
   },
   computed: {
     isCharacterInfo() {
