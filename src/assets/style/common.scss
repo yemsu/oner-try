@@ -101,6 +101,25 @@ caption, .ir-hidden {
     content: '';
     transition: transform 0.3s;
   }
+  &.x-small {
+    margin-left: 0.15em;
+    &:before {
+      width: 0.3em;
+      height: 0.3em;
+      border-width: 1px;
+    }
+    &.down,
+    &.up {
+      width: 0.3em;
+      height: 6px;
+    }
+    &.right,
+    &.left {
+      width: 0.5em;
+      height: 0.85em;
+      margin-top: 0.15em;
+    }
+  }
   &.small {
     margin-left: 0.45em;
     &:before {

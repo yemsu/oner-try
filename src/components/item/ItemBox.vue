@@ -72,7 +72,7 @@
         <div v-if="!visibleDetail && isComp && isLink" class="wrap-sub-text">
           <p class="color-neon">
             <small>클릭하여 조합 보러가기 </small>
-            <i class="icon-arrow right small border-neon" />
+            <i class="icon-arrow right x-small border-neon" />
           </p>
         </div>
       </section>
