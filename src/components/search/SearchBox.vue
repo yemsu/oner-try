@@ -106,6 +106,10 @@ export default {
     isFullWidth: {
       type: Boolean,
       default: () => false
+    },
+    showDefaultList: {
+      type: Boolean, 
+      default: () => true
     }
   },
   data() {
@@ -127,6 +131,7 @@ export default {
       return this.rankingList && this.rankingList.length > 0 && !this.inputValue
     },
     matchDataSliced() {
+      if(!this.inputValue && !this.showDefaultList) return []
       if(!this.inputValue && this.showRankingList) return this.rankingList
       const SLICE_NUM = 10
       const noBlank = target => target.replace(/ /g, '')

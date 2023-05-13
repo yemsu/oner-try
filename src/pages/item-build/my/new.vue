@@ -31,7 +31,8 @@
             v-if="searchBoxFullData.length > 0 && items.length > 0"
             :full-data="searchBoxFullData"
             :fn-after-search="selectItem"
-            size="small"
+            :show-default-list="false"
+            size="xsmall"
             placeholder="추가할 아이템 검색"
           />
           <v-tab :tabs="itemTypeDefs" type="basic">

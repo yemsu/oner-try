@@ -7,6 +7,7 @@
     :custom-match-data-item="true"
     :placeholder="placeholder"
     :is-full-width="isFullWidth"
+    :show-default-list="showDefaultList"
     @onSearch="fnSearch"
   >
     <template v-slot:matchDataItem="{ props: matchData }">
@@ -45,6 +46,10 @@ export default {
     isFullWidth: {
       type: Boolean,
       default: () => false
+    },
+    showDefaultList: {
+      type: Boolean, 
+      default: () => true
     }
   },
   data() {
