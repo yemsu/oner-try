@@ -50,7 +50,7 @@
     &-small {
       @include setSize($item-image-small);
     }
-    &-basic {
+    &-medium {
       @include setSize($item-image-basic);     
     }
     &-big {

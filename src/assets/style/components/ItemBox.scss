@@ -62,7 +62,7 @@ $name-space: 5px;
         height: $item-image-small;
       }
     }
-    &-basic {
+    &-medium {
       .item-blank {
         height: $item-image-basic;     
       }
@@ -103,7 +103,7 @@ $name-space: 5px;
         &-small {
           width: $item-image-small;
         }
-        &-basic {
+        &-medium {
           width: $item-image-basic;     
         }
         &-big {    
@@ -162,7 +162,7 @@ $name-space: 5px;
   &.wanted-paper {
     background-color: #d7b993;
     border: 1px solid #333;
-    &.size-basic {
+    &.size-medium {
       .img-wanted {
         width: 55px;
       }

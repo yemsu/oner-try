@@ -73,7 +73,7 @@ export default {
     },
     size: {
       type: String,
-      default: () => 'basic'
+      default: () => 'medium'
     },
     isComp: {
       type: Boolean,
