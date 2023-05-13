@@ -20,10 +20,6 @@ export default {
       type: String,
       default: () => ''
     },
-    size: {
-      type: String,
-      default: () => 'basic'
-    },
   },
   data() {
     return {

@@ -50,7 +50,6 @@
           <item-list
             :items="totalIngrdnts.sailors"
             columnNum="10"
-            size="xsmall"
             class="sailors"
           >
             <template v-slot="{ item }">
@@ -65,7 +64,6 @@
           <item-list
             :items="totalIngrdnts.etcItems"
             columnNum="10"
-            size="xsmall"
           >
             <template v-slot="{ item }">
               <item-box
