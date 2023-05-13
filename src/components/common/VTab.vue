@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap-tab">
+  <div :class="`wrap-tab type-${type}`">
     <section>
       <h2 class="ir-hidden">탭 버튼 리스트 ({{ tabs.length }})</h2>
       <ul class="tabs">
@@ -28,6 +28,10 @@ export default {
       default: () => [],
       required: true
     },
+    type: {
+      type: String,
+      default: () => 'none' // none, basic
+    }
   },
   data() {
     return {
@@ -41,7 +45,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tabs {
-  display: flex;
-}
+@import '@/assets/style/components/common/VTab.scss';
 </style>
