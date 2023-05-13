@@ -48,6 +48,7 @@
         </div>
         <title-content v-show="totalIngrdnts" title="Total" class="wrap-total area-item-list emph">
           <item-list
+            v-if="totalIngrdnts.sailors.length > 0"
             :items="totalIngrdnts.sailors"
             columnNum="10"
             class="sailors"
