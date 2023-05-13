@@ -6,6 +6,7 @@
     :is-item="true"
     :custom-match-data-item="true"
     :placeholder="placeholder"
+    :is-full-width="isFullWidth"
     @onSearch="fnSearch"
   >
     <template v-slot:matchDataItem="{ props: matchData }">
@@ -40,6 +41,10 @@ export default {
     placeholder: {
       type: String,
       default: () => "아이템 검색"
+    },
+    isFullWidth: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {

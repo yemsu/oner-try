@@ -1,5 +1,12 @@
 <template>
-  <section :class="['box-search', {'compact':size === 'small'}, size]">
+  <section
+    :class="[
+      'box-search',
+      {'compact': size === 'small'},
+      size,
+      {'full-width': isFullWidth}
+    ]"
+  >
     <h2 class="ir-hidden">{{ searchBoxTitle }}</h2>
     <div :class="[
       'wrap-search',
@@ -95,6 +102,10 @@ export default {
     searchBoxTitle: {
       type: String,
       default: () => '검색'
+    },
+    isFullWidth: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {

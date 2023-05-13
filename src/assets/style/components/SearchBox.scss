@@ -22,6 +22,11 @@
       }
     }
   }
+  &.full-width {
+    .wrap-search {
+      width: 100%;
+    }
+  }
   .wrap-search {
     position: relative;
     transition: width 0.3s;
