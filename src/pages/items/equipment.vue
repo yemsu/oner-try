@@ -119,7 +119,6 @@ export default {
         const filteringOptions = isAllOption ? true
           : checkOptions.length === 1 && checkOptions[0]
         if(filteringOptions === true) return true
-        else if(filteringOptions.length === checkOptionsByGrade.length) return true
       })
       
       this.resultEquipments = resultEquipments
