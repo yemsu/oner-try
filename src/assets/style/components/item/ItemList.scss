@@ -1,6 +1,7 @@
 .list-item {
   display: flex;
   flex-wrap: wrap;
+  gap: 5px;
   @for $i from 2 to 9 {
     &.column-#{$i} {
       display: grid;
