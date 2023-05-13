@@ -32,9 +32,10 @@
               <item-box
                 :item="item"
                 :showBadges="['howGet', 'stack']"
-                :has-click-event="true"
-                @click="$emit('delete', { item, index})"
-                title="클릭하여 삭제"
+                :is-link="!makingMode"
+                :has-click-event="makingMode"
+                @click="makingMode && $emit('delete', { item, index })"
+                :title="makingMode && '클릭하여 삭제'"
               ></item-box>
             </template>
           </item-list>
