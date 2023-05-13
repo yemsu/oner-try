@@ -4,7 +4,7 @@
       v-for="(item, i) in items"
       :key="`item${i}`"
     >
-      <slot :item="item"></slot>
+      <slot :data="{ item, i }"></slot>
     </li>
   </ul>
 </template>

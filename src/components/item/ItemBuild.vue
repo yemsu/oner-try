@@ -28,12 +28,12 @@
             :type="type"
             :columnNum="columnNum"
           >
-            <template v-slot="{ item }">
+            <template v-slot="{ data: { item, i: index } }">
               <item-box
                 :item="item"
                 :showBadges="['howGet', 'stack']"
                 :has-click-event="true"
-                @click="$emit('delete', item)"
+                @click="$emit('delete', { item, index})"
                 title="클릭하여 삭제"
               ></item-box>
             </template>

@@ -44,7 +44,7 @@
                 :type="activeTab.type"
                 column-num="5"
               >
-                <template v-slot="{ item }">
+                <template v-slot="{ data: { item } }">
                   <item-box
                     :item="item"
                     :is-link="false"
@@ -253,12 +253,8 @@ export default {
 
       return true
     },
-    onDeleteBuildItem(item) {
-      const { type, id } = item
-      this.buildInfo[type] = this.buildInfo[type].map(item => {
-        if(item?.id === id) return null
-        return item
-      })
+    onDeleteBuildItem({ item, index }) {
+      this.buildInfo[item.type].splice(index, 1, null)
       this.ProcessAfterUpdateItem(item)
     }
   },
