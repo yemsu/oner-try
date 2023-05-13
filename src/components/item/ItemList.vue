@@ -1,5 +1,5 @@
 <template>
-  <ul :class="`list-item column-${columnNum} ${size}`">
+  <ul :class="`list-item column-${columnNum}`">
     <li
       v-for="(item, i) in items"
       :key="`item${i}`"
