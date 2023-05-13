@@ -1,15 +1,23 @@
 <template>
-  <dl class="option-bar">
-    <dt class="title">{{ title }}</dt>
-    <div class="wrap-menu list-button-common">
+  <dl
+    :class="`option-bar size-${size}`"
+    :is="title ? 'dl' : 'div'"
+  >
+    <dt v-if="title" class="title">{{ title }}</dt>
+    <div
+      class="wrap-menu"
+      :is="title ? 'div' : 'ul'"
+    >
       <dd
         v-for="(gradeTitle, key) in options"
         :key="`gradeTitle${key}`"
         :class="['menu-filter', {'active': isActiveMenu(key, 'grade')}]"
+        :is="title ? 'dd' : 'li'"
       >
         <base-button
           @click="onClickButton(key)"
           class="button-filter"
+          :size="size"
           type="round"
           :bg="isActiveMenu(key, 'grade') ? 'active': 'inActive'"
         >
@@ -30,11 +38,14 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
     },
     options: {
       type: Object,
       required: true
+    },
+    size: {
+      type: String,
+      default: () => 'medium' // small, medium
     }
   },
   data() {
@@ -79,10 +90,24 @@ export default {
     width: 100px;
   }
   .wrap-menu {
+    display: flex;
+    flex-wrap: wrap;
     flex: 1;
   }
   & + .option-bar {
     border-top: 1px solid var(--border-light-gray);
+  }
+  &.size {
+    &-small {
+      .wrap-menu {
+        gap: 5px;
+      }
+    }
+    &-medium {
+      .wrap-menu {
+        gap: 10px;
+      }
+    }
   }
 }
 </style>
