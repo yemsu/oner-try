@@ -91,7 +91,7 @@ import ItemBuild from '@/components/item/ItemBuild.vue'
 import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
 import VTab from '@/components/common/VTab.vue';
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
-import { itemTypeDefs } from '@/plugins/utils/item-def';
+import { itemTypeDefs, maxStack } from '@/plugins/utils/item-def';
 import { mapGetters, mapActions } from 'vuex';
 import BaseInput from '@/components/common/BaseInput.vue';
 import ALERTS from '@/constants/ALERTS.js'
@@ -182,6 +182,8 @@ export default {
         blankSlotIndex++
         continue
       }
+
+      item.stack = maxStack(item)
 
       this.buildInfo[item.type][blankSlotIndex] = item
       this.ProcessAfterUpdateItem(item)
