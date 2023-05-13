@@ -1,8 +1,11 @@
 <template>
-  <div v-if="description" class="details">
+  <div
+    v-if="description"
+    :class="`details size-${size}`"
+  >
     <p>{{ description }}</p>
   </div>
-  <dl v-else :class="`details type-${type} color-${colorMode} columns-${columns}`">
+  <dl v-else :class="`details type-${type} color-${colorMode} columns-${columns} size-${size}`">
     <div v-if="dropMonster" class="wrap-detail drop-monster">
       <dt :class="['title', {'color-point': highlightTitle}]">획득처</dt>
       <dd>{{ dropMonster }}</dd>
@@ -86,6 +89,10 @@ export default {
     showGradeOption: {
       type: Boolean,
       default: () => false
+    },
+    size: {
+      type: String,
+      default: () => 'medium' // small, medium
     }
   },
   computed: {

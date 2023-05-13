@@ -1,11 +1,11 @@
 <template>
-  <section class="item-table">
+  <section :class="`item-table size-${size}`">
     <h2 class="ir-hidden">결과 아이템 리스트</h2>
     <div class="text-refer top">
       <div class="align-left">
         <p>총 {{ items.length }}개</p>
       </div>
-      <div class="align-right">
+      <!-- <div class="align-right">
         <p 
           v-if="type === 'colleague'"
           class="badge-text-wrap"
@@ -15,10 +15,10 @@
           <span class="badge deBuff">디버프</span>
           는 효과 중첩가능
         </p>
-        <!-- <p v-if="dataDate">{{ dataDate }} 도감 기준</p> -->
-      </div>
+        <p v-if="dataDate">{{ dataDate }} 도감 기준</p>
+      </div> -->
     </div>
-    <table :class="`table-${type}`">
+    <table>
       <colgroup>
         <col
           v-for="(data, i) in tableInfo"
@@ -42,6 +42,9 @@
         <tr
           v-for="(item, i) in items"
           :key="`item-tr2-${i}`"
+          :title="hasClickEvent && '아이템 선택'"
+          :style="hasClickEvent && 'cursor: pointer;'"
+          @click="$emit('click', item)"
         >
           <template
             v-for="(data, i) in tableInfo"
@@ -67,9 +70,11 @@
                   :key="`tableItem${i}`"
                   type="list"
                   :item="tableItem"
-                  :showBadges="['howGet']"
+                  :showBadges="size === 'small' ? [] : ['howGet']"
                   :showTooltip="false"
                   :padding="false"
+                  :is-link="!hasClickEvent"
+                  :size="size === 'small' ? 'xsmall' : size"
                 />
               </template>
               <!-- 옵션 -->
@@ -80,12 +85,14 @@
                 :description="item.description"
                 :markOptions="optionsSelected"
                 :highlight-title="false"
+                :size="size"
               />
               <!-- 인연 / 악연 -->
               <template v-if="data.type === 'synergy'">
                 <synergy-desc
-                  v-if="item.synergies.length !== 0"
+                  v-if="item.synergies && item.synergies.length !== 0"
                   :synergies="item.synergies"
+                  :size="size"
                 />
                 <span v-else>-</span>
               </template>
@@ -104,6 +111,7 @@
                       :options="item.coloOption"
                       :highlightTitle="false"
                       :pureValue="true"
+                      :size="size"
                     />
                   </div>
                   <div v-if="item.coloPassive" class="wrap-passive box-gray">
@@ -127,12 +135,14 @@
                   :options="item.optionsByStack[optionIndex(data)]"
                   :markOptions="optionsSelected"
                   :highlightTitle="false"
+                  :size="size"
                 />
                 <item-detail-info
                   v-if="item.gradeOption"
                   :options="item.gradeOption"
                   :markOptions="optionsSelected"
                   :highlightTitle="false"
+                  :size="size"
                 />
               </div>
               <!-- 장비 등급별 옵션 -->
@@ -171,10 +181,6 @@ import { gradesDef } from '@/plugins/utils/item-def.js'
 
 export default {
   props: {
-    type: {
-      type: String,
-      default: () => '' //sailor colleague ship
-    },
     items: {
       type: Array,
       default: () => []
@@ -187,6 +193,14 @@ export default {
       type: Array,
       required: true
     },
+    size: {
+      type: String,
+      default: () => 'medium' // small, medium
+    },
+    hasClickEvent: {
+      type: Boolean,
+      default: () => false
+    }
   },
   components: {
     SynergyDesc,

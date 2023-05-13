@@ -81,14 +81,12 @@
 <script>
 import TitleContent from '@/components/common/TitleContent.vue'
 import SynergyDesc from '@/components/item/SynergyDesc.vue'
-import EmojiButton from '../common/EmojiButton.vue'
 import { itemTypeDefs } from '@/plugins/utils/item-def'
 
 export default {
   components: {
     TitleContent,
-    SynergyDesc,
-    EmojiButton
+    SynergyDesc
   },
   props: {
     buildInfo: {

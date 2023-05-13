@@ -1,6 +1,5 @@
 <template>
-  <section>
-    <h2 class="ir-hidden">시너지</h2>
+  <div :class="`synergy-desc size-${size}`">
     <dl class="synergies">
       <div
         v-for="(synergy, i) in synergies"
@@ -14,6 +13,7 @@
           <item-detail-info
             :options="synergy.option"
             :highlightTitle="false"
+            :size="size"
           />
         </dd>
         <dd class="sailors badges badge-gap">
@@ -22,14 +22,14 @@
           <span
             v-for="(sailor, i) in synergy.sailors"
             :key="`sailor${i}`"
-            :class="`badge size-big type-round line-${classNegaPosi(synergy)}`"
+            :class="`badge size-${size === 'medium' ? 'big' : size} type-round line-${classNegaPosi(synergy)}`"
           >
             {{ sailor }}
           </span>
         </dd>
       </div>
     </dl>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -38,6 +38,10 @@ export default {
     synergies: {
       type: Array,
       default: () => []
+    },
+    size: {
+      type: String,
+      default: () => 'medium' // small, medium
     }
   },
   methods: {

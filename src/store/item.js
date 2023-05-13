@@ -41,6 +41,7 @@ export const getters = {
   getHeroes: (state) => state.heroes,
   getColleagues: (state) => state.colleagues,
   getSynergies: (state) => state.synergies,
+  getSailorsSynergy: (state) => state.sailors_synergy,
 }
 
 export const mutations = {

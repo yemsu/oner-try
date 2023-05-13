@@ -39,22 +39,16 @@
               {{ data.title }}
             </template>
             <template v-slot:content="{ activeTab }">
-              <item-list
-                :items="itemListData(activeTab.type)"
-                :type="activeTab.type"
-                column-num="5"
-              >
-                <template v-slot="{ data: { item } }">
-                  <item-box
-                    :item="item"
-                    :is-link="false"
-                    type="list"
-                    size="xxsmall"
-                    :has-click-event="true"
-                    @click="selectItem"
-                  />
-                </template>
-              </item-list>
+              <ItemFilterTable
+                v-if="getTableData(activeTab).length > 0"
+                :items-stringified="getTableData(activeTab)"
+                :table-info="getTableInfo(activeTab)"
+                :grade-menus="activeTab.type === 'ship' ? null : gradeMenus"
+                :option-menus="optionMenus"
+                :has-click-event="true"
+                @click="selectItem"
+                size="small"
+              />
             </template>
           </v-tab>
         </section>
@@ -76,7 +70,7 @@
           size="large"
           bg="point"
           @click="onClickSave"
-        >저장</base-button>
+        >빌드 저장</base-button>
       </wrap-buttons>
     </div>
   </div>
@@ -89,9 +83,10 @@ import BaseButton from '@/components/common/BaseButton.vue';
 import WrapButtons from '@/components/common/WrapButtons.vue';
 import ItemBuild from '@/components/item/ItemBuild.vue'
 import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
+import ItemFilterTable from '../../../components/item/ItemFilterTable.vue';
 import VTab from '@/components/common/VTab.vue';
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
-import { itemTypeDefs, maxStack, slotNumbers } from '@/plugins/utils/item-def';
+import { itemTypeDefs, maxStack, slotNumbers, noEquipOptions, gradesDef, equipmentGrades } from '@/plugins/utils/item-def';
 import { getTypeKorName } from '@/plugins/utils/item';
 import { mapGetters, mapActions } from 'vuex';
 import BaseInput from '@/components/common/BaseInput.vue';
@@ -106,7 +101,8 @@ export default {
     BaseInput,
     OptionBar,
     BaseButton,
-    WrapButtons
+    WrapButtons,
+    ItemFilterTable
   },
   head() {
     return setMeta({
@@ -130,7 +126,9 @@ export default {
         synergy: [],
         totalOption: []
       },
-      buildInfoString: null
+      buildInfoString: null,
+      gradeMenus: {},
+      optionMenus: {},
     }
   },
   computed: {
@@ -138,17 +136,31 @@ export default {
       items: 'item/getItems',
       synergies: 'item/getSynergies',
       heroes: 'item/getHeroes',
-      isLogin: 'auth/getIsLogin'
+      isLogin: 'auth/getIsLogin',
+      equipmentsTable: 'item/getEquipmentsTable',
+      sailorsSynergy: 'item/getSailorsSynergy',
+      shipsTable: 'item/getShipsTable',
     }),
     itemTypeDefs() {
       return itemTypeDefs
     }
   },
   async created() {
+    if(this.equipmentsTable.length === 0) await this.getEquipmentsTable()
+    if(this.sailorsSynergy.length === 0) await this.getSailorsSynergy()
+    if(this.shipsTable.length === 0) await this.getShipsTable()
+    const commonMenu = { all: 'ALL' }
+    const gradeMaps = equipmentGrades.reduce((result, keyName) => {
+      result[keyName] = gradesDef[keyName]
+      return result
+    }, {})
+    this.gradeMenus = {...commonMenu, ...gradeMaps}
+    this.optionMenus =  {...commonMenu, ...noEquipOptions}
     if(this.items.length === 0) await this.getItems()
     if(this.synergies.length === 0) await this.getSynergies()
     if(this.heroes.length === 0) await this.getHeroes()
     this.heroOptions = this.heroes.reduce((result, hero) => {
+      if(hero.name.includes('(스킨)')) return result
       result[hero.imageName] = hero.name
       return result
     }, {})
@@ -156,14 +168,15 @@ export default {
     this.setSearchBoxFullData()
     this.setBuildInfoString()
   },
-  mounted() {
-  },
   methods: {
     ...mapActions({
       getItems: 'item/GET_ITEMS',
       getSynergies: 'item/GET_SYNERGIES',
       getHeroes: 'item/GET_HEROES',
-      saveItemBuild: 'itemBuild/POST_ITEM_BUILD'
+      getEquipmentsTable: 'item/GET_EQUIPMENTS_TABLE',
+      getSailorsSynergy: 'item/GET_SAILORS_SYNERGY',
+      getShipsTable: 'item/GET_SHIPS_TABLE',
+      saveItemBuild: 'itemBuild/POST_ITEM_BUILD',
     }),
     setSearchBoxFullData() {
       this.searchBoxFullData = this.items.filter((item) => item.type !== 'etcItem')
@@ -174,7 +187,7 @@ export default {
     setTotalOption() {
       this.buildInfo.totalOption = getTotalOption(this.buildInfo, this.buildInfo.synergy)
     },
-    selectItem(name) {
+    selectItem({ name }) {
       const item = this.items.find((item) => item.name === name)
 
       let blankSlotIndex = 0
@@ -256,7 +269,80 @@ export default {
     onDeleteBuildItem({ item, index }) {
       this.buildInfo[item.type].splice(index, 1, null)
       this.ProcessAfterUpdateItem(item)
-    }
+    },
+    getTableData(activeTab) {
+      switch (activeTab.type) {
+        case 'equipment':
+          return JSON.stringify(this.equipmentsTable)
+        case 'sailor':
+          return JSON.stringify(this.sailorsSynergy)
+        case 'ship':
+          return JSON.stringify(this.shipsTable)
+      }
+    },
+    getTableInfo(activeTab) {
+      switch (activeTab.type) {
+        case 'equipment':
+          return [
+            {
+              title: '장비',
+              type: 'item',
+              width: '20%'
+            },
+            {
+              title: '등급',
+              type: 'grade',
+              width: '7%'
+            },
+            {
+              title: '옵션',
+              type: 'option',
+              width: '28%'
+            },
+            {
+              title: '추가 옵션',
+              type: 'string',
+              key: 'gradeOption',
+              width: '45%'
+            },
+          ]
+        case 'sailor':
+          return [
+            {
+              title: '선원',
+              type: 'item',
+              width: '20%'
+            },
+            {
+              title: '등급',
+              type: 'grade',
+              width: '7%'
+            },
+            {
+              title: '옵션',
+              type: 'option',
+              width: '30%'
+            },
+            {
+              title: '인연 / 악연',
+              type: 'synergy',
+              width: '43%'
+            },
+          ]
+        case 'ship':
+          return [
+            {
+              title: '선박',
+              type: 'item',
+              width: '40%'
+            },
+            {
+              title: '옵션',
+              type: 'option'
+            }
+          ]
+      }
+    },
   },
 }
 </script>

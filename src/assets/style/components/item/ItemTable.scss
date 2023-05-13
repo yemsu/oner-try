@@ -11,23 +11,16 @@ table {
   }
   th {
     vertical-align: middle;
-    padding: 8px 10px;
     background-color: var(--bg-light-gray);
-    font-size: $font-size-S-pc;
     font-weight: normal;
     color: var(--font-gray);
     text-align: left;
   }
   td {
     vertical-align: middle;
-    padding: 15px 10px;
-    font-size: $font-size-S-pc;
     word-break: keep-all;
     &.td-common {
       background-color: var(--bg-light-gray);
-    }
-    .details .wrap-detail {
-      font-size: $font-size-MS-pc;
     }
     .many-text {
       padding: 10px 0 15px;
@@ -110,6 +103,39 @@ table {
       font-size: $font-size-XS-pc;
       color: var(--color-gray-60);
       font-weight: normal;
+    }
+  }
+}
+.item-table {
+  &.size {
+    &-small {
+      .text-refer {
+        p {
+          font-size: $font-size-XS-pc;
+        }
+      }
+      table {
+        th {
+          padding: 3px 5px 3px 10px;
+          font-size: $font-size-XS-pc;
+        }
+        td {
+          padding: 5px;
+          font-size: $font-size-XS-pc;
+        }
+      }
+    }
+    &-medium {
+      table {
+        th {
+          padding: 8px 10px;
+          font-size: $font-size-S-pc;
+        }
+        td {
+          padding: 15px 10px;
+          font-size: $font-size-S-pc;
+        }
+      }
     }
   }
 }

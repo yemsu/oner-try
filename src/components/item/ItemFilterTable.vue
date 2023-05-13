@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="`item-filter-table size-${size}`">
     <section v-if="gradeMenus || optionMenus">
       <h2 class="ir-hidden">필터 선택</h2>
       <option-bar
@@ -7,6 +7,7 @@
         title="등급"
         :options="gradeMenus"
         :select-list="gradesSelected"
+        :size="size"
         @onChange="(list) => gradesSelected = list"
       />
       <option-bar
@@ -14,15 +15,18 @@
         title="옵션"
         :options="optionMenus"
         :select-list="optionsSelected"
+        :size="size"
         @onChange="(list) => optionsSelected = list"
       />
     </section>
-    <div class="mrg-top-medium">
+    <div class="area-item-table">
       <item-table
-        type="equipment"
         :items="tableItems"
         :optionsSelected="optionsSelected"
         :table-info="tableInfo"
+        :has-click-event="hasClickEvent"
+        :size="size"
+        @click="(item) => $emit('click', item)"
       />
     </div>
   </div>
@@ -37,18 +41,15 @@ export default {
   props: {
     items: {
       type: Array,
-      required: true
+      default: () => null
+    },
+    itemsStringified: {
+      type: String,
+      default: () => ''
     },
     tableInfo: {
       type: Array,
       required: true,
-      default: [
-        {
-          title: 'th text',
-          type: 'td type',
-          width: '10%'
-        }
-      ]
     },
     optionMenus: {
       type: Object,
@@ -58,6 +59,14 @@ export default {
       type: Object,
       default: () => null
     },
+    size: {
+      type: String,
+      default: () => 'medium' // small, medium
+    },
+    hasClickEvent: {
+      type: Boolean,
+      default: () => false
+    }
   },
   data() {
     return {
@@ -72,14 +81,18 @@ export default {
     },
     gradesSelected(crr, pre) {
       this.setTableItems()
-    }
+    },
+    itemsStringified(crr) {
+      this.tableItems = JSON.parse(crr)
+    },
   },
   created() {
-    this.tableItems = this.items
+    this.tableItems = this.items || JSON.parse(this.itemsStringified)
   },
   methods: {
     setTableItems() {
-      const tableItems = this.items.filter(item => {
+      const items = this.items || JSON.parse(this.itemsStringified)
+      const tableItems = items.filter(item => {
         const { grade, option } = item
         const isAllGrade = this.gradesSelected.length === 0
         const isAllOption = this.optionsSelected.length === 0
@@ -102,5 +115,19 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.item-filter-table {
+  &.size {
+    &-small {
+      .area-item-table {
+        margin-top: 10px;
+      }
+    }
+    &-medium {
+      .area-item-table {
+        margin-top: 30px;
+      }
+    }
+  }
+}
 </style>
