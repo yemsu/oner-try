@@ -66,6 +66,8 @@
         <item-build
           v-if="buildInfoString"
           :build-info="buildInfoString"
+          :making-mode="true"
+          @delete="onDeleteBuildItem"
         />
       </section>
       <wrap-buttons>
@@ -182,6 +184,9 @@ export default {
       }
 
       this.buildInfo[item.type][blankSlotIndex] = item
+      this.ProcessAfterUpdateItem(item)
+    },
+    ProcessAfterUpdateItem(item) {
       if(item.type === 'sailor') {
         this.buildInfo.synergy = getCharacterSynergies(this.buildInfo.sailor, this.synergies)
       } 
@@ -240,6 +245,14 @@ export default {
 
       return true
     },
+    onDeleteBuildItem(item) {
+      const { type, id } = item
+      this.buildInfo[type] = this.buildInfo[type].map(item => {
+        if(item?.id === id) return null
+        return item
+      })
+      this.ProcessAfterUpdateItem(item)
+    }
   },
 }
 </script>

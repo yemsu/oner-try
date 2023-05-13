@@ -33,6 +33,13 @@
                 :item="item"
                 :showBadges="['howGet', 'stack']"
               ></item-box>
+              <button
+                v-if="makingMode && item"
+                class="button-delete"
+                @click="$emit('delete', item)"
+              >
+                클릭하여 삭제 ❌
+              </button>
             </template>
           </item-list>
         </title-content>
@@ -78,12 +85,14 @@
 <script>
 import TitleContent from '@/components/common/TitleContent.vue'
 import SynergyDesc from '@/components/item/SynergyDesc.vue'
+import EmojiButton from '../common/EmojiButton.vue'
 import { itemTypeDefs } from '@/plugins/utils/item-def'
 
 export default {
   components: {
     TitleContent,
-    SynergyDesc
+    SynergyDesc,
+    EmojiButton
   },
   props: {
     buildInfo: {
@@ -92,6 +101,10 @@ export default {
       required: true,
     },
     showRangeValue: {
+      type: Boolean,
+      default: () => false
+    },
+    makingMode: {
       type: Boolean,
       default: () => false
     }
@@ -129,7 +142,7 @@ export default {
       console.log('JSON.parse(this.buildInfo)',JSON.parse(this.buildInfo))
       return JSON.parse(this.buildInfo)
     }
-  }
+  },
 }
 </script>
 

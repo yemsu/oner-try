@@ -93,7 +93,7 @@ $color-total-option: hsl(39, 100%, 50%);
   --border-gold: #cfa61f;
 
   // bg color
-  --bg-body: var(--color-gray-85);
+  --bg-body: hsl(var(--point-h), 5%, 88%);
   --bg-dark: var(--color-black);
   --bg-dark-gray: var(--color-gray-40);
   --bg-gray: var(--color-gray-80);
@@ -104,6 +104,7 @@ $color-total-option: hsl(39, 100%, 50%);
   --darker-20: hsla(var(--point-h), 15%, 30%, 20%);
   --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
   --lighter-10: hsla(var(--point-h), 15%, 90%, 10%);
+  --lighter-80: hsla(var(--point-h), 5%, 90%, 80%);
 
   // font color
   --font-dark: var(--color-gray-20);
@@ -115,7 +116,7 @@ $color-total-option: hsl(39, 100%, 50%);
   --font-weight-L: 300;
   --font-weight-N: 400;
   --font-weight-B: 600;
-  --font-weight-XB: 600;
+  --font-weight-XB: 700;
 
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
@@ -183,7 +184,9 @@ $color-total-option: hsl(39, 100%, 50%);
   --darker-15: hsla(var(--point-h), 10%, 65%, 15%);
   --darker-20: hsla(var(--point-h), 10%, 65%, 20%);
   --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
-  --lighter-10: hsla(var(--point-h), 15%, 70%, 8%);
+  --lighter-10: hsla(var(--point-h), 10%, 15%, 20%);
+  --lighter-50: hsla(var(--point-h), 5%, 15%, 60%);
+  --lighter-80: hsla(var(--point-h), 5%, 15%, 90%);
 
   // font color
   --font-dark: var(--color-gray-85);
