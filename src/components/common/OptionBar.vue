@@ -86,9 +86,6 @@ export default {
   display: flex;
   padding: 10px;
   background-color: var(--color-white);
-  .title {
-    width: 100px;
-  }
   .wrap-menu {
     display: flex;
     flex-wrap: wrap;
@@ -99,11 +96,18 @@ export default {
   }
   &.size {
     &-small {
+      .title {
+        width: 50px;
+        font-size: $font-size-XS-pc;
+      }
       .wrap-menu {
         gap: 5px;
       }
     }
     &-medium {
+      .title {
+        width: 100px;
+      }
       .wrap-menu {
         gap: 10px;
       }
