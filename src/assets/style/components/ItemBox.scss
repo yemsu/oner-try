@@ -137,6 +137,8 @@ $name-space: 5px;
       &.size {
         &-xxsmall {
           .name {
+            display: flex;
+            align-items: center;
             font-size: $font-size-XS-pc;
           }
         }
