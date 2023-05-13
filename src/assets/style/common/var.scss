@@ -97,6 +97,12 @@ $color-total-option: hsl(39, 100%, 50%);
   --bg-gray: var(--color-gray-80);
   --bg-light-gray: var(--color-gray-95);
 
+  // common color
+  --darker-10: hsla(var(--point-h), 15%, 30%, 8%);
+  --darker-20: hsla(var(--point-h), 15%, 30%, 20%);
+  --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
+  --lighter-10: hsla(var(--point-h), 15%, 90%, 10%);
+
   // font color
   --font-dark: var(--color-gray-20);
   --font-dark-gray: var(--color-gray-30);
@@ -168,6 +174,13 @@ $color-total-option: hsl(39, 100%, 50%);
   --bg-dark-gray: var(--color-gray-80);
   --bg-gray: var(--color-gray-40);
   --bg-light-gray: var(--color-gray-20);
+
+  // common color
+  --darker-10: hsla(var(--point-h), 10%, 65%, 8%);
+  --darker-15: hsla(var(--point-h), 10%, 65%, 15%);
+  --darker-20: hsla(var(--point-h), 10%, 65%, 20%);
+  --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
+  --lighter-10: hsla(var(--point-h), 15%, 70%, 8%);
 
   // font color
   --font-dark: var(--color-gray-85);

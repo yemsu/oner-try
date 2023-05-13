@@ -30,7 +30,7 @@
 }
 
 @mixin scrollBar(
-  $thumbColor: var(--color-gray-85), 
+  $thumbColor: var(--darker-20), 
   $hoverThumbColor: var(--color-gray-65)
 ) {
   scrollbar-arrow-color: var(--color-gray-50);
@@ -40,7 +40,7 @@
   scrollbar-darkshadow-color: var(--color-gray-65);
   scrollbar-base-color: var(--color-gray-95);    
   &::-webkit-scrollbar {
-    width: 7px;
+    width: 5px;
     height: 11px;
   }
   &::-webkit-scrollbar-track {
@@ -48,8 +48,7 @@
   }
   &::-webkit-scrollbar-thumb {
     background-color: $thumbColor;
-    border-radius: 5px;
-    border: 3px solid transparent;
+    border: 2px solid transparent;
     border-left: none;
     background-clip: content-box;
   }
