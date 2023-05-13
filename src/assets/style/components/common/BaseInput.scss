@@ -38,7 +38,8 @@
       padding: 10px 20px;
     }    
   }
-  &.small {
+  &.small,
+  &.xsmall {
     input {
       width: 100%;
       padding: 5px 20px;
@@ -59,7 +60,8 @@
         padding-left: 60px;
       }    
     }
-    &.small {
+    &.small,
+    &.xsmall {
       input {
         padding-left: 20px;
       }

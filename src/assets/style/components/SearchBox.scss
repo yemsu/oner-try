@@ -12,7 +12,8 @@
       width: 500px;
     }
   }
-  &.small {
+  &.small,
+  &.xsmall {
     .wrap-search {
       width: 250px;
       ::v-deep {

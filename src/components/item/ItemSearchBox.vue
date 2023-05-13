@@ -11,10 +11,10 @@
   >
     <template v-slot:matchDataItem="{ props: matchData }">
       <item-box
-        size="small"
+        :size="size"
         type="list"
         :item="findItem(matchData)"
-        :showBadges="['howGet']"
+        :showBadges="size === 'xsmall' ? [] : ['howGet']"
         :showTooltip="false"
         :isLink="false"
       />
@@ -32,7 +32,7 @@ export default {
     },
     size: {
       type: String,
-      default: () => "basic"
+      default: () => "medium"
     },
     fnAfterSearch: {
       type: Function,
