@@ -56,6 +56,7 @@
     }
   }
   &.size {
+    font-size: $font-size-XS-pc;
     &-small {
       &.type {
         &-basic {
@@ -71,6 +72,7 @@
       }
     }
     &-medium {
+      font-size: $font-size-S-pc;
       &.type {
         &-basic {
           font-size: $font-size-MS-pc;
