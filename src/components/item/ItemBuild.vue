@@ -32,14 +32,10 @@
               <item-box
                 :item="item"
                 :showBadges="['howGet', 'stack']"
-              ></item-box>
-              <button
-                v-if="makingMode && item"
-                class="button-delete"
+                :has-click-event="true"
                 @click="$emit('delete', item)"
-              >
-                클릭하여 삭제 ❌
-              </button>
+                title="클릭하여 삭제"
+              ></item-box>
             </template>
           </item-list>
         </title-content>
