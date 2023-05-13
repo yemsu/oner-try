@@ -86,6 +86,7 @@ $color-total-option: hsl(39, 100%, 50%);
 
   // border color
   // 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
+  --border-dark-gray: var(--color-gray-70);
   --border-gray: var(--color-gray-80);
   --border-light-gray: var(--color-gray-90);
   // 아이템 스택 뱃지 라인

@@ -1,73 +1,90 @@
 <template>
-  <section class="inner-size-basic mrg-top-medium">
-    <div class="area-page-title">
-      <h2 class="title badge-text-wrap">빌드 만들기</h2>        
-    </div>
-    <div>
-      <h3>빌드 제목</h3>
-      <base-input
-        :value="buildTitle"
-        @onUpdateInput="onUpdateTitleInput"
-        size="small"
-        placeholder="빌드 제목"
-      />
-    </div>
-    <div>
-      <option-bar
-        title="캐릭터 선택"
-        :options="heroOptions"
-        :select-list="buildCharacters"
-        @onChange="(list) => buildCharacters = list"
-      />
-    </div>
-    <div>
-      <h3>아이템 선택</h3>
-      <item-search-box
-        v-if="searchBoxFullData.length > 0 && items.length > 0"
-        :full-data="searchBoxFullData"
-        :fn-after-search="selectItem"
-        size="small"
-        placeholder="추가할 아이템 검색"
-      />
-      <v-tab :tabs="itemTypeDefs">
-        <template v-slot:tab="{ tab: { data } }">
-          {{ data.title }}
-          {{ data.type }}
-        </template>
-        <template v-slot:content="{ activeTab }">
-          <item-list
-            :items="itemListData(activeTab.type)"
-            :type="activeTab.type"
-            column-num="8"
-          >
-            <template v-slot="{ item }">
-              <item-box
-                :item="item"
-                :is-link="false"
-                type="list"
-                size="xsmall"
-                :has-click-event="true"
-                @click="selectItem"
-              />
-            </template>
-          </item-list>
-        </template>
-      </v-tab>
-    </div>
-    <section>
-      <h2 class="ir-hidden">선택한 아이템빌드</h2>
-      <item-build 
-        v-if="buildInfoString"
-        :build-info="buildInfoString"
-      />
+  <div>
+    <section class="inner-size-basic mrg-top-medium">
+      <div class="area-page-title">
+        <h2 class="title">🔥 빌드 만들기</h2>
+      </div>
     </section>
-    <button @click="onClickSave">저장</button>
-  </section>
+    <div class="wrap-categories">
+      <div class="inner-size-basic">
+        <section class="wrap-category title">
+          <h3 class="title-category">제목</h3>
+          <base-input
+            :value="buildTitle"
+            @onUpdateInput="onUpdateTitleInput"
+            size="small"
+            placeholder="빌드 제목"
+          />
+        </section>
+        <section class="wrap-category character">
+          <h3 class="title-category">캐릭터</h3>
+          <option-bar
+            :options="heroOptions"
+            :select-list="buildCharacters"
+            size="small"
+            @onChange="(list) => buildCharacters = list"
+          />
+        </section>
+        <section class="wrap-category item">
+          <h3 class="title-category">아이템</h3>
+          <item-search-box
+            v-if="searchBoxFullData.length > 0 && items.length > 0"
+            :full-data="searchBoxFullData"
+            :fn-after-search="selectItem"
+            size="small"
+            placeholder="추가할 아이템 검색"
+          />
+          <v-tab :tabs="itemTypeDefs" type="basic">
+            <template v-slot:tab="{ tab: { data } }">
+              {{ data.title }}
+            </template>
+            <template v-slot:content="{ activeTab }">
+              <item-list
+                :items="itemListData(activeTab.type)"
+                :type="activeTab.type"
+                column-num="5"
+              >
+                <template v-slot="{ item }">
+                  <item-box
+                    :item="item"
+                    :is-link="false"
+                    type="list"
+                    size="xxsmall"
+                    :has-click-event="true"
+                    @click="selectItem"
+                  />
+                </template>
+              </item-list>
+            </template>
+          </v-tab>
+        </section>
+      </div>
+    </div>
+    <div class="inner-size-basic">
+      <section>
+        <h2 class="ir-hidden">선택한 아이템빌드</h2>
+        <item-build
+          v-if="buildInfoString"
+          :build-info="buildInfoString"
+        />
+      </section>
+      <wrap-buttons>
+        <base-button
+          type="square-round"
+          size="large"
+          bg="point"
+          @click="onClickSave"
+        >저장</base-button>
+      </wrap-buttons>
+    </div>
+  </div>
 </template>
 
 <script>
 import setMeta from '@/plugins/utils/meta';
-import OptionBar from '../../../components/common/OptionBar.vue';
+import OptionBar from '@/components/common/OptionBar.vue';
+import BaseButton from '@/components/common/BaseButton.vue';
+import WrapButtons from '@/components/common/WrapButtons.vue';
 import ItemBuild from '@/components/item/ItemBuild.vue'
 import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
 import VTab from '@/components/common/VTab.vue';
@@ -84,7 +101,9 @@ export default {
     ItemSearchBox,
     VTab,
     BaseInput,
-    OptionBar
+    OptionBar,
+    BaseButton,
+    WrapButtons
   },
   head() {
     return setMeta({
@@ -226,5 +245,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/pages/character/result.scss';
+@import '@/assets/style/pages/item-build/new.scss';
 </style>
