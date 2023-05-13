@@ -130,6 +130,7 @@ export default {
       buildInfoString: null,
       gradeMenus: {},
       optionMenus: {},
+      isSaveSuccess: false
     }
   },
   computed: {
@@ -169,6 +170,20 @@ export default {
     this.setSearchBoxFullData()
     this.setBuildInfoString()
   },
+  mounted() {
+    this.addBeforeUnloadEvent()
+  },
+  beforeRouteLeave (to, from, next) {
+    if(this.isSaveSuccess) {
+      next()
+      return
+    }
+    const willLeave = confirm('페이지를 떠나시겠습니까? \n변경사항이 저장되지 않을 수 있습니다.')
+    if(willLeave) next()
+  },
+  beforeDestroy() {
+    this.removeBeforeUnloadEvent()
+  },
   methods: {
     ...mapActions({
       getItems: 'item/GET_ITEMS',
@@ -179,6 +194,16 @@ export default {
       getShipsTable: 'item/GET_SHIPS_TABLE',
       saveItemBuild: 'itemBuild/POST_ITEM_BUILD',
     }),
+    addBeforeUnloadEvent() {
+      window.addEventListener('beforeunload', this.confirmClose);
+    },
+    removeBeforeUnloadEvent() {
+      window.removeEventListener('beforeunload', this.confirmClose);
+    },
+    confirmClose(e) {
+      e.preventDefault();
+      e.returnValue = '';
+    },
     setSearchBoxFullData() {
       this.searchBoxFullData = this.items.filter((item) => item.type !== 'etcItem')
     },
@@ -224,17 +249,22 @@ export default {
     onUpdateTitleInput(title) {
       this.buildTitle = title
     },
-    onClickSave() {  
+    async onClickSave() {  
+      const { equipment, sailor, ship } = this.buildInfo
       const passValidation = this.checkValidation()
       if(!passValidation) return
 
-      this.saveItemBuild({
+      const saveSuccess = await this.saveItemBuild({
         title: this.buildTitle,
         characterName: this.stringifyForDB(this.buildCharacters),
         equipments: this.stringifyForDB(equipment), 
         sailor: this.stringifyForDB(sailor), 
         ship: ship[0]?.id
       })
+      
+      if(!saveSuccess) return
+      this.isSaveSuccess = true
+      this.$router.push('/item-build/my')
     },
     stringifyForDB(itemList) {
       return itemList

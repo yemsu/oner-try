@@ -18,7 +18,11 @@ export const mutations = {
 export const actions = {
   async POST_ITEM_BUILD({}, itemBuild) {
     const res = await postItemBuild(itemBuild)
-    if(!res) alert(ALERTS.ITEM_SETTING.FAIL)
+    if(!res) {
+      alert(ALERTS.ITEM_SETTING.FAIL)
+      return false
+    }
     alert(ALERTS.ITEM_SETTING.SUCCESS)
+    return true
   },
 }
