@@ -338,15 +338,16 @@ caption, .ir-hidden {
 
 // title
 .area-page-title {
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid var(--border-dark-gray);
   margin-bottom: 10px;
   padding-bottom: 2px;
   letter-spacing: 0.01em;
   font-weight: var(--font-weight-N);
   > .title {
-    font-weight: var(--font-weight-B);
+    font-weight: var(--font-weight-XB);
   }
   .skull {
+    font-weight: var(--font-weight-B);
     font-size: 1.1em;
   }
 }
