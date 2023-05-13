@@ -41,6 +41,9 @@
     }
   }
   &.size {
+    &-xxsmall {
+      @include setSize($item-image-xxsmall);
+    }
     &-xsmall {
       @include setSize($item-image-xsmall);
     }

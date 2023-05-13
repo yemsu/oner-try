@@ -47,6 +47,11 @@ $name-space: 5px;
     background-color: transparent;
   }
   &.size {
+    &-xxsmall {
+      .item-blank {
+        height: $item-image-xxsmall;
+      }
+    }
     &-xsmall {
       .item-blank {
         height: $item-image-xsmall;
@@ -89,6 +94,9 @@ $name-space: 5px;
         }
       }
       &.size {
+        &-xxsmall {
+          width: $item-image-xxsmall;
+        }
         &-xsmall {
           width: $item-image-xsmall;
         }
@@ -126,6 +134,11 @@ $name-space: 5px;
         }
       }  
       &.size {
+        &-xxsmall {
+          .name {
+            font-size: $font-size-XS-pc;
+          }
+        }
         &-xsmall {
           .name {
             font-size: $font-size-S-pc;

@@ -94,7 +94,7 @@ export default {
     },
     size: {
       type: String,
-      default: () => 'basic' // xsmall, small, big
+      default: () => 'basic' // xxsmall, xsmall, small, big
     },
     type: {
       type: String,
