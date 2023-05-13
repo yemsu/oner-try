@@ -47,7 +47,7 @@
                 :grade-menus="activeTab.type === 'ship' ? null : gradeMenus"
                 :option-menus="optionMenus"
                 :has-click-event="true"
-                @click="selectItem"
+                @click="(item) => selectItem(item.name)"
                 size="small"
               />
             </template>
@@ -188,8 +188,8 @@ export default {
     setTotalOption() {
       this.buildInfo.totalOption = getTotalOption(this.buildInfo, this.buildInfo.synergy)
     },
-    selectItem({ name }) {
-      const item = this.items.find((item) => item.name === name)
+    selectItem(itemName) {
+      const item = this.items.find((item) => item.name === itemName)
 
       let blankSlotIndex = 0
       for(const slot of this.buildInfo[item.type]) {
