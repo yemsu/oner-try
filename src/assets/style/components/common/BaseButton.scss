@@ -36,13 +36,13 @@
   }
   &.square-round {
     border-radius: 5px;
+    text-align: center;
     &.size {
       &-medium {
         min-width: 50px;
         padding: 0 10px;
         font-size: $font-size-M-pc;
         line-height: $square-btn-medium-line-height;
-        text-align: center;
         .text {
           opacity: .8;
         }
@@ -55,10 +55,17 @@
           }
         }
       }
+      &-large {
+        min-width: 100px;
+        padding: 0 10px;
+        font-size: $font-size-M-pc;
+        line-height: $square-btn-medium-line-height;
+      }
     }
   }
   &.bg {
-    &-active {
+    &-active,
+    &-point {
       background-color: $color-point;
       color: $color-white;
     }
