@@ -1,28 +1,16 @@
 <template>
   <section>
     <h2 class="ir-hidden">선박 아이템 도감</h2>
-    <section>
-      <h2 class="ir-hidden">필터 선택</h2>
-      <option-bar
-        v-if="optionMenus"
-        title="옵션"
-        :options="optionMenus"
-        :select-list="optionsSelected"
-        @onChange="(list) => optionsSelected = list"
-      />
-    </section>
-    <div class="mrg-top-medium">  
-      <item-table
-        type="ship"
-        :items="resultShips"
-        :optionsSelected="optionsSelected"
-      />
-    </div>
+    <item-filter-table
+      :items="ships"
+      :option-menus="optionMenus"
+      :table-info="tableInfo"
+    />
   </section>
 </template>
 
 <script>
-import OptionBar from '@/components/common/OptionBar.vue';
+import ItemFilterTable from '@/components/item/ItemFilterTable.vue';
 import setMeta from '@/plugins/utils/meta';
 import { noEquipOptions } from '@/plugins/utils/item-def'
 export default {
@@ -34,7 +22,7 @@ export default {
     })
   },
   components: {
-    OptionBar
+    ItemFilterTable
   },
   async asyncData({ store }) {
     const ships = await store.dispatch('item/GET_SHIPS_TABLE')
@@ -47,73 +35,39 @@ export default {
   },
   data() {
     return {
-      optionsSelected: [],
-      resultShips: null
+      tableInfo: [
+        {
+          title: '선박',
+          type: 'item',
+          width: '40%'
+        },
+        {
+          title: '옵션',
+          type: 'option'
+        }
+        // {
+        //   title: '+0',
+        //   type: 'optionsByStack0'
+        // },
+        // {
+        //   title: '+1',
+        //   type: 'optionsByStack1'
+        // },
+        // {
+        //   title: '+2',
+        //   type: 'optionsByStack2'
+        // },
+        // {
+        //   title: '+3',
+        //   type: 'optionsByStack3'
+        // },
+        // {
+        //   title: '+4',
+        //   type: 'optionsByStack4'
+        // },
+      ],
     }
   },
-  watch: {
-    optionsSelected(crr, pre) {
-      this.setResultShips()
-    }
-  },
-  created() {
-    this.resultShips = this.ships
-  },
-  methods: {
-    setResultShips() {
-      const resultShips = this.ships.filter(ship => {
-        const { optionsByStack, option } = ship
-        const targetOptions = optionsByStack ? optionsByStack[4] : option
-        const isAllOption = this.optionsSelected.length === 0
-
-        const optionKeys = targetOptions.map(option => Object.keys(option)[0])
-        const checkListOptions = this.optionsSelected.map(optionsSelected => optionKeys.includes(optionsSelected))
-
-        const checkOptions = [...new Set(checkListOptions)]
-
-        const filteringOptions = isAllOption ? true
-          : checkOptions.length === 1 && checkOptions[0]
-        if(filteringOptions === true) return true
-        else if(filteringOptions.length === targetOptions.length) return true
-      })
-      
-      this.resultShips = resultShips
-    },
-    isActiveMenu(key, type) {
-      const selectList = this[`${type}sSelected`]
-      const isActiveMenu = key === 'all'
-        ? selectList.length === 0
-        : selectList.includes(key)
-      
-      return isActiveMenu
-    },
-    toggleMenu(key, type) {
-      const dataName = `${type}sSelected`
-      if(key === 'all') {
-        this[dataName] = []
-        return
-      }
-      if(this[dataName].includes(key)) {
-        const index = this[dataName].indexOf(key)
-        this[dataName].splice(index, 1)
-      } else {
-        this[dataName].push(key)
-      }     
-    },
-    classNegaPosi(ship) {
-      return ship.coloYn ? 'positive' : 'negative'
-    },
-    classColoPassive(coloPassive) {
-      switch (coloPassive) {
-        case '버프':
-          return 'buff'
-        case '자신':
-          return 'self'
-        case '디버프':
-          return 'deBuff'
-      }
-    }
-  }
 }
 </script>
 

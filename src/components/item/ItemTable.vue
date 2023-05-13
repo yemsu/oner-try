@@ -21,7 +21,7 @@
     <table :class="`table-${type}`">
       <colgroup>
         <col
-          v-for="(data, i) in tableData"
+          v-for="(data, i) in tableInfo"
           :key="`col-${i}`"
           :width="data.width"
         >
@@ -29,7 +29,7 @@
       <thead>
         <tr>
           <th
-            v-for="(data, i) in tableData"
+            v-for="(data, i) in tableInfo"
             :key="`th-${i}`"
             scope="col"
             :class="data.align ? `text-${data.align}` : ''"
@@ -44,7 +44,7 @@
           :key="`item-tr2-${i}`"
         >
           <template
-            v-for="(data, i) in tableData"
+            v-for="(data, i) in tableInfo"
           >
             <th
               v-if="data.th"
@@ -182,153 +182,16 @@ export default {
     optionsSelected: {
       type: Array,
       default: () => []
-    }
+    },
+    tableInfo: {
+      type: Array,
+      required: true
+    },
   },
   components: {
     SynergyDesc,
   },
-  data() {
-    return {
-      sailorTableData: [
-        {
-          title: '선원',
-          type: 'item',
-          width: '22%'
-        },
-        {
-          title: '등급',
-          type: 'grade',
-          width: '10%'
-        },
-        {
-          title: '옵션',
-          type: 'option',
-          width: '24%'
-        },
-        {
-          title: '인연 / 악연',
-          type: 'synergy',
-          width: '43%'
-        },
-      ],
-      colleagueTableData: [
-        {
-          title: '동료',
-          type: 'item',
-          width: '20%'
-        },
-        {
-          title: '옵션',
-          type: 'option',
-          width: '22%'
-        },
-        {
-          title: '콜로세움',
-          align: 'center',
-          type: 'coloYn',
-          width: '10%'
-        },
-        {
-          title: '콜로세움 능력치',
-          type: 'coloPassive',
-          width: '43%'
-        },
-      ],
-      shipTableData: [
-        {
-          title: '선박',
-          type: 'item',
-          width: '40%'
-        },
-        {
-          title: '옵션',
-          type: 'option'
-        }
-        // {
-        //   title: '+0',
-        //   type: 'optionsByStack0'
-        // },
-        // {
-        //   title: '+1',
-        //   type: 'optionsByStack1'
-        // },
-        // {
-        //   title: '+2',
-        //   type: 'optionsByStack2'
-        // },
-        // {
-        //   title: '+3',
-        //   type: 'optionsByStack3'
-        // },
-        // {
-        //   title: '+4',
-        //   type: 'optionsByStack4'
-        // },
-      ],
-      equipmentTableData: [
-        {
-          title: '장비',
-          type: 'item',
-          width: '16%'
-        },
-        {
-          title: '등급',
-          type: 'grade',
-          width: '6%'
-        },
-        {
-          title: '옵션',
-          type: 'option',
-          width: '18%'
-        },
-        {
-          title: '추가 옵션',
-          type: 'string',
-          key: 'gradeOption',
-          width: '32%'
-        },
-        {
-          title: '획득처',
-          type: 'string',
-          key: 'dropMonster',
-          width: '28%'
-        },
-      ],
-      potionTableData: [
-        {
-          title: '포션',
-          type: 'item',
-          width: '40%'
-        },
-        {
-          title: '옵션',
-          type: 'option'
-        }
-      ],
-      etcItemTableData: [
-        {
-          title: '재료',
-          type: 'item',
-          width: '30%'
-        },
-        {
-          title: '설명',
-          type: 'option',
-          width: '30%'
-        },
-        {
-          title: '획득처',
-          type: 'string',
-          key: 'dropMonster',
-          width: '40%'
-        }
-      ],
-    }
-  },
   computed: {
-    tableData() {
-      return this[`${this.type}TableData`]
-    },
     dataDate() {
       const dataDate = {
         sailor: '2022.06.12',

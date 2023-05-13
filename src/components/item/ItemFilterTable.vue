@@ -22,6 +22,7 @@
         type="equipment"
         :items="tableItems"
         :optionsSelected="optionsSelected"
+        :table-info="tableInfo"
       />
     </div>
   </div>
@@ -37,6 +38,17 @@ export default {
     items: {
       type: Array,
       required: true
+    },
+    tableInfo: {
+      type: Array,
+      required: true,
+      default: [
+        {
+          title: 'th text',
+          type: 'td type',
+          width: '10%'
+        }
+      ]
     },
     optionMenus: {
       type: Object,

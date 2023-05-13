@@ -5,6 +5,7 @@
       :items="equipments"
       :option-menus="optionMenus"
       :grade-menus="gradeMenus"
+      :table-info="tableInfo"
     />
   </section>
 </template>
@@ -40,6 +41,39 @@ export default {
       gradeMenus
     }
   },
+  data() {
+    return {
+      tableInfo: [
+        {
+          title: '장비',
+          type: 'item',
+          width: '16%'
+        },
+        {
+          title: '등급',
+          type: 'grade',
+          width: '6%'
+        },
+        {
+          title: '옵션',
+          type: 'option',
+          width: '18%'
+        },
+        {
+          title: '추가 옵션',
+          type: 'string',
+          key: 'gradeOption',
+          width: '32%'
+        },
+        {
+          title: '획득처',
+          type: 'string',
+          key: 'dropMonster',
+          width: '28%'
+        },
+      ],
+    }
+  }
 }
 </script>
 
