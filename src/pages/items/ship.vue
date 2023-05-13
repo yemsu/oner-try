@@ -3,25 +3,13 @@
     <h2 class="ir-hidden">선박 아이템 도감</h2>
     <section>
       <h2 class="ir-hidden">필터 선택</h2>
-      <dl class="list-menu-filter">
-        <dt class="title">옵션</dt>
-        <div class="wrap-menu list-button-common">
-          <dd
-            v-for="(optionTitle, key) in optionMenus"
-            :key="`optionTitle${key}`"
-            :class="['menu-filter', {'active': isActiveMenu(key, 'option')}]"
-          >
-            <base-button
-              @click="toggleMenu(key, 'option')"
-              class="button-filter"
-              type="round"
-              :bg="isActiveMenu(key, 'option') ? 'active': 'inActive'"
-            >
-              {{ optionTitle }}
-            </base-button>
-          </dd>
-        </div>
-      </dl>
+      <option-bar
+        v-if="optionMenus"
+        title="옵션"
+        :options="optionMenus"
+        :select-list="optionsSelected"
+        @onChange="(list) => optionsSelected = list"
+      />
     </section>
     <div class="mrg-top-medium">  
       <item-table
@@ -34,8 +22,7 @@
 </template>
 
 <script>
-// import { mapGetters, mapActions, mapMutations } from 'vuex'
-import BaseButton from '@/components/common/BaseButton.vue'
+import OptionBar from '@/components/common/OptionBar.vue';
 import setMeta from '@/plugins/utils/meta';
 import { noEquipOptions } from '@/plugins/utils/item-def'
 export default {
@@ -47,7 +34,7 @@ export default {
     })
   },
   components: {
-    BaseButton
+    OptionBar
   },
   async asyncData({ store }) {
     const ships = await store.dispatch('item/GET_SHIPS_TABLE')

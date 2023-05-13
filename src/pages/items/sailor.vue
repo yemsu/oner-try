@@ -3,44 +3,20 @@
     <h2 class="ir-hidden">선원 아이템 도감</h2>
     <section>
       <h2 class="ir-hidden">필터 선택</h2>
-      <dl class="list-menu-filter">
-        <dt class="title">등급</dt>
-        <div class="wrap-menu list-button-common">
-          <dd
-            v-for="(gradeTitle, key) in gradeMenus"
-            :key="`gradeTitle${key}`"
-            :class="['menu-filter', {'active': isActiveMenu(key, 'grade')}]"
-          >
-            <base-button
-              @click="toggleMenu(key, 'grade')"
-              class="button-filter"
-              type="round"
-              :bg="isActiveMenu(key, 'grade') ? 'active': 'inActive'"
-            >
-              {{ gradeTitle }}
-            </base-button>
-          </dd>
-        </div>
-      </dl>
-      <dl class="list-menu-filter">
-        <dt class="title">옵션</dt>
-        <div class="wrap-menu list-button-common">
-          <dd
-            v-for="(optionTitle, key) in optionMenus"
-            :key="`optionTitle${key}`"
-            :class="['menu-filter', {'active': isActiveMenu(key, 'option')}]"
-          >
-            <base-button
-              @click="toggleMenu(key, 'option')"
-              class="button-filter"
-              type="round"
-              :bg="isActiveMenu(key, 'option') ? 'active': 'inActive'"
-            >
-              {{ optionTitle }}
-            </base-button>
-          </dd>
-        </div>
-      </dl>
+      <option-bar
+        v-if="gradeMenus"
+        title="등급"
+        :options="gradeMenus"
+        :select-list="gradesSelected"
+        @onChange="(list) => gradesSelected = list"
+      />
+      <option-bar
+        v-if="optionMenus"
+        title="옵션"
+        :options="optionMenus"
+        :select-list="optionsSelected"
+        @onChange="(list) => optionsSelected = list"
+      />
     </section>
     <div class="mrg-top-medium">
       <item-table
@@ -53,11 +29,10 @@
 </template>
 
 <script>
-// import { mapGetters, mapActions, mapMutations } from 'vuex'
-import ItemTable from '@/components/item/ItemTable.vue'
-import BaseButton from '@/components/common/BaseButton.vue'
+import OptionBar from '@/components/common/OptionBar.vue';
 import setMeta from '@/plugins/utils/meta';
 import { noEquipOptions, gradesDef, sailorGrades } from '@/plugins/utils/item-def'
+
 export default {
   head() {
     return setMeta({
@@ -67,8 +42,7 @@ export default {
     })
   },
   components: {
-    BaseButton,
-    ItemTable
+    OptionBar
   },
   async asyncData({ store }) {
     const synergySailors =  await store.dispatch('item/GET_SAILORS_SYNERGY')
