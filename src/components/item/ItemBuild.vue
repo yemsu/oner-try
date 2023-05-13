@@ -134,7 +134,6 @@ export default {
   },
   computed: {
     buildData() {
-      console.log('JSON.parse(this.buildInfo)',JSON.parse(this.buildInfo))
       return JSON.parse(this.buildInfo)
     }
   },
