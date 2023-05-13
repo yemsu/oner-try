@@ -24,6 +24,7 @@
         @onFocusInput="focusInput"
         @onBlurInput="blurInput"
         @onEnter="onSearch(useAutoEnter ? matchDataSliced[0] : inputValue)"
+        @onKeydown="isSearching = true"
       />
       
       <search-box-skeleton 
