@@ -78,7 +78,7 @@
         </div>
       </section>
     </template>
-    <item-image v-else :item="item" />
+    <item-image v-else :item="item" :size="size" />
   </div>
 </template>
 

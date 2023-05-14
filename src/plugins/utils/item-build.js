@@ -1,5 +1,5 @@
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
-import { fillDefaultList } from '@/plugins/utils/item'
+import { fillDefaultList, parserStrData, fillDataAndInsertValue } from '@/plugins/utils/item'
 import { remakeDateStr } from '@/plugins/utils/index'
 import { slotNumbers, maxStack } from '@/plugins/utils/item-def'
 
@@ -8,14 +8,19 @@ export const parseItemBuildData = (itemBuild, items, synergies, heroes) => {
   const parseItems = (type) => {
     const itemBuildKeyName = ['equipment', 'sailor'].includes(type)
       ? `${type}s` : type
-      
-    if(!itemBuild[itemBuildKeyName]) return [itemBuild[itemBuildKeyName]]
+    const data = itemBuild[itemBuildKeyName]
+    if(!data) return [data]
+    
+    // stack 설정 가능 전에 저장된 데이터 호환되도록 분기처리
+    const fullData = data.includes(':')
+      ? fillDataAndInsertValue(items, parserStrData(data), 'stack', true)
+      : data.split(',').map(getFullData)
     return fillDefaultList(
-      itemBuild[itemBuildKeyName].split(',').map(getFullData),
+      fullData,
       slotNumbers[type]
     ).map(item => {
       if(!item) return item
-      item.stack = maxStack(item)
+      if(!item.stack) item.stack = maxStack(item)
       return item
     })
   }

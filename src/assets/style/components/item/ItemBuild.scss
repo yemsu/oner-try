@@ -34,6 +34,9 @@ $common-gap: 10px;
     .item-blank {
       margin-bottom: 32px;
     }
+    .list-item > li {
+      min-height: 103px;
+    }
   }
 }
 .wrap-stat-box {
