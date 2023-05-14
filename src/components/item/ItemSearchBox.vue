@@ -12,7 +12,7 @@
   >
     <template v-slot:matchDataItem="{ props: matchData }">
       <item-box
-        :size="size"
+        :size="size === 'xsmall' ? size: 'small'"
         type="list"
         :item="findItem(matchData)"
         :showBadges="size === 'xsmall' ? [] : ['howGet']"
