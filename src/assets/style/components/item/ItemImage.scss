@@ -20,6 +20,11 @@
 
 .item-img {
   overflow: hidden;
+  .item-blank {
+    height: 100%;
+    @include blank();
+    background-color: transparent;
+  }
   .box-img {
     &.blank {
       display: flex;
@@ -41,13 +46,16 @@
     }
   }
   &.size {
+    &-xxsmall {
+      @include setSize($item-image-xxsmall);
+    }
     &-xsmall {
       @include setSize($item-image-xsmall);
     }
     &-small {
       @include setSize($item-image-small);
     }
-    &-basic {
+    &-medium {
       @include setSize($item-image-basic);     
     }
     &-big {
@@ -76,9 +84,9 @@
     }
     .box-img {
       .img-item {
-        width: 150% !important;
-        height: 150% !important;
-        margin: -26% 0 0 -25%;
+        // width: 150% !important;
+        // height: 150% !important;
+        // margin: -26% 0 0 -25%;
         border-radius: 100%;
       }
     }

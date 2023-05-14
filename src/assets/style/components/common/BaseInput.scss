@@ -5,7 +5,7 @@
     width: 100%;
     min-width: 150px;
     padding: 10px;
-    border: 1px solid var(--border-gray);
+    border: 1px solid $color-point;
     border-radius: 30px;
     font-size: inherit;
     line-height: 1;
@@ -38,10 +38,11 @@
       padding: 10px 20px;
     }    
   }
-  &.small {
+  &.small,
+  &.xsmall {
     input {
       width: 100%;
-      padding: 5px 10px;
+      padding: 5px 20px;
     }
     .svg-icon {
       left: 10px;
@@ -59,9 +60,10 @@
         padding-left: 60px;
       }    
     }
-    &.small {
+    &.small,
+    &.xsmall {
       input {
-        padding-left: 30px;
+        padding-left: 20px;
       }
       .svg-icon {
         left: 10px;
@@ -70,9 +72,6 @@
     }
   }
   &:not(.compact) {
-    input {
-      border: 1px solid $color-point;
-    }
     .svg-icon {
       path {
         fill: var(--color-point);

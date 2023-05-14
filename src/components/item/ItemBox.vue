@@ -62,6 +62,7 @@
         <h2 v-if="!visibleDetail && !showName" class="tooltip-title">{{ item.name }}</h2>
         <item-detail-info 
           :colorMode="visibleDetail ? 'black' : 'white'"
+          size="small"
           :options="item.option"
           :dropMonster="item.dropMonster"
           :type="itemDetailInfoType"
@@ -77,7 +78,7 @@
         </div>
       </section>
     </template>
-    <div v-else class="item-blank"></div>
+    <item-image v-else :item="item" />
   </div>
 </template>
 
@@ -94,7 +95,7 @@ export default {
     },
     size: {
       type: String,
-      default: () => 'basic' // xsmall, small, big
+      default: () => 'medium' // xxsmall, xsmall, small, medium, big
     },
     type: {
       type: String,

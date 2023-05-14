@@ -12,7 +12,8 @@
       width: 500px;
     }
   }
-  &.small {
+  &.small,
+  &.xsmall {
     .wrap-search {
       width: 250px;
       ::v-deep {
@@ -20,6 +21,11 @@
           font-size: $font-size-M-pc;
         }
       }
+    }
+  }
+  &.full-width {
+    .wrap-search {
+      width: 100%;
     }
   }
   .wrap-search {

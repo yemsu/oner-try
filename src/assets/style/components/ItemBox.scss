@@ -41,38 +41,6 @@ $name-space: 5px;
       word-break: keep-all;
     }
   }
-  .item-blank {
-    height: 100%;
-    @include blank();
-    background-color: transparent;
-  }
-  &.size {
-    &-xsmall {
-      .item-blank {
-        height: $item-image-xsmall;
-      }
-    }
-    &-small {
-      .item-blank {
-        height: $item-image-small;
-      }
-    }
-    &-basic {
-      .item-blank {
-        height: $item-image-basic;     
-      }
-    }
-    &-big {    
-      .item-blank {
-        height: $item-image-big;  
-      }
-    }
-  }
-  &.round {
-    .item-blank {
-      border-radius: 100%;
-    }
-  }
   &.type {
     &-basic {
       ::v-deep {
@@ -89,13 +57,16 @@ $name-space: 5px;
         }
       }
       &.size {
+        &-xxsmall {
+          width: $item-image-xxsmall;
+        }
         &-xsmall {
           width: $item-image-xsmall;
         }
         &-small {
           width: $item-image-small;
         }
-        &-basic {
+        &-medium {
           width: $item-image-basic;     
         }
         &-big {    
@@ -115,6 +86,7 @@ $name-space: 5px;
     &-list {
       height: 100%;
       box-sizing: border-box;
+      padding: 0;
       .item-box-info {
         display: flex;
         align-items: center;
@@ -126,6 +98,13 @@ $name-space: 5px;
         }
       }  
       &.size {
+        &-xxsmall {
+          .name {
+            display: flex;
+            align-items: center;
+            font-size: $font-size-XS-pc;
+          }
+        }
         &-xsmall {
           .name {
             font-size: $font-size-S-pc;
@@ -146,7 +125,7 @@ $name-space: 5px;
   &.wanted-paper {
     background-color: #d7b993;
     border: 1px solid #333;
-    &.size-basic {
+    &.size-medium {
       .img-wanted {
         width: 55px;
       }

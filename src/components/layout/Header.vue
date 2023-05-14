@@ -50,10 +50,10 @@ export default {
           path: '/items',
           menuName: '아이템도감',
         },
-        // {
-        //   path: '/item-build/my',
-        //   menuName: 'MY 빌드',
-        // },
+        {
+          path: '/item-build/my',
+          menuName: 'MY 빌드',
+        },
       ],
       siteSideMenuList: [
         {
@@ -62,6 +62,12 @@ export default {
         }
       ]
     }
+  },
+  created() {
+    // 점검인 경우 에러 발생
+    const error = new Error()
+    error.statusCode = 600
+    throw error
   }
 }
 </script>

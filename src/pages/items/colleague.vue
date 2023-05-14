@@ -1,43 +1,19 @@
 <template>
   <section>
     <h2 class="ir-hidden">동료 아이템 도감</h2>
-    <section>
-      <h2 class="ir-hidden">필터 선택</h2>
-      <dl class="list-menu-filter">
-        <dt class="title">옵션</dt>
-        <div class="wrap-menu list-button-common">
-          <dd
-            v-for="(optionTitle, key) in optionMenus"
-            :key="`optionTitle${key}`"
-            :class="['menu-filter', {'active': isActiveMenu(key, 'option')}]"
-          >
-            <base-button
-              @click="toggleMenu(key, 'option')"
-              class="button-filter"
-              type="round"
-              :bg="isActiveMenu(key, 'option') ? 'active': 'inActive'"
-            >
-              {{ optionTitle }}
-            </base-button>
-          </dd>
-        </div>
-      </dl>
-    </section>
-    <div class="mrg-top-medium">
-      <item-table
-        type="colleague"
-        :items="resultColleagues"
-        :optionsSelected="optionsSelected"
-      />
-    </div>
+    <item-filter-table
+      :items="colleagues"
+      :option-menus="optionMenus"
+      :table-info="tableInfo"
+    />
   </section>
 </template>
 
 <script>
-// import { mapGetters, mapActions, mapMutations } from 'vuex'
-import BaseButton from '@/components/common/BaseButton.vue'
+import ItemFilterTable from '@/components/item/ItemFilterTable.vue';
 import setMeta from '@/plugins/utils/meta';
 import { noEquipOptions } from '@/plugins/utils/item-def'
+
 export default {
   head() {
     return setMeta({
@@ -47,7 +23,7 @@ export default {
     })
   },
   components: {
-    BaseButton
+    ItemFilterTable
   },
   async asyncData({ store }) {
     const colleagues = await store.dispatch('item/GET_COLLEAGUES')
@@ -60,59 +36,31 @@ export default {
   },
   data() {
     return {
-      optionsSelected: [],
-      resultColleagues: null
+      tableInfo: [
+        {
+          title: '동료',
+          type: 'item',
+          width: '20%'
+        },
+        {
+          title: '옵션',
+          type: 'option',
+          width: '22%'
+        },
+        {
+          title: '콜로세움',
+          align: 'center',
+          type: 'coloYn',
+          width: '10%'
+        },
+        {
+          title: '콜로세움 능력치',
+          type: 'coloPassive',
+          width: '43%'
+        },
+      ],
     }
   },
-  watch: {
-    optionsSelected(crr, pre) {
-      this.setResultColleagues()
-    }
-  },
-  created() {
-    this.resultColleagues = this.colleagues
-  },
-  methods: {
-    setResultColleagues() {
-      const resultColleagues = this.colleagues.filter(colleague => {
-        const { option: options } = colleague
-        const isAllOption = this.optionsSelected.length === 0
-
-        const optionKeys = options.map(option => Object.keys(option)[0])
-        const checkListOptions = this.optionsSelected.map(optionsSelected => optionKeys.includes(optionsSelected))
-
-        const checkOptions = [...new Set(checkListOptions)]
-
-        const filteringOptions = isAllOption ? true
-          : checkOptions.length === 1 && checkOptions[0]
-        if(filteringOptions === true) return true
-        else if(filteringOptions.length === options.length) return true
-      })
-      
-      this.resultColleagues = resultColleagues
-    },
-    isActiveMenu(key, type) {
-      const selectList = this[`${type}sSelected`]
-      const isActiveMenu = key === 'all'
-        ? selectList.length === 0
-        : selectList.includes(key)
-      
-      return isActiveMenu
-    },
-    toggleMenu(key, type) {
-      const dataName = `${type}sSelected`
-      if(key === 'all') {
-        this[dataName] = []
-        return
-      }
-      if(this[dataName].includes(key)) {
-        const index = this[dataName].indexOf(key)
-        this[dataName].splice(index, 1)
-      } else {
-        this[dataName].push(key)
-      }     
-    },
-  }
 }
 </script>
 

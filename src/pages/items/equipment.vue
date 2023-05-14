@@ -1,61 +1,20 @@
 <template>
   <section>
     <h2 class="ir-hidden">장비 아이템 도감</h2>
-    <section>
-      <h2 class="ir-hidden">필터 선택</h2>
-      <dl class="list-menu-filter">
-        <dt class="title">등급</dt>
-        <div class="wrap-menu list-button-common">
-          <dd
-            v-for="(gradeTitle, key) in gradeMenus"
-            :key="`gradeTitle${key}`"
-            :class="['menu-filter', {'active': isActiveMenu(key, 'grade')}]"
-          >
-            <base-button
-              @click="toggleMenu(key, 'grade')"
-              class="button-filter"
-              type="round"
-              :bg="isActiveMenu(key, 'grade') ? 'active': 'inActive'"
-            >
-              {{ gradeTitle }}
-            </base-button>
-          </dd>
-        </div>
-      </dl>
-      <dl class="list-menu-filter">
-        <dt class="title">옵션</dt>
-        <div class="wrap-menu list-button-common">
-          <dd
-            v-for="(optionTitle, key) in optionMenus"
-            :key="`optionTitle${key}`"
-            :class="['menu-filter', {'active': isActiveMenu(key, 'option')}]"
-          >
-            <base-button
-              @click="toggleMenu(key, 'option')"
-              class="button-filter"
-              type="round"
-              :bg="isActiveMenu(key, 'option') ? 'active': 'inActive'"
-            >
-              {{ optionTitle }}
-            </base-button>
-          </dd>
-        </div>
-      </dl>
-    </section>
-    <div class="mrg-top-medium">  
-      <item-table
-        type="equipment"
-        :items="resultEquipments"
-        :optionsSelected="optionsSelected"
-      />
-    </div>
+    <item-filter-table
+      :items="equipments"
+      :option-menus="optionMenus"
+      :grade-menus="gradeMenus"
+      :table-info="tableInfo"
+    />
   </section>
 </template>
 
 <script>
-import BaseButton from '@/components/common/BaseButton.vue'
+import ItemFilterTable from '@/components/item/ItemFilterTable.vue';
 import setMeta from '@/plugins/utils/meta';
 import { noEquipOptions, gradesDef, equipmentGrades } from '@/plugins/utils/item-def'
+
 export default {
   head() {
     return setMeta({
@@ -65,7 +24,7 @@ export default {
     })
   },
   components: {
-    BaseButton
+    ItemFilterTable
   },
   async asyncData({ store }) {
     const equipments = await store.dispatch('item/GET_EQUIPMENTS_TABLE')
@@ -84,83 +43,39 @@ export default {
   },
   data() {
     return {
-      gradesSelected: [],
-      optionsSelected: [],
-      resultEquipments: null
-    }
-  },
-  watch: {
-    optionsSelected(crr, pre) {
-      this.setResultEquipments()
-    },
-    gradesSelected(crr, pre) {
-      this.setResultEquipments()
-    }
-  },
-  created() {
-    console.log('this.equipments', this.equipments)
-    this.resultEquipments = this.equipments
-  },
-  methods: {
-    setResultEquipments() {
-      const resultEquipments = this.equipments.filter(equipment => {
-        const { grade, option } = equipment
-        const isAllGrade = this.gradesSelected.length === 0
-        const isAllOption = this.optionsSelected.length === 0
-        const filteringGrade = isAllGrade ? true
-          : this.gradesSelected.includes(grade)
-        if(!filteringGrade) return false
-        const optionKeys = [...option].map(option => Object.keys(option)[0])
-        const checkListOptions = this.optionsSelected.map(optionsSelected => optionKeys.includes(optionsSelected))
-
-// console.log('optionKeys', optionKeys, checkListOptions)
-        const checkOptions = [...new Set(checkListOptions)]
-
-        const filteringOptions = isAllOption ? true
-          : checkOptions.length === 1 && checkOptions[0]
-        if(filteringOptions === true) return true
-      })
-      
-      this.resultEquipments = resultEquipments
-    },
-    isActiveMenu(key, type) {
-      const selectList = this[`${type}sSelected`]
-      const isActiveMenu = key === 'all'
-        ? selectList.length === 0
-        : selectList.includes(key)
-      
-      return isActiveMenu
-    },
-    toggleMenu(key, type) {
-      const dataName = `${type}sSelected`
-      if(key === 'all') {
-        this[dataName] = []
-        return
-      }
-      if(this[dataName].includes(key)) {
-        const index = this[dataName].indexOf(key)
-        this[dataName].splice(index, 1)
-      } else {
-        this[dataName].push(key)
-      }     
-    },
-    classNegaPosi(equipment) {
-      return equipment.coloYn ? 'positive' : 'negative'
-    },
-    classColoPassive(coloPassive) {
-      switch (coloPassive) {
-        case '버프':
-          return 'buff'
-        case '자신':
-          return 'self'
-        case '디버프':
-          return 'deBuff'
-      }
+      tableInfo: [
+        {
+          title: '장비',
+          type: 'item',
+          width: '16%'
+        },
+        {
+          title: '등급',
+          type: 'grade',
+          width: '6%'
+        },
+        {
+          title: '옵션',
+          type: 'option',
+          width: '18%'
+        },
+        {
+          title: '추가 옵션',
+          type: 'string',
+          key: 'gradeOption',
+          width: '32%'
+        },
+        {
+          title: '획득처',
+          type: 'string',
+          key: 'dropMonster',
+          width: '28%'
+        },
+      ],
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/pages/items/table.scss';
 </style>

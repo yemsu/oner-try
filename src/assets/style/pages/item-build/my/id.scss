@@ -1,0 +1,13 @@
+.content-top {
+  > .inner-size-basic {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .area-page-title {
+    .wrap-sub-info {
+      font-size: $font-size-S-pc;
+      color: var(--font-gray);
+    }
+  }
+}

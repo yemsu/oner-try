@@ -1,6 +1,12 @@
 // layout
 $basic-container-width: 1080px;
-$mobile-size: 768px;
+$tablet-size: 1024px;
+$mobile-size: 768px;// layout
+$layout-sizes: (
+  'basic': 1080px,
+  'wide': 1400px,
+  'full': 1920px
+);
 // header
 $top-menu-bar-vtc-pd: 5px;
 $square-btn-medium-line-height: 36px;
@@ -18,8 +24,10 @@ $font-size-M-pc: 15px;
 $font-size-MS-pc: 14px;
 $font-size-S-pc: 13px;
 $font-size-XS-pc: 12px;
+$font-size-XXS-pc: 11px;
 
 // item img size
+$item-image-xxsmall: 20px;
 $item-image-xsmall: 30px;
 $item-image-small: 40px;
 $item-image-basic: 55px;
@@ -85,17 +93,24 @@ $color-total-option: hsl(39, 100%, 50%);
 
   // border color
   // 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
+  --border-dark-gray: var(--color-gray-70);
   --border-gray: var(--color-gray-80);
   --border-light-gray: var(--color-gray-90);
   // 아이템 스택 뱃지 라인
   --border-gold: #cfa61f;
 
   // bg color
-  --bg-body: var(--color-gray-85);
+  --bg-body: hsl(var(--point-h), 5%, 88%);
   --bg-dark: var(--color-black);
   --bg-dark-gray: var(--color-gray-40);
   --bg-gray: var(--color-gray-80);
   --bg-light-gray: var(--color-gray-95);
+
+  // common color
+  --darker-10: hsla(var(--point-h), 15%, 30%, 10%);
+  --darker-20: hsla(var(--point-h), 15%, 30%, 20%);
+  --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
+  --lighter-10: hsla(var(--point-h), 15%, 98%, 35%);
 
   // font color
   --font-dark: var(--color-gray-20);
@@ -104,9 +119,10 @@ $color-total-option: hsl(39, 100%, 50%);
   --font-light-gray: var(--color-gray-50);
 
   // font weight  
-  --font-weight-L: 300;
-  --font-weight-N: 400;
-  --font-weight-B: 600;
+  --font-weight-L: 400;
+  --font-weight-N: 500;
+  --font-weight-B: 700;
+  --font-weight-XB: 800;
 
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
@@ -169,9 +185,15 @@ $color-total-option: hsl(39, 100%, 50%);
   --bg-gray: var(--color-gray-40);
   --bg-light-gray: var(--color-gray-20);
 
+  // common color
+  --darker-10: hsla(var(--point-h), 6%, 85%, 6%);
+  --darker-20: hsla(var(--point-h), 6%, 85%, 12%);
+  --darker-30: hsla(var(--point-h), 6%, 85%, 18%);
+  --lighter-10: hsla(var(--point-h), 6%, 6%, 20%);
+
   // font color
   --font-dark: var(--color-gray-85);
-  --font-dark-gray: var(--color-gray-65);
+  --font-dark-gray: var(--color-gray-70);
   --font-gray: var(--color-gray-55);
   --font-light-gray: ;
 
@@ -179,6 +201,7 @@ $color-total-option: hsl(39, 100%, 50%);
   --font-weight-L: 200;
   --font-weight-N: 300;
   --font-weight-B: 400;
+  --font-weight-XB: 600;
 
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
@@ -205,7 +228,7 @@ $color-total-option: hsl(39, 100%, 50%);
 
   // 기타 컬러
   --wanted-brown: #5a352d;
-  --color-text-highlight: #3f5000;
+  --color-text-highlight: #373d1e;
   --color-green-neon: #5fee27;
   --color-ban: #d00;
 }

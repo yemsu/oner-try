@@ -1,0 +1,27 @@
+.tabs {
+  display: flex;
+}
+
+.wrap-tab {
+  &.type {
+    &-basic {
+      .tabs {
+        .tab {
+          padding: 4px 15px 0;
+          background-color: var(--bg-light-gray);
+          &.active {
+            background-color: var(--color-white);
+          }
+        }
+      }
+      .content {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 300px;
+        padding: 5px;
+        background-color: var(--color-white);
+        @include scrollBar;
+      }
+    }
+  }
+}

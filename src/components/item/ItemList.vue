@@ -1,10 +1,10 @@
 <template>
-  <ul :class="`list-item column-${columnNum} ${size}`">
+  <ul :class="`list-item column-${columnNum}`">
     <li
       v-for="(item, i) in items"
       :key="`item${i}`"
     >
-      <slot :item="item"></slot>
+      <slot :data="{ item, i }"></slot>
     </li>
   </ul>
 </template>
@@ -19,10 +19,6 @@ export default {
     columnNum: {
       type: String,
       default: () => ''
-    },
-    size: {
-      type: String,
-      default: () => 'basic'
     },
   },
   data() {

@@ -20,7 +20,6 @@
           <item-tree-depth
             :items="item.ingredients"
             :depthIndex="1"
-            itemSize="basic"
           >
             <template v-slot="{ props: propsD1 }">
               <div
@@ -31,7 +30,6 @@
                 <item-tree-depth
                   :items="propsD1.ingredients"
                   :depthIndex="2"
-                  itemSize="basic"
                   :class="{ 'show-depth3': dataShowDepth3[`index${propsD1.index}`] }"
                 >
                   <template v-slot="{ props: propsD2 }">

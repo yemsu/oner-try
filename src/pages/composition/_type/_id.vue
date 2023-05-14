@@ -27,7 +27,7 @@
           <section v-if="highRankItems.length !== 0" class="wrap-high-rank">
             <h2 class="title">상위 아이템</h2>
             <item-list :items="highRankItems">
-              <template v-slot="{ item: highRankItems }">
+              <template v-slot="{ data: { item: highRankItems } }">
                 <item-box
                   :item="highRankItems"
                   size="small"
@@ -48,12 +48,12 @@
         </div>
         <title-content v-show="totalIngrdnts" title="Total" class="wrap-total area-item-list emph">
           <item-list
+            v-if="totalIngrdnts.sailors.length > 0"
             :items="totalIngrdnts.sailors"
             columnNum="10"
-            size="xsmall"
             class="sailors"
           >
-            <template v-slot="{ item }">
+            <template v-slot="{ data: { item } }">
               <item-box
                 :item="item"
                 type="list"
@@ -65,9 +65,8 @@
           <item-list
             :items="totalIngrdnts.etcItems"
             columnNum="10"
-            size="xsmall"
           >
-            <template v-slot="{ item }">
+            <template v-slot="{ data: { item } }">
               <item-box
                 :item="item"
                 type="list"

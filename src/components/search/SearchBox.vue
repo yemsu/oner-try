@@ -1,5 +1,12 @@
 <template>
-  <section :class="['box-search', {'compact':size === 'small'}, size]">
+  <section
+    :class="[
+      'box-search',
+      {'compact': size === 'small'},
+      size,
+      {'full-width': isFullWidth}
+    ]"
+  >
     <h2 class="ir-hidden">{{ searchBoxTitle }}</h2>
     <div :class="[
       'wrap-search',
@@ -17,6 +24,7 @@
         @onFocusInput="focusInput"
         @onBlurInput="blurInput"
         @onEnter="onSearch(useAutoEnter ? matchDataSliced[0] : inputValue)"
+        @onKeydown="isSearching = true"
       />
       
       <search-box-skeleton 
@@ -95,6 +103,14 @@ export default {
     searchBoxTitle: {
       type: String,
       default: () => '검색'
+    },
+    isFullWidth: {
+      type: Boolean,
+      default: () => false
+    },
+    showDefaultList: {
+      type: Boolean, 
+      default: () => true
     }
   },
   data() {
@@ -116,6 +132,7 @@ export default {
       return this.rankingList && this.rankingList.length > 0 && !this.inputValue
     },
     matchDataSliced() {
+      if(!this.inputValue && !this.showDefaultList) return []
       if(!this.inputValue && this.showRankingList) return this.rankingList
       const SLICE_NUM = 10
       const noBlank = target => target.replace(/ /g, '')

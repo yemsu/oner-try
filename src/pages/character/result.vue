@@ -12,7 +12,7 @@
       </div>
     </div>
     <section class="inner-size-basic mrg-top-small">
-      <div class="area-page-title">
+      <div class="area-page-title underline">
         <h2 class="title badge-text-wrap">
           <i class="skull">☠</i> 
           {{ nickname }}           

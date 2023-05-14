@@ -6,14 +6,16 @@
     :is-item="true"
     :custom-match-data-item="true"
     :placeholder="placeholder"
+    :is-full-width="isFullWidth"
+    :show-default-list="showDefaultList"
     @onSearch="fnSearch"
   >
     <template v-slot:matchDataItem="{ props: matchData }">
       <item-box
-        size="small"
+        :size="size === 'xsmall' ? size: 'small'"
         type="list"
         :item="findItem(matchData)"
-        :showBadges="['howGet']"
+        :showBadges="size === 'xsmall' ? [] : ['howGet']"
         :showTooltip="false"
         :isLink="false"
       />
@@ -31,7 +33,7 @@ export default {
     },
     size: {
       type: String,
-      default: () => "basic"
+      default: () => "medium"
     },
     fnAfterSearch: {
       type: Function,
@@ -40,6 +42,14 @@ export default {
     placeholder: {
       type: String,
       default: () => "아이템 검색"
+    },
+    isFullWidth: {
+      type: Boolean,
+      default: () => false
+    },
+    showDefaultList: {
+      type: Boolean, 
+      default: () => true
     }
   },
   data() {

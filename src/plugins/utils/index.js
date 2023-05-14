@@ -15,3 +15,9 @@ export const isOnlyNumber = (str) => {
 export const objArrKeys = arr => {
   return arr.map(item => Object.keys(item)[0])
 }
+export const remakeDateStr = (date) => {
+  const [rawDay, rawTime] = date.split('T')
+  const day = rawDay.replace(/-/gi, '.')
+  const [hour, minute] = rawTime.split(':')
+  return `${day} ${hour}:${minute}`
+}

@@ -1,5 +1,5 @@
 import { deepClone, getOnlyText, objArrKeys } from '@/plugins/utils'
-import { gradeScoresDef } from '@/plugins/utils/item-def'
+import { gradeScoresDef, itemTypeDefs } from '@/plugins/utils/item-def'
 
 export const findData = (dataList, key, checkValue) => {
   return dataList.find(data => getOnlyText(data[key]) === getOnlyText(checkValue))
@@ -66,4 +66,7 @@ export const fillDefaultList = (items, numberFixed) => {
   newItems.push(...defaultArr)
 
   return newItems
+}
+export const getTypeKorName = (typeEngName) => {
+  return itemTypeDefs.find(({type}) => type === typeEngName).title
 }

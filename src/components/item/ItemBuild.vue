@@ -2,6 +2,7 @@
 <div>
   <div class="text-refer top">
     <p v-if="buildData.saveDate">최근 세이브: {{ buildData.saveDate }}</p>
+    <p v-else-if="buildData.regDt">{{ buildData.regDt }}</p>
     <p class="align-right">
       <span class="badge-text-wrap">
         <span class="badge black line-gold" data-v-21f97cac="">숫자</span>
@@ -28,10 +29,14 @@
             :type="type"
             :columnNum="columnNum"
           >
-            <template v-slot="{ item }">
+            <template v-slot="{ data: { item, i: index } }">
               <item-box
                 :item="item"
                 :showBadges="['howGet', 'stack']"
+                :is-link="!makingMode"
+                :has-click-event="makingMode"
+                @click="makingMode && $emit('delete', { item, index })"
+                :title="makingMode && '클릭하여 삭제'"
               ></item-box>
             </template>
           </item-list>
@@ -94,6 +99,10 @@ export default {
     showRangeValue: {
       type: Boolean,
       default: () => false
+    },
+    makingMode: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {
@@ -126,10 +135,9 @@ export default {
   },
   computed: {
     buildData() {
-      console.log('JSON.parse(this.buildInfo)',JSON.parse(this.buildInfo))
       return JSON.parse(this.buildInfo)
     }
-  }
+  },
 }
 </script>
 

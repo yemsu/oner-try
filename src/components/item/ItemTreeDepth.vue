@@ -34,7 +34,7 @@ export default {
     },
     itemSize: {
       type: String,
-      default: () => 'small'
+      default: () => 'medium'
     },
   },
 }

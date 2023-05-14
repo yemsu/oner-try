@@ -42,6 +42,11 @@ export const getUserBookmarks = ({ category }) => getApiReturnData(
   '/user/bookmarks', { category }
 )
 
+// item build
+export const getItemBuild = (id) => getApi(`/builds/${id}`)
+export const getItemBuilds = (params) => getApi('/my/builds', { params })
+export const postItemBuild = (itemBuild) => postBodyApi('/builds', itemBuild)
+
 // common
 export const setDefaultHeader = (key, value) => {
   $axios.defaults.headers.common[key] = value
@@ -150,6 +155,11 @@ function getApiReturnData(url = '', params = {}) {
 }
 function postApi(url = '', params = {}) {
   return $axios.post(url, null, { params })
+    .then(res => res)
+    .catch(error => errorHandler('url', error))
+}
+function postBodyApi(url = '', payload = {}) {
+  return $axios.post(url, payload)
     .then(res => res)
     .catch(error => errorHandler('url', error))
 }

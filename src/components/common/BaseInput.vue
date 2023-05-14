@@ -90,7 +90,10 @@ export default {
       this.$emit('onBlurInput')
     },
     onEnter(e) {
-      if(e.key !== 'Enter') return
+      if(e.key !== 'Enter') {
+        this.$emit('onKeydown', this.value)
+        return
+      }
       this.$emit('onEnter', this.value)
     },
     focusToInput() {
