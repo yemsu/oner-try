@@ -102,10 +102,10 @@ $color-total-option: hsl(39, 100%, 50%);
   --bg-light-gray: var(--color-gray-95);
 
   // common color
-  --darker-10: hsla(var(--point-h), 15%, 30%, 8%);
+  --darker-10: hsla(var(--point-h), 15%, 30%, 10%);
   --darker-20: hsla(var(--point-h), 15%, 30%, 20%);
   --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
-  --lighter-10: hsla(var(--point-h), 15%, 98%, 30%);
+  --lighter-10: hsla(var(--point-h), 15%, 98%, 35%);
 
   // font color
   --font-dark: var(--color-gray-20);

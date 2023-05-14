@@ -336,6 +336,15 @@ caption, .ir-hidden {
   }
 }
 
+// content-top 
+.content-top {
+  padding: 10px 0;
+  background-color: var(--bg-light-gray);
+  .area-page-title {
+    margin-bottom: 0;
+  }
+}
+
 // title
 .area-page-title {
   display: flex;
@@ -348,7 +357,8 @@ caption, .ir-hidden {
     border-bottom: 1px solid var(--border-dark-gray);
     margin-bottom: 10px;
   }
-  > .title {
+  > .title,
+  .page-title {
     font-weight: var(--font-weight-XB);
   }
   .skull {

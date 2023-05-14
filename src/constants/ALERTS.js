@@ -11,6 +11,7 @@ export default {
     SAVE_SUCCESS: '빌드가 저장되었습니다.',
     SAVE_FAIL: `빌드 저장에 실패하였습니다. ${FAIL_COMMON}`,
     OVER_SLOT: (slotNumber) => `최대 ${slotNumber}개까지 선택하실 수 있습니다.`,
-    GET_FAIL: `빌드 리스트를 가져오지 못하였습니다. ${FAIL_COMMON}`
+    GET_FAIL: `빌드를 가져오지 못하였습니다. ${FAIL_COMMON}`,
+    GET_LIST_FAIL: `빌드 리스트 가져오지 못하였습니다. ${FAIL_COMMON}`
   }
 }

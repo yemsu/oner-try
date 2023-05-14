@@ -1,18 +1,23 @@
-import { getItemBuilds, postItemBuild } from "@/plugins/utils/https"
+import { getItemBuild, getItemBuilds, postItemBuild } from "@/plugins/utils/https"
 import { parseItemBuildData } from '@/plugins/utils/item-build'
 import ALERTS from "@/constants/ALERTS"
 
 export const state = () => ({
   itemBuilds: [],
+  itemBuild: null,
 })
 
 export const getters = {
   getItemBuilds: (state) => state.itemBuilds,
+  getItemBuild: (state) => state.itemBuild,
 }
 
 export const mutations = {
   SET_ITEM_BUILDS(state, {data}) {
     state.itemBuilds = data
+  },
+  SET_ITEM_BUILD(state, {data}) {
+    state.itemBuild = data
   },
 }
 
@@ -33,7 +38,7 @@ export const actions = {
     })
     // console.log("GET_ITEM_BUILDS", data)
     if(!data) {
-      alert(ALERTS.ITEM_SETTING.GET_FAIL)
+      alert(ALERTS.ITEM_SETTING.GET_LIST_FAIL)
       return false
     }
 
@@ -41,6 +46,24 @@ export const actions = {
       parseItemBuildData(itemBuild, items, synergies, heroes)
     ))
     commit(`SET_ITEM_BUILDS`, { data: newData })
+  },
+  async GET_ITEM_BUILD({ commit, rootState, dispatch }, id) {
+    const { item } = rootState
+    if(item.items.length === 0) await dispatch('item/GET_ITEMS','', { root: true })
+    if(item.synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
+    if(item.heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
+    const items = rootState.item.items
+    const synergies = rootState.item.synergies
+    const heroes = rootState.item.heroes
+    const data = await getItemBuild(id)
+    if(!data) {
+      alert(ALERTS.ITEM_SETTING.GET_FAIL)
+      return false
+    }
+    const newData = parseItemBuildData(data, items, synergies, heroes)
+
+    commit('SET_ITEM_BUILD', { data: newData })
+    return newData
   },
   async POST_ITEM_BUILD({}, itemBuild) {
     const res = await postItemBuild(itemBuild)

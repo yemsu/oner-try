@@ -43,7 +43,8 @@ export const getUserBookmarks = ({ category }) => getApiReturnData(
 )
 
 // item build
-export const getItemBuild = (params) => getApi('/my/builds', { params })
+export const getItemBuild = (id) => getApi(`/builds/${id}`)
+export const getItemBuilds = (params) => getApi('/my/builds', { params })
 export const postItemBuild = (itemBuild) => postBodyApi('/builds', itemBuild)
 
 // common
