@@ -31,12 +31,12 @@
 export default {
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: () => ''
     },
     inputType: {
       type: String,
-      default: () => 'text',
+      default: () => 'text', // text, number
     },
     placeholder: {
       type: String,
@@ -65,6 +65,17 @@ export default {
     id: {
       type: String,
       default: () => ''
+    },
+    isOnFocus: {
+      type: Boolean,
+      default: () => false
+    }
+  },
+  watch: {
+    isOnFocus(crr, prev) {
+      if(crr) {
+        this.focusToInput()
+      }
     }
   },
   mounted() {

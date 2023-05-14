@@ -11,9 +11,10 @@
           <h3 class="title-category">제목</h3>
           <base-input
             :value="buildTitle"
-            @onUpdateInput="onUpdateTitleInput"
             size="small"
             placeholder="빌드 제목"
+            :is-on-focus="isOnFocusTitle"
+            @onUpdateInput="onUpdateTitleInput"
           />
         </section>
         <section class="wrap-category character">
@@ -25,6 +26,32 @@
             size="small"
             @onChange="(list) => buildCharacters = list"
           />
+        </section>
+        <section class="wrap-category selected-item">
+          <h3 class="title-category">아이템 강화 수치 설정</h3>
+          <form @submit="addItem">
+            <div class="area-item">
+              <item-box
+                :item="selectedItem"
+                size="small"
+                type="list"
+              />
+            </div>
+            <base-input
+              input-type="number"
+              :value="itemStack"
+              size="small"
+              placeholder="빌드 제목"
+              :is-on-focus="isOnFocusStack"
+              @onUpdateInput="onUpdateStackInput"
+            />
+            <base-button
+              type="round"
+              bg="point"
+            >
+              아이템 추가
+            </base-button>
+          </form>
         </section>
         <section class="wrap-category item">
           <h3 class="title-category">아이템</h3>
@@ -88,7 +115,7 @@ import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
 import ItemFilterTable from '../../../components/item/ItemFilterTable.vue';
 import VTab from '@/components/common/VTab.vue';
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
-import { itemTypeDefs, maxStack, slotNumbers, noEquipOptions, gradesDef, equipmentGrades } from '@/plugins/utils/item-def';
+import { itemTypeDefs, maxStack, slotNumbers, noEquipOptions, gradesDef, equipmentGrades, canEnhance } from '@/plugins/utils/item-def';
 import { getTypeKorName } from '@/plugins/utils/item';
 import { mapGetters, mapActions } from 'vuex';
 import BaseInput from '@/components/common/BaseInput.vue';
@@ -137,7 +164,11 @@ export default {
       buildInfoString: null,
       gradeMenus: {},
       optionMenus: {},
-      isSaveSuccess: false
+      isSaveSuccess: false,
+      itemStack: 0,
+      selectedItem: null,
+      isOnFocusStack: false,
+      isOnFocusTitle: false,
     }
   },
   computed: {
@@ -220,25 +251,56 @@ export default {
     setTotalOption() {
       this.buildInfo.totalOption = getTotalOption(this.buildInfo, this.buildInfo.synergy)
     },
+    resetSelectItem() {
+      this.selectedItem = null
+      this.itemStack = 0
+    },
     selectItem(itemName) {
       const item = this.items.find((item) => item.name === itemName)
-
+      if(!canEnhance(item)) {
+        this.addItem(null, item)
+        return
+      }
+      if(this.selectedItem?.name === itemName) {
+        this.addItem(null, item)
+        this.resetSelectItem()
+        return
+      }
+      this.selectedItem = item
+      this.itemStack = maxStack(item)
+      this.isOnFocusStack = true
+      setTimeout(() => {
+        this.isOnFocusStack = false
+      }, 500)
+    },
+    onUpdateStackInput(stack) {
+      this.itemStack = stack
+    },
+    addItem(e, item) {
+      e && e.preventDefault()
+      const selectedItem = this.selectedItem || item
+      const { type } = selectedItem
+      if(this.itemStack) {
+        this.selectedItem.stack = this.itemStack
+      }
       let blankSlotIndex = 0
-      for(const slot of this.buildInfo[item.type]) {
+      for(const slot of this.buildInfo[type]) {
         if(!slot) break
         blankSlotIndex++
         continue
       }
 
-
-      if(slotNumbers[item.type] === blankSlotIndex) {
-        alert(`${getTypeKorName(item.type)} 아이템은 ${ALERTS.ITEM_SETTING.OVER_SLOT(slotNumbers[item.type])}`)
+      if(slotNumbers[type] === blankSlotIndex) {
+        alert(`${getTypeKorName(type)} 아이템은 ${ALERTS.ITEM_SETTING.OVER_SLOT(slotNumbers[type])}`)
         return
       }
 
-      item.stack = maxStack(item)
-      this.buildInfo[item.type][blankSlotIndex] = item
-      this.ProcessAfterUpdateItem(item)
+      this.buildInfo[type][blankSlotIndex] = selectedItem
+      this.ProcessAfterUpdateItem(selectedItem)
+      // reset select item
+      if(this.selectedItem) {
+        this.resetSelectItem()
+      }
     },
     ProcessAfterUpdateItem(item) {
       if(item.type === 'sailor') {
@@ -260,10 +322,9 @@ export default {
       const { equipment, sailor, ship } = this.buildInfo
       const passValidation = this.checkValidation()
       if(!passValidation) return
-
       const saveSuccess = await this.saveItemBuild({
         title: this.buildTitle,
-        characterName: this.stringifyForDB(this.buildCharacters),
+        characterName: this.buildCharacters[0],
         equipments: this.stringifyForDB(equipment), 
         sailor: this.stringifyForDB(sailor), 
         ship: ship[0]?.id
@@ -274,10 +335,11 @@ export default {
       this.$router.push('/item-build/my')
     },
     stringifyForDB(itemList) {
-      return itemList
-          .filter((item) => !!item)
-          .map((item) => item?.id || item)
-          .join(',')
+      const dbData = itemList
+        .filter((item) => !!item)
+        .map((item) => `${item.id}:${item.stack}`)
+        .join(',')
+      return dbData
     },
     checkValidation() {
       if(!this.isLogin) {
@@ -289,6 +351,10 @@ export default {
       const alertMessages = []
       if(!this.buildTitle) {
         alertMessages.push(ALERTS.VALIDATIONS.TITLE)
+        this.isOnFocusTitle = true
+        setTimeout(() => {
+          this.isOnFocusTitle = false
+        }, 500)
       }
       if(this.buildCharacters.length === 0) {
         alertMessages.push(ALERTS.VALIDATIONS.CHARACTER)

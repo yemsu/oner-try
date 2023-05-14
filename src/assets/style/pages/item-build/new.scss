@@ -31,5 +31,29 @@
         margin-top: 10px;
       }
     }
+    &.selected-item {
+      grid-column-start: 1;
+      grid-column-end: 3;
+      form {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-right: -20px;
+        padding: 5px;
+        background-color: var(--color-white);
+        .area-item {
+          flex-shrink: 0;
+          width: 172px;
+        }
+      }
+      ::v-deep {
+        .wrap-input {
+          input {
+            width: 70px;
+            min-width: 0;
+          }
+        }
+      }
+    }
   }
 }

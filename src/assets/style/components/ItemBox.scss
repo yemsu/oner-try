@@ -110,6 +110,11 @@ $name-space: 5px;
             font-size: $font-size-S-pc;
           }
         }
+        &-small {
+          .name {
+            font-size: $font-size-MS-pc;
+          }
+        }
         &-big {
           display: flex;
           .area-name {
