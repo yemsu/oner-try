@@ -76,6 +76,8 @@ export default {
       deleteItemBuilds: 'itemBuild/DELETE_ITEM_BUILD'
     }),
     onBuildDelete(id) {
+      const isConfirm = confirm(ALERTS.ITEM_SETTING.DELETE_CONFIRM)
+      if(!isConfirm) return
       this.deleteItemBuilds(id)
     }
   }
