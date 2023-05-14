@@ -1,14 +1,23 @@
 import { optionDefaultValue, optionOrder, valueByStack } from '@/plugins/utils/item-def'
 export const getCharacterSynergies = (sailors, synergies) => {
   const sailorNames = sailors.filter(sailor => sailor).map(sailor => sailor?.name)
-
-  return synergies.filter(synergy => {
+  const characterSynergies = synergies.filter(synergy => {
     const checkArr = synergy.sailors.map(synergySailor => sailorNames.includes(synergySailor))
     const checkSet = new Set(checkArr)
     const isAllTrue = checkSet.size === 1 && [...checkSet][0]
     // console.log(synergy, checkSet.size === 1, checkSet[0])
     return isAllTrue
   })
+  const specialSailors = sailors.filter(sailor => sailor.grade === 'special')
+  // 스페셜 선원 2명 이상인 경우 디버프 적용.
+  if(specialSailors.length >= 2) {
+    characterSynergies.push({
+      name: '스페셜 제한',
+      option: [{ss: '-100'}],
+      sailors: specialSailors.map(sailor => sailor.name)
+    })
+  }
+  return characterSynergies
 }
 export const getTotalOption = (character, characterSynergies) => {
   // const { equipment, sailor, colleague, ship } = character
