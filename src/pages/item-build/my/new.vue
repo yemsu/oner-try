@@ -41,7 +41,8 @@
               input-type="number"
               :value="itemStack"
               size="small"
-              placeholder="빌드 제목"
+              placeholder="스택"
+              maxlength="3"
               :is-on-focus="isOnFocusStack"
               @onUpdateInput="onUpdateStackInput"
             />
