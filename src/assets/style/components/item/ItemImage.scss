@@ -20,6 +20,11 @@
 
 .item-img {
   overflow: hidden;
+  .item-blank {
+    height: 100%;
+    @include blank();
+    background-color: transparent;
+  }
   .box-img {
     &.blank {
       display: flex;

@@ -41,43 +41,6 @@ $name-space: 5px;
       word-break: keep-all;
     }
   }
-  .item-blank {
-    height: 100%;
-    @include blank();
-    background-color: transparent;
-  }
-  &.size {
-    &-xxsmall {
-      .item-blank {
-        height: $item-image-xxsmall;
-      }
-    }
-    &-xsmall {
-      .item-blank {
-        height: $item-image-xsmall;
-      }
-    }
-    &-small {
-      .item-blank {
-        height: $item-image-small;
-      }
-    }
-    &-medium {
-      .item-blank {
-        height: $item-image-basic;     
-      }
-    }
-    &-big {    
-      .item-blank {
-        height: $item-image-big;  
-      }
-    }
-  }
-  &.round {
-    .item-blank {
-      border-radius: 100%;
-    }
-  }
   &.type {
     &-basic {
       ::v-deep {

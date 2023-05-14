@@ -77,7 +77,7 @@
         </div>
       </section>
     </template>
-    <div v-else class="item-blank"></div>
+    <item-image v-else :item="item" />
   </div>
 </template>
 
