@@ -96,7 +96,9 @@ export default {
   methods: {
     getOptionUnit(key) {
       if(this.isCharacterInfo) {
-        return key === '위험도' ? '/LV' : '/p'
+        return key === '위험도' ? '/LV'
+          : key === '레일리' ? '단계'
+          : '/p'
       }
       return noUnitOptions.includes(key) ? '' : '%'
     },
@@ -120,7 +122,8 @@ export default {
       if(canEnhance(this.item)) return this.getRangeValue(option)
       if(!this.showValueDecimal) return value
 
-      const result = this.isCharacterInfo && key !== '위험도'
+      const isIntType = ['위험도', '레일리'].includes(key)
+      const result = this.isCharacterInfo && !isIntType
         ? value.toFixed(2)
         : value
       return result.toLocaleString()
