@@ -9,6 +9,7 @@
       >+ NEW</base-button>
     </div>
     <item-build-list
+      v-if="isLogin"
       :item-builds="itemBuilds"
     />
   </section>
