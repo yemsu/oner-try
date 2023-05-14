@@ -46,6 +46,7 @@ export const getUserBookmarks = ({ category }) => getApiReturnData(
 export const getItemBuild = (id) => getApi(`/builds/${id}`)
 export const getItemBuilds = (params) => getApi('/my/builds', { params })
 export const postItemBuild = (itemBuild) => postBodyApi('/builds', itemBuild)
+export const deleteItemBuild = (id) => deleteApi(`/builds/${id}`)
 
 // common
 export const setDefaultHeader = (key, value) => {

@@ -1,4 +1,4 @@
-import { getItemBuild, getItemBuilds, postItemBuild } from "@/plugins/utils/https"
+import { getItemBuild, getItemBuilds, postItemBuild, deleteItemBuild } from "@/plugins/utils/https"
 import { parseItemBuildData } from '@/plugins/utils/item-build'
 import ALERTS from "@/constants/ALERTS"
 
@@ -18,6 +18,9 @@ export const mutations = {
   },
   SET_ITEM_BUILD(state, {data}) {
     state.itemBuild = data
+  },
+  DELETE_ITEM_BUILDS(state, id) {
+    state.itemBuilds = state.itemBuilds.filter(itemBuild => itemBuild.id !== id)
   },
 }
 
@@ -74,4 +77,14 @@ export const actions = {
     alert(ALERTS.ITEM_SETTING.SAVE_SUCCESS)
     return true
   },
+  async DELETE_ITEM_BUILD({ commit }, id) {
+    const res = await deleteItemBuild(id)
+    if(!res) {
+      alert(ALERTS.ITEM_SETTING.DELETE_FAIL)
+      return false
+    }
+
+    alert(ALERTS.ITEM_SETTING.DELETE_SUCCESS)
+    commit('DELETE_ITEM_BUILDS', id)
+  }
 }
