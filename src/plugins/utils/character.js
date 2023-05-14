@@ -8,7 +8,7 @@ export const getCharacterSynergies = (sailors, synergies) => {
     // console.log(synergy, checkSet.size === 1, checkSet[0])
     return isAllTrue
   })
-  const specialSailors = sailors.filter(sailor => sailor.grade === 'special')
+  const specialSailors = sailors.filter(sailor => sailor?.grade === 'special')
   // 스페셜 선원 2명 이상인 경우 디버프 적용.
   if(specialSailors.length >= 2) {
     characterSynergies.push({

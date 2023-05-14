@@ -8,10 +8,13 @@ export const parseItemBuildData = (itemBuild, items, synergies, heroes) => {
   const parseItems = (type) => {
     const itemBuildKeyName = ['equipment', 'sailor'].includes(type)
       ? `${type}s` : type
+      
+    if(!itemBuild[itemBuildKeyName]) return [itemBuild[itemBuildKeyName]]
     return fillDefaultList(
       itemBuild[itemBuildKeyName].split(',').map(getFullData),
       slotNumbers[type]
     ).map(item => {
+      if(!item) return item
       item.stack = maxStack(item)
       return item
     })
