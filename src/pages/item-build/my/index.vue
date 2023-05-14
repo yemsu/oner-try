@@ -11,6 +11,7 @@
     <item-build-list
       v-if="isLogin"
       :item-builds="itemBuilds"
+      @delete="onBuildDelete"
     />
   </section>
 </template>
@@ -71,8 +72,12 @@ export default {
   },
   methods: {
     ...mapActions({
-      getItemBuilds: 'itemBuild/GET_ITEM_BUILDS'
-    })
+      getItemBuilds: 'itemBuild/GET_ITEM_BUILDS',
+      deleteItemBuilds: 'itemBuild/DELETE_ITEM_BUILD'
+    }),
+    onBuildDelete(id) {
+      this.deleteItemBuilds(id)
+    }
   }
 }
 </script>

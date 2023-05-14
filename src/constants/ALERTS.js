@@ -12,6 +12,8 @@ export default {
     SAVE_FAIL: `빌드 저장에 실패하였습니다. ${FAIL_COMMON}`,
     OVER_SLOT: (slotNumber) => `최대 ${slotNumber}개까지 선택하실 수 있습니다.`,
     GET_FAIL: `빌드를 가져오지 못하였습니다. ${FAIL_COMMON}`,
-    GET_LIST_FAIL: `빌드 리스트 가져오지 못하였습니다. ${FAIL_COMMON}`
+    GET_LIST_FAIL: `빌드 리스트 가져오지 못하였습니다. ${FAIL_COMMON}`,
+    DELETE_FAIL: `빌드 삭제에 실패하였습니다. ${FAIL_COMMON}`,
+    DELETE_SUCCESS: `빌드가 삭제되었습니다`,
   }
 }
