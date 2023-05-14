@@ -53,9 +53,9 @@
             </dl>
           </div>
         </nuxt-link>
-        <div class="wrap-button-delete">
+        <!-- <div class="wrap-button-delete">
           <base-button type="text" size="xsmall" bg="sub">삭제</base-button>
-        </div>
+        </div> -->
       </div>
     </section>
   </div>
