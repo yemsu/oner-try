@@ -1,10 +1,10 @@
 <template>
   <div>
-    <section class="inner-size-basic mrg-top-medium">
+    <div class="inner-size-basic mrg-top-medium">
       <div class="area-page-title">
         <h2 class="title">🔥 빌드 만들기</h2>
       </div>
-    </section>
+    </div>
     <div class="wrap-categories">
       <div class="inner-size-basic">
         <section class="wrap-category title">
@@ -21,6 +21,7 @@
           <option-bar
             :options="heroOptions"
             :select-list="buildCharacters"
+            :can-multi-select="false"
             size="small"
             @onChange="(list) => buildCharacters = list"
           />
