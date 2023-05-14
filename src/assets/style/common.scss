@@ -427,16 +427,8 @@ caption, .ir-hidden {
     color: var(--color-ban);
   }
 }
-[class*="line-"] {
+.text-marking {
   background-color: hsla(var(--hsl-white), 80%);
   color: var(--color-black);
   font-weight: var(--font-weight-N);
-}
-.line {
-  &-positive {
-    border-color: var(--color-point-sub-pale);
-  }
-  &-negative {
-    border-color: var(--color-point-pale);
-  }
 }
