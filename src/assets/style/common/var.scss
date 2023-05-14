@@ -1,7 +1,12 @@
 // layout
 $basic-container-width: 1080px;
 $tablet-size: 1024px;
-$mobile-size: 768px;
+$mobile-size: 768px;// layout
+$layout-sizes: (
+  'basic': 1080px,
+  'wide': 1400px,
+  'full': 1920px
+);
 // header
 $top-menu-bar-vtc-pd: 5px;
 $square-btn-medium-line-height: 36px;

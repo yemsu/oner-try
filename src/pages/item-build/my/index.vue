@@ -18,6 +18,7 @@
 import ItemBuildList from '@/components/item-build/ItemBuildList.vue';
 import BaseButton from '@/components/common/BaseButton.vue'
 import ItemImage from '@/components/item/ItemImage.vue';
+import ALERTS from '@/constants/ALERTS'
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -32,15 +33,32 @@ export default {
   },
   computed: {
     ...mapGetters({
+      isLogin: 'auth/getIsLogin',
       itemBuilds: 'itemBuild/getItemBuilds'
     })
   },
-  async created() {
-    await this.getItemBuilds({
-      character: 'all',
-      page: 1
-    })
-    console.log('itemBuilds', this.itemBuilds)
+  watch: {
+    isLogin(crr, prev) {
+      if(crr && crr !== prev) {
+        this.getItemBuilds({
+          character: 'all',
+          page: 1
+        })
+      }
+    }
+  },
+  async mounted() {
+    this.isLogin && await this.getItemBuilds({
+        character: 'all',
+        page: 1
+      })
+    setTimeout(() => {
+      if(!this.isLogin) {
+        alert(ALERTS.NEED_LOGIN)
+        this.$router.push({ name: 'auth-login' })
+        return
+      }
+    }, 500)
   },
   methods: {
     ...mapActions({

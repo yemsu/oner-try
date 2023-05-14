@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="!isLogin" id="googleLogin"></div>
+    <div v-show="!isLogin" :id="buttonId"></div>
     
     <div v-show="isLogin" class="wrap-dropdown" >
       <button
@@ -21,6 +21,12 @@ import { postGoogleCredential, setDefaultHeader, deleteUser } from "@/plugins/ut
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
+  props: {
+    isInPage: {
+      type: Boolean,
+      default: () => false
+    },
+  },
   data() {
     return {
       authClientId: process.env.AuthClientId,
@@ -35,19 +41,31 @@ export default {
     }),
     isDevEnv() {
       return process.env.NODE_ENV === 'development'
+    },
+    buttonId() {
+      return this.isInPage ? 'googleLogin' : 'googleLoginInPage'
     }
   },
   watch: {
     isLogin(crr, prev) {
       console.log('isLogin : ', 'crr', crr, 'prev', prev, 'userInfo', this.userInfo)
       // 회원 가입 페이지에서 isLogin값 true로 하면 여기서 로그인 처리
-      if(crr && crr !== prev && !this.userInfo) this.fnLogin()
+      if(crr) {
+        !this.userInfo && this.fnLogin()
+      }
     },
     $route(crr, prev) {
       this.checkLoginExpired()
     }
   },
   async mounted() {
+    if(this.isInPage) {
+      setTimeout(() => {
+        this.renderGoogleLoginBtn()
+        this.initGoogleOneTap()
+      }, 200);
+      return
+    }
     this.jToken = sessionStorage.getItem('JUID')
     this.initGoogleLogin()
     this.sendJTokenToNewTab()
@@ -109,12 +127,14 @@ export default {
       google.accounts.id.prompt()
     },
     renderGoogleLoginBtn() {
+      const size = this.isInPage ? 'big' : 'small'
+      const text = this.isInPage ? '' : 'signin'
       google.accounts.id.renderButton(
-        document.getElementById('googleLogin'),
+        document.getElementById(this.buttonId),
         { 
           type: 'standard',
-          size: 'small',
-          text: 'signin',
+          size,
+          text,
           shape: 'rectangular',
           logo_alignment: 'center',
           width: 60
@@ -170,7 +190,7 @@ export default {
         this.renderGoogleLoginBtn()
       }, 100);
       // 로그인 관련 페이지에서 로그아웃 했다면 메인으로 이동
-      if(this.$route.path.includes('/auth/')) this.$router.push('/')
+      if(this.$route.path.includes('/my')) this.$router.push('/')
       // 로그아웃 후 alert message 있다면 띄우기
       alertMsg && alert(alertMsg)
       // user dropdown 메뉴 열려있다면 닫기
