@@ -146,6 +146,7 @@ export const characterInfos = {
   악마의열매숙련도: '악마의 열매 숙련도',
   에피소드숙련도: '에피소드 숙련도',
   위험도: '위험도',
+  레일리: '레일리',
 }
 export const slotNumbers = {
   sailor: 6,
