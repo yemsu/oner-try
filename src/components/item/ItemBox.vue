@@ -62,6 +62,7 @@
         <h2 v-if="!visibleDetail && !showName" class="tooltip-title">{{ item.name }}</h2>
         <item-detail-info 
           :colorMode="visibleDetail ? 'black' : 'white'"
+          size="small"
           :options="item.option"
           :dropMonster="item.dropMonster"
           :type="itemDetailInfoType"
