@@ -53,9 +53,14 @@
             </dl>
           </div>
         </nuxt-link>
-        <!-- <div class="wrap-button-delete">
-          <base-button type="text" size="xsmall" bg="sub">삭제</base-button>
-        </div> -->
+        <div class="wrap-button-delete">
+          <base-button
+            type="text"
+            size="xsmall"
+            bg="sub"
+            @click="$emit('delete', itemBuild.id)"
+          >삭제</base-button>
+        </div>
       </div>
     </section>
   </div>
