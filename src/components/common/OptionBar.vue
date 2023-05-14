@@ -46,6 +46,10 @@ export default {
     size: {
       type: String,
       default: () => 'medium' // small, medium
+    },
+    canMultiSelect: {
+      type: Boolean,
+      default: () => true
     }
   },
   data() {
@@ -58,7 +62,6 @@ export default {
       const isActiveMenu = key === 'all'
         ? this.selectList.length === 0
         : this.selectList.includes(key)
-      
       return isActiveMenu
     },
     toggleMenu(key) {
@@ -67,10 +70,13 @@ export default {
         return
       }
       if(this.selectList.includes(key)) {
+        if(!this.canMultiSelect) return
         const index = this.selectList.indexOf(key)
         this.selectList.splice(index, 1)
       } else {
-        this.selectList.push(key)
+        this.canMultiSelect
+          ? this.selectList.push(key)
+          : this.selectList = [key]
       }    
     },
     onClickButton(key) { 
