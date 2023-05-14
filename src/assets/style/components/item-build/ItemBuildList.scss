@@ -26,13 +26,13 @@
   .wrap-info-top {
     display: flex;
     justify-content: space-between;
+    color: var(--font-dark-gray);
     p {
       &.character {
         font-size: $font-size-S-pc;
       }
       &.regDt {
         font-size: $font-size-XS-pc;
-        color: var(--font-dark-gray);
       }
     }
   }
