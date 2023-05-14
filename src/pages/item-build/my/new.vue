@@ -93,7 +93,6 @@ import { getTypeKorName } from '@/plugins/utils/item';
 import { mapGetters, mapActions } from 'vuex';
 import BaseInput from '@/components/common/BaseInput.vue';
 import ALERTS from '@/constants/ALERTS.js'
-import setMeta from '@/plugins/utils/meta';
 
 export default {
   head() {
