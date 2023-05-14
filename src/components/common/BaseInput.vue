@@ -11,9 +11,9 @@
     <input
       ref="baseInput"
       :id="id"
-      :type="inputType"
       :placeholder="placeholder"
       :value="value"
+      :maxlength="maxlength"
       @input="onUpdateInput"
       @focus="onFocusInput"
       @keydown="onEnter"
@@ -69,6 +69,10 @@ export default {
     isOnFocus: {
       type: Boolean,
       default: () => false
+    },
+    maxlength: {
+      type: String,
+      default: () => null
     }
   },
   watch: {
@@ -92,6 +96,10 @@ export default {
   },
   methods: {
     onUpdateInput(e) {
+      if(this.inputType === 'number') {
+        const number = e.target.value.match(/\d/g)
+        e.target.value = number.join('')
+      }
       this.$emit('onUpdateInput', e.target.value)
     },
     onFocusInput() {
