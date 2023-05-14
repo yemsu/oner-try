@@ -29,6 +29,7 @@
             :wanted-paper="true"
             :size="isActive ? 'xbig' : 'big'"
             :customBadge="`lv.${data.lv}`"
+            :title="data.hero.name"
           ></item-box>
         </template>
         <template v-slot:content="{ activeTab }">
