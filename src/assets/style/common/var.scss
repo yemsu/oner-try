@@ -1,5 +1,6 @@
 // layout
 $basic-container-width: 1080px;
+$tablet-size: 1024px;
 $mobile-size: 768px;
 // header
 $top-menu-bar-vtc-pd: 5px;
@@ -103,8 +104,7 @@ $color-total-option: hsl(39, 100%, 50%);
   --darker-10: hsla(var(--point-h), 15%, 30%, 8%);
   --darker-20: hsla(var(--point-h), 15%, 30%, 20%);
   --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
-  --lighter-10: hsla(var(--point-h), 15%, 90%, 10%);
-  --lighter-80: hsla(var(--point-h), 5%, 90%, 80%);
+  --lighter-10: hsla(var(--point-h), 15%, 98%, 30%);
 
   // font color
   --font-dark: var(--color-gray-20);
@@ -113,10 +113,10 @@ $color-total-option: hsl(39, 100%, 50%);
   --font-light-gray: var(--color-gray-50);
 
   // font weight  
-  --font-weight-L: 300;
-  --font-weight-N: 400;
-  --font-weight-B: 600;
-  --font-weight-XB: 700;
+  --font-weight-L: 400;
+  --font-weight-N: 500;
+  --font-weight-B: 700;
+  --font-weight-XB: 800;
 
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
@@ -180,13 +180,10 @@ $color-total-option: hsl(39, 100%, 50%);
   --bg-light-gray: var(--color-gray-20);
 
   // common color
-  --darker-10: hsla(var(--point-h), 10%, 65%, 8%);
-  --darker-15: hsla(var(--point-h), 10%, 65%, 15%);
-  --darker-20: hsla(var(--point-h), 10%, 65%, 20%);
-  --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
-  --lighter-10: hsla(var(--point-h), 10%, 15%, 20%);
-  --lighter-50: hsla(var(--point-h), 5%, 15%, 60%);
-  --lighter-80: hsla(var(--point-h), 5%, 15%, 90%);
+  --darker-10: hsla(var(--point-h), 6%, 85%, 6%);
+  --darker-20: hsla(var(--point-h), 6%, 85%, 12%);
+  --darker-30: hsla(var(--point-h), 6%, 85%, 18%);
+  --lighter-10: hsla(var(--point-h), 6%, 6%, 20%);
 
   // font color
   --font-dark: var(--color-gray-85);

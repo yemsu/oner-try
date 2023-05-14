@@ -3,6 +3,7 @@
   // padding: 3px 10px;
   // border-radius: 5px;
   // font-weight: 300;
+  display: inline-block;
   &.dark {
     background-color: var(--color-black);
     color: var(--color-white);
@@ -17,6 +18,9 @@
     background-color: rgba(255, 255, 255, 0.2);
   }
   &.size {
+    &-xsmall {
+      font-size: $font-size-XS-pc;
+    }
     &-small {
       font-size: $font-size-S-pc;
     }
@@ -60,6 +64,13 @@
         padding: 0 10px;
         font-size: $font-size-M-pc;
         line-height: $square-btn-medium-line-height;
+      }
+    }
+  }
+  &.text {
+    &.bg {
+      &-sub {
+        color: var(--font-gray);
       }
     }
   }

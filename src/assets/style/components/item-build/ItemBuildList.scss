@@ -1,0 +1,85 @@
+.item-build-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include mobile {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.box-item-build {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 8px;
+  background-color: var(--lighter-10);
+  border: 2px solid transparent;
+  > a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .wrap-info-top {
+    display: flex;
+    justify-content: space-between;
+    p {
+      &.character {
+        font-size: $font-size-S-pc;
+      }
+      &.regDt {
+        font-size: $font-size-XS-pc;
+        color: var(--font-dark-gray);
+      }
+    }
+  }
+  .wrap-info-main {
+    padding-right: 35px;
+    .title {
+      font-size: $font-size-title-XS-pc;
+      font-weight: var(--font-weight-B);
+    }
+    .desc {
+      overflow: hidden;
+      margin-top: 8px;
+      font-size: $font-size-title-XS-pc;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  .wrap-info-bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    font-size: $font-size-XS-pc;
+  }
+  .area-item-list {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+    margin: 0 auto;
+    .wrap-item-list {
+      &.equipment,
+      &.sailor {
+        display: grid;
+        gap: 5px;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .title-item-list {
+        margin-right: 10px;
+        font-size: $font-size-XS-pc;
+        font-weight: var(--font-weight-B);
+        color: var(--font-dark-gray);
+      }
+    }
+  }
+}
+.wrap-button-delete {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  line-height: 1;
+}

@@ -28,11 +28,11 @@ export default {
   props: {
     type: {
       type: String,
-      default: () => '' //icon, mode-wide, round, square-round
+      default: () => '' //icon, mode-wide, round, square-round, text
     },
     bg: {
       type: String,
-      default: () => '' //active, inactive, point
+      default: () => '' //active, inactive, point, sub
     },
     size: {
       type: String,
