@@ -5,7 +5,7 @@
       <base-button
         type="square-round"
         bg="point"
-        link-to="my/new"
+        link-to="/item-build/my/new"
       >+ NEW</base-button>
     </div>
     <item-build-list
