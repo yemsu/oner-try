@@ -61,8 +61,13 @@ export const getCompositionPageViews = () => {
   } })
 }
 export const getCharacterPageViews = () => {
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = today.getMonth() + 1
+  const day = today.getDate()
+  // 어제부터의 데이터 집계
   return getApi(`/characterPageViews`, { params: {
-    startDate: '2023-5-10',
+    startDate: `${year}-${month}-${day}`,
     length: 10
   } })
 }
