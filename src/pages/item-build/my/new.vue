@@ -93,9 +93,16 @@ import { getTypeKorName } from '@/plugins/utils/item';
 import { mapGetters, mapActions } from 'vuex';
 import BaseInput from '@/components/common/BaseInput.vue';
 import ALERTS from '@/constants/ALERTS.js'
+import setMeta from '@/plugins/utils/meta';
 
 export default {
-  name: 'character-result',
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `MY 빌드 만들기`,
+      description: 'MY 빌드 만들기. 나만의 빌드를 만들어볼 수 잇습니다.',
+    })
+  },
   components: {
     ItemBuild,
     ItemSearchBox,

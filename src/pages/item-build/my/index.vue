@@ -21,8 +21,16 @@ import BaseButton from '@/components/common/BaseButton.vue'
 import ItemImage from '@/components/item/ItemImage.vue';
 import ALERTS from '@/constants/ALERTS'
 import { mapGetters, mapActions } from 'vuex';
+import setMeta from '@/plugins/utils/meta';
 
 export default {
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `MY 빌드`,
+      description: 'MY 빌드 메인 페이지. 생성한 MY 빌드 리스트를 확인하고 새로운 빌드를 생성할 수 있습니다.',
+    })
+  },
   components: {
     BaseButton,
     ItemImage,

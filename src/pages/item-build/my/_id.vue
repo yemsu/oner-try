@@ -31,8 +31,16 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import ItemBuild from '../../../components/item/ItemBuild.vue'
+import setMeta from '@/plugins/utils/meta';
 
 export default {
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `${itemBuild.title ? `${itemBuild.title} - ` : ''}MY 빌드`,
+      description: 'MY 빌드 상세페이지. 작성한 빌드에 대한 시너지, 토탈 스탯 등 자세한 내용을 확인할 수 있습니다.',
+    })
+  },
   components: {
     ItemBuild
   },
