@@ -36,11 +36,10 @@ export const actions = {
     })
     // console.log("GET_ITEM_BUILDS", data)
     if(!data) {
-      alert(ALERTS.ITEM_SETTING.FAIL)
+      alert(ALERTS.ITEM_SETTING.GET_FAIL)
       return false
     }
 
-    
     const getFullData = (itemId) => items.find(({id}) => id === itemId)
     const newData = data.map(itemBuild => {
       const characterName = heroes.find(hero => hero.imageName === itemBuild.characterName).name
@@ -68,10 +67,10 @@ export const actions = {
   async POST_ITEM_BUILD({}, itemBuild) {
     const res = await postItemBuild(itemBuild)
     if(!res) {
-      alert(ALERTS.ITEM_SETTING.FAIL)
+      alert(ALERTS.ITEM_SETTING.SAVE_FAIL)
       return false
     }
-    alert(ALERTS.ITEM_SETTING.SUCCESS)
+    alert(ALERTS.ITEM_SETTING.SAVE_SUCCESS)
     return true
   },
 }
