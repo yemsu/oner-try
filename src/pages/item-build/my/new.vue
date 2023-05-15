@@ -328,7 +328,7 @@ export default {
         characterName: this.buildCharacters[0],
         equipments: this.stringifyForDB(equipment), 
         sailor: this.stringifyForDB(sailor), 
-        ship: ship[0]?.id
+        ship: this.stringifyForDB([ship[0]])
       })
       
       if(!saveSuccess) return
