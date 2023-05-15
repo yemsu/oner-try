@@ -55,7 +55,10 @@
           </form>
         </section>
         <section class="wrap-category item">
-          <h3 class="title-category">아이템</h3>
+          <div class="title-category">
+            <h3 class="title-category">아이템</h3>
+            <p class="text-refer">* 선택한 아이템을 한번 더 클릭하면 빌드에 바로 추가됩니다.</p>
+          </div>
           <item-search-box
             v-if="searchBoxFullData.length > 0 && items.length > 0"
             :full-data="searchBoxFullData"
@@ -264,7 +267,7 @@ export default {
     },
     resetSelectItem() {
       this.selectedItem = null
-      this.itemStack = 0
+      // this.itemStack = 0
     },
     selectItem(itemName) {
       const item = this.items.find((item) => item.name === itemName)
@@ -278,7 +281,7 @@ export default {
         return
       }
       this.selectedItem = item
-      this.itemStack = maxStack(item)
+      if(!this.itemStack) this.itemStack = maxStack(item)
       this.isOnFocusStack = true
       setTimeout(() => {
         this.isOnFocusStack = false
