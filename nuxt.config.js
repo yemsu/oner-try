@@ -56,6 +56,7 @@ export default {
   plugins: [
     { src: '~/plugins/vuexPersist', mode: 'client' },
     { src: '~/constants/ALERTS', mode: 'client' },
+    { src: '~/plugins/peer', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

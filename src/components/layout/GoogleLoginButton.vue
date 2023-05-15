@@ -18,6 +18,7 @@
 
 <script>
 import { postGoogleCredential, setDefaultHeader, deleteUser } from "@/plugins/utils/https"
+import Https from "@/plugins/utils/https-new"
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
@@ -145,6 +146,7 @@ export default {
       if(!this.jToken) {
         this.jToken = sessionStorage.getItem('JUID')
       }
+      Https.prototype.jToken = this.jToken
       setDefaultHeader('Authorization', this.jToken)
       const userInfo = await this.getUserInfo()
       console.log('fnLogin userInfo', { userInfo }, this.isLogin)

@@ -1,0 +1,243 @@
+<template>
+  <layout-content-wrap v-if="chatRoom && peer">
+    <h1>{{ chatRoom.title }}</h1>
+    <party-chat
+      :peer-id="nickname"
+      :conn="connections"
+      :chat-messages="chatMessages"
+      @sendMessage="sendMessage"
+    />
+  </layout-content-wrap>  
+  <div v-else></div>
+</template>
+
+<script>
+import PartyChat from '@/components/pages/party/PartyChat.vue'
+import setMeta from '@/plugins/utils/meta';
+import { mapGetters, mapActions, mapMutations } from 'vuex'
+
+export default {
+  head() {
+    return setMeta({
+      url: this.$route.fullPath,
+      title: `${this.chatRoom?.title} - 파티 찾기`,
+    })
+  },
+  components: {
+    PartyChat
+  },
+  data() {
+    return {
+      peer: null,
+      connections: [],
+      remoteIds: [],
+      willLeave: false,
+      chatMessages: [],
+    }
+  },
+  computed: {
+    ...mapGetters({
+      nickname: 'auth/getNickname',
+      chatRoom: 'party/getChatRoom',
+    }),
+    isHost() {
+      return this.chatRoom?.host === this.nickname
+    },
+    memberNicks() {
+      return this.chatRoom.members.map(({nickname}) => nickname)
+    }
+  },
+  async mounted() {
+    const chatRoom = await this.getChatRoom(this.$route.query.id)
+    if(!chatRoom)  {
+      alert(this.$ALERTS.CHAT.NO_ROOM)
+      this.$router.push({ name: 'party' })
+      return
+    }
+    console.log('this.chatRoom', this.chatRoom)
+
+    setTimeout(() => {
+      if(!this.nickname) {
+        alert(this.$ALERTS.NEED_LOGIN)
+        this.$router.push({ name: 'auth-login' })
+        return
+      }
+      this.createPeer()
+      this.subscribeMe()
+
+      window.addEventListener('unload', this.destroyPeer)
+      window.addEventListener('beforeunload', this.confirmClose)
+    }, 200);
+  },
+  beforeDestroy() {    
+    window.removeEventListener('unload', this.destroyPeer);
+    window.removeEventListener('beforeunload', this.confirmClose);
+  },
+  async beforeRouteLeave (to, from, next) {
+    if(!this.chatRoom || !this.peer) {
+      next()
+      return
+    }
+    this.willLeave = confirm(this.$ALERTS.CHAT.CONFIRM_END)
+    if(!this.willLeave) return
+    await this.onDeleteMember(this.nickname)
+    if(this.peer) this.peer.destroy()
+    next()
+  },
+  methods: {
+    ...mapMutations({
+      changeHostState: 'party/CHANGE_HOST',
+      deleteMemberState: 'party/DELETE_MEMBER',
+      addMember: 'party/ADD_MEMBER',
+    }),
+    ...mapActions({
+      getChatRoom: 'party/GET_CHAT_ROOM',
+      postMember: 'party/POST_MEMBER',
+      deleteMember: 'party/DELETE_MEMBER',
+      deleteChatRoom: 'party/DELETE_CHAT_ROOM',
+      patchHost: 'party/PATCH_HOST',
+    }),
+    createPeer() {
+      if(this.peer) return
+      this.peer = new this.$Peer(this.nickname, {
+        host: '13.209.11.12',
+        port: 9000,
+      })      
+      
+      this.peer.on('error', async (error) => {
+        console.error('PEERJS ERROR: ', error)
+      })
+    },
+    subscribeMe() {
+      this.peer.on('open', (id) => {
+        console.log('im open', )
+        if(this.isHost && this.chatRoom.members.length === 1) {
+          this.pushChatMessage(null, `방을 개설하였습니다.`)
+        } else {
+          this.onPostMember(this.nickname)
+          this.startConnection()
+        }
+      })
+      this.peer.on('connection',(dc) => {
+        this.connections.push(dc)
+        this.remoteIds.push(dc.peer)
+        // console.log('connection', dc)
+        this.subscribeMembers(dc)
+      })
+    },
+    async onPostMember(peerId) {
+      if(!this.memberNicks.includes(peerId)) {
+        await this.postMember(this.$route.query.id)
+      }
+    },
+    startConnection() {
+      // start connecting 
+      for(const nickname of this.memberNicks) {
+        const alreadyConnected = Object.keys(this.peer.connections).includes(nickname)
+        if(alreadyConnected) {
+          continue
+        }
+        const connection = this.peer.connect(nickname)
+        this.connections.push(connection)
+        this.subscribeMembers(connection)
+      }
+    },
+    subscribeMembers(connection) {
+      const CHECK_REFRESH_FLAG = 'onertrychatroomRefreshflag'
+      const checkRefreshFlag = () => sessionStorage.getItem(CHECK_REFRESH_FLAG)
+      const deleteRefreshFlag = () => sessionStorage.removeItem(CHECK_REFRESH_FLAG)
+
+      // 다른 멤버가 들어왔을때
+      connection.on('open',() => {
+        if(checkRefreshFlag()) {  // open에 flag 존재하면 refresh임
+          deleteRefreshFlag()
+          return
+        }
+        this.openConnection(connection.peer)
+      })
+      connection.on('close', () => {
+        console.log('connection close', connection.peer)
+        // 새로고침 했을때
+        sessionStorage.setItem(CHECK_REFRESH_FLAG, '1')
+        setTimeout(() => {
+          if(checkRefreshFlag()) { // close에 flag 존재하면 refresh 아님
+            deleteRefreshFlag()
+            this.closeConnection(connection.peer)
+          }
+        }, 1000);
+      })
+      connection.on('disconnected', () => {
+        console.log('connection disconnected', connection.peer)
+      })
+      // 다른 멤버가 메세지를 보냈을때
+      connection.on("data", (message) => {
+        this.pushChatMessage(connection.peer, message)
+      });
+    },
+    openConnection(peerId) {
+      this.pushChatMessage(null, `${peerId}님이 접속하셨습니다.`)
+      if(!this.memberNicks.includes(peerId)) {
+        this.addMember({ nickname: peerId })
+      }
+    },
+    closeConnection(peerId) {
+      console.log("connection close!", this.willLeave, this.nickname)
+      this.pushChatMessage(null, `${peerId}님이 방을 나가셨습니다.`)
+      if(this.willLeave) return
+      // 다른 멤버가 나갔을때 (본인이 나갈때 실행되지 않도록 willLeave 플래그 체크)
+      this.deleteMemberState(peerId)
+      console.log(this.chatRoom)
+      if(this.chatRoom.host === peerId) {
+        this.changeHostState(this.chatRoom.members[0].nickname)
+        this.pushChatMessage(null, `👑 ${this.chatRoom.members[0].nickname}님이 방장이 되셨습니다!`)
+      }
+    },
+    sendMessage({ nickname, message }) {
+      // 내가 메세지를 보내면
+      // 내 화면에 추가되도록 데이터 업데이트
+      this.pushChatMessage(nickname, message)
+      // 멤버들 화면에도 추가되도록 전송
+			for(const connection of this.connections) {
+        connection.send(message)
+      }
+		},
+    pushChatMessage(nickname, message) {
+      const date = new Date()
+      const [time, minute] = date.toLocaleTimeString().split(':')
+      // nickname = null 은 알림 메세지
+      this.chatMessages.push({
+        nickname,
+        message,
+        time: `${time}:${minute}`
+      })
+    },
+    async onDeleteMember(peerId) {
+      const deleteMember = await this.deleteMember(this.$route.query.id)
+      console.log('deleteMember', peerId, deleteMember)
+    },
+    async onPatchHost(peerId) {
+      await this.patchHost({
+        id: this.$route.query.id,
+        host: peerId
+      })
+    },
+    destroyPeer() {
+      if(this.peer) this.peer.destroy()
+      this.onDeleteMember(this.nickname)
+      console.log('unload')
+    },
+    confirmClose(e) {
+      e.preventDefault();
+      e.returnValue = '';
+    },
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+#area-peer {
+  width: 100%;
+  height: 500px;
+  background-color: var(--darker-10);
+}
+</style>
