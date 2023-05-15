@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     onUpdateInput(e) {
-      if(this.inputType === 'number') {
+      if(this.inputType === 'number' && e.target.value) {
         const number = e.target.value.match(/\d/g)
         e.target.value = number.join('')
       }
