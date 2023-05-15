@@ -33,18 +33,27 @@
         @onEnter="onEnterInput"
       />
     </div>
-    <ul class="chat-members">
-      <li
-        v-for="{id, nickname: memberNick} in chatroom.members"
-        :key="`chat-member-${id}`"
-        :class="{ 'me' : memberNick === nickname }"
+    <div>
+      <element-button
+        type="text"
+        size="small"
+        @click="$emit('toggleOnBeep')"
       >
-        <span class="crown-emoji">
-          {{ memberNick === chatroom.host ? '👑' : '😊' }}
-        </span>
-        {{ memberNick }}
-      </li>
-    </ul>
+        채팅 알람 {{ isOnBeep ? '끄기' : '켜기' }}
+      </element-button>
+      <ul class="chat-members">
+        <li
+          v-for="{id, nickname: memberNick} in chatroom.members"
+          :key="`chat-member-${id}`"
+          :class="{ 'me' : memberNick === nickname }"
+        >
+          <span class="crown-emoji">
+            {{ memberNick === chatroom.host ? '👑' : '😊' }}
+          </span>
+          {{ memberNick }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -64,6 +73,10 @@ export default {
     peerId: {
       type: String,
       default: () => ''
+    },
+    isOnBeep: {
+      type: Boolean,
+      default: () => false
     },
   },
   components: {
