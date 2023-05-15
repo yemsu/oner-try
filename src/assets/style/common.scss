@@ -431,8 +431,18 @@ div.text-refer {
     color: var(--color-ban);
   }
 }
-.text-marking {
+// line- 클래스명은 deprecated, 이후 badge타입으로 개선 필요.
+.text-marking,
+[class*="line-"] {
   background-color: hsla(var(--hsl-white), 80%);
   color: var(--color-black);
   font-weight: var(--font-weight-N);
+}
+.line {
+  &-positive {
+    border-color: var(--color-point-sub-pale);
+  }
+  &-negative {
+    border-color: var(--color-point-pale);
+  }
 }
