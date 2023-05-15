@@ -73,7 +73,7 @@
                 v-if="getTableData(activeTab).length > 0"
                 :items-stringified="getTableData(activeTab)"
                 :table-info="getTableInfo(activeTab)"
-                :grade-menus="activeTab.type === 'ship' ? null : gradeMenus"
+                :grade-menus="getGradeMenu(activeTab.type)"
                 :option-menus="optionMenus"
                 :has-click-event="true"
                 @click="(item) => selectItem(item.name)"
@@ -116,7 +116,7 @@ import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
 import ItemFilterTable from '../../../components/item/ItemFilterTable.vue';
 import VTab from '@/components/common/VTab.vue';
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
-import { itemTypeDefs, maxStack, slotNumbers, noEquipOptions, gradesDef, equipmentGrades, canEnhance } from '@/plugins/utils/item-def';
+import { itemTypeDefs, maxStack, slotNumbers, noEquipOptions, gradesDef, equipmentGrades, sailorGrades, canEnhance } from '@/plugins/utils/item-def';
 import { getTypeKorName } from '@/plugins/utils/item';
 import { mapGetters, mapActions } from 'vuex';
 import BaseInput from '@/components/common/BaseInput.vue';
@@ -149,6 +149,7 @@ export default {
   },
   data() {
     return {
+      commonOption: { all: 'ALL' },
       searchBoxFullData: [],
       heroOptions: {},
       buildTitle: '',
@@ -163,7 +164,6 @@ export default {
         totalOption: []
       },
       buildInfoString: null,
-      gradeMenus: {},
       optionMenus: {},
       isSaveSuccess: false,
       itemStack: 0,
@@ -190,13 +190,7 @@ export default {
     if(this.equipmentsTable.length === 0) await this.getEquipmentsTable()
     if(this.sailorsSynergy.length === 0) await this.getSailorsSynergy()
     if(this.shipsTable.length === 0) await this.getShipsTable()
-    const commonMenu = { all: 'ALL' }
-    const gradeMaps = equipmentGrades.reduce((result, keyName) => {
-      result[keyName] = gradesDef[keyName]
-      return result
-    }, {})
-    this.gradeMenus = {...commonMenu, ...gradeMaps}
-    this.optionMenus =  {...commonMenu, ...noEquipOptions}
+    this.optionMenus =  {...this.commonOption, ...noEquipOptions}
     if(this.items.length === 0) await this.getItems()
     if(this.synergies.length === 0) await this.getSynergies()
     if(this.heroes.length === 0) await this.getHeroes()
@@ -224,6 +218,22 @@ export default {
     this.removeBeforeUnloadEvent()
   },
   methods: {
+    getGradeMenu(type) {
+      const getGradeMaps = (itemTypeGrades) => {
+        return itemTypeGrades.reduce((result, keyName) => {
+            result[keyName] = gradesDef[keyName]
+            return result
+          }, {})
+      }
+      switch (type) {
+        case 'equipment':
+          return {...this.commonOption, ...getGradeMaps(equipmentGrades)}
+        case 'sailor':
+          return {...this.commonOption, ...getGradeMaps(sailorGrades)}
+        case 'ship':
+          return null
+      }
+    },
     ...mapActions({
       getItems: 'item/GET_ITEMS',
       getSynergies: 'item/GET_SYNERGIES',
@@ -328,7 +338,7 @@ export default {
         characterName: this.buildCharacters[0],
         equipments: this.stringifyForDB(equipment), 
         sailor: this.stringifyForDB(sailor), 
-        ship: ship[0]?.id
+        ship: this.stringifyForDB([ship[0]])
       })
       
       if(!saveSuccess) return

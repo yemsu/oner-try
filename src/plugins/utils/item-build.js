@@ -9,21 +9,21 @@ export const parseItemBuildData = (itemBuild, items, synergies, heroes) => {
     const itemBuildKeyName = ['equipment', 'sailor'].includes(type)
       ? `${type}s` : type
     const data = itemBuild[itemBuildKeyName]
-    if(!data) return [data]
+    if(!data) return fillDefaultList([null], slotNumbers[type])
     
     // stack 설정 가능 전에 저장된 데이터 호환되도록 분기처리
     const fullData = data.includes(':')
       ? fillDataAndInsertValue(items, parserStrData(data), 'stack', true)
       : data.split(',').map(getFullData)
-    return fillDefaultList(
-      fullData,
-      slotNumbers[type]
-    ).map(item => {
-      if(!item) return item
-      if(!item.stack) item.stack = maxStack(item)
-      return item
-    })
+    return fillDefaultList(fullData, slotNumbers[type])
+      .map(item => {
+        if(!item) return item
+        if(!item.stack) item.stack = maxStack(item)
+        return item
+      })
   }
+
+  console.log('ddd', parseItems('equipment'))
   const hero = heroes.find(hero => hero.imageName === itemBuild.characterName)
   const regDt = remakeDateStr(itemBuild.regDt)
   const equipment = parseItems('equipment')
