@@ -12,6 +12,7 @@ $top-menu-bar-vtc-pd: 5px;
 $square-btn-medium-line-height: 36px;
 $header-game-menu-height: $square-btn-medium-line-height + ($top-menu-bar-vtc-pd * 2);
 $header-site-menu-height: 32px;
+$header-height: $header-game-menu-height + $header-site-menu-height;
 
 // size
 $font-size-title-B-pc: 30px;
@@ -40,6 +41,11 @@ $list-gap-basic: 10px;
 // filter
 $filter-brighter: brightness(120%) saturate(95%);
 $filter-darker: brightness(75%);
+
+// z index
+$floating-z-index: 8;
+$dim-z-index: 9;
+$popup-z-index: 10;
 
 // color maker
 $color-point-hsl: (355, 65%, 45%);
