@@ -120,7 +120,6 @@ import { itemTypeDefs, maxStack, slotNumbers, noEquipOptions, gradesDef, equipme
 import { getTypeKorName } from '@/plugins/utils/item';
 import { mapGetters, mapActions } from 'vuex';
 import BaseInput from '@/components/common/BaseInput.vue';
-import ALERTS from '@/constants/ALERTS.js'
 
 export default {
   head() {
@@ -302,7 +301,7 @@ export default {
       }
 
       if(slotNumbers[type] === blankSlotIndex) {
-        alert(`${getTypeKorName(type)} 아이템은 ${ALERTS.ITEM_SETTING.OVER_SLOT(slotNumbers[type])}`)
+        alert(`${getTypeKorName(type)} 아이템은 ${this.$ALERTS.ITEM_SETTING.OVER_SLOT(slotNumbers[type])}`)
         return
       }
 
@@ -354,25 +353,25 @@ export default {
     },
     checkValidation() {
       if(!this.isLogin) {
-        alert(ALERTS.NEED_LOGIN)
+        alert(this.$ALERTS.NEED_LOGIN)
         return false
       }
       const { equipment, sailor, ship } = this.buildInfo
 
       const alertMessages = []
       if(!this.buildTitle) {
-        alertMessages.push(ALERTS.VALIDATIONS.TITLE)
+        alertMessages.push(this.$ALERTS.VALIDATIONS.TITLE)
         this.isOnFocusTitle = true
         setTimeout(() => {
           this.isOnFocusTitle = false
         }, 500)
       }
       if(this.buildCharacters.length === 0) {
-        alertMessages.push(ALERTS.VALIDATIONS.CHARACTER)
+        alertMessages.push(this.$ALERTS.VALIDATIONS.CHARACTER)
       }
       const items = [...equipment, ...sailor, ...ship].filter(item => item)
       if(items.length === 0) {
-        alertMessages.push(ALERTS.VALIDATIONS.ITEM)
+        alertMessages.push(this.$ALERTS.VALIDATIONS.ITEM)
       }
       if(alertMessages.length > 0) {
         alert(alertMessages.join('\n'))

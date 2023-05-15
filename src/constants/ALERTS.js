@@ -1,6 +1,8 @@
+import Vue from "vue"
+
 const FAIL_COMMON = '문제가 지속될 시 개발자에게 문의해주세요.'
 
-export default {
+const ALERTS = {
   NEED_LOGIN: '로그인 해주세요!',
   VALIDATIONS: {
     TITLE: '제목을 입력해 주세요.',
@@ -18,3 +20,6 @@ export default {
     DELETE_CONFIRM: `빌드를 삭제하시겠습니까?`,
   }
 }
+
+
+Vue.prototype.$ALERTS = ALERTS
