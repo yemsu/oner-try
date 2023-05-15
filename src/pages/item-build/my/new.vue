@@ -264,7 +264,7 @@ export default {
     },
     resetSelectItem() {
       this.selectedItem = null
-      this.itemStack = 0
+      // this.itemStack = 0
     },
     selectItem(itemName) {
       const item = this.items.find((item) => item.name === itemName)
@@ -278,7 +278,7 @@ export default {
         return
       }
       this.selectedItem = item
-      this.itemStack = maxStack(item)
+      if(!this.itemStack) this.itemStack = maxStack(item)
       this.isOnFocusStack = true
       setTimeout(() => {
         this.isOnFocusStack = false
