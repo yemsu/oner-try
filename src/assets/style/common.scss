@@ -304,7 +304,11 @@ caption, .ir-hidden {
   gap: 3px;
 }
 //  content top
-.text-refer {
+p.text-refer {
+  font-size: $font-size-XS-pc;
+  color: var(--font-dark-gray);
+}
+div.text-refer {
   display: flex;
   align-items: center;
   gap: 10px;
