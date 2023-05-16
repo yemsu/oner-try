@@ -23,14 +23,14 @@ export const parseItemBuildData = (itemBuild, items, synergies, heroes) => {
       })
   }
 
-  console.log('ddd', parseItems('equipment'))
   const hero = heroes.find(hero => hero.imageName === itemBuild.characterName)
   const regDt = remakeDateStr(itemBuild.regDt)
+  const colleague = parseItems('colleague')
   const equipment = parseItems('equipment')
   const sailor = parseItems('sailor')
   const ship = parseItems('ship')
   const characterSynergies = getCharacterSynergies(sailor, synergies)
-  const character = {...itemBuild, hero, regDt, equipment, sailor, ship, synergy: characterSynergies}
+  const character = {...itemBuild, hero, regDt, equipment, sailor, ship, colleague, synergy: characterSynergies}
   const totalOption = getTotalOption(character, characterSynergies)
 
   return {...character, totalOption}
