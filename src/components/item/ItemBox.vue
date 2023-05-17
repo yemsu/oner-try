@@ -78,7 +78,7 @@
         </div>
       </section>
     </template>
-    <item-image v-else :item="item" :size="size" />
+    <item-image v-else :item="item" :size="size" :is-round-img="isRoundImg"/>
   </div>
 </template>
 

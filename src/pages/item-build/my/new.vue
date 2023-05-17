@@ -184,6 +184,7 @@ export default {
       equipmentsTable: 'item/getEquipmentsTable',
       sailorsSynergy: 'item/getSailorsSynergy',
       shipsTable: 'item/getShipsTable',
+      colleagues: 'item/getColleagues',
     }),
     itemTypeDefs() {
       return itemTypeDefs
@@ -193,6 +194,7 @@ export default {
     if(this.equipmentsTable.length === 0) await this.getEquipmentsTable()
     if(this.sailorsSynergy.length === 0) await this.getSailorsSynergy()
     if(this.shipsTable.length === 0) await this.getShipsTable()
+    if(this.colleagues.length === 0) await this.getColleagues()
     this.optionMenus =  {...this.commonOption, ...noEquipOptions}
     if(this.items.length === 0) await this.getItems()
     if(this.synergies.length === 0) await this.getSynergies()
@@ -244,6 +246,7 @@ export default {
       getEquipmentsTable: 'item/GET_EQUIPMENTS_TABLE',
       getSailorsSynergy: 'item/GET_SAILORS_SYNERGY',
       getShipsTable: 'item/GET_SHIPS_TABLE',
+      getColleagues: 'item/GET_COLLEAGUES',
       saveItemBuild: 'itemBuild/POST_ITEM_BUILD',
     }),
     addBeforeUnloadEvent() {
@@ -266,22 +269,22 @@ export default {
       this.buildInfo.totalOption = getTotalOption(this.buildInfo, this.buildInfo.synergy)
     },
     resetSelectItem() {
+      if(!this.selectedItem) return
       this.selectedItem = null
       // this.itemStack = 0
     },
     selectItem(itemName) {
       const item = this.items.find((item) => item.name === itemName)
-      if(!canEnhance(item)) {
+      if(!canEnhance(item) || this.selectedItem?.name === itemName) {
         this.addItem(null, item)
-        return
-      }
-      if(this.selectedItem?.name === itemName) {
-        this.addItem(null, item)
-        this.resetSelectItem()
         return
       }
       this.selectedItem = item
-      if(!this.itemStack) this.itemStack = maxStack(item)
+
+      if(!this.itemStack || this.itemStack >  maxStack(item)) {
+        this.itemStack = maxStack(item)
+      }
+
       this.isOnFocusStack = true
       setTimeout(() => {
         this.isOnFocusStack = false
@@ -291,11 +294,11 @@ export default {
       this.itemStack = stack
     },
     addItem(e, item) {
-      e && e.preventDefault()
-      const selectedItem = this.selectedItem || item
+      e && e.preventDefault()      
+      const selectedItem = item || this.selectedItem
       const { type } = selectedItem
       if(this.itemStack) {
-        this.selectedItem.stack = this.itemStack
+        selectedItem.stack = this.itemStack
       }
       let blankSlotIndex = 0
       for(const slot of this.buildInfo[type]) {
@@ -312,9 +315,7 @@ export default {
       this.buildInfo[type][blankSlotIndex] = selectedItem
       this.ProcessAfterUpdateItem(selectedItem)
       // reset select item
-      if(this.selectedItem) {
-        this.resetSelectItem()
-      }
+      this.resetSelectItem()
     },
     ProcessAfterUpdateItem(item) {
       if(item.type === 'sailor') {
@@ -325,9 +326,6 @@ export default {
     },
     itemListData(activeTabType) {
       return this.items.filter(({type}) => type === activeTabType)
-    },
-    onClickItem(name) {
-      this.selectItem(name)
     },
     onUpdateTitleInput(title) {
       this.buildTitle = title
@@ -396,6 +394,8 @@ export default {
           return JSON.stringify(this.sailorsSynergy)
         case 'ship':
           return JSON.stringify(this.shipsTable)
+        case 'colleague':
+          return JSON.stringify(this.colleagues)
       }
     },
     getTableInfo(activeTab) {
@@ -445,6 +445,19 @@ export default {
               title: '인연 / 악연',
               type: 'synergy',
               width: '43%'
+            },
+          ]
+        case 'colleague':
+          return [
+            {
+              title: '동료',
+              type: 'item',
+              width: '40%'
+            },
+            {
+              title: '옵션',
+              type: 'option',
+              width: '%'
             },
           ]
         case 'ship':

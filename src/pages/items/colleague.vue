@@ -40,23 +40,17 @@ export default {
         {
           title: '동료',
           type: 'item',
-          width: '20%'
+          width: '24%'
         },
         {
           title: '옵션',
           type: 'option',
-          width: '22%'
+          width: '28%'
         },
         {
-          title: '콜로세움',
-          align: 'center',
-          type: 'coloYn',
-          width: '10%'
-        },
-        {
-          title: '콜로세움 능력치',
-          type: 'coloPassive',
-          width: '43%'
+          title: '획득처',
+          type: 'string',
+          key: 'dropMonster',
         },
       ],
     }

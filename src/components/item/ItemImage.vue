@@ -4,7 +4,7 @@
       'item-img',
       `size-${size}`,
       {'round': isRoundImg},
-      item && item.grade
+      item && `grade-${item.grade}`
   ]">
     <div v-if="!item" class="item-blank"></div>
     <div

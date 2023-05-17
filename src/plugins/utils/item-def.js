@@ -7,10 +7,10 @@ export const itemTypeDefs = [
     title: "선원",
     type: "sailor",    
   },
-  // {
-  //   title: "동료",
-  //   type: "colleague",
-  // },
+  {
+    title: "동료",
+    type: "colleague",
+  },
   {
     title: "선박",
     type: "ship",
@@ -148,6 +148,12 @@ export const characterInfos = {
   위험도: '위험도',
   레일리: '레일리',
 }
+export const skillDamageOptions = {
+  qd: 'Q 비례량',
+  wd: 'W 비례량',
+  ed: 'E 비례량',
+  rd: 'R 비례량',
+}
 export const slotNumbers = {
   sailor: 6,
   equipment: 6,
@@ -157,21 +163,23 @@ export const slotNumbers = {
 }
 export const canEnhance = (item) => {
   if(!item) return false
-  const commonCase = ['sailor', 'ship'].includes(item.type)
-  const falseCase1 = item.name !== '통통배'
+  const commonCase = ['sailor', 'ship', 'colleague'].includes(item.type)
+  const falseCase1 = item.grade !== '0'
+  const falseCase2 = item.name !== '통통배'
   const trueCase1 = item.grade === 'dedicated'
 
-  return (commonCase && falseCase1) || trueCase1
+  return (commonCase && falseCase1 && falseCase2) || trueCase1
 }
 export const maxStack = (item) => {
-  return item.name === '고잉 메리호' ? 10 
+  return item.name === '고잉 메리호' || item.type === 'colleague' ? 10 
     : item.grade === 'dedicated' ? 100
     : 50
 }
 export const valueByStack = (item, value, stack) => {
   // stack 0이거나 NaN(시너지)인 케이스는 바로 value 반환
   if(!stack) return (value*1)
-  const valueByEachStack = item.grade === 'dedicated' ? 0.5 : (value / 20)
+  const valueByEachStack = item.grade === 'dedicated' || item.type === 'colleague' ? 0.5 
+    : (value / 20)
   // stack 1: 최소값 
   // stack 2 부터: 스택당 +(최소값/20)
   return (value*1) + (valueByEachStack * (stack - 1))
@@ -183,8 +191,9 @@ export const equipmentsOnlyOptionsMap = new Map(Object.entries(equipOnlyOptionsD
 export const noEquipOptionsMap = new Map(Object.entries(noEquipOptions))
 export const colosseumOptionsMap = new Map(Object.entries(colosseumOptions))
 export const characterInfosMap = new Map(Object.entries(characterInfos))
+export const skillDamageOptionsMap = new Map(Object.entries(skillDamageOptions))
 const totalOptions = () => {
-  const totalOptions = new Map([...noEquipOptionsMap, ...colosseumOptionsMap, ...characterInfosMap])
+  const totalOptions = new Map([...noEquipOptionsMap, ...colosseumOptionsMap, ...characterInfosMap, ...skillDamageOptionsMap])
   for(const [key, value] of equipmentsOnlyOptionsMap) {
     totalOptions.set(key, value)
   }

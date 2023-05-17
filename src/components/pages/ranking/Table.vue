@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="rankingCrr.length === 0" style="margin-top: 300px; font-size: 1.5em; text-align: center;">
-      데이터 로딩중💦 잠시만 기다려 주세요🐱‍🏍
+      데이터 로딩중💦 잠시만 기다려 주세요
     </div>
     <table v-else class="list-ranking">
       <caption>랭킹 순위에 따른 랭크, 영웅, 유저명, 현상금, 선원, 동료 정보 테이블</caption>
@@ -36,14 +36,17 @@
               :wantedPaper="i === 0"
               :isPirateKing="i === 0"
               :showBounty="false"
-              :size="i === 0 ? 'basic' : 'small'"
+              :size="i === 0 ? 'medium' : 'small'"
             ></item-box>
           </td>
           <td class="level">
             {{ user.lv }}
           </td>
           <td class="nickname">
-            <router-link :to="`/character/result?nickname=${user.nickName}`">
+            <router-link
+              :to="`/character/result?nickname=${user.nickName}`"
+              title="유저 캐릭터 보러가기"
+            >
               {{ user.nickName }}
             </router-link>
           </td>

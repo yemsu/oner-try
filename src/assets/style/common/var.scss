@@ -141,11 +141,11 @@ $color-total-option: hsl(39, 100%, 50%);
 
   // 랭크 등급 표시 컬러
   --color-rank-1: hsl(14, 100%, 50%);
-  --color-rank-1-bg: var(--color-black);
+  --color-rank-1-bg: hsl(var(--point-h), 20%, 20%);
   --color-rank-2: hsl(273, 77%, 38%);
-  --color-rank-2-bg: var(--color-gray-80);
+  --color-rank-2-bg: hsl(var(--point-h), 20%, 88%);
   --color-rank-3: hsl(229, 65%, 41%);
-  --color-rank-3-bg:  var(--color-gray-90);
+  --color-rank-3-bg: hsl(var(--point-h), 20%, 93%);
 
   // 기타 컬러
   --wanted-brown: #5a352d;
@@ -219,12 +219,12 @@ $color-total-option: hsl(39, 100%, 50%);
   --badge-color-green: hsl(120, 100%, 25%); // 동료 타입
 
   // 랭크 등급 표시 컬러
-  --color-rank-1: hsl(14, 100%, 50%);
-  --color-rank-1-bg: hsl(var(--point-h), 50%, 2%);
+  --color-rank-1: hsl(0, 100%, 50%);
+  --color-rank-1-bg: hsl(var(--point-h), 100%, 0%);
   --color-rank-2: hsl(283, 100%, 64%);
-  --color-rank-2-bg: hsl(var(--point-h), 8%, 9%);
+  --color-rank-2-bg: hsl(var(--point-h), 14%, 12%);
   --color-rank-3: hsl(212, 100%, 50%);
-  --color-rank-3-bg: hsl(var(--point-h), 8%, 14%);
+  --color-rank-3-bg: hsl(var(--point-h), 12%, 16%);
 
   // 기타 컬러
   --wanted-brown: #5a352d;

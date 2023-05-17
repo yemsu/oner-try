@@ -14,14 +14,35 @@ $common-gap: 10px;
     word-break: keep-all;
   }
 }
+
 .wrap-item-build {
-  display: flex;
+  display: grid;
+  grid-template-columns: 198px 198px 105px 170px;
+  grid-template-rows: 160px 160px 36px 140px;
   gap: $list-gap-basic;
+  grid-auto-flow: dense;
   .wrap-title-content {
     display: flex;
     flex-direction: column;
     gap: $common-gap;
-    max-width: 192px;
+    &.equipment {
+      grid-column-start: 1;
+      grid-row-start: 1;
+    }
+    &.sailor {
+      grid-column-start: 2;
+      grid-row-start: 1;
+    }
+    &.colleague {
+      grid-column-start: 3;
+      grid-column-end: 5;
+      grid-row-start: 1;
+    }
+    &.ship {
+      grid-column-start: 3;
+      // grid-column-end: 5;
+      grid-row-start: 2;
+    }
   }
   ::v-deep {
     .area-item-list {

@@ -18,7 +18,7 @@
       <div
         v-for="({ title, type, columnNum }, i) in itemGridInfoList"
         :key="`itemGridInfo${i}`"
-        class="wrap-title-content"
+        :class="`wrap-title-content ${type}`"
       >
         <title-content
           :title="title"

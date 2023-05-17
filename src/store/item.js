@@ -127,16 +127,19 @@ export const actions = {
     return getColleagues(payload)
       .then((data) => {
         // console.log('GET_COLLEAGUES', data)
-        const newData = data.map(dataItem => {
-          const { option, coloOption, coloPassive } = dataItem
-          const optionObj = {option: parserStrData(option)}
-          const coloOptionObj = coloOption ? {coloOption: parserStrData(coloOption)} : {}
-          const coloPassiveObj = coloPassive ? {coloPassive: parserStrData(coloPassive, 'list')} : {}
-          const newObj = coloOption
-            ? Object.assign(optionObj, {...coloOptionObj, ...coloPassiveObj})
-            : optionObj
-          return Object.assign(dataItem, newObj)
-        })
+        const newData = data
+          .map(dataItem => {
+            const { option } = dataItem
+            const newObj = {option: parserStrData(option)}
+            return Object.assign(dataItem, newObj)
+          })
+          .sort((a, b) => {
+            // 기본적으로 오름차순 정렬. 하지만 0성은 최하단 위치하도록.
+            const getGrade = (item) => (
+              item.grade === '0' ? 999 : item.grade
+            )
+            return getGrade(a) - getGrade(b)
+          })
 
         commit(`SET_COLLEAGUES`, {data: newData})
         return newData
