@@ -50,6 +50,9 @@ i {
 .top-bar {
   padding: 6px 0;
   background-color: var(--color-gray-50);
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--color-gray-40);
+  }
   > [class*=inner] {
     display: flex;
     > .align-right {

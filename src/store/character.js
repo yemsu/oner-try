@@ -37,7 +37,7 @@ export const mutations = {
     state.gameUsers = data
   },
   SET_RANKING(state, data) {     
-    state.ranking = data
+    state.ranking = [...state.ranking, ...data]
   },
   ADD_RANKING_DATA(state, { number }) {
     const { rankingCrr, ranking } = state
@@ -46,7 +46,7 @@ export const mutations = {
     state.rankingCrr = rankingCrr.concat(thisData)
   },
   RESET_RANKING_DATA(state, { number }) {
-    state.rankingCrr = state.rankingCrr.splice(0, number)
+    state.ranking = state.ranking.splice(0, number)
   },
 }
 export const actions = {
@@ -113,12 +113,11 @@ export const actions = {
       })
       .catch(error => console.error('GET_GAME_USERS', error))
   },
-  async GET_RANKING({ commit, rootState, dispatch }, payload) {
+  async GET_RANKING({ commit, rootState, dispatch }, params) {
     const { item: { sailors, colleagues }} = rootState
     if(sailors.length === 0) await dispatch('item/GET_SAILORS','', { root: true })
     if(colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
-
-    return getRanking(payload)
+    return getRanking(params)
       .then((data) => {
         const { item: { sailors, colleagues } } = rootState
         const newData = data.map(user => {

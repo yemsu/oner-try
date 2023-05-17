@@ -17,7 +17,7 @@ export const getRyuoList = () => getApi(`/ryuoList`)
 export const getPotions = () => getApi(`/potions`)
 
 // character
-export const getRanking = () => getApi(`/ranking`)
+export const getRanking = (params) => getApi(`/ranking`, { params })
 export const getUserCharacters = (nickName) => getApi(`/characterList`, { params: nickName })
 export const getGameUsers = (params) => getApi(`/gameUsers`, { params })
 
