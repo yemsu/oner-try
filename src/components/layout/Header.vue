@@ -65,9 +65,9 @@ export default {
   },
   mounted() {
     // 점검인 경우 에러 발생
-    const error = new Error()
-    error.statusCode = 600
-    throw error
+    // const error = new Error()
+    // error.statusCode = 600
+    // throw error
   }
 }
 </script>
