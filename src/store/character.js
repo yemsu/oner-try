@@ -143,6 +143,9 @@ function sortRank(data) {
   const newData = deepClone(data)
   return newData.sort((a, b) => {
     if(b.bounty === a.bounty) {
+      if(b.lv === a.lv) {
+        return b.exp - a.exp
+      }
       return b.lv - a.lv
     }
     return b.bounty - a.bounty
