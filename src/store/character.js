@@ -134,8 +134,8 @@ export const actions = {
             colleagues: userColleagues
           })
         })
-        commit(`SET_RANKING`, sortRank(newData))
-        return sortRank(newData)
+        commit(`SET_RANKING`, newData)
+        return newData
       })
       .catch(error => console.error('character/GET_RANKING', error))
   }
