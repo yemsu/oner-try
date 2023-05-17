@@ -2,7 +2,8 @@
  <div id="app">
     <LayoutHeader />
     <div class="container">
-      <nuxt />
+      <error v-if="false"></error>
+      <nuxt v-else />
     </div>
     <FloatingMenu />
     <LayoutFooter />
@@ -11,10 +12,12 @@
 
 <script>
 import FloatingMenu from '@/components/layout/FloatingMenu.vue';
+import Error from './error.vue';
 
 export default {
   components: {
-    FloatingMenu
+    FloatingMenu,
+    Error
   }
 }
 </script>

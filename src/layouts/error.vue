@@ -65,8 +65,14 @@ export default {
     })
   },
   props: ['error'],
+  created() {
+    if(!this.error) {
+      const error = new Error()
+      error.statusCode = 600
+      this.error = error
+    }
+  },
   mounted() {
-    console.log('ERROR', this.error)
   }
 }
 </script>
