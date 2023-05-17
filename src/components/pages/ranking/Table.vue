@@ -116,7 +116,8 @@ export default {
       selectedList: null,
       page: 1,
       prevRankingDataLength: 0,
-      isInfiniteScrollEnd: false
+      isInfiniteScrollEnd: false,
+      isDataLoading: false
     }
   },
   computed: {
@@ -162,6 +163,9 @@ export default {
       return rankInfo
     },
     async loadData() {
+      if(this.isDataLoading) return 
+      this.isDataLoading = true
+
       await this.getRanking({
         character: this.selectedHero,
         page: this.page,
@@ -169,10 +173,12 @@ export default {
       })
       if(this.ranking.length < 15 || this.prevRankingDataLength === this.ranking.length) {
         this.isInfiniteScrollEnd = true
+        this.isDataLoading = false
         return
       }
       this.prevRankingDataLength = this.ranking.length
       this.page += 1
+      this.isDataLoading = false
     }
   }
 }
