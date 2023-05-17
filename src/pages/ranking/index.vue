@@ -39,7 +39,7 @@
       </ul> -->
       <div class="text-refer top">
         <p class="align-right">
-          캐릭터 검색을 이용한 유저만 랭킹에 노출됩니다. (갱신 주기: 30분)
+          * 랭킹 등록 조건: 캐릭터 검색 이용 유저, 현상금 20만 이상 (갱신 주기 30분)
         </p>
       </div>
       <ranking-table
