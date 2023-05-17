@@ -2,7 +2,7 @@
  <div id="app">
     <LayoutHeader />
     <div class="container">
-      <error v-if="true"></error>
+      <error v-if="false"></error>
       <nuxt v-else />
     </div>
     <FloatingMenu />
