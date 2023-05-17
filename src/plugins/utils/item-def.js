@@ -88,7 +88,7 @@ ms: 이동속도
 */
 
 export const optionOrder = [
-  'hp', 'gdr', 'df', 'ev', 'ss', 'adt', 'maxD', 'ct', 'ctD', 'dr', 'maxDr', 'dct', 'ctDr', 'cd', 'mcd', 'ms'
+  'hp', 'gdr', 'df', 'ev', 'ss', 'adt', 'maxD', 'ct', 'ctD', 'dr', 'maxDr', 'dct', 'ctDr', 'cd', 'mcd', 'ms', 'qd', 'wd', 'ed', 'rd',
 ]
 
 export const optionDefaultValue = {
@@ -112,6 +112,10 @@ export const optionDefaultValue = {
   maxDr: 0,
   mcd: 0,
   ctDr: 0,
+  qd: 0,
+  wd: 0,
+  ed: 0,
+  rd: 0,
 }
 export const equipOnlyOptionsDef = {
   str: '견문색',

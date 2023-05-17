@@ -1,7 +1,7 @@
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
 import { fillDefaultList, parserStrData, fillDataAndInsertValue } from '@/plugins/utils/item'
 import { remakeDateStr } from '@/plugins/utils/index'
-import { slotNumbers, maxStack } from '@/plugins/utils/item-def'
+import { slotNumbers, maxStack, skillDamageOptions } from '@/plugins/utils/item-def'
 
 export const parseItemBuildData = (itemBuild, items, synergies, heroes) => {
   const getFullData = (itemId) => items.find(({id}) => id === itemId)
@@ -31,7 +31,13 @@ export const parseItemBuildData = (itemBuild, items, synergies, heroes) => {
   const ship = parseItems('ship')
   const characterSynergies = getCharacterSynergies(sailor, synergies)
   const character = {...itemBuild, hero, regDt, equipment, sailor, ship, colleague, synergy: characterSynergies}
-  const totalOption = getTotalOption(character, characterSynergies)
+  const everyOption = getTotalOption(character, characterSynergies)
+  const totalOption = everyOption.filter(option => (
+    !skillDamageOptions[Object.keys(option)[0]]
+  ))
+  const skillDamageOption = everyOption.filter(option => (
+    skillDamageOptions[Object.keys(option)[0]]
+  ))
 
-  return {...character, totalOption}
+  return {...character, totalOption, skillDamageOption}
 }

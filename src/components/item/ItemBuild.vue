@@ -61,6 +61,14 @@
         :plusMinusUnit="false"
         :showValueDecimal="true"
       />
+      <item-detail-info
+        v-if="buildData.skillDamageOption"
+        type="total"
+        colorMode="white"
+        :options="buildData.skillDamageOption"
+        :plusMinusUnit="false"
+        :showValueDecimal="true"
+      />
       <section
         v-if="buildData.totalOption.length > 0"
         class="all-options-main"

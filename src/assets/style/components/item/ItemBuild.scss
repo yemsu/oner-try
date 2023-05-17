@@ -20,7 +20,6 @@ $common-gap: 10px;
   grid-template-columns: 198px 198px 105px 170px;
   grid-template-rows: 160px 160px 36px 140px;
   gap: $list-gap-basic;
-  grid-auto-flow: dense;
   .wrap-title-content {
     display: flex;
     flex-direction: column;
@@ -61,6 +60,13 @@ $common-gap: 10px;
   }
 }
 .wrap-stat-box {
-  display: flex;
+  display: grid;
+  grid-template-columns: 188px 188px;
+  grid-template-rows: 177px 126px 108px;
   gap: $common-gap;
+  .all-options-main {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+  }
 }

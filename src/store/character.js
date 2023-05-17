@@ -1,5 +1,5 @@
 import { fillDataAndInsertValue, parserDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
-import { slotNumbers } from '../plugins/utils/item-def'
+import { slotNumbers, skillDamageOptions } from '../plugins/utils/item-def'
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
 import { deepClone } from '@/plugins/utils'
 import { getUserCharacters, getGameUsers, getRanking } from '@/plugins/utils/https'
@@ -57,7 +57,6 @@ export const actions = {
     if(sailors.length === 0) await dispatch('item/GET_SAILORS','', { root: true })
     if(colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
     if(ships.length === 0) await dispatch('item/GET_SHIPS','', { root: true })
-    // if(ryuoes.length === 0) await dispatch('item/GET_RYUOES','', { root: true })
     if(synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
     return getUserCharacters(payload)
       .then((data) => {
@@ -82,21 +81,21 @@ export const actions = {
           }
           const equipment = dataParser(character, 'equipment')
           const sailor = dataParser(character, 'sailor')
-          const colleague = new Array(3).fill(null)
-          // const colleague = dataParser(character, 'colleague')
+          const colleague = dataParser(character, 'colleague')
           const ship = dataParser(character, 'ship')
           const information = parserStrData(character.information.join(','))
-          // const characterRyuo = rootState.item.ryuoes.find(ryuo => ryuo.name.includes(`${character.ryuo}차`))
-          // const ryuo = characterRyuo ? [{
-          //   name: characterRyuo.name,
-          //   option: characterRyuo.option
-          // }] : [null]
           Object.assign(character, { hero, equipment, sailor, colleague , ship, information })
 
           const characterSynergies = getCharacterSynergies(sailor, rootState.item.synergies)
-          const totalOption = getTotalOption(character, characterSynergies)
+          const everyOption = getTotalOption(character, characterSynergies)
+          const totalOption = everyOption.filter(option => (
+            !skillDamageOptions[Object.keys(option)[0]]
+          ))
+          const skillDamageOption = everyOption.filter(option => (
+            skillDamageOptions[Object.keys(option)[0]]
+          ))
 
-          return Object.assign(character, { totalOption, synergy: characterSynergies })
+          return Object.assign(character, { totalOption, skillDamageOption, synergy: characterSynergies })
         })
         
         commit(`SET_USER_CHARACTERS`, sortRank(newData))

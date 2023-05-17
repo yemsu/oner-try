@@ -119,7 +119,7 @@ import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
 import ItemFilterTable from '../../../components/item/ItemFilterTable.vue';
 import VTab from '@/components/common/VTab.vue';
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
-import { itemTypeDefs, maxStack, slotNumbers, noEquipOptions, gradesDef, equipmentGrades, sailorGrades, canEnhance } from '@/plugins/utils/item-def';
+import { itemTypeDefs, maxStack, slotNumbers, noEquipOptions, gradesDef, equipmentGrades, sailorGrades, canEnhance, skillDamageOptions } from '@/plugins/utils/item-def';
 import { getTypeKorName } from '@/plugins/utils/item';
 import { mapGetters, mapActions } from 'vuex';
 import BaseInput from '@/components/common/BaseInput.vue';
@@ -164,7 +164,8 @@ export default {
         ship: new Array(1),
         ryuo: new Array(1),
         synergy: [],
-        totalOption: []
+        totalOption: [],
+        skillDamageOption: []
       },
       buildInfoString: null,
       optionMenus: {},
@@ -204,7 +205,7 @@ export default {
       result[hero.imageName] = hero.name
       return result
     }, {})
-    this.setTotalOption()
+    this.setOptionInfos()
     this.setSearchBoxFullData()
     this.setBuildInfoString()
   },
@@ -265,8 +266,14 @@ export default {
     setBuildInfoString() {
       this.buildInfoString = JSON.stringify(this.buildInfo)
     },
-    setTotalOption() {
-      this.buildInfo.totalOption = getTotalOption(this.buildInfo, this.buildInfo.synergy)
+    setOptionInfos() {
+      const everyOption = getTotalOption(this.buildInfo, this.buildInfo.synergy)
+      this.buildInfo.totalOption = everyOption.filter(option => (
+        !skillDamageOptions[Object.keys(option)[0]]
+      ))
+      this.buildInfo.skillDamageOption = everyOption.filter(option => (
+        skillDamageOptions[Object.keys(option)[0]]
+      ))
     },
     resetSelectItem() {
       if(!this.selectedItem) return
@@ -321,7 +328,7 @@ export default {
       if(item.type === 'sailor') {
         this.buildInfo.synergy = getCharacterSynergies(this.buildInfo.sailor, this.synergies)
       } 
-      this.setTotalOption()
+      this.setOptionInfos()
       this.setBuildInfoString()
     },
     itemListData(activeTabType) {

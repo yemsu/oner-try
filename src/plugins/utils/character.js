@@ -1,4 +1,4 @@
-import { optionDefaultValue, optionOrder, valueByStack } from '@/plugins/utils/item-def'
+import { optionDefaultValue, optionOrder, valueByStack, skillDamageOptions } from '@/plugins/utils/item-def'
 export const getCharacterSynergies = (sailors, synergies) => {
   const sailorNames = sailors.filter(sailor => sailor).map(sailor => sailor?.name)
   const characterSynergies = synergies.filter(synergy => {
@@ -31,16 +31,23 @@ export const getTotalOption = (character, characterSynergies) => {
   }, {})
   // console.log('totalOption', totalOption)      
   // ev는 str 수치를 더한다.
-  totalOption.ev += totalOption.str
+  // totalOption.ev += totalOption.str
 
   // dex는 레벨을 더한다.
-  totalOption.dex += character.lv
+  // totalOption.dex += character.lv
 
   const result = optionOrder.map(key => ({[key]: totalOption[key]}))
   return result
 }
-const getOptions =  (allItem) => {
-  const options = allItem
+export const getTotalSkillDamageOption = (character) => {
+  const { equipment, sailor, colleague, ship } = character
+  const allItem = [...equipment, ...sailor, ...colleague, ...ship, ...characterSynergies]
+  const allOption = getOptions(allItem)
+  console.log('allOption', allOption)
+
+}
+const getOptions =  (items) => {
+  const options = items
     .reduce((result, item) => { 
       if(!item?.option) return result
       // 여기: 데이터 없으면 기본값 뱉도록 수정 필요
@@ -55,3 +62,22 @@ const getOptions =  (allItem) => {
     }, {})
   return options
 }
+// const getSkillDamageOption = (items) => {
+//   const options = items
+//     .reduce((result, item) => { 
+//       if(!item?.option) return result
+//       // 여기: 데이터 없으면 기본값 뱉도록 수정 필요
+//       const { option: options, stack } = item
+//       for(const option of [...options]) {
+//         const key = Object.keys(option)[0]
+//         if(!Object.keys(skillDamageOptions).includes(key)) {
+//           continue
+//         }
+//         const resultValue = result[key] || 0
+//         const newValue = resultValue + valueByStack(item, option[key], (stack*1))
+//         Object.assign(result, {[key]: newValue})
+//       }
+//       return result
+//     }, {})
+//   return options
+// }
