@@ -91,6 +91,10 @@ export default {
           title: '선원'
         },
         {
+          keyName: 'colleague',
+          title: '동료'
+        },
+        {
           keyName: 'ship',
           title: '선박'
         },

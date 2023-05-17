@@ -331,14 +331,15 @@ export default {
       this.buildTitle = title
     },
     async onClickSave() {  
-      const { equipment, sailor, ship } = this.buildInfo
+      const { equipment, sailor, colleague, ship } = this.buildInfo
       const passValidation = this.checkValidation()
       if(!passValidation) return
       const saveSuccess = await this.saveItemBuild({
         title: this.buildTitle,
         characterName: this.buildCharacters[0],
-        equipments: this.stringifyForDB(equipment), 
+        equipment: this.stringifyForDB(equipment), 
         sailor: this.stringifyForDB(sailor), 
+        colleague: this.stringifyForDB(colleague), 
         ship: this.stringifyForDB([ship[0]])
       })
       
@@ -358,7 +359,7 @@ export default {
         alert(ALERTS.NEED_LOGIN)
         return false
       }
-      const { equipment, sailor, ship } = this.buildInfo
+      const { equipment, sailor, colleague, ship } = this.buildInfo
 
       const alertMessages = []
       if(!this.buildTitle) {
@@ -371,7 +372,7 @@ export default {
       if(this.buildCharacters.length === 0) {
         alertMessages.push(ALERTS.VALIDATIONS.CHARACTER)
       }
-      const items = [...equipment, ...sailor, ...ship].filter(item => item)
+      const items = [...equipment, ...sailor, ...colleague, ...ship].filter(item => item)
       if(items.length === 0) {
         alertMessages.push(ALERTS.VALIDATIONS.ITEM)
       }
