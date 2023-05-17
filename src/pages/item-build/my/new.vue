@@ -269,24 +269,22 @@ export default {
       this.buildInfo.totalOption = getTotalOption(this.buildInfo, this.buildInfo.synergy)
     },
     resetSelectItem() {
+      if(!this.selectedItem) return
       this.selectedItem = null
       // this.itemStack = 0
     },
     selectItem(itemName) {
-      console.log('selectItem', itemName)
       const item = this.items.find((item) => item.name === itemName)
-      console.log('item', item)
-      if(!canEnhance(item)) {
+      if(!canEnhance(item) || this.selectedItem?.name === itemName) {
         this.addItem(null, item)
-        return
-      }
-      if(this.selectedItem?.name === itemName) {
-        this.addItem(null, item)
-        this.resetSelectItem()
         return
       }
       this.selectedItem = item
-      if(!this.itemStack) this.itemStack = maxStack(item)
+
+      if(!this.itemStack || this.itemStack >  maxStack(item)) {
+        this.itemStack = maxStack(item)
+      }
+
       this.isOnFocusStack = true
       setTimeout(() => {
         this.isOnFocusStack = false
@@ -296,12 +294,11 @@ export default {
       this.itemStack = stack
     },
     addItem(e, item) {
-      e && e.preventDefault()
-      console.log('this.selectedItem || item', this.selectedItem, item)
-      const selectedItem = this.selectedItem || item
+      e && e.preventDefault()      
+      const selectedItem = item || this.selectedItem
       const { type } = selectedItem
       if(this.itemStack) {
-        this.selectedItem.stack = this.itemStack
+        selectedItem.stack = this.itemStack
       }
       let blankSlotIndex = 0
       for(const slot of this.buildInfo[type]) {
@@ -318,9 +315,7 @@ export default {
       this.buildInfo[type][blankSlotIndex] = selectedItem
       this.ProcessAfterUpdateItem(selectedItem)
       // reset select item
-      if(this.selectedItem) {
-        this.resetSelectItem()
-      }
+      this.resetSelectItem()
     },
     ProcessAfterUpdateItem(item) {
       if(item.type === 'sailor') {
