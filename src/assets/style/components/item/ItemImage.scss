@@ -68,22 +68,20 @@
   &.round {
     border-radius: 100%;
     &:not(:has(.item-blank)) {
-      border: 1px solid var(--color-white);
+      border: 1px solid var(--border-gray);
     }
-    .grade {
-      &-legend {
-        border: 2px solid var(--color-grade-legend);
-        box-shadow: 0 0 10px var(--color-grade-legend-sub);
+    &.grade {
+      &-common {
+        // border: 1px solid var(--color-grade-common);
+        box-shadow: 0 0 3px var(--color-grade-common);
       }
-      &-epic {
-        border: 2px solid var(--color-grade-epic);
-        box-shadow: 0 0 5px var(--color-grade-epic-sub);
+      &-uncommon {
+        border: 1px solid var(--color-uncommon-epic);
+        box-shadow: 0 0 5px var(--color-grade-epic);
       }
-      &-rare {
-        border: 2px solid var(--color-grade-rare);
-      }
-      &-normal {
-        border: 2px solid var(--color-grade-normal);
+      &-special {
+        border: 1px solid var(--color-grade-special);
+        box-shadow: 0 0 5px var(--color-grade-special);
       }
     }
     .box-img {
