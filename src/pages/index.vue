@@ -149,16 +149,16 @@ export default {
           text: '선박'
         },
         {
+          pageName: 'colleague',
+          text: '동료'
+        },
+        {
           pageName: 'equipment',
           text: '장비'
         },
         {
           pageName: 'potion',
           text: '포션'
-        },
-        {
-          pageName: 'etcItem',
-          text: '기타'
         },
       ],
       BASE_URL: process.env.BASE_URL,

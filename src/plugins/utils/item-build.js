@@ -6,9 +6,7 @@ import { slotNumbers, maxStack } from '@/plugins/utils/item-def'
 export const parseItemBuildData = (itemBuild, items, synergies, heroes) => {
   const getFullData = (itemId) => items.find(({id}) => id === itemId)
   const parseItems = (type) => {
-    const itemBuildKeyName = ['equipment', 'sailor'].includes(type)
-      ? `${type}s` : type
-    const data = itemBuild[itemBuildKeyName]
+    const data = itemBuild[type]
     if(!data) return fillDefaultList([null], slotNumbers[type])
     
     // stack 설정 가능 전에 저장된 데이터 호환되도록 분기처리
