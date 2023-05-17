@@ -163,21 +163,23 @@ export const slotNumbers = {
 }
 export const canEnhance = (item) => {
   if(!item) return false
-  const commonCase = ['sailor', 'ship'].includes(item.type)
-  const falseCase1 = item.name !== '통통배'
+  const commonCase = ['sailor', 'ship', 'colleague'].includes(item.type)
+  const falseCase1 = item.grade !== '0'
+  const falseCase2 = item.name !== '통통배'
   const trueCase1 = item.grade === 'dedicated'
 
-  return (commonCase && falseCase1) || trueCase1
+  return (commonCase && falseCase1 && falseCase2) || trueCase1
 }
 export const maxStack = (item) => {
-  return item.name === '고잉 메리호' ? 10 
+  return item.name === '고잉 메리호' || item.type === 'colleague' ? 10 
     : item.grade === 'dedicated' ? 100
     : 50
 }
 export const valueByStack = (item, value, stack) => {
   // stack 0이거나 NaN(시너지)인 케이스는 바로 value 반환
   if(!stack) return (value*1)
-  const valueByEachStack = item.grade === 'dedicated' ? 0.5 : (value / 20)
+  const valueByEachStack = item.grade === 'dedicated' || item.type === 'colleague' ? 0.5 
+    : (value / 20)
   // stack 1: 최소값 
   // stack 2 부터: 스택당 +(최소값/20)
   return (value*1) + (valueByEachStack * (stack - 1))
