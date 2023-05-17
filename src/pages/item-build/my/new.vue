@@ -297,7 +297,7 @@ export default {
       e && e.preventDefault()      
       const selectedItem = item || this.selectedItem
       const { type } = selectedItem
-      if(this.itemStack) {
+      if(canEnhance(selectedItem) && this.itemStack) {
         selectedItem.stack = this.itemStack
       }
       let blankSlotIndex = 0
