@@ -47,22 +47,27 @@ export default {
         {
           title: '선원',
           type: 'item',
-          width: '22%'
+          width: '16%'
         },
         {
           title: '등급',
           type: 'grade',
-          width: '10%'
+          width: '6%'
         },
         {
           title: '옵션',
           type: 'option',
-          width: '24%'
+          width: '22%'
+        },
+        {
+          title: '획득처',
+          type: 'string',
+          key: 'dropMonster',
         },
         {
           title: '인연 / 악연',
           type: 'synergy',
-          width: '43%'
+          width: '32%'
         },
       ],
     }
