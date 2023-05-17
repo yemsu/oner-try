@@ -184,6 +184,7 @@ export default {
       equipmentsTable: 'item/getEquipmentsTable',
       sailorsSynergy: 'item/getSailorsSynergy',
       shipsTable: 'item/getShipsTable',
+      colleagues: 'item/getColleagues',
     }),
     itemTypeDefs() {
       return itemTypeDefs
@@ -193,6 +194,7 @@ export default {
     if(this.equipmentsTable.length === 0) await this.getEquipmentsTable()
     if(this.sailorsSynergy.length === 0) await this.getSailorsSynergy()
     if(this.shipsTable.length === 0) await this.getShipsTable()
+    if(this.colleagues.length === 0) await this.getColleagues()
     this.optionMenus =  {...this.commonOption, ...noEquipOptions}
     if(this.items.length === 0) await this.getItems()
     if(this.synergies.length === 0) await this.getSynergies()
@@ -244,6 +246,7 @@ export default {
       getEquipmentsTable: 'item/GET_EQUIPMENTS_TABLE',
       getSailorsSynergy: 'item/GET_SAILORS_SYNERGY',
       getShipsTable: 'item/GET_SHIPS_TABLE',
+      getColleagues: 'item/GET_COLLEAGUES',
       saveItemBuild: 'itemBuild/POST_ITEM_BUILD',
     }),
     addBeforeUnloadEvent() {
@@ -270,7 +273,9 @@ export default {
       // this.itemStack = 0
     },
     selectItem(itemName) {
+      console.log('selectItem', itemName)
       const item = this.items.find((item) => item.name === itemName)
+      console.log('item', item)
       if(!canEnhance(item)) {
         this.addItem(null, item)
         return
@@ -292,6 +297,7 @@ export default {
     },
     addItem(e, item) {
       e && e.preventDefault()
+      console.log('this.selectedItem || item', this.selectedItem, item)
       const selectedItem = this.selectedItem || item
       const { type } = selectedItem
       if(this.itemStack) {
@@ -325,9 +331,6 @@ export default {
     },
     itemListData(activeTabType) {
       return this.items.filter(({type}) => type === activeTabType)
-    },
-    onClickItem(name) {
-      this.selectItem(name)
     },
     onUpdateTitleInput(title) {
       this.buildTitle = title
@@ -396,6 +399,8 @@ export default {
           return JSON.stringify(this.sailorsSynergy)
         case 'ship':
           return JSON.stringify(this.shipsTable)
+        case 'colleague':
+          return JSON.stringify(this.colleagues)
       }
     },
     getTableInfo(activeTab) {
@@ -445,6 +450,19 @@ export default {
               title: '인연 / 악연',
               type: 'synergy',
               width: '43%'
+            },
+          ]
+        case 'colleague':
+          return [
+            {
+              title: '동료',
+              type: 'item',
+              width: '40%'
+            },
+            {
+              title: '옵션',
+              type: 'option',
+              width: '%'
             },
           ]
         case 'ship':
