@@ -36,7 +36,7 @@
               :wantedPaper="i === 0"
               :isPirateKing="i === 0"
               :showBounty="false"
-              :size="i === 0 ? 'basic' : 'small'"
+              :size="i === 0 ? 'medium' : 'small'"
             ></item-box>
           </td>
           <td class="level">
