@@ -178,7 +178,8 @@ export const maxStack = (item) => {
 export const valueByStack = (item, value, stack) => {
   // stack 0이거나 NaN(시너지)인 케이스는 바로 value 반환
   if(!stack) return (value*1)
-  const valueByEachStack = item.grade === 'dedicated' || item.type === 'colleague' ? 0.5 
+  const valueByEachStack = item.grade === 'dedicated' ? 0.5 
+    : item.type === 'colleague' ? 0.05
     : (value / 20)
   // stack 1: 최소값 
   // stack 2 부터: 스택당 +(최소값/20)
