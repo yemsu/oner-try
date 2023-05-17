@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="rankingCrr.length === 0" style="margin-top: 300px; font-size: 1.5em; text-align: center;">
+    <div v-if="ranking.length === 0" style="margin-top: 300px; font-size: 1.5em; text-align: center;">
       데이터 로딩중💦 잠시만 기다려 주세요
     </div>
     <table v-else class="list-ranking">
@@ -19,11 +19,11 @@
       <tbody>
         <tr
           :class="`item-ranking tear-${getRankInfo(i).index}`"
-          v-for="(user, i) in rankingCrr"
+          v-for="(user, i) in ranking"
           :key="`user${i}`"
         >
           <td class="rank">
-            <span :class="`rank-title type-${getRankInfo(i).index}`" v-if="i <= 11">
+            <span :class="`rank-title type-${getRankInfo(i).index}`" v-if="i <= 11 && selectedHero === 'all'">
               <span class="skull">☠</span>
               {{ getRankInfo(i).title }}
             </span>
@@ -31,7 +31,7 @@
           </td>
           <td class="thumb-hero">
             <item-box
-              :item="findHero(user.name)"
+              :item="user.hero"
               :showName="false"
               :wantedPaper="i === 0"
               :isPirateKing="i === 0"
@@ -86,7 +86,10 @@
         </tr>
       </tbody>
     </table>
-    <div v-if="useInfiniteScroll" ref="checker-observer"></div>
+    <common-scroll-observer
+      :is-end="isInfiniteScrollEnd"
+      @endScroll="loadData()"
+    />
   </div>
 </template>
 
@@ -103,28 +106,33 @@ export default {
       type: Boolean,
       default: () => true
     },
+    selectedHero: {
+      type: String,
+      default: 'all'
+    }
+  },
+  data() {
+    return {
+      selectedList: null,
+      page: 1,
+      prevRankingDataLength: 0,
+      isInfiniteScrollEnd: false
+    }
   },
   computed: {
     ...mapGetters({
       rankingCrr: 'character/getRankingCrr',
       ranking: 'character/getRanking',
-      heroes:  'item/getHeroes',
     })
   },
-  async created() {    
-    if(this.ranking.length === 0) await this.getRanking()
-
-    this.setRankingList()
-  },
-  mounted() {
-    this.$nextTick(() => {
-      setTimeout(() => {
-        this.useInfiniteScroll && this.infiniteScroll()
-      }, 300)
-    })
+  watch: {
+    selectedHero(crr, prev) {
+      this.resetRankingData()
+      this.loadData()
+    }
   },
   beforeDestroy() {
-    this.resetRanking({ number: this.defaultDataNum })
+      this.resetRankingData()
   },
   methods: {
     ...mapActions({
@@ -132,10 +140,13 @@ export default {
     }),
     ...mapMutations({
       addRanking: 'character/ADD_RANKING_DATA',
-      resetRanking: 'character/RESET_RANKING_DATA'
+      resetRanking: 'character/RESET_RANKING_DATA',
     }),
-    findHero(name) {
-      return this.heroes.find(hero => hero.name === name)
+    resetRankingData() {
+      this.resetRanking({ number: 0 })
+      this.page = 1
+      this.prevRankingDataLength = 0
+      this.isInfiniteScrollEnd = false
     },
     getRankInfo(index) {
       if(index > 12) return false
@@ -150,30 +161,18 @@ export default {
 
       return rankInfo
     },
-    setRankingList() {
-      const { length: dataLength } = this.rankingCrr
-      if(dataLength === this.defaultDataNum) return
-      const checkNeedMoreData = dataLength < this.defaultDataNum
-      const methodName = checkNeedMoreData
-        ? 'addRanking'
-        : 'resetRanking'
-
-      this[methodName]({ number: this.defaultDataNum })
-    },
-    infiniteScroll() {
-      const checker = this.$refs['checker-observer']
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.intersectionRatio > 0) {
-            const checkEnd = this.ranking.length === this.rankingCrr.length
-            if(checkEnd) return false
-            console.log('observer on', checkEnd)
-            this.addRanking({ number: 15 })
-          }
-        })
+    async loadData() {
+      await this.getRanking({
+        character: this.selectedHero,
+        page: this.page,
+        size: 15
       })
-
-      io.observe(checker);
+      if(this.ranking.length < 15 || this.prevRankingDataLength === this.ranking.length) {
+        this.isInfiniteScrollEnd = true
+        return
+      }
+      this.prevRankingDataLength = this.ranking.length
+      this.page += 1
     }
   }
 }
