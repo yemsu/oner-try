@@ -42,10 +42,10 @@ export default {
           path: '/composition',
           menuName: '조합법',
         },
-        // {
-        //   path: '/ranking',
-        //   menuName: '랭킹',
-        // },
+        {
+          path: '/ranking',
+          menuName: '랭킹',
+        },
         {
           path: '/items',
           menuName: '아이템도감',
