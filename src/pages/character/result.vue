@@ -50,7 +50,7 @@ import ItemBuild from "@/components/item/ItemBuild.vue";
 import setMeta from '@/plugins/utils/meta';
 import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
 import { postCharacterPageView, getCharacterPageViews, postMergeCharacterView } from '@/plugins/utils/https'
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 export default {
   name: 'character-result',
   components: {
@@ -86,6 +86,9 @@ export default {
   async created() {
     if(this.gameUsers.length === 0) await this.$store.dispatch('character/GET_GAME_USERS')
   },
+  beforeDestroy() {
+    this.setUserCharacters([])
+  },
   mounted() {
     this.getUserData(this.$route.query.nickname)
   },
@@ -93,6 +96,9 @@ export default {
     ...mapActions({
       getUserCharacters: 'character/GET_USER_CHARACTERS',
       getGameUser: 'character/GET_GAME_USERS'
+    }),
+    ...mapMutations({
+      setUserCharacters: 'character/SET_USER_CHARACTERS',
     }),
     async getUserData(nickName) {
       const result = await this.getUserCharacters({ nickName })
