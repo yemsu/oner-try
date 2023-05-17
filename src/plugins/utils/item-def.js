@@ -148,6 +148,12 @@ export const characterInfos = {
   위험도: '위험도',
   레일리: '레일리',
 }
+export const skillDamageOptions = {
+  qd: 'Q 비례량',
+  wd: 'W 비례량',
+  ed: 'E 비례량',
+  rd: 'R 비례량',
+}
 export const slotNumbers = {
   sailor: 6,
   equipment: 6,
@@ -183,8 +189,9 @@ export const equipmentsOnlyOptionsMap = new Map(Object.entries(equipOnlyOptionsD
 export const noEquipOptionsMap = new Map(Object.entries(noEquipOptions))
 export const colosseumOptionsMap = new Map(Object.entries(colosseumOptions))
 export const characterInfosMap = new Map(Object.entries(characterInfos))
+export const skillDamageOptionsMap = new Map(Object.entries(skillDamageOptions))
 const totalOptions = () => {
-  const totalOptions = new Map([...noEquipOptionsMap, ...colosseumOptionsMap, ...characterInfosMap])
+  const totalOptions = new Map([...noEquipOptionsMap, ...colosseumOptionsMap, ...characterInfosMap, ...skillDamageOptionsMap])
   for(const [key, value] of equipmentsOnlyOptionsMap) {
     totalOptions.set(key, value)
   }

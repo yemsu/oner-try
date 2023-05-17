@@ -128,13 +128,8 @@ export const actions = {
       .then((data) => {
         // console.log('GET_COLLEAGUES', data)
         const newData = data.map(dataItem => {
-          const { option, coloOption, coloPassive } = dataItem
-          const optionObj = {option: parserStrData(option)}
-          const coloOptionObj = coloOption ? {coloOption: parserStrData(coloOption)} : {}
-          const coloPassiveObj = coloPassive ? {coloPassive: parserStrData(coloPassive, 'list')} : {}
-          const newObj = coloOption
-            ? Object.assign(optionObj, {...coloOptionObj, ...coloPassiveObj})
-            : optionObj
+          const { option } = dataItem
+          const newObj = {option: parserStrData(option)}
           return Object.assign(dataItem, newObj)
         })
 
