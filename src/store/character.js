@@ -6,10 +6,12 @@ import { getUserCharacters, getGameUsers, getRanking } from '@/plugins/utils/htt
 
 const dataParseHandler = (items, rawData, type) => {
   const data2 = fillDataAndInsertValue(items, parserStrData(rawData[type]), 'stack', true)
-
-  // const data3 = type === 'colleagues' || type === 'ship'
-  const data3 = type === 'ship'
-    ? fillDefaultList(data2, slotNumbers[type])
+  
+  const keyName = type === 'colleagues' ? 'colleague'
+    : type === 'sailors' ? 'sailor'
+    : type
+  const data3 = type === 'colleagues' || type === 'ship'
+    ? fillDefaultList(data2, slotNumbers[keyName])
     : data2
 
   return data3
