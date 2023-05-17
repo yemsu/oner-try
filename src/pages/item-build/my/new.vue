@@ -274,7 +274,7 @@ export default {
       // this.itemStack = 0
     },
     selectItem(itemName) {
-      const item = this.items.find((item) => item.name === itemName)
+      const item = [...this.items, ...this.colleagues].find((item) => item.name === itemName)
       if(!canEnhance(item) || this.selectedItem?.name === itemName) {
         this.addItem(null, item)
         return
