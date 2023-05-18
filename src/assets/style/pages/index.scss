@@ -1,6 +1,6 @@
 $column-num: 3;
 .main {
-  max-width: 1120px;
+  max-width: 1420px;
   margin: 0 auto;
   background-repeat: no-repeat;
   background-position: top center;
@@ -10,7 +10,7 @@ $column-num: 3;
     grid-template-columns: repeat(2, 1fr);
     height: clamp(100px, 38vw, 550px);
     // padding: ;
-    font-size: clamp(20px, 5vw, 96px);
+    font-size: clamp(20px, 6vw, 115px);
     > div {
       display: flex;
       align-items: center;

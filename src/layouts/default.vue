@@ -56,7 +56,8 @@ export default {
       this.showContentTopAd = false
       this.showContentBottomAd = false
       setTimeout(() => {
-        const names = ['item-setting-my-view', 'item-setting-shared-id', 'item-setting-all-id']
+        const names = ['index']
+
         if(names.includes(routeName)) {
           this.showSideFixAds = false
           this.showContentTopAd = true
