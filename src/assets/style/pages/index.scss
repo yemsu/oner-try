@@ -10,7 +10,7 @@ $column-num: 3;
     grid-template-columns: repeat(2, 1fr);
     height: clamp(100px, 38vw, 550px);
     // padding: ;
-    font-size: clamp(20px, 6vw, 115px);
+    font-size: clamp(20px, 5vw, 96px);
     > div {
       display: flex;
       align-items: center;
