@@ -19,7 +19,7 @@
       box-shadow: 3px 3px 10px 0px hsl(var(--hsl-black), 10%);
     }
     > h2 {
-      font-size: $font-size-S;
+      font-size: var(--font-size-S);
       button {
         width: 100%;
         padding: 10px;

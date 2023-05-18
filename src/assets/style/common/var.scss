@@ -13,19 +13,6 @@ $square-btn-medium-line-height: 36px;
 $header-game-menu-height: $square-btn-medium-line-height + ($top-menu-bar-vtc-pd * 2);
 $header-site-menu-height: 32px;
 
-// size
-$font-size-title-B: 30px;
-$font-size-title-M: 25px;
-$font-size-title-MS: 23px;
-$font-size-title-S: 20px;
-$font-size-title-XS: 16px;
-$font-size-B: 16px;
-$font-size-M: 15px;
-$font-size-MS: 14px;
-$font-size-S: 13px;
-$font-size-XS: 12px;
-$font-size-XXS: 11px;
-
 // item img size
 $item-image-xxsmall: 20px;
 $item-image-xsmall: 30px;
@@ -231,5 +218,21 @@ $color-total-option: hsl(39, 100%, 50%);
   --color-text-highlight: #373d1e;
   --color-green-neon: #5fee27;
   --color-ban: #d00;
+}
+}
+
+@media screen and (min-width: ($mobile-size + 1)) {
+:root {
+  --font-size-title-B: 30px;
+  --font-size-title-M: 25px;
+  --font-size-title-MS: 23px;
+  --font-size-title-S: 20px;
+  --font-size-title-XS: 16px;
+  --font-size-B: 16px;
+  --font-size-M: 15px;
+  --font-size-MS: 14px;
+  --font-size-S: 13px;
+  --font-size-XS: 12px;
+  --font-size-XXS: 11px;
 }
 }

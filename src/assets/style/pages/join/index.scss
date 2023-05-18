@@ -37,7 +37,7 @@
     }
   }
   .btn-enter {
-    font-size: $font-size-B;
+    font-size: var(--font-size-B);
     color: var(--color-point);
     font-weight: 500;
     animation: enterAni 01s ease infinite;
@@ -48,7 +48,7 @@
   }
   .text-result {
     padding: 20px 0 40px;
-    font-size: $font-size-title-B;
+    font-size: var(--font-size-title-B);
     font-weight: 500;
   }
 

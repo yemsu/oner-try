@@ -5,7 +5,7 @@ $font-family: 'Pretendard Variable', sans-serif;
 
 body {
   background-color: var(--bg-body);
-  font-size: $font-size-M;
+  font-size: var(--font-size-M);
   line-height: 1.5;
   color: var(--color-black);
   font-family: $font-family;
@@ -13,7 +13,7 @@ body {
   letter-spacing: -0.05em;
 }
 small {
-  font-size: $font-size-XS;
+  font-size: var(--font-size-XS);
 }
 button, a, input {
   font-family: $font-family;
@@ -273,7 +273,7 @@ caption, .ir-hidden {
     border-radius: 5px;
   }
   &.size-big {
-    font-size: $font-size-S;
+    font-size: var(--font-size-S);
   }
   &.black {
     background-color: rgba(0, 0, 0, 0.8);
@@ -308,14 +308,14 @@ caption, .ir-hidden {
 }
 //  content top
 p.text-refer {
-  font-size: $font-size-XS;
+  font-size: var(--font-size-XS);
   color: var(--font-dark-gray);
 }
 div.text-refer {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: $font-size-XS;
+  font-size: var(--font-size-XS);
   &.top {
     margin-bottom: 6px;
   }

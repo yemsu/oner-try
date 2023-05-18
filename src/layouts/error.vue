@@ -80,13 +80,13 @@ export default {
 <style lang="scss" scoped>
 .wrap-error {
   .title {
-    font-size: $font-size-title-B;
+    font-size: var(--font-size-title-B);
   }
   .error-desc {
-    font-size: $font-size-B;
+    font-size: var(--font-size-B);
   }
   .error-msg {
-    font-size: $font-size-S;
+    font-size: var(--font-size-S);
     color: var(--font-dark-gray);
   }
   .text-sub {

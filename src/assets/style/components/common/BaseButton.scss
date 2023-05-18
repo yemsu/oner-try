@@ -19,10 +19,10 @@
   }
   &.size {
     &-xsmall {
-      font-size: $font-size-XS;
+      font-size: var(--font-size-XS);
     }
     &-small {
-      font-size: $font-size-S;
+      font-size: var(--font-size-S);
     }
     &-medium {
     }
@@ -45,7 +45,7 @@
       &-medium {
         min-width: 50px;
         padding: 0 10px;
-        font-size: $font-size-M;
+        font-size: var(--font-size-M);
         line-height: $square-btn-medium-line-height;
         .text {
           opacity: .8;
@@ -62,7 +62,7 @@
       &-large {
         min-width: 100px;
         padding: 0 10px;
-        font-size: $font-size-M;
+        font-size: var(--font-size-M);
         line-height: $square-btn-medium-line-height;
       }
     }

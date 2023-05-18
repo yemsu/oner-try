@@ -18,7 +18,7 @@
       width: 250px;
       ::v-deep {
         input {
-          font-size: $font-size-M;
+          font-size: var(--font-size-M);
         }
       }
     }
@@ -40,7 +40,7 @@
       .title-list {
         padding: 3px 10px;
         background-color: var(--color-black);
-        font-size: $font-size-S;
+        font-size: var(--font-size-S);
         color: var(--color-white);
         text-align: center;
       }
@@ -63,12 +63,12 @@
         .number-ranking {
           min-width: 2em;
           padding-left: 10px;
-          font-size: $font-size-S;
+          font-size: var(--font-size-S);
           color: var(--color-gray-40);
         }
         .value-ranking {
           padding-right: 10px;
-          font-size: $font-size-S;
+          font-size: var(--font-size-S);
           color: var(--color-point-sub);
         }
       }

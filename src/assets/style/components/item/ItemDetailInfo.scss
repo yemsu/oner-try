@@ -37,7 +37,7 @@
       padding: 15px 20px;
       background-color: rgba(0, 0, 0, 0.8);
       text-align: center;
-      font-size: $font-size-S;
+      font-size: var(--font-size-S);
       border-radius: 10px;
       .wrap-detail {
         display: flex;
@@ -56,26 +56,26 @@
     }
   }
   &.size {
-    font-size: $font-size-S;
+    font-size: var(--font-size-S);
     &-small {
       &.type {
         &-basic {
-          font-size: $font-size-S;
+          font-size: var(--font-size-S);
         }
         &-list-main {
           > .wrap-detail {
             dd {
-              font-size: $font-size-S;
+              font-size: var(--font-size-S);
             }
           }
         } 
       }
     }
     &-medium {
-      font-size: $font-size-S;
+      font-size: var(--font-size-S);
       &.type {
         &-basic {
-          font-size: $font-size-MS;
+          font-size: var(--font-size-MS);
           &:nth-child(n + 2) {
             margin-top: 0.2em;
           }
@@ -83,7 +83,7 @@
         &-list-main {
           > .wrap-detail {
             dd {
-              font-size: $font-size-M;
+              font-size: var(--font-size-M);
             }
           }
         }

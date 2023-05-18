@@ -104,7 +104,7 @@ export default {
     &-small {
       .title {
         width: 50px;
-        font-size: $font-size-XS;
+        font-size: var(--font-size-XS);
       }
       .wrap-menu {
         gap: 5px;

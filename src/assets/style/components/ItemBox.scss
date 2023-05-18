@@ -52,7 +52,7 @@ $name-space: 5px;
           .name {
             width: 140%;
             margin-left: -20%;
-            font-size: $font-size-S;
+            font-size: var(--font-size-S);
           }
         }
       }
@@ -102,17 +102,17 @@ $name-space: 5px;
           .name {
             display: flex;
             align-items: center;
-            font-size: $font-size-XS;
+            font-size: var(--font-size-XS);
           }
         }
         &-xsmall {
           .name {
-            font-size: $font-size-S;
+            font-size: var(--font-size-S);
           }
         }
         &-small {
           .name {
-            font-size: $font-size-MS;
+            font-size: var(--font-size-MS);
           }
         }
         &-big {
@@ -120,7 +120,7 @@ $name-space: 5px;
           .area-name {
             margin-left: 10px;
             .name {
-              font-size: $font-size-S + 8;
+              font-size: var(--font-size-S + 8);
             }
           }
         }
@@ -193,7 +193,7 @@ $name-space: 5px;
     text-align: left;
     transform: translateX(100%);
     .tooltip-title {
-      font-size: $font-size-S;
+      font-size: var(--font-size-S);
     }
     &:before {
       display: block;

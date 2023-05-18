@@ -13,7 +13,7 @@
 footer {
   padding: 20px;
   border-top: 1px solid var(--border-gray);
-  font-size: $font-size-S;
+  font-size: var(--font-size-S);
   text-align: center;
   color: var(--color-gray-50);
   a {

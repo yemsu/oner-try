@@ -47,7 +47,7 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-  font-size: $font-size-title-B;
+  font-size: var(--font-size-title-B);
   font-weight: var(--font-weight-XB);
 }
 </style>
