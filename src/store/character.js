@@ -5,14 +5,11 @@ import { deepClone } from '@/plugins/utils'
 import { getUserCharacters, getGameUsers, getRanking } from '@/plugins/utils/https'
 
 const dataParseHandler = (items, rawData, type) => {
-  const data2 = fillDataAndInsertValue(items, parserStrData(rawData[type]), 'stack', true)
+  const keyName = ['colleague', 'sailor'].includes(type)
+    ? `${type}s` : type
+  const data2 = fillDataAndInsertValue(items, parserStrData(rawData[keyName]), 'stack', true)
   
-  const keyName = type === 'colleagues' ? 'colleague'
-    : type === 'sailors' ? 'sailor'
-    : type
-  const data3 = type === 'colleagues' || type === 'ship'
-    ? fillDefaultList(data2, slotNumbers[keyName])
-    : data2
+  const data3 = fillDefaultList(data2, slotNumbers[type])
 
   return data3
 }
@@ -118,10 +115,10 @@ export const actions = {
         const { item: { sailors, colleagues } } = rootState
         const newData = data.map(user => {
           const userSailors = user.sailors !== '[]'
-            ? dataParseHandler(sailors, user, 'sailors') 
+            ? dataParseHandler(sailors, user, 'sailor') 
             : new Array(6).fill(null)
           const userColleagues = user.colleagues !== '[]'
-            ? dataParseHandler(colleagues, user, 'colleagues')
+            ? dataParseHandler(colleagues, user, 'colleague')
             : new Array(3).fill(null)
           return Object.assign(user, {
             sailors: userSailors,
