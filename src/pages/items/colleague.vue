@@ -5,6 +5,7 @@
       :items="colleagues"
       :option-menus="optionMenus"
       :table-info="tableInfo"
+      table-min-width="600px"
     />
   </section>
 </template>

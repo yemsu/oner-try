@@ -19,7 +19,7 @@
       box-shadow: 3px 3px 10px 0px hsl(var(--hsl-black), 10%);
     }
     > h2 {
-      font-size: $font-size-S-pc;
+      font-size: var(--font-size-S);
       button {
         width: 100%;
         padding: 10px;
@@ -44,5 +44,15 @@
   }
   .emoji-star {
     font-size: 0.9em;
+  }
+  @include mobile {
+    bottom: 10px;
+    right: 10px;
+    button {
+      font-size: var(--font-size-S);
+    }
+    .wrapper {
+      border-width: 1px;
+    }
   }
 }

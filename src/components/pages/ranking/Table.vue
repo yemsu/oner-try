@@ -3,89 +3,91 @@
     <div v-if="ranking.length === 0" style="margin-top: 300px; font-size: 1.5em; text-align: center;">
       데이터 로딩중💦 잠시만 기다려 주세요
     </div>
-    <table v-else class="list-ranking">
-      <caption>랭킹 순위에 따른 랭크, 영웅, 유저명, 현상금, 선원, 동료 정보 테이블</caption>
-      <thead>
-        <tr>
-          <th scope="col">랭크</th>
-          <th scope="col">영웅</th>
-          <th scope="col">레벨</th>
-          <th scope="col">유저명</th>
-          <th scope="col">현상금</th>
-          <th scope="col">선원</th>
-          <th scope="col">동료</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          :class="`item-ranking tear-${getRankInfo(i).index}`"
-          v-for="(user, i) in ranking"
-          :key="`user${i}`"
-        >
-          <td class="rank">
-            <span :class="`rank-title type-${getRankInfo(i).index}`" v-if="i <= 11 && selectedHero === 'all'">
-              <span class="skull">☠</span>
-              {{ getRankInfo(i).title }}
-            </span>
-            <span class="number-rank" v-else>{{ i + 1 }}</span>
-          </td>
-          <td class="thumb-hero">
-            <item-box
-              :item="user.hero"
-              :showName="false"
-              :wantedPaper="i === 0"
-              :isPirateKing="i === 0"
-              :showBounty="false"
-              :size="i === 0 ? 'medium' : 'small'"
-            ></item-box>
-          </td>
-          <td class="level">
-            {{ user.lv }}
-          </td>
-          <td class="nickname">
-            <router-link
-              :to="`/character/result?nickname=${user.nickName}`"
-              title="유저 캐릭터 보러가기"
-            >
-              {{ user.nickName }}
-            </router-link>
-          </td>
-          <td class="bounty">$ {{ user.bounty.toLocaleString() }}</td>
-          <td class="sailors">
-            <ul class="list-items">
-              <li
-                v-for="(sailor, i) in user.sailors"
-                :key="`sailor${i}`"
+    <div v-else class="wrap-scroll">
+      <table class="list-ranking">
+        <caption>랭킹 순위에 따른 랭크, 영웅, 유저명, 현상금, 선원, 동료 정보 테이블</caption>
+        <thead>
+          <tr>
+            <th scope="col">랭크</th>
+            <th scope="col">영웅</th>
+            <th scope="col">레벨</th>
+            <th scope="col">유저명</th>
+            <th scope="col">현상금</th>
+            <th scope="col">선원</th>
+            <th scope="col">동료</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            :class="`item-ranking tear-${getRankInfo(i).index}`"
+            v-for="(user, i) in ranking"
+            :key="`user${i}`"
+          >
+            <td class="rank">
+              <span :class="`rank-title type-${getRankInfo(i).index}`" v-if="i <= 11 && selectedHero === 'all'">
+                <span class="skull">☠</span>
+                {{ getRankInfo(i).title }}
+              </span>
+              <span class="number-rank" v-else>{{ i + 1 }}</span>
+            </td>
+            <td class="thumb-hero">
+              <item-box
+                :item="user.hero"
+                :showName="false"
+                :wantedPaper="i === 0"
+                :isPirateKing="i === 0"
+                :showBounty="false"
+                :size="i === 0 ? 'medium' : 'small'"
+              ></item-box>
+            </td>
+            <td class="level">
+              {{ user.lv }}
+            </td>
+            <td class="nickname">
+              <router-link
+                :to="`/character/result?nickname=${user.nickName}`"
+                title="유저 캐릭터 보러가기"
               >
-                <item-box
-                  :item="sailor"
-                  :showName="false"
-                  :onlyImg="true"
-                  :isRoundImg="true"
-                  size="small"
-                />
-              </li>
-            </ul>
-          </td>
-          <td class="colleagues">
-            <ul class="list-items">
-              <li
-                v-for="(colleague, i) in user.colleagues"
-                :key="`colleague${i}`"
-              >
-                <item-box
-                  :item="colleague"
-                  :showName="false"
-                  :onlyImg="true"
-                  :isRoundImg="true"
-                  size="small"
-                />
-              </li>
-            </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                {{ user.nickName }}
+              </router-link>
+            </td>
+            <td class="bounty">$ {{ user.bounty.toLocaleString() }}</td>
+            <td class="sailors">
+              <ul class="list-items">
+                <li
+                  v-for="(sailor, i) in user.sailors"
+                  :key="`sailor${i}`"
+                >
+                  <item-box
+                    :item="sailor"
+                    :showName="false"
+                    :onlyImg="true"
+                    :isRoundImg="true"
+                    size="small"
+                  />
+                </li>
+              </ul>
+            </td>
+            <td class="colleagues">
+              <ul class="list-items">
+                <li
+                  v-for="(colleague, i) in user.colleagues"
+                  :key="`colleague${i}`"
+                >
+                  <item-box
+                    :item="colleague"
+                    :showName="false"
+                    :onlyImg="true"
+                    :isRoundImg="true"
+                    size="small"
+                  />
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <common-scroll-observer
       :is-end="isInfiniteScrollEnd"
       @endScroll="loadData()"

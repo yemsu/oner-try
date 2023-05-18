@@ -5,7 +5,7 @@ $font-family: 'Pretendard Variable', sans-serif;
 
 body {
   background-color: var(--bg-body);
-  font-size: $font-size-M-pc;
+  font-size: var(--font-size-M);
   line-height: 1.5;
   color: var(--color-black);
   font-family: $font-family;
@@ -13,7 +13,7 @@ body {
   letter-spacing: -0.05em;
 }
 small {
-  font-size: $font-size-XS-pc;
+  font-size: var(--font-size-XS);
 }
 button, a, input {
   font-family: $font-family;
@@ -31,6 +31,9 @@ i {
 // layout
 .mrg-top-medium {
   margin-top: 30px;
+  @include mobile {
+    margin-top: 20px;
+  }
 }
 .mrg-top-small {
   margin-top: 10px;
@@ -263,7 +266,7 @@ caption, .ir-hidden {
   border: 1px solid #333;
   background-color: rgba(255, 255, 255, 0.8);
   color: $color-black;
-  font-size: 11px;
+  font-size: var(--font-size-XXS);
   font-weight: 500;
   line-height: 1;
   text-align: center;
@@ -273,7 +276,9 @@ caption, .ir-hidden {
     border-radius: 5px;
   }
   &.size-big {
-    font-size: $font-size-S-pc;
+    @include pc {
+      font-size: var(--font-size-S);
+    }
   }
   &.black {
     background-color: rgba(0, 0, 0, 0.8);
@@ -308,14 +313,14 @@ caption, .ir-hidden {
 }
 //  content top
 p.text-refer {
-  font-size: $font-size-XS-pc;
+  font-size: var(--font-size-XS);
   color: var(--font-dark-gray);
 }
 div.text-refer {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: $font-size-XS-pc;
+  font-size: var(--font-size-XS);
   &.top {
     margin-bottom: 6px;
   }
@@ -341,6 +346,9 @@ div.text-refer {
   > .align-right {
     margin-left: auto;
   }
+  > .title {
+    flex-shrink: 0;
+  }
 }
 
 // content-top 
@@ -360,6 +368,9 @@ div.text-refer {
   padding-bottom: 2px;
   letter-spacing: 0.01em;
   font-weight: var(--font-weight-N);
+  @include mobile {
+    margin-bottom: 10px;
+  }
   &.underline {
     border-bottom: 1px solid var(--border-dark-gray);
     margin-bottom: 10px;
@@ -448,4 +459,9 @@ div.text-refer {
   &-negative {
     border-color: var(--color-point-pale);
   }
+}
+
+.wrap-x-scroll {
+  overflow-x: auto;
+  @include scrollBar;
 }

@@ -101,10 +101,11 @@ export default {
     border-top: 1px solid var(--border-light-gray);
   }
   &.size {
+    @include pc {
     &-small {
       .title {
         width: 50px;
-        font-size: $font-size-XS-pc;
+        font-size: var(--font-size-XS);
       }
       .wrap-menu {
         gap: 5px;
@@ -116,6 +117,26 @@ export default {
       }
       .wrap-menu {
         gap: 10px;
+      }
+    }
+    }
+    @include mobile {
+      &-small {
+        .title {
+          width: 40px;
+          font-size: var(--font-size-XS);
+        }
+        .wrap-menu {
+          gap: 3px;
+        }
+      }
+      &-medium {
+        .title {
+          width: 50px;
+        }
+        .wrap-menu {
+          gap: 6px;
+        }
       }
     }
   }

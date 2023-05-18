@@ -1,14 +1,14 @@
 <template>
-  <section class="wrap-search">
+  <section class="wrap-search inner-size-wide">
     <h2 class="ir-hidden">조합법</h2>
-    <item-checker-board
-      v-if="uncommonItems"
-      :items="uncommonItems"
-    />
     <composition-search-box
       v-if="compositionItems"
       :full-data="compositionItems"
       size="big"
+    />
+    <item-checker-board
+      v-if="uncommonItems"
+      :items="uncommonItems"
     />
   </section>
 </template>

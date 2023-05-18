@@ -48,14 +48,14 @@ $column-num: 3;
     .area-text {
       text-align: center;
       > .title  {
-        font-size: $font-size-title-M-pc;
+        font-size: var(--font-size-title-M);
         font-weight: 500;
         &.small {
-          font-size: $font-size-title-MS-pc;
+          font-size: var(--font-size-title-MS);
         }
         & ~ p {
           margin-top: 10px;
-          font-size: $font-size-B-pc;
+          font-size: var(--font-size-B);
         }
       }
     }

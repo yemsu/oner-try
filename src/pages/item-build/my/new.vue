@@ -79,6 +79,7 @@
                 :grade-menus="getGradeMenu(activeTab.type)"
                 :option-menus="optionMenus"
                 :has-click-event="true"
+                :table-min-width="getTableMinWidth(activeTab.type)"
                 @click="(item) => selectItem(item.name)"
                 size="small"
               />
@@ -223,22 +224,6 @@ export default {
     this.removeBeforeUnloadEvent()
   },
   methods: {
-    getGradeMenu(type) {
-      const getGradeMaps = (itemTypeGrades) => {
-        return itemTypeGrades.reduce((result, keyName) => {
-            result[keyName] = gradesDef[keyName]
-            return result
-          }, {})
-      }
-      switch (type) {
-        case 'equipment':
-          return {...this.commonOption, ...getGradeMaps(equipmentGrades)}
-        case 'sailor':
-          return {...this.commonOption, ...getGradeMaps(sailorGrades)}
-        case 'ship':
-          return null
-      }
-    },
     ...mapActions({
       getItems: 'item/GET_ITEMS',
       getSynergies: 'item/GET_SYNERGIES',
@@ -397,6 +382,33 @@ export default {
           return JSON.stringify(this.shipsTable)
         case 'colleague':
           return JSON.stringify(this.colleagues)
+      }
+    },
+    getGradeMenu(type) {
+      const getGradeMaps = (itemTypeGrades) => {
+        return itemTypeGrades.reduce((result, keyName) => {
+            result[keyName] = gradesDef[keyName]
+            return result
+          }, {})
+      }
+      switch (type) {
+        case 'equipment':
+          return {...this.commonOption, ...getGradeMaps(equipmentGrades)}
+        case 'sailor':
+          return {...this.commonOption, ...getGradeMaps(sailorGrades)}
+        case 'ship':
+          return null
+      }
+    },
+    getTableMinWidth(type) {
+      switch (type) {
+        case 'equipment':
+          return '500px'
+        case 'sailor':
+          return '650px'
+        case 'colleague':
+        case 'ship':
+          return '300px'
       }
     },
     getTableInfo(activeTab) {

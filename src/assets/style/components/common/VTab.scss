@@ -1,5 +1,7 @@
 .tabs {
+  overflow-x: auto;
   display: flex;
+  @include scrollBar;
 }
 
 .wrap-tab {

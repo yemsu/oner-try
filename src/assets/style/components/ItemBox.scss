@@ -28,7 +28,9 @@ $name-space: 5px;
     }
   }
   .wrap-info {
-    width: 100%;
+    @include pc {
+      width: 100%;
+    }
   }
   .item-box-info {
     display: block;
@@ -52,33 +54,38 @@ $name-space: 5px;
           .name {
             width: 140%;
             margin-left: -20%;
-            font-size: $font-size-S-pc;
+            @include pc {
+              font-size: var(--font-size-S);
+            }
+            @include mobile {
+              font-size: var(--font-size-XS);
+            }
           }
         }
       }
       &.size {
         &-xxsmall {
-          width: $item-image-xxsmall;
+          width: var(--item-image-xxsmall);
         }
         &-xsmall {
-          width: $item-image-xsmall;
+          width: var(--item-image-xsmall);
         }
         &-small {
-          width: $item-image-small;
+          width: var(--item-image-small);
         }
         &-medium {
-          width: $item-image-basic;     
+          width: var(--item-image-basic);
         }
         &-big {    
-          width: $item-image-big;  
+          width: var(--item-image-big);
           &.wanted-paper {
-            @include setWantedPaper($item-image-big);
+            @include setWantedPaper(var(--item-image-big));
           }     
         }
         &-xbig { 
-          width: $item-image-xbig;  
+          width: var(--item-image-xbig);
           &.wanted-paper {
-            @include setWantedPaper($item-image-xbig);
+            @include setWantedPaper(var(--item-image-xbig));
           }     
         }
       }
@@ -93,6 +100,7 @@ $name-space: 5px;
         height: 100%;
         .area-name {
           display: flex;
+          align-items: center;
           gap: 5px;
           margin-left: 6px;
         }
@@ -102,17 +110,17 @@ $name-space: 5px;
           .name {
             display: flex;
             align-items: center;
-            font-size: $font-size-XS-pc;
+            font-size: var(--font-size-XS);
           }
         }
         &-xsmall {
           .name {
-            font-size: $font-size-S-pc;
+            font-size: var(--font-size-S);
           }
         }
         &-small {
           .name {
-            font-size: $font-size-MS-pc;
+            font-size: var(--font-size-MS);
           }
         }
         &-big {
@@ -120,7 +128,7 @@ $name-space: 5px;
           .area-name {
             margin-left: 10px;
             .name {
-              font-size: $font-size-S-pc + 8;
+              font-size: var(--font-size-S + 8);
             }
           }
         }
@@ -130,6 +138,9 @@ $name-space: 5px;
   &.wanted-paper {
     background-color: #d7b993;
     border: 1px solid #333;
+    .img-wanted {
+      max-width: 100%;
+    }
     &.size-medium {
       .img-wanted {
         width: 55px;
@@ -142,7 +153,9 @@ $name-space: 5px;
     }
     .item-box-info {
       .img-wanted {
-        margin-bottom: 5px;
+        @include pc {
+          margin-bottom: 5px;
+        }
       }
       .area-img {
         overflow: hidden;
@@ -193,7 +206,7 @@ $name-space: 5px;
     text-align: left;
     transform: translateX(100%);
     .tooltip-title {
-      font-size: $font-size-S-pc;
+      font-size: var(--font-size-S);
     }
     &:before {
       display: block;

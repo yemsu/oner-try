@@ -26,6 +26,7 @@
         :table-info="tableInfo"
         :has-click-event="hasClickEvent"
         :size="size"
+        :table-min-width="tableMinWidth"
         @click="(item) => $emit('click', item)"
       />
     </div>
@@ -66,6 +67,10 @@ export default {
     hasClickEvent: {
       type: Boolean,
       default: () => false
+    },
+    tableMinWidth: {
+      type: String,
+      default: () => '800px'
     }
   },
   data() {

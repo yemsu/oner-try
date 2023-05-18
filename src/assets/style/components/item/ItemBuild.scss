@@ -1,14 +1,16 @@
 $common-gap: 10px;
 
 .wrapper {
-  display: flex;
-  justify-content: space-between;
-  gap: $common-gap;
+  @include pc {
+    display: flex;
+    justify-content: space-between;
+    gap: $common-gap;
+  }
 }
 .all-options-main {
   .text-notice {
     margin-top: 5px;
-    font-size: $font-size-XS-pc;
+    font-size: var(--font-size-XS);
     color: var(--font-dark-gray);
     text-align: center;
     word-break: keep-all;
@@ -17,50 +19,91 @@ $common-gap: 10px;
 
 .wrap-item-build {
   display: grid;
-  grid-template-columns: 198px 198px 105px 170px;
-  grid-template-rows: 160px 160px 36px 140px;
   gap: $list-gap-basic;
-  grid-auto-flow: dense;
   .wrap-title-content {
     display: flex;
     flex-direction: column;
     gap: $common-gap;
-    &.equipment {
-      grid-column-start: 1;
-      grid-row-start: 1;
-    }
-    &.sailor {
-      grid-column-start: 2;
-      grid-row-start: 1;
-    }
-    &.colleague {
-      grid-column-start: 3;
-      grid-column-end: 5;
-      grid-row-start: 1;
-    }
-    &.ship {
-      grid-column-start: 3;
-      // grid-column-end: 5;
-      grid-row-start: 2;
-    }
   }
   ::v-deep {
     .area-item-list {
       height: 100%;
     }
-    .box-item {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
     .item-blank {
       margin-bottom: 32px;
     }
-    .list-item > li {
-      min-height: 103px;
+  }
+  @include pc {
+    grid-template-columns: 198px 198px 105px 170px;
+    grid-template-rows: 160px 160px 36px 140px;
+    .wrap-title-content {
+      &.equipment {
+        grid-column-start: 1;
+        grid-row-start: 1;
+      }
+      &.sailor {
+        grid-column-start: 2;
+        grid-row-start: 1;
+      }
+      &.colleague {
+        grid-column-start: 3;
+        grid-column-end: 5;
+        grid-row-start: 1;
+      }
+      &.ship {
+        grid-column-start: 3;
+        // grid-column-end: 5;
+        grid-row-start: 2;
+      }
+    }
+    ::v-deep {
+      .area-item-list {
+        height: 100%;
+      }
+      .box-item {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      .list-item > li {
+        min-height: 103px;
+      }
+    }
+  }
+  @include mobile {
+    grid-template-columns: repeat(4, 1fr);
+    .list-item {
+      justify-items: center;
+    }
+    .wrap-title-content {
+      &.equipment {
+        grid-column-start: 1;
+        grid-column-end: 3;
+      }
+      &.sailor {
+        grid-column-start: 3;
+        grid-column-end: 5;
+      }
+      &.colleague {
+        grid-column-start: 1;
+        grid-column-end: 4;
+        grid-row-start: 1;
+      }
+      &.ship {
+        grid-column-start: 4;
+        grid-column-end: 5;
+        grid-row-start: 1;
+      }
     }
   }
 }
 .wrap-stat-box {
-  display: flex;
   gap: $common-gap;
+  @include pc {
+    display: flex;
+  }
+  @include mobile {
+    margin-top: $common-gap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

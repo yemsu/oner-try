@@ -18,12 +18,25 @@
       display: flex;
       align-items: center;
       height: 100%;
-      margin-left: 40px;
       > .wrap-detail {
         border-left: 2px solid var(--border-dark-gray);
-        padding-left: 8px;
-        &:nth-child(n+2) {
-          margin-left: 20px;
+      }
+      @include pc {
+        margin-left: 40px;
+        > .wrap-detail {
+          padding-left: 8px;
+          &:nth-child(n+2) {
+            margin-left: 20px;
+          }
+        }
+      }
+      @include mobile {
+        margin-left: 5px;
+        > .wrap-detail {
+          padding-left: 5px;
+          &:nth-child(n+2) {
+            margin-left: 10px;
+          }
         }
       }
     }
@@ -32,12 +45,10 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      min-width: 180px;
       margin-bottom: auto;
-      padding: 15px 20px;
       background-color: rgba(0, 0, 0, 0.8);
       text-align: center;
-      font-size: $font-size-S-pc;
+      font-size: var(--font-size-S);
       border-radius: 10px;
       .wrap-detail {
         display: flex;
@@ -53,29 +64,36 @@
           }
         }
       }
+      @include pc {
+        min-width: 180px;
+        padding: 15px 20px;
+      }
+      @include mobile {
+        padding: 10px;
+      }
     }
   }
   &.size {
-    font-size: $font-size-S-pc;
+    font-size: var(--font-size-S);
     &-small {
       &.type {
         &-basic {
-          font-size: $font-size-S-pc;
+          font-size: var(--font-size-S);
         }
         &-list-main {
           > .wrap-detail {
             dd {
-              font-size: $font-size-S-pc;
+              font-size: var(--font-size-S);
             }
           }
         } 
       }
     }
     &-medium {
-      font-size: $font-size-S-pc;
+      font-size: var(--font-size-S);
       &.type {
         &-basic {
-          font-size: $font-size-MS-pc;
+          font-size: var(--font-size-MS);
           &:nth-child(n + 2) {
             margin-top: 0.2em;
           }
@@ -83,7 +101,7 @@
         &-list-main {
           > .wrap-detail {
             dd {
-              font-size: $font-size-M-pc;
+              font-size: var(--font-size-M);
             }
           }
         }

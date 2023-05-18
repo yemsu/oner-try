@@ -19,10 +19,10 @@
   }
   &.size {
     &-xsmall {
-      font-size: $font-size-XS-pc;
+      font-size: var(--font-size-XS);
     }
     &-small {
-      font-size: $font-size-S-pc;
+      font-size: var(--font-size-S);
     }
     &-medium {
     }
@@ -30,11 +30,21 @@
   &.round {
     border-radius: 20px;
     &.size {
-      &-small {
-        padding: 2px 8px;
+      @include pc {
+        &-small {
+          padding: 2px 8px;
+        }
+        &-medium {
+          padding: 5px 10px;
+        }
       }
-      &-medium {
-        padding: 5px 10px;
+      @include mobile {
+        &-small {
+          padding: 1px 6px;
+        }
+        &-medium {
+          padding: 2px 8px;
+        }
       }
     }
   }
@@ -45,8 +55,8 @@
       &-medium {
         min-width: 50px;
         padding: 0 10px;
-        font-size: $font-size-M-pc;
-        line-height: $square-btn-medium-line-height;
+        font-size: var(--font-size-M);
+        line-height: var(--square-btn-medium-line-height);
         .text {
           opacity: .8;
         }
@@ -62,8 +72,8 @@
       &-large {
         min-width: 100px;
         padding: 0 10px;
-        font-size: $font-size-M-pc;
-        line-height: $square-btn-medium-line-height;
+        font-size: var(--font-size-M);
+        line-height: var(--square-btn-medium-line-height);
       }
     }
   }
