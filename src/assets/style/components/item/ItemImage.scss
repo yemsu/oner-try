@@ -47,22 +47,22 @@
   }
   &.size {
     &-xxsmall {
-      @include setSize($item-image-xxsmall);
+      @include setSize(var(--item-image-xxsmall));
     }
     &-xsmall {
-      @include setSize($item-image-xsmall);
+      @include setSize(var(--item-image-xsmall));
     }
     &-small {
-      @include setSize($item-image-small);
+      @include setSize(var(--item-image-small));
     }
     &-medium {
-      @include setSize($item-image-basic);     
+      @include setSize(var(--item-image-basic));
     }
     &-big {
-      @include setSize($item-image-big);     
+      @include setSize(var(--item-image-big));
     }
     &-xbig {
-      @include setSize($item-image-xbig);       
+      @include setSize(var(--item-image-xbig));
     }
   }
   &.round {

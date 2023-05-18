@@ -223,7 +223,7 @@ export default {
   }
   .menu-dropdown {
     position: absolute;
-    top: $header-site-menu-height;
+    top: var(--header-site-menu-height);
     left: 50%;
     min-width: 100%;
     text-align: center;

@@ -6,6 +6,7 @@
         type="etcItem"
         :items="etcItems"
         :table-info="tableInfo"
+        table-min-width="300px"
       />
     </div>
   </section>

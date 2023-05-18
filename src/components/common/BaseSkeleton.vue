@@ -45,8 +45,8 @@ export default {
     margin: 6px;
     border-radius: 100%;
     &.size-small {
-      width: $item-image-small;
-      height: $item-image-small;
+      width: var(--item-image-small);
+      height: var(--item-image-small);
     }
   }
 }

@@ -136,6 +136,16 @@ table {
           font-size: var(--font-size-S);
         }
       }
+      @include mobile {
+        table {
+          th {
+            padding: 5px 6px;
+          }
+          td {
+            padding: 10px 5px;
+          }
+        }
+      }
     }
   }
 }

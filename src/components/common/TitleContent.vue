@@ -35,7 +35,7 @@ export default {
   .title {
     padding: 5px 10px;
     border-bottom: 1px solid var(--border-gray);
-    font-size: 16px;
+    font-size: var(--font-size-title-XS);
     font-weight: bold;
   }
   .contents {

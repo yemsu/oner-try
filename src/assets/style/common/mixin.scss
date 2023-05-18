@@ -1,6 +1,9 @@
 @mixin containerSize($size:basic) {
   max-width: 100%;
   padding: 0 20px;
+  @include mobile {
+    padding: 0 10px;
+  }
   @if($size == basic) {
     width: $basic-container-width;
   } @else if($size == wide) {
@@ -47,7 +50,7 @@
   scrollbar-base-color: var(--color-gray-95);    
   &::-webkit-scrollbar {
     width: 5px;
-    height: 11px;
+    height: 6px;
   }
   &::-webkit-scrollbar-track {
     background-color: transparent;

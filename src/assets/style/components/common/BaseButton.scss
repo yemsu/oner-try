@@ -30,11 +30,21 @@
   &.round {
     border-radius: 20px;
     &.size {
-      &-small {
-        padding: 2px 8px;
+      @include pc {
+        &-small {
+          padding: 2px 8px;
+        }
+        &-medium {
+          padding: 5px 10px;
+        }
       }
-      &-medium {
-        padding: 5px 10px;
+      @include mobile {
+        &-small {
+          padding: 1px 6px;
+        }
+        &-medium {
+          padding: 2px 8px;
+        }
       }
     }
   }
@@ -46,7 +56,7 @@
         min-width: 50px;
         padding: 0 10px;
         font-size: var(--font-size-M);
-        line-height: $square-btn-medium-line-height;
+        line-height: var(--square-btn-medium-line-height);
         .text {
           opacity: .8;
         }
@@ -63,7 +73,7 @@
         min-width: 100px;
         padding: 0 10px;
         font-size: var(--font-size-M);
-        line-height: $square-btn-medium-line-height;
+        line-height: var(--square-btn-medium-line-height);
       }
     }
   }

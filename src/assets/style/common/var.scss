@@ -7,19 +7,6 @@ $layout-sizes: (
   'wide': 1400px,
   'full': 1920px
 );
-// header
-$top-menu-bar-vtc-pd: 5px;
-$square-btn-medium-line-height: 36px;
-$header-game-menu-height: $square-btn-medium-line-height + ($top-menu-bar-vtc-pd * 2);
-$header-site-menu-height: 32px;
-
-// item img size
-$item-image-xxsmall: 20px;
-$item-image-xsmall: 30px;
-$item-image-small: 40px;
-$item-image-basic: 55px;
-$item-image-big: 70px;
-$item-image-xbig: 90px;
 
 // list padding, gap
 $list-gap-basic: 10px;
@@ -223,6 +210,13 @@ $color-total-option: hsl(39, 100%, 50%);
 
 @media screen and (min-width: ($mobile-size + 1)) {
 :root {
+  // header
+  --top-menu-bar-vtc-pd: 5px;
+  --square-btn-medium-line-height: 36px;
+  --header-game-menu-height: calc(var(--square-btn-medium-line-height) + (var(--top-menu-bar-vtc-pd) * 2));
+  --header-site-menu-height: 32px;
+  --header-height: calc(var(--header-game-menu-height) + var(--header-site-menu-height));
+
   --font-size-title-B: 30px;
   --font-size-title-M: 25px;
   --font-size-title-MS: 23px;
@@ -234,5 +228,44 @@ $color-total-option: hsl(39, 100%, 50%);
   --font-size-S: 13px;
   --font-size-XS: 12px;
   --font-size-XXS: 11px;
+
+  // item img size
+  --item-image-xxsmall: 20px;
+  --item-image-xsmall: 30px;
+  --item-image-small: 40px;
+  --item-image-basic: 55px;
+  --item-image-big: 70px;
+  --item-image-xbig: 90px;
+}
+}
+
+@media screen and (max-width: $mobile-size) {
+:root {
+  // header
+  --top-menu-bar-vtc-pd: 5px;
+  --square-btn-medium-line-height: 30px;
+  --header-game-menu-height: calc(var(--square-btn-medium-line-height) + (var(--top-menu-bar-vtc-pd) * 2));
+  --header-site-menu-height: 32px;
+  --header-height: calc(var(--header-game-menu-height) + var(--header-site-menu-height));
+
+  --font-size-title-B: 22px;
+  --font-size-title-M: 20px;
+  --font-size-title-MS: 18px;
+  --font-size-title-S: 16px;
+  --font-size-title-XS: 15px;
+  --font-size-B: 14px;
+  --font-size-M: 13px;
+  --font-size-MS: 12px;
+  --font-size-S: 12px;
+  --font-size-XS: 11px;
+  --font-size-XXS: 10px;
+
+  // item img size
+  --item-image-xxsmall: 20px;
+  --item-image-xsmall: 25px;
+  --item-image-small: 30px;
+  --item-image-basic: 35px;
+  --item-image-big: 50px;
+  --item-image-xbig: 60px;
 }
 }

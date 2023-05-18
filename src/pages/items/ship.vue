@@ -5,6 +5,7 @@
       :items="ships"
       :option-menus="optionMenus"
       :table-info="tableInfo"
+      table-min-width="300px"
     />
   </section>
 </template>

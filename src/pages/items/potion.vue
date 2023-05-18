@@ -6,6 +6,7 @@
         type="potion"
         :items="potions"
         :table-info="tableInfo"
+        table-min-width="300px"
       />
     </div>
   </section>

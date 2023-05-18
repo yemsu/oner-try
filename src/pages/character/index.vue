@@ -1,13 +1,13 @@
 <template>
-  <section class="wrap-search">
+  <section class="wrap-search inner-size-wide">
     <h2 class="ir-hidden">캐릭터</h2>
-    <item-checker-board
-      v-if="pureHeroes"
-      :items="pureHeroes"
-    />
     <character-search-box
       :full-data="gameUsers"
       size="big"
+    />
+    <item-checker-board
+      v-if="pureHeroes"
+      :items="pureHeroes"
     />
   </section>
 </template>

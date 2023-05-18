@@ -45,4 +45,14 @@
   .emoji-star {
     font-size: 0.9em;
   }
+  @include mobile {
+    bottom: 10px;
+    right: 10px;
+    button {
+      font-size: var(--font-size-S);
+    }
+    .wrapper {
+      border-width: 1px;
+    }
+  }
 }

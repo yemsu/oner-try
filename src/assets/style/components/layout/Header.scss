@@ -13,7 +13,9 @@ header {
     }
   }
   .menu-bar.game-menu {
-    padding-left: 85px;
+    @include pc {
+      padding-left: 85px;
+    }
   }
   .menu-bar.site {
     position: relative;
@@ -25,7 +27,7 @@ header {
     ::v-deep {
       a, button {
         color: rgba(255, 255, 255, 0.8);
-        line-height: $header-site-menu-height;
+        line-height: var(--header-site-menu-height);
       }
     }
     .logo {

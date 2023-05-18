@@ -25,7 +25,12 @@
       }
     }
     .content {
-      padding-top: 50px;
+      @include pc {
+        padding-top: 50px;
+      }
+      @include mobile {
+        padding-top: 20px;
+      }
     }
   }
 }

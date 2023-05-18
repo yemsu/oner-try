@@ -11,6 +11,9 @@
     }
     nav {
       display: flex;
+      > ul {
+        flex-shrink: 0;
+      }
       a {
         display: block;
         padding: 0 10px;
@@ -18,17 +21,32 @@
       .menu-list {
         display: flex;
       }
+      @include mobile {
+        overflow-x: auto;
+        @include scrollBar()
+      }
     }
     &.size {
       &-medium {
-        padding: $top-menu-bar-vtc-pd 10px;
+        padding: var(--top-menu-bar-vtc-pd) 10px;
         .area-side-menu {
           display: flex;
           margin-left: auto;
+          word-break: keep-all;
           a {
             font-size: 0.9em;
+            @include mobile {
+              width: 42px;
+              min-width: 0;
+              padding: 0;
+              line-height: 1.2;
+            }
           }
         }
+      }
+      @include mobile {
+        padding-left: 0;
+        padding-right: 0;
       }
     }
     &.color {

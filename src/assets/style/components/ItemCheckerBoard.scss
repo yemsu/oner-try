@@ -12,26 +12,24 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 40px 30px;
   // gap: $img-gap-vtc $img-gap-hrz;
   align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 45vh 80px;
   // padding: ($header-height + $img-area-padding) $img-area-padding $img-area-padding;
+  @include pc {
+    gap: 40px 30px;
+    padding: 25vh 80px;
+  }
+  @include mobile {
+    gap: 30px 20px;
+    padding: 50px 0;
+  }
   > .img-bg {
-    width: $img-size;
-    height: $img-size;
     > div {
       width: 100%;
       height: 100%;
       background-repeat: no-repeat;
       background-size: cover;
       transform: rotate(45deg);
-      opacity: 0.35;
       transition: 1s;
     }
     &:hover {
@@ -39,6 +37,20 @@
         opacity: 1;
         transform: rotate3d(0, -5, 0, 180deg) rotate(45deg);
         transition: 0.3s;
+      }
+    }
+    @include pc {
+      width: 58px;
+      height: 58px;
+      > div {
+        opacity: 0.35;
+      }
+    }
+    @include mobile {
+      width: 40px;
+      height: 40px;
+      > div {
+        opacity: 0.5;
       }
     }
   }

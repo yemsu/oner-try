@@ -6,6 +6,7 @@
       :option-menus="optionMenus"
       :grade-menus="gradeMenus"
       :table-info="tableInfo"
+      table-min-width="800px"
     />
   </section>
 </template>
@@ -57,7 +58,7 @@ export default {
         {
           title: '옵션',
           type: 'option',
-          width: '22%'
+          width: '25%'
         },
         {
           title: '획득처',
@@ -67,7 +68,7 @@ export default {
         {
           title: '인연 / 악연',
           type: 'synergy',
-          width: '32%'
+          width: '29%'
         },
       ],
     }

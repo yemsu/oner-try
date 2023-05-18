@@ -1,10 +1,6 @@
 .content-top {
   > .inner-size-basic {
-    display: flex;
-    align-items: center;
-    gap: 20px;
     .wrap-high-rank {
-      margin-left: auto;
       > .title {
         font-size: var(--font-size-S);
         color: var(--color-point-sub);
@@ -15,6 +11,21 @@
             margin-left: 6px;
           }
         }
+      }
+    }
+    @include pc {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      .wrap-high-rank {
+        margin-left: auto;
+      }
+    }
+    @include mobile {
+      .wrap-high-rank {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid var(--border-light-gray);
       }
     }
   }
