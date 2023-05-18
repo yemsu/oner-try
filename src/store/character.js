@@ -84,15 +84,9 @@ export const actions = {
           }
           const equipment = dataParser(character, 'equipment')
           const sailor = dataParser(character, 'sailor')
-          const colleague = new Array(3).fill(null)
-          // const colleague = dataParser(character, 'colleague')
+          const colleague = dataParser(character, 'colleague')
           const ship = dataParser(character, 'ship')
           const information = parserStrData(character.information.join(','))
-          // const characterRyuo = rootState.item.ryuoes.find(ryuo => ryuo.name.includes(`${character.ryuo}차`))
-          // const ryuo = characterRyuo ? [{
-          //   name: characterRyuo.name,
-          //   option: characterRyuo.option
-          // }] : [null]
           Object.assign(character, { hero, equipment, sailor, colleague , ship, information })
 
           const characterSynergies = getCharacterSynergies(sailor, rootState.item.synergies)
