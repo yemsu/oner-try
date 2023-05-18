@@ -1,0 +1,133 @@
+
+.adsense {
+  position: absolute;
+  &.filled {
+    position: static;
+    width: auto;
+  }
+  &.unfilled {
+    display: none;
+  }
+  &.shade {
+    display: block;
+    position: static;
+    background-color: var(--darker-10);
+    ins {
+      background-color: var(--darker-10);
+    }
+  }
+  ins {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  &.type {
+    &-side-fix {
+      @include pc {
+        position: fixed;
+        top: calc(var(--header-height) + var(--header-game-menu-height));
+        z-index: $ad-z-index;
+        .side_fix_left,
+        .side_fix_right {
+          max-width: 300px;
+          min-width: 200px;
+          width: 100%;
+          min-height: 550px;
+          max-height: 650px;
+          height: 100%;
+        }
+        &.pos {
+          &-left {
+            transform: translateX(-100%);
+            left: calc(50% - (#{map-get($layout-sizes, 'basic')} / 2) - 10px);
+          }
+          &-right {
+            transform: translateX(100%);
+            right: calc(50% - (#{map-get($layout-sizes, 'basic')} / 2) - 10px);
+          }
+        }
+      }
+      @include mobile {
+        position: relative;
+        top: var(--header-height);
+        .side_fix_left {
+          width: 100%;
+          min-height: 80px;
+          max-height: 120px;
+          height: 100%;
+        }
+        .side_fix_right {
+          display: none;
+        }
+      }
+    }
+    &-content-bottom {
+      display: flex;
+      width: calc(100% - 40px);
+      @include pc {
+        .content_bottom_left,
+        .content_bottom_right {
+          min-width: 300px;
+          max-width: 100%;
+          width: 100%;
+          min-height: 200px;
+          max-height: 300px;
+          height: 100%;
+        }
+      }
+      @include mobile {
+        .content_bottom_left {
+          width: 100%;
+          min-height: 180px;
+          max-height: 300px;
+          height: 100%;
+        }
+        .content_bottom_right {
+          display: none;
+        }
+      }
+    }
+    &-content-top {
+      @include pc {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        // width: calc(50% - 10px);
+        // .content_top_left,
+        // .content_top_right {
+        //   min-width: 300px;
+        //   max-width: 510px;
+        //   width: 100%;
+        //   min-height: 130px;
+        //   max-height: 200px;
+        //   height: 100%;
+        // }
+        .content_top_left {
+          min-width: 300px;
+          max-width: 100%;
+          width: 100%;
+          min-height: 150px;
+          max-height: 200px;
+          height: 100%;
+        }
+      }
+      @include mobile {
+        display: block;
+        width: 100%;
+        &:nth-child(n+2) {
+          display: none;
+        }
+        .content_top_left {
+          width: 100%;
+          min-height: 80px;
+          max-height: 120px;
+          height: 100%;
+        }
+        .content_top_right {
+          display: none;
+        }
+      }
+    }
+  }
+}
