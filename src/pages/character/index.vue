@@ -1,5 +1,5 @@
 <template>
-  <section class="wrap-search inner-size-wide">
+  <section class="wrap-search inner-size-basic">
     <h2 class="ir-hidden">캐릭터</h2>
     <character-search-box
       :full-data="gameUsers"
