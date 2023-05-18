@@ -461,7 +461,9 @@ div.text-refer {
   }
 }
 
-.wrap-x-scroll {
-  overflow-x: auto;
-  @include scrollBar;
+@include mobile {
+  .wrap-x-scroll {
+    overflow-x: auto;
+    @include scrollBar;
+  }
 }
