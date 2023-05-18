@@ -3,7 +3,7 @@
     <div v-if="ranking.length === 0" style="margin-top: 300px; font-size: 1.5em; text-align: center;">
       데이터 로딩중💦 잠시만 기다려 주세요
     </div>
-    <div v-else class="wrap-scroll">
+    <div v-else class="wrap-x-scroll">
       <table class="list-ranking">
         <caption>랭킹 순위에 따른 랭크, 영웅, 유저명, 현상금, 선원, 동료 정보 테이블</caption>
         <thead>
