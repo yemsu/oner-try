@@ -35,12 +35,9 @@
           word-break: keep-all;
           a {
             font-size: 0.9em;
-            @include mobile {
-              width: 42px;
-              min-width: 0;
-              padding: 0;
-              line-height: 1.2;
-            }
+          }
+          @include mobile {
+            display: none;
           }
         }
       }
