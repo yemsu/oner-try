@@ -40,7 +40,7 @@
       }
     }
     .title {
-      font-size: $font-size-title-XS-pc;
+      font-size: $font-size-title-XS;
       font-weight: var(--font-weight-B);
       line-height: 1;
     }
@@ -48,7 +48,7 @@
       flex-shrink: 0;
       width: 52px;
       color: var(--font-gray);
-      font-size: $font-size-XXS-pc;
+      font-size: $font-size-XXS;
       line-height: 1.1;
       text-align: right;
       letter-spacing: -0.03em;
@@ -56,7 +56,7 @@
     }
     .desc {
       overflow: hidden;
-      font-size: $font-size-XS-pc;
+      font-size: $font-size-XS;
       color: var(--font-dark-gray);
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -66,7 +66,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: auto;
-    font-size: $font-size-XS-pc;
+    font-size: $font-size-XS;
   }
   .area-item-list {
     display: flex;
@@ -86,7 +86,7 @@
       }
       .title-item-list {
         margin-right: 10px;
-        font-size: $font-size-XS-pc;
+        font-size: $font-size-XS;
         font-weight: var(--font-weight-B);
         color: var(--font-dark-gray);
       }

@@ -5,7 +5,7 @@
     vertical-align: middle;
     padding: 8px 15px;
     background-color: var(--bg-light-gray);
-    font-size: $font-size-S-pc;
+    font-size: $font-size-S;
     font-weight: normal;
     color: var(--font-gray);
     text-align: center;
@@ -44,7 +44,7 @@
       padding-left: 2px;
       padding-right: 2px;
       .number-rank {
-        font-size: $font-size-S-pc;
+        font-size: $font-size-S;
         color: var(--color-gray-40);
       }
       .rank-title {

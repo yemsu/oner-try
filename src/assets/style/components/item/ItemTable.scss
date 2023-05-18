@@ -100,7 +100,7 @@ table {
     .title-small {
       flex-shrink: 0;
       width: 2.5em;
-      font-size: $font-size-XS-pc;
+      font-size: $font-size-XS;
       color: var(--color-gray-60);
       font-weight: normal;
     }
@@ -111,17 +111,17 @@ table {
     &-small {
       .text-refer {
         p {
-          font-size: $font-size-XS-pc;
+          font-size: $font-size-XS;
         }
       }
       table {
         th {
           padding: 3px 5px 3px 10px;
-          font-size: $font-size-XS-pc;
+          font-size: $font-size-XS;
         }
         td {
           padding: 5px;
-          font-size: $font-size-XS-pc;
+          font-size: $font-size-XS;
         }
       }
     }
@@ -129,11 +129,11 @@ table {
       table {
         th {
           padding: 8px 10px;
-          font-size: $font-size-S-pc;
+          font-size: $font-size-S;
         }
         td {
           padding: 15px 10px;
-          font-size: $font-size-S-pc;
+          font-size: $font-size-S;
         }
       }
     }
