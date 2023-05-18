@@ -1,5 +1,5 @@
 <template>
-  <section class="wrap-search inner-size-wide">
+  <section class="wrap-search inner-size-basic">
     <h2 class="ir-hidden">조합법</h2>
     <composition-search-box
       v-if="compositionItems"
