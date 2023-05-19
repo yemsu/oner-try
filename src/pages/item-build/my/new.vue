@@ -11,8 +11,8 @@
       :build-characters="buildCharacters"
       :is-on-focus-title="isOnFocusTitle"
       :is-on-focus-stack="isOnFocusStack"
-      @onUpdateTitleInput="onUpdateTitleInput"
-      @onUpdateStackInput="onUpdateStackInput"
+      @onUpdateTitleInput="(stack) => itemStack = stack"
+      @onUpdateStackInput="(title) => buildTitle = title"
       @onChangeCharacterOption="(list) => buildCharacters = list"
       @onSelectItem="onSelectItem"
       @onAddItem="onAddItem"
@@ -136,7 +136,9 @@ export default {
       this.buildInfo.totalOption = getTotalOption(this.buildInfo, this.buildInfo.synergy)
     },
     onSelectItem() {
-      this.isOnFocusStack = true
+      setTimeout(() => {
+        this.isOnFocusStack = true
+      }, 100);
       setTimeout(() => {
         this.isOnFocusStack = false
       }, 500)
@@ -151,12 +153,6 @@ export default {
       } 
       this.setTotalOption()
       this.setBuildInfoString()
-    },
-    onUpdateStackInput(stack) {
-      this.itemStack = stack
-    },
-    onUpdateTitleInput(title) {
-      this.buildTitle = title
     },
     async onClickSave() {  
       const { equipment, sailor, colleague, ship } = this.buildInfo
