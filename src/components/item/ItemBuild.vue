@@ -41,18 +41,10 @@
             </template>
           </item-list>
         </title-content>
-        <div
-          v-if="type === 'sailor' && buildData.synergy.length > 0"
-          class="area-synergies"
-        >
-          <synergy-desc
-            :synergies="buildData.synergy"
-          />
-        </div>
       </div>
-    </div>
-    
-    <div class="wrap-stat-box">
+      <synergy-desc
+        :synergies="buildData.synergy"
+      />
       <item-detail-info
         v-if="buildData.information"
         type="character-info"
