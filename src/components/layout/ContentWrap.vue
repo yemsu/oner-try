@@ -15,7 +15,7 @@ export default {
   props: {
     size: {
       type: String,
-      required: true
+      default: () => 'basic' // basic, full
     },
     pdTop: {
       type: String,

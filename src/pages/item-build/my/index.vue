@@ -20,7 +20,6 @@
 import ItemBuildList from '@/components/item-build/ItemBuildList.vue';
 import BaseButton from '@/components/common/BaseButton.vue'
 import ItemImage from '@/components/item/ItemImage.vue';
-import ALERTS from '@/constants/ALERTS'
 import { mapGetters, mapActions } from 'vuex';
 import setMeta from '@/plugins/utils/meta';
 
@@ -64,7 +63,7 @@ export default {
       })
     setTimeout(() => {
       if(!this.isLogin) {
-        alert(ALERTS.NEED_LOGIN)
+        alert(this.$ALERTS.NEED_LOGIN)
         this.$router.push({ name: 'auth-login' })
         return
       }
@@ -76,7 +75,7 @@ export default {
       deleteItemBuilds: 'itemBuild/DELETE_ITEM_BUILD'
     }),
     onBuildDelete(id) {
-      const isConfirm = confirm(ALERTS.ITEM_SETTING.DELETE_CONFIRM)
+      const isConfirm = confirm(this.$ALERTS.ITEM_SETTING.DELETE_CONFIRM)
       if(!isConfirm) return
       this.deleteItemBuilds(id)
     }

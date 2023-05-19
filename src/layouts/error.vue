@@ -1,6 +1,6 @@
 <template>
   <div class="wrap-error">
-    <content-layout
+    <layout-content-wrap
       size="basic"
       pd-top="none"
       :is-main-content="true"
@@ -45,18 +45,16 @@
         type="square-round"
         bg="point"
       >메인으로 돌아가기</base-button>
-    </content-layout>
+    </layout-content-wrap>
   </div>
 </template>
 
 <script>
 import BaseButton from '@/components/common/BaseButton.vue'
-import ContentLayout from '@/components/layout/ContentLayout.vue'
 import setMeta from '@/plugins/utils/meta';
 
 export default {
   components: {
-    ContentLayout,
     BaseButton,
   },
   head() {
