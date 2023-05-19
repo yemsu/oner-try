@@ -13,7 +13,7 @@ export const getCharacterSynergies = (sailors, synergies) => {
   if(specialSailors.length >= 2) {
     characterSynergies.push({
       name: '스페셜 제한',
-      option: [{ss: '-100'}],
+      option: [{ss: '-500'}, {aas: '10'}],
       sailors: specialSailors.map(sailor => sailor.name)
     })
   }
