@@ -112,7 +112,7 @@ export default {
       return unit
     },
     plusMinusSign(option) {
-      !this.plusMinusUnit || this.pureValue || isMinus(option) ? '' : '+'
+      !this.plusMinusUnit || this.pureValue || this.isMinus(option) ? '' : '+'
     },
     getOptionTitle(key) {
       const findKey = [...optionsMap.keys()].find(optionKey => {
