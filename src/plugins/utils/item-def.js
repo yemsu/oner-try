@@ -102,11 +102,9 @@ export const optionDefaultValue = {
   dct: 0,
   ctD: 0,
   ss: 0,
-  ms: 0,
   cd: 0,
   df: 0,
   ev: 0,
-  aas: 0,
   str: 0,
   dex: 0,
   int: 0,
@@ -114,6 +112,8 @@ export const optionDefaultValue = {
   maxDr: 0,
   mcd: 0,
   ctDr: 0,
+  ms: 360,
+  aas: 0,
 }
 export const equipOnlyOptionsDef = {
   str: '견문색',
