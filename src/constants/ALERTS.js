@@ -1,6 +1,8 @@
+import Vue from "vue"
+
 const FAIL_COMMON = '문제가 지속될 시 개발자에게 문의해주세요.'
 
-export default {
+const ALERTS = {
   NEED_LOGIN: '로그인 해주세요!',
   VALIDATIONS: {
     TITLE: '제목을 입력해 주세요.',
@@ -16,5 +18,12 @@ export default {
     DELETE_FAIL: `빌드 삭제에 실패하였습니다. ${FAIL_COMMON}`,
     DELETE_SUCCESS: `빌드가 삭제되었습니다.`,
     DELETE_CONFIRM: `빌드를 삭제하시겠습니까?`,
+  },
+  CHAT: {
+    CONFIRM_END: '파티 찾기를 종료하시겠습니까?',
+    NO_ROOM: '존재하지 않는 파티 찾기 방입니다.',
   }
 }
+
+
+Vue.prototype.$ALERTS = ALERTS

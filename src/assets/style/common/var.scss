@@ -18,6 +18,11 @@ $list-gap-basic: 10px;
 $filter-brighter: brightness(120%) saturate(95%);
 $filter-darker: brightness(75%);
 
+// z index
+$floating-z-index: 8;
+$dim-z-index: 9;
+$popup-z-index: 10;
+
 // color maker
 $color-point-hsl: (355, 65%, 45%);
 $color-point-sub-hsl: (218, 40%, 45%);
@@ -37,6 +42,19 @@ $hsl-white: 0, 0%, 100%;
 $hsl-black: 0, 0%, 0%;
 
 $color-total-option: hsl(39, 100%, 50%);
+
+$item-grade-colors: (
+  'common': (0, 0%, 100%),
+  'uncommon': (179, 100%, 86%),
+  'special': (57, 100%, 56%),
+);
+
+// chat status color
+$chat-status-colors: (
+  'wait': (204 42% 42%),  // 일반
+  'ready': (138 45% 47%),  // 고급
+  'afk': (0 56% 42%),  // 희귀
+);
 
 :root {
   // pallette
@@ -105,9 +123,9 @@ $color-total-option: hsl(39, 100%, 50%);
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
 
   // 아이템 등급 컬러
-  --color-grade-common: #fff;
-  --color-grade-uncommon: #b7fffe;
-  --color-grade-special: #fff51e;
+  --color-grade-common: hsl(0, 0%, 100%);
+  --color-grade-uncommon: hsl(179, 100%, 86%);
+  --color-grade-special: hsl(57, 100%, 56%);
 
   // 뱃지 컬러
   --badge-color-orange-light: hsla(19, 100%, 84%, 0.8); // 조합 아이템, 콜로세움 버프 효과

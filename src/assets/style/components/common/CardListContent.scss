@@ -1,0 +1,86 @@
+
+.card-list-content {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  height: 100%;
+  padding: 10px 8px 8px;
+  background-color: var(--bg-light-gray);
+  &.no-gap {
+    gap: 0;
+  }
+  > a {
+    flex: 1;
+  }
+  .btn-share {
+    position: absolute;
+    z-index: 1;
+    top: 28px;
+    right: 10px;
+  }
+  .wrap-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+    line-height: 1;
+    &-top {
+      .wrap-text-sub {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: var(--font-size-XS-pc);
+        p {
+          color: var(--font-dark-gray);
+          font-weight: 300;
+        }
+        .character {
+          font-weight: var(--font-weight-B);
+          color: var(--font-dark-gray);
+        }
+      }
+      .wrap-text-main {
+        margin-top: 4px;
+        padding-right: 35px;
+        .text-main {
+          overflow: hidden;
+          .title {
+            font-size: var(--font-size-title-XS-pc);
+            font-weight: var(--font-weight-XB);
+          }
+          .desc {
+            overflow: hidden;
+            margin-top: 8px;
+            font-size: var(--font-size-XS-pc);
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+    &-bottom {
+      display: flex;
+      justify-content: space-between;
+      margin-top: auto;
+      font-size: var(--font-size-XS-pc);
+      .box-left {
+        display: flex;
+        gap: 10px;
+      }
+      .btn.text {
+        margin-left: auto;
+      }
+    }
+    .list-item-name {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+  }
+  .btn-delete {
+    line-height: 1;
+    padding-right: 0;
+  }
+}

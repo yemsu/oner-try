@@ -47,7 +47,6 @@ import ItemBuild from '@/components/item/ItemBuild.vue'
 import BaseButton from '@/components/common/BaseButton.vue';
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
 import { mapGetters, mapActions } from 'vuex';
-import ALERTS from '@/constants/ALERTS.js'
 
 export default {
   head() {
@@ -180,25 +179,25 @@ export default {
     },
     checkValidation() {
       if(!this.isLogin) {
-        alert(ALERTS.NEED_LOGIN)
+        alert(this.$ALERTS.NEED_LOGIN)
         return false
       }
       const { equipment, sailor, colleague, ship } = this.buildInfo
 
       const alertMessages = []
       if(!this.buildTitle) {
-        alertMessages.push(ALERTS.VALIDATIONS.TITLE)
+        alertMessages.push(this.$ALERTS.VALIDATIONS.TITLE)
         this.isOnFocusTitle = true
         setTimeout(() => {
           this.isOnFocusTitle = false
         }, 500)
       }
       if(this.buildCharacters.length === 0) {
-        alertMessages.push(ALERTS.VALIDATIONS.CHARACTER)
+        alertMessages.push(this.$ALERTS.VALIDATIONS.CHARACTER)
       }
       const items = [...equipment, ...sailor, ...colleague, ...ship].filter(item => item)
       if(items.length === 0) {
-        alertMessages.push(ALERTS.VALIDATIONS.ITEM)
+        alertMessages.push(this.$ALERTS.VALIDATIONS.ITEM)
       }
       if(alertMessages.length > 0) {
         alert(alertMessages.join('\n'))
