@@ -1,5 +1,6 @@
 import { getItemBuild, getItemBuilds, postItemBuild, deleteItemBuild } from "@/plugins/utils/https"
 import { parseItemBuildData } from '@/plugins/utils/item-build'
+import ALERTS from "../constants/ALERTS"
 
 export const state = () => ({
   itemBuilds: [],
@@ -40,7 +41,7 @@ export const actions = {
     })
     // console.log("GET_ITEM_BUILDS", data)
     if(!data) {
-      alert(this.$ALERTS.ITEM_SETTING.GET_LIST_FAIL)
+      alert(ALERTS.ITEM_SETTING.GET_LIST_FAIL)
       return false
     }
 
@@ -59,7 +60,7 @@ export const actions = {
     const heroes = rootState.item.heroes
     const data = await getItemBuild(id)
     if(!data) {
-      alert(this.$ALERTS.ITEM_SETTING.GET_FAIL)
+      alert(ALERTS.ITEM_SETTING.GET_FAIL)
       return false
     }
     const newData = parseItemBuildData(data, items, synergies, heroes)
@@ -70,20 +71,20 @@ export const actions = {
   async POST_ITEM_BUILD({}, itemBuild) {
     const res = await postItemBuild(itemBuild)
     if(!res) {
-      alert(this.$ALERTS.ITEM_SETTING.SAVE_FAIL)
+      alert(ALERTS.ITEM_SETTING.SAVE_FAIL)
       return false
     }
-    alert(this.$ALERTS.ITEM_SETTING.SAVE_SUCCESS)
+    alert(ALERTS.ITEM_SETTING.SAVE_SUCCESS)
     return true
   },
   async DELETE_ITEM_BUILD({ commit }, id) {
     const res = await deleteItemBuild(id)
     if(!res) {
-      alert(this.$ALERTS.ITEM_SETTING.DELETE_FAIL)
+      alert(ALERTS.ITEM_SETTING.DELETE_FAIL)
       return false
     }
 
-    alert(this.$ALERTS.ITEM_SETTING.DELETE_SUCCESS)
+    alert(ALERTS.ITEM_SETTING.DELETE_SUCCESS)
     commit('DELETE_ITEM_BUILDS', id)
   }
 }
