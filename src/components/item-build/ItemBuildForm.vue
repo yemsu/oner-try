@@ -38,7 +38,7 @@
             placeholder="스택"
             maxlength="3"
             :is-on-focus="isOnFocusStack"
-            @onUpdateInput="(value) => $emit('onUpdateStackInput', value)"
+            @onUpdateInput="(value) => itemStack = value"
           />
           <base-button
             type="round"
@@ -198,9 +198,12 @@ export default {
       e && e.preventDefault()      
       const selectedItem = item || {...this.selectedItem}
       const { type } = selectedItem
+
       if(canEnhance(selectedItem) && this.itemStack) {
         selectedItem.stack = this.itemStack
+        console.log("ddd", selectedItem, this.itemStack)
       }
+
       let blankSlotIndex = 0
       for(const slot of this.buildInfo[type]) {
         if(!slot) break

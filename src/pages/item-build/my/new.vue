@@ -12,7 +12,6 @@
       :is-on-focus-title="isOnFocusTitle"
       :is-on-focus-stack="isOnFocusStack"
       @onUpdateTitleInput="(title) => buildTitle = title"
-      @onUpdateStackInput="(stack) => itemStack = stack"
       @onChangeCharacterOption="(list) => buildCharacters = list"
       @onSelectItem="onSelectItem"
       @onAddItem="onAddItem"
