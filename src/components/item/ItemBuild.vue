@@ -61,11 +61,11 @@
         :plusMinusUnit="false"
         :showValueDecimal="true"
       />
-      <section
+      <div
         v-if="buildData.totalOption.length > 0"
         class="all-options-main"
       >
-        <h2 class="ir-hidden">빌드 총 스탯</h2>
+        <h3 class="ir-hidden">빌드 총 스탯</h3>
         <item-detail-info
           type="total"
           colorMode="white"
@@ -74,7 +74,7 @@
           :showValueDecimal="true"
         />
         <p class="text-notice">실제 스탯과 약간의 오차가 있을 수 있습니다.</p>
-      </section>
+      </div>
     </div>
   </div>
 </div>

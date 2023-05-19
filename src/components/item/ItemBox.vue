@@ -58,8 +58,8 @@
       </nuxt-link>
       
       <!-- tooltip -->
-      <section v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
-        <h2 v-if="!visibleDetail && !showName" class="tooltip-title">{{ item.name }}</h2>
+      <div v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
+        <p v-if="!visibleDetail && !showName" class="tooltip-title">{{ item.name }}</p>
         <item-detail-info 
           :colorMode="visibleDetail ? 'black' : 'white'"
           size="small"
@@ -76,7 +76,7 @@
             <i class="icon-arrow right x-small border-neon" />
           </p>
         </div>
-      </section>
+      </div>
     </template>
     <item-image v-else :item="item" :size="size" :is-round-img="isRoundImg"/>
   </div>
