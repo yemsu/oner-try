@@ -1,7 +1,7 @@
 <template>
   <section :class="`area-title-content area-${type}`">
     <div class="area-item-list">
-      <h4 class="title">{{ title }}</h4>
+      <h3 class="title">{{ title }}</h3>
       <div class="contents">
         <slot></slot>
       </div>
