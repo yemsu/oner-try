@@ -212,7 +212,7 @@ export default {
       }
 
       if(slotNumbers[type] === blankSlotIndex) {
-        alert(`${getTypeKorName(type)} 아이템은 ${ALERTS.ITEM_SETTING.OVER_SLOT(slotNumbers[type])}`)
+        alert(`${getTypeKorName(type)} 아이템은 ${this.$ALERTS.ITEM_SETTING.OVER_SLOT(slotNumbers[type])}`)
         return
       }
 

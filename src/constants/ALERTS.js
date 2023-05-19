@@ -27,3 +27,5 @@ const ALERTS = {
 
 
 Vue.prototype.$ALERTS = ALERTS
+
+export default ALERTS
