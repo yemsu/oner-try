@@ -34,7 +34,7 @@ $common-gap: 10px;
   }
   @include pc {
     grid-template-columns: 186px 186px 99px 162px 178px 178px;
-    grid-template-rows: 160px 160px 36px 140px;
+    grid-template-rows: 160px 160px 36px auto;
     .wrap-title-content {
       &.equipment {
         grid-column-start: 1;
@@ -57,6 +57,7 @@ $common-gap: 10px;
     }
     .synergy-desc {
       grid-column-start: 2;
+      grid-column-end: 4;
       grid-row-start: 4;
     }
     .all-options-main {
