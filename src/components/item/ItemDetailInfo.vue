@@ -21,8 +21,7 @@
           {{ getOptionTitle(keyOf(option)) }}
         </dt>
         <dd>
-          {{ !plusMinusUnit || pureValue || isMinus(option) ? '' : '+' }}
-          {{ optionValue(option) }}{{ getUnit(option) }}
+          {{ plusMinusSign(option) }}{{ optionValue(option) }}{{ getUnit(option) }}
         </dd>
       </div>
     </template>
@@ -107,7 +106,13 @@ export default {
           : key === '레일리' ? '단계'
           : '/p'
       }
-      return noUnitOptions.includes(key) ? '' : '%'
+      const unit = noUnitOptions.includes(key) ? ''
+        : key === 'aas' ? '/s'
+        : '%'
+      return unit
+    },
+    plusMinusSign(option) {
+      !this.plusMinusUnit || this.pureValue || isMinus(option) ? '' : '+'
     },
     getOptionTitle(key) {
       const findKey = [...optionsMap.keys()].find(optionKey => {

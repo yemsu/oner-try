@@ -71,7 +71,7 @@ hp: 체력
 gdr: 받는 피해 감소
 df: 막기 확률
 ev: 회피 확률
-평타 속도
+aas: 평타 속도
 ss: 스킬 속도
 adt: 추가 피해량
 maxD: 최대 피해량
@@ -89,7 +89,7 @@ ms: 이동속도
 */
 
 export const optionOrder = [
-  'hp', 'gdr', 'df', 'ev', 'ss', 'adt', 'maxD', 'ct', 'ctD', 'dr', 'maxDr', 'dct', 'ctDr', 'cd', 'mcd', 'ms'
+  'hp', 'gdr', 'df', 'ev', 'ss', 'adt', 'maxD', 'ct', 'ctD', 'dr', 'maxDr', 'dct', 'ctDr', 'cd', 'mcd', 'ms', 'aas'
 ]
 
 export const optionDefaultValue = {
@@ -106,6 +106,7 @@ export const optionDefaultValue = {
   cd: 0,
   df: 0,
   ev: 0,
+  aas: 0,
   str: 0,
   dex: 0,
   int: 0,
@@ -128,6 +129,7 @@ export const noEquipOptions = {
   gdr: '받는 피해 감소',
   df: '막기 확률',
   ev: '회피 확률',
+  aas: '평타 속도',
   ss: '스킬 속도',
   adt: '추가 피해량',
   maxD: '최대 피해량',
