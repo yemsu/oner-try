@@ -18,6 +18,8 @@ const ALERTS = {
     DELETE_FAIL: `빌드 삭제에 실패하였습니다. ${FAIL_COMMON}`,
     DELETE_SUCCESS: `빌드가 삭제되었습니다.`,
     DELETE_CONFIRM: `빌드를 삭제하시겠습니까?`,
+    EDIT_SAVE_SUCCESS: '빌드가 수정되었습니다.',
+    EDIT_SAVE_FAIL: `빌드 수정에 실패하였습니다. ${FAIL_COMMON}`,
   },
   CHAT: {
     CONFIRM_END: '파티 찾기를 종료하시겠습니까?',

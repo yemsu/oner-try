@@ -1,4 +1,4 @@
-import { getItemBuild, getItemBuilds, postItemBuild, deleteItemBuild } from "@/plugins/utils/https"
+import { getItemBuild, getItemBuilds, postItemBuild, deleteItemBuild, putItemBuild } from "@/plugins/utils/https"
 import { parseItemBuildData } from '@/plugins/utils/item-build'
 import ALERTS from "../constants/ALERTS"
 
@@ -13,15 +13,27 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_ITEM_BUILDS(state, {data}) {
+  SET_ITEM_BUILDS(state, data) {
     state.itemBuilds = data
   },
-  SET_ITEM_BUILD(state, {data}) {
+  SET_ITEM_BUILD(state, data) {
     state.itemBuild = data
   },
   DELETE_ITEM_BUILDS(state, id) {
     state.itemBuilds = state.itemBuilds.filter(itemBuild => itemBuild.id !== id)
   },
+  SET_ITEM_BUILD_TITLE(state, title) {
+    state.itemBuild.title = title
+  },
+  EDIT_ITEM_BUILD_DATA(state, { keyName, data }) {
+    state.itemBuild[keyName] = data
+  },
+  ADD_ITEM_BUILD_ITEM(state, { type, blankSlotIndex, selectedItem }) {
+    state.itemBuild[type][blankSlotIndex] = selectedItem
+  },
+  DELETE_ITEM_BUILD_ITEM(state, { type, index }) {
+    state.itemBuild[type].splice(index, 1, null)      
+  }
 }
 
 export const actions = {
@@ -48,7 +60,7 @@ export const actions = {
     const newData = data.map(itemBuild => (
       parseItemBuildData(itemBuild, items, synergies, heroes)
     ))
-    commit(`SET_ITEM_BUILDS`, { data: newData })
+    commit(`SET_ITEM_BUILDS`, newData)
   },
   async GET_ITEM_BUILD({ commit, rootState, dispatch }, id) {
     const { item } = rootState
@@ -65,7 +77,7 @@ export const actions = {
     }
     const newData = parseItemBuildData(data, items, synergies, heroes)
 
-    commit('SET_ITEM_BUILD', { data: newData })
+    commit('SET_ITEM_BUILD', newData)
     return newData
   },
   async POST_ITEM_BUILD({}, itemBuild) {
@@ -86,5 +98,15 @@ export const actions = {
 
     alert(ALERTS.ITEM_SETTING.DELETE_SUCCESS)
     commit('DELETE_ITEM_BUILDS', id)
+  },
+  async PUT_ITEM_BUILD({}, itemBuild) {
+    const res = await putItemBuild(itemBuild)
+    if(!res) {
+      alert(ALERTS.ITEM_SETTING.EDIT_SAVE_SUCCESS)
+      return false
+    }
+    alert(ALERTS.ITEM_SETTING.EDIT_SAVE_FAIL)
+    console.log('res', res)
+    return res
   }
 }

@@ -1,93 +1,97 @@
 <template>
   <div>
-    <div>
-      <div class="wrap-categories">
-        <div class="inner-size-basic">
-          <section class="wrap-category title">
-            <h3 class="title-category">제목</h3>
-            <base-input
-              :value="buildTitle"
-              size="small"
-              placeholder="빌드 제목"
-              :is-on-focus="isOnFocusTitle"
-              @onUpdateInput="(title) => buildTitle = title"
-            />
-          </section>
-          <section class="wrap-category character">
-            <h3 class="title-category">캐릭터</h3>
-            <option-bar
-              :options="heroOptions"
-              :select-list="buildCharacters"
-              :can-multi-select="false"
-              size="small"
-              @onChange="(list) => buildCharacters = list"
-            />
-          </section>
-          <section class="wrap-category selected-item">
-            <h3 class="title-category">아이템 강화 수치 설정</h3>
-            <form @submit="addItem">
-              <div class="area-item">
-                <item-box
-                  :item="selectedItem"
-                  size="small"
-                  type="list"
-                />
-              </div>
-              <base-input
-                input-type="number"
-                :value="itemStack"
+    <div v-if="itemBuild && showForm" class="wrap-categories">
+      <div class="inner-size-basic">
+        <section class="wrap-category title">
+          <h3 class="title-category">제목</h3>
+          <base-input
+            :value="itemBuild.title"
+            size="small"
+            placeholder="빌드 제목"
+            :is-on-focus="isOnFocusTitle"
+            @onUpdateInput="(title) => editItemBuildData({
+              keyName: 'title',
+              data: title
+            })"
+          />
+        </section>
+        <section class="wrap-category character">
+          <h3 class="title-category">캐릭터</h3>
+          <option-bar
+            :options="heroOptions"
+            :select-list="[itemBuild.characterName]"
+            :can-multi-select="false"
+            size="small"
+            @onChange="(list) => editItemBuildData({
+              keyName: 'character',
+              data: list[0]
+            })"
+          />
+        </section>
+        <section class="wrap-category selected-item">
+          <h3 class="title-category">아이템 강화 수치 설정</h3>
+          <form @submit="addItem">
+            <div class="area-item">
+              <item-box
+                :item="selectedItem"
                 size="small"
-                placeholder="스택"
-                maxlength="3"
-                :is-on-focus="isOnFocusStack"
-                @onUpdateInput="(value) => itemStack = value"
+                type="list"
               />
-              <base-button
-                type="round"
-                bg="point"
-              >
-                아이템 추가
-              </base-button>
-            </form>
-          </section>
-          <section class="wrap-category item">
-            <div class="title-category">
-              <h3 class="title-category">아이템</h3>
-              <p class="text-refer">* 선택한 아이템을 한번 더 클릭하면 빌드에 바로 추가됩니다.</p>
             </div>
-            <item-search-box
-              v-if="searchBoxFullData.length > 0 && items.length > 0"
-              :full-data="searchBoxFullData"
-              :fn-after-search="selectItem"
-              :show-default-list="false"
-              size="xsmall"
-              placeholder="추가할 아이템 검색"
+            <base-input
+              input-type="number"
+              :value="itemStack"
+              size="small"
+              placeholder="스택"
+              maxlength="3"
+              :is-on-focus="isOnFocusStack"
+              @onUpdateInput="(value) => itemStack = value"
             />
-            <v-tab :tabs="itemTypeDefs" type="basic">
-              <template v-slot:tab="{ tab: { data } }">
-                {{ data.title }}
-              </template>
-              <template v-slot:content="{ activeTab }">
-                <ItemFilterTable
-                  v-if="getTableData(activeTab).length > 0"
-                  :items-stringified="getTableData(activeTab)"
-                  :table-info="getTableInfo(activeTab)"
-                  :grade-menus="getGradeMenu(activeTab.type)"
-                  :option-menus="itemFilterOptions"
-                  :has-click-event="true"
-                  :table-min-width="getTableMinWidth(activeTab.type)"
-                  @click="(item) => selectItem(item.name)"
-                  size="small"
-                />
-              </template>
-            </v-tab>
-          </section>
-        </div>
+            <base-button
+              type="round"
+              bg="point"
+            >
+              아이템 추가
+            </base-button>
+          </form>
+        </section>
+        <section class="wrap-category item">
+          <div class="title-category">
+            <h3 class="title-category">아이템</h3>
+            <p class="text-refer">* 선택한 아이템을 한번 더 클릭하면 빌드에 바로 추가됩니다.</p>
+          </div>
+          <item-search-box
+            v-if="searchBoxFullData.length > 0 && items.length > 0"
+            :full-data="searchBoxFullData"
+            :fn-after-search="selectItem"
+            :show-default-list="false"
+            size="xsmall"
+            placeholder="추가할 아이템 검색"
+          />
+          <v-tab :tabs="itemTypeDefs" type="basic">
+            <template v-slot:tab="{ tab: { data } }">
+              {{ data.title }}
+            </template>
+            <template v-slot:content="{ activeTab }">
+              <ItemFilterTable
+                v-if="getTableData(activeTab).length > 0"
+                :items-stringified="getTableData(activeTab)"
+                :table-info="getTableInfo(activeTab)"
+                :grade-menus="getGradeMenu(activeTab.type)"
+                :option-menus="itemFilterOptions"
+                :has-click-event="true"
+                :table-min-width="getTableMinWidth(activeTab.type)"
+                @click="(item) => selectItem(item.name)"
+                size="small"
+              />
+            </template>
+          </v-tab>
+        </section>
       </div>
     </div>
     <div class="inner-size-basic">
       <!-- item build slot -->
-      <slot :data="{ buildInfoString, onDeleteBuildItem, onClickSave }"></slot>
+      <slot :data="{ buildInfoString: buildItemsString, onDeleteBuildItem, onClickSave }"></slot>
     </div>
   </div>
 </template>
@@ -102,7 +106,7 @@ import BaseInput from '../common/BaseInput.vue';
 import VTab from '../common/VTab.vue';
 import { getTypeKorName } from '@/plugins/utils/item';
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   components: {
@@ -113,26 +117,23 @@ export default {
     BaseInput,
     VTab
   },
+  props: {
+    showForm: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       buildTitle: '',
       buildCharacters: [],
-      buildInfo: {
-        equipment: new Array(6),
-        sailor: new Array(6),
-        colleague: new Array(3),
-        ship: new Array(1),
-        ryuo: new Array(1),
-        synergy: [],
-        totalOption: []
-      },
       commonOption: { all: 'ALL' },
       heroOptions: {},
       itemFilterOptions: {},
       searchBoxFullData: [],
       selectedItem: null,
       itemStack: 0,
-      buildInfoString: null,
+      buildItemsString: null,
       isSaveSuccess: false,
       isOnFocusStack: false,
       isOnFocusTitle: false,
@@ -148,10 +149,11 @@ export default {
       colleagues: 'item/getColleagues',
       synergies: 'item/getSynergies',
       isLogin: 'auth/getIsLogin',
+      itemBuild: 'itemBuild/getItemBuild',
     }),
     itemTypeDefs() {
       return itemTypeDefs
-    }
+    },
   },
   async created() {
     if(this.items.length === 0) await this.getItems()
@@ -168,11 +170,25 @@ export default {
     }, {})
     this.itemFilterOptions =  {...this.commonOption, ...noEquipOptions}
     this.setSearchBoxFullData()
-    this.setTotalOption()
-    this.setBuildInfoString()
   },
   mounted() {
     this.addBeforeUnloadEvent()
+
+    if(!this.itemBuild) {
+      this.setItemBuild({
+        ...this.itemBuild,
+        equipment: new Array(6),
+        sailor: new Array(6),
+        colleague: new Array(3),
+        ship: new Array(1),
+        ryuo: new Array(1),
+        synergy: [],
+        totalOption: []
+      })
+    }
+    
+    this.setTotalOption()
+    this.setBuildItemsString()
   },
   beforeRouteLeave (to, from, next) {
     if(this.isSaveSuccess) {
@@ -180,9 +196,11 @@ export default {
       return
     }
     const willLeave = confirm('페이지를 떠나시겠습니까? \n변경사항이 저장되지 않을 수 있습니다.')
-    if(willLeave) next()
+    if(!willLeave) return
+    next()
   },
   beforeDestroy() {
+    this.setItemBuild(null)
     this.removeBeforeUnloadEvent()
   },
   methods: {
@@ -195,7 +213,35 @@ export default {
       getColleagues: 'item/GET_COLLEAGUES',
       getSynergies: 'item/GET_SYNERGIES',
       saveItemBuild: 'itemBuild/POST_ITEM_BUILD',
+      editItemBuild: 'itemBuild/PUT_ITEM_BUILD',
     }),
+    ...mapMutations({
+      setItemBuild: 'itemBuild/SET_ITEM_BUILD',
+      editItemBuildData: 'itemBuild/EDIT_ITEM_BUILD_DATA',
+      addItemBuildItem: 'itemBuild/ADD_ITEM_BUILD_ITEM',
+      deleteItemBuildItem: 'itemBuild/DELETE_ITEM_BUILD_ITEM'
+    }),
+    buildItems() {      
+      const {
+        equipment,
+        sailor,
+        colleague,
+        ship,
+        ryuo,
+        synergy,
+        totalOption
+      } = this.itemBuild
+
+      return {
+        equipment,
+        sailor,
+        colleague,
+        ship,
+        ryuo,
+        synergy,
+        totalOption,
+      }
+    },
     setSearchBoxFullData() {
       this.searchBoxFullData = this.items.filter((item) => item.type !== 'etcItem')
     },
@@ -228,7 +274,7 @@ export default {
       }
 
       let blankSlotIndex = 0
-      for(const slot of this.buildInfo[type]) {
+      for(const slot of this.buildItems()[type]) {
         if(!slot) break
         blankSlotIndex++
         continue
@@ -238,8 +284,12 @@ export default {
         alert(`${getTypeKorName(type)} 아이템은 ${this.$ALERTS.ITEM_SETTING.OVER_SLOT(slotNumbers[type])}`)
         return
       }
-
-      this.buildInfo[type][blankSlotIndex] = selectedItem
+      
+      this.addItemBuildItem({
+        type,
+        blankSlotIndex,
+        selectedItem
+      })
       this.ProcessAfterUpdateItem(selectedItem)
       // reset select item
       this.resetSelectItem()
@@ -259,35 +309,45 @@ export default {
       e.preventDefault();
       e.returnValue = '';
     },
-    setBuildInfoString() {
-      this.buildInfoString = JSON.stringify(this.buildInfo)
+    setBuildItemsString() {
+      this.buildItemsString = JSON.stringify(this.buildItems())
     },
     setTotalOption() {
-      this.buildInfo.totalOption = getTotalOption(this.buildInfo, this.buildInfo.synergy)
+      this.buildItems().totalOption = getTotalOption(this.buildItems(), this.buildItems().synergy)
     },
     ProcessAfterUpdateItem(item) {
       if(item.type === 'sailor') {
-        this.buildInfo.synergy = getCharacterSynergies(this.buildInfo.sailor, this.synergies)
+        this.buildItems().synergy = getCharacterSynergies(this.buildItems().sailor, this.synergies)
       } 
       this.setTotalOption()
-      this.setBuildInfoString()
+      this.setBuildItemsString()
     },
-    async onClickSave() {  
-      const { equipment, sailor, colleague, ship } = this.buildInfo
-      const passValidation = this.checkValidation()
-      if(!passValidation) return
-      const saveSuccess = await this.saveItemBuild({
-        title: this.buildTitle,
-        characterName: this.buildCharacters[0],
+    getNewItemBuild() {
+      const { title, characterName, equipment, sailor, colleague, ship } = this.itemBuild
+      return {
+        title: title,
+        characterName: characterName,
         equipment: this.stringifyForDB(equipment), 
         sailor: this.stringifyForDB(sailor), 
         colleague: this.stringifyForDB(colleague), 
         ship: this.stringifyForDB([ship[0]])
-      })
+      }
+    },
+    async onClickSave() {  
+      const passValidation = this.checkValidation()
+      if(!passValidation) return
       
-      if(!saveSuccess) return
-      this.isSaveSuccess = true
-      this.$router.push('/item-build/my')
+      // itemBuild.id가 존재하면 빌드 수정인 것.
+      if(this.itemBuild.id) {
+        const saveSuccess = await this.editItemBuild(this.getNewItemBuild())
+        if(!saveSuccess) return
+        this.$emit('onEditSave')
+      } else {
+        const saveSuccess = await this.saveItemBuild(this.getNewItemBuild())
+        if(!saveSuccess) return
+        this.isSaveSuccess = true
+        this.$router.push('/item-build/my')
+      }
     },
     stringifyForDB(itemList) {
       const dbData = itemList
@@ -301,17 +361,17 @@ export default {
         alert(this.$ALERTS.NEED_LOGIN)
         return false
       }
-      const { equipment, sailor, colleague, ship } = this.buildInfo
+      const { title, characterName, equipment, sailor, colleague, ship } = this.itemBuild
 
       const alertMessages = []
-      if(!this.buildTitle) {
+      if(!title) {
         alertMessages.push(this.$ALERTS.VALIDATIONS.TITLE)
         this.isOnFocusTitle = true
         setTimeout(() => {
           this.isOnFocusTitle = false
         }, 500)
       }
-      if(this.buildCharacters.length === 0) {
+      if(!characterName) {
         alertMessages.push(this.$ALERTS.VALIDATIONS.CHARACTER)
       }
       const items = [...equipment, ...sailor, ...colleague, ...ship].filter(item => item)
@@ -326,7 +386,10 @@ export default {
       return true
     },
     onDeleteBuildItem({ item, index }) {
-      this.buildInfo[item.type].splice(index, 1, null)
+      this.deleteItemBuildItem({
+        type: item.type,
+        index
+      })
       this.ProcessAfterUpdateItem(item)
     },
     getGradeMenu(type) {

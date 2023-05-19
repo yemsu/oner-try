@@ -1,6 +1,6 @@
 <template>
   <section v-if="itemBuild">
-    <div class="content-top">
+    <div v-if="!isMakingMode" class="content-top">
       <div class="inner-size-basic">
         <item-box
           :item="itemBuild.hero"
@@ -14,10 +14,19 @@
             <h2 class="page-title">{{ itemBuild.title }}</h2>
           </div>
         </div>
+        <base-button
+          type="square-round"
+          size="small"
+          bg="point"
+          @click="isMakingMode = true"
+        >수정</base-button>
       </div>
     </div>
     
-    <new-item-build>
+    <new-item-build
+      :show-form="isMakingMode"
+      @onEditSave="isMakingMode = false"
+    >
       <template v-slot="{ data: { buildInfoString, onDeleteBuildItem, onClickSave } }">
         <div class="inner-size-basic">
           <section>
@@ -52,7 +61,8 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import ItemBuild from '@/components/item/ItemBuild.vue'
-import NewItemBuild from '../../../components/item-build/NewItemBuild.vue';
+import NewItemBuild from '@/components/item-build/NewItemBuild.vue';
+import BaseButton from '@/components/common/BaseButton.vue';
 import WrapButtons from '@/components/common/WrapButtons.vue';
 import setMeta from '@/plugins/utils/meta';
 
@@ -67,6 +77,7 @@ export default {
   components: {
     ItemBuild,
     NewItemBuild,
+    BaseButton,
     WrapButtons
   },
   data() {
