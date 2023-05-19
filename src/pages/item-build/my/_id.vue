@@ -16,21 +16,44 @@
         </div>
       </div>
     </div>
-    <div class="inner-size-basic mrg-top-medium">
-      <section>
-        <h2 class="ir-hidden">아이템빌드</h2>
-        <item-build
-          v-if="buildInfoString"
-          :build-info="buildInfoString"
-        />
-      </section>
-    </div>
+    
+    <new-item-build>
+      <template v-slot="{ data: { buildInfoString, onDeleteBuildItem, onClickSave } }">
+        <div class="inner-size-basic">
+          <section>
+            <h2 class="ir-hidden">아이템빌드</h2>
+            <template v-if="buildInfoString">
+              <item-build
+                v-if="!isMakingMode"
+                :build-info="buildInfoString"
+              />
+              <item-build
+                v-else
+                :build-info="buildInfoString"
+                :making-mode="true"
+                @delete="onDeleteBuildItem"
+              />
+              <wrap-buttons>
+                <base-button
+                  type="square-round"
+                  size="large"
+                  bg="point"
+                  @click="onClickSave"
+                >빌드 저장</base-button>
+              </wrap-buttons>
+            </template>
+          </section>
+        </div>
+      </template>
+    </new-item-build>
   </section>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import ItemBuild from '../../../components/item/ItemBuild.vue'
+import ItemBuild from '@/components/item/ItemBuild.vue'
+import NewItemBuild from '../../../components/item-build/NewItemBuild.vue';
+import WrapButtons from '@/components/common/WrapButtons.vue';
 import setMeta from '@/plugins/utils/meta';
 
 export default {
@@ -42,11 +65,14 @@ export default {
     })
   },
   components: {
-    ItemBuild
+    ItemBuild,
+    NewItemBuild,
+    WrapButtons
   },
   data() {
     return {
       buildInfoString: null,
+      isMakingMode: false
     }
   },
   computed: {
