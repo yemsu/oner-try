@@ -1,5 +1,5 @@
 .wrap-categories {
-  padding: 20px 10px;
+  padding: 20px 0;
   background-color: var(--lighter-10);
   margin-bottom: 10px;
   .inner-size-basic {
@@ -41,12 +41,17 @@
         display: flex;
         align-items: center;
         gap: 5px;
-        margin-right: -20px;
         padding: 5px;
         background-color: var(--color-white);
         .area-item {
           flex-shrink: 0;
           width: 172px;
+        }
+      }
+      @include pc {
+        overflow: visible;
+        form {
+          margin-right: -20px;
         }
       }
       ::v-deep {
