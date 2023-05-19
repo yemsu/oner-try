@@ -25,6 +25,7 @@
       background-color: var(--color-rank-1-bg);
       td {
         color: $color-white;
+        font-weight: $font-weight-600;
         > a {
           color: $color-white;
           font-size: 1.2em;
