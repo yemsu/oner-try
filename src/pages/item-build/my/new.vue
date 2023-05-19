@@ -5,7 +5,7 @@
         <h2 class="title">🔥 빌드 만들기</h2>
       </div>
     </div>
-    <item-build-form>
+    <new-item-build>
       <template v-slot="{ data: { buildInfoString, onDeleteBuildItem, onClickSave } }">
         <section>
           <h2 class="ir-hidden">선택한 아이템빌드</h2>
@@ -25,13 +25,13 @@
           >빌드 저장</base-button>
         </wrap-buttons>
       </template>
-    </item-build-form>
+    </new-item-build>
   </div>
 </template>
 
 <script>
 import setMeta from '@/plugins/utils/meta';
-import ItemBuildForm from '@/components/item-build/ItemBuildForm.vue';
+import NewItemBuild from '@/components/item-build/NewItemBuild.vue';
 import WrapButtons from '@/components/common/WrapButtons.vue';
 import ItemBuild from '@/components/item/ItemBuild.vue'
 import BaseButton from '@/components/common/BaseButton.vue';
@@ -47,7 +47,7 @@ export default {
   components: {
     ItemBuild,
     WrapButtons,
-    ItemBuildForm,
+    NewItemBuild,
     BaseButton
   },
   head() {

@@ -449,5 +449,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/components/item-build/ItemBuildForm.scss';
+@import '@/assets/style/components/item-build/NewItemBuild.scss';
 </style>
