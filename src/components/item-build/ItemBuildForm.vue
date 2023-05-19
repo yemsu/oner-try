@@ -23,7 +23,7 @@
       </section>
       <section class="wrap-category selected-item">
         <h3 class="title-category">아이템 강화 수치 설정</h3>
-        <form @submit="(e) => $emit('onSubmit', e)">
+        <form @submit="addItem">
           <div class="area-item">
             <item-box
               :item="selectedItem"
