@@ -77,7 +77,7 @@
         </div>
       </div>
     </template>
-    <item-image v-else :item="item" :size="size" img-type="round" />
+    <item-image v-else :item="item" :size="size" :img-type="imgType" />
   </div>
 </template>
 
