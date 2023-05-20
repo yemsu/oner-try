@@ -12,8 +12,8 @@
         </h2>
         <p class="error-desc">
           <!-- 및 새로운 기능 오픈 준비를 -->
-          버그 수정을 위해 점검 중입니다!<br>
-          15분 정도 소요될 예정입니다.
+          아이템 빌드 수정 기능이 추가 될 예정입니다!<br>
+          점검은 15분 정도 소요될 예정입니다.
         </p>
       </template>
       <template v-else-if="error.statusCode === 404">
