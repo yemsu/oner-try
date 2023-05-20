@@ -102,17 +102,17 @@ export const actions = {
     alert(ALERTS.ITEM_SETTING.DELETE_SUCCESS)
     commit('DELETE_ITEM_BUILDS', id)
   },
-  async PUT_ITEM_BUILD({ commit, dispatch }, itemBuild) {
+  async PUT_ITEM_BUILD({ commit, rootState, dispatch }, itemBuild) {
+    if(rootState.heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
     const res = await putItemBuild(itemBuild)
     if(!res) {
       alert(ALERTS.ITEM_SETTING.EDIT_SAVE_FAIL)
       return false
     }
-    
-    if(res.hero) {
-      dispatch('SET_ITEM_BUILD_HERO'. res.hero)
-    }
-    commit('SET_ITEM_BUILD', itemBuild)
+
+    const hero = res.hero || rootState.heroes.find(hero => hero.imageName === res.characterName)
+    commit('SET_ITEM_BUILD_HERO', hero)
+
     return res
   }
 }
