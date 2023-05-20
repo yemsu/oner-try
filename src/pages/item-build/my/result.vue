@@ -1,5 +1,5 @@
 <template>
-  <section v-if="itemBuild" ref="copyArea">
+  <section v-if="itemBuild" class="copy-area" ref="copyArea">
     <div v-if="!isMakingMode" class="content-top">
       <div class="inner-size-basic spbw">
         <item-box
