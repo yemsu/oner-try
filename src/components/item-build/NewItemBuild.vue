@@ -155,6 +155,11 @@ export default {
       return itemTypeDefs
     },
   },
+  watch: {
+    showForm(crr, prev) {
+      (!prev && crr) ? this.addBeforeUnloadEvent() : this.removeBeforeUnloadEvent()
+    }
+  },
   async created() {
     if(this.items.length === 0) await this.getItems()
     if(this.equipmentsTable.length === 0) await this.getEquipmentsTable()
@@ -191,7 +196,7 @@ export default {
     this.setBuildItemsString()
   },
   beforeRouteLeave (to, from, next) {
-    if(this.isSaveSuccess) {
+    if(this.isSaveSuccess || !this.showForm) {
       next()
       return
     }
@@ -302,9 +307,11 @@ export default {
       // this.itemStack = 0
     },
     addBeforeUnloadEvent() {
+      if(!this.showForm) return
       window.addEventListener('beforeunload', this.confirmClose);
     },
     removeBeforeUnloadEvent() {
+      if(!this.showForm) return
       window.removeEventListener('beforeunload', this.confirmClose);
     },
     confirmClose(e) {
