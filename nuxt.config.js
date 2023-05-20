@@ -43,6 +43,12 @@ export default {
       { type: 'text/javascript', src: 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js', async: true },
       { type: 'text/javascript', src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4052679554213032', async: true, crossorigin: 'anonymous' },
       { type: 'text/javascript', src: 'https://accounts.google.com/gsi/client' },
+      { type: 'text/javascript', src: 'https://fundingchoicesmessages.google.com/i/pub-4052679554213032?ers=1', async: true },
+      {
+        type: 'text/javascript',
+        nonce: 'ye3J2pAzfL2mh7kryNp8Kw',
+        innerHTML: `(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();`
+      },
     ]
   },
 

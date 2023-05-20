@@ -1,6 +1,6 @@
 <template>
  <div id="app">
-    <LayoutHeader />
+    <layout-header />
      <base-adsense
       v-if="showSideFixAds"
       ad-slot="6463699903"
@@ -19,15 +19,16 @@
       <error v-if="false"></error>
       <nuxt v-else />
     </div>
-    <FloatingMenu />
-    <LayoutFooter />
+    <element-toast-popup />
+    <floating-menu />
+    <layout-footer />
  </div>
 </template>
 
 <script>
 import BaseAdsense from '@/components/common/BaseAdsense.vue';
-import FloatingMenu from '@/components/layout/FloatingMenu.vue';
 import Error from './error.vue';
+import FloatingMenu from '../components/layout/FloatingMenu.vue';
 
 export default {
   components: {

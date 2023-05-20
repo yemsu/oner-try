@@ -1,7 +1,7 @@
 <template>
-  <section v-if="itemBuild">
+  <section v-if="itemBuild" ref="copyArea" class="copy-area">
     <div class="content-top">
-      <div class="inner-size-basic">
+      <div class="inner-size-basic spbw">
         <item-box
           :item="itemBuild.hero"
           :wanted-paper="true"
@@ -14,6 +14,11 @@
             <h2 class="page-title">{{ itemBuild.title }}</h2>
           </div>
         </div>
+        <common-wrap-buttons position="right">
+          <element-copy-button
+            :copy-area="$refs.copyArea"
+          />
+        </common-wrap-buttons>
       </div>
     </div>
     <div class="inner-size-basic mrg-top-medium">

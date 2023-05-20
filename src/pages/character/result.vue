@@ -11,13 +11,16 @@
         </div>
       </div>
     </div>
-    <section class="inner-size-basic mrg-top-small">
+    <section class="inner-size-basic mrg-top-small copy-area" ref="copyArea">
       <div class="area-page-title underline">
         <h2 class="title badge-text-wrap">
           <i class="skull">☠</i> 
           {{ nickname }}           
           <span v-if="isBanUser(nickname)" class="badge banned size-big type-round">활동정지</span>
-        </h2>        
+        </h2>    
+        <element-copy-button
+          :copy-area="$refs.copyArea"
+        />
       </div>
       <v-tab
         v-if="userCharacters.length !== 0"
@@ -51,6 +54,7 @@ import setMeta from '@/plugins/utils/meta';
 import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
 import { postCharacterPageView, getCharacterPageViews, postMergeCharacterView } from '@/plugins/utils/https'
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+
 export default {
   name: 'character-result',
   components: {
@@ -127,7 +131,7 @@ export default {
     isBanUser(nickname) {
       const banUserList = []
       return banUserList.includes(nickname)
-    }
+    },
   },
 }
 </script>
