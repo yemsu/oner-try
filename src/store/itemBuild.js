@@ -22,9 +22,6 @@ export const mutations = {
   DELETE_ITEM_BUILDS(state, id) {
     state.itemBuilds = state.itemBuilds.filter(itemBuild => itemBuild.id !== id)
   },
-  SET_ITEM_BUILD_TITLE(state, title) {
-    state.itemBuild.title = title
-  },
   EDIT_ITEM_BUILD_DATA(state, { keyName, data }) {
     state.itemBuild[keyName] = data
   },
@@ -34,9 +31,6 @@ export const mutations = {
   DELETE_ITEM_BUILD_ITEM(state, { type, index }) {
     state.itemBuild[type].splice(index, 1, null)      
   },
-  SET_ITEM_BUILD_HERO(state, hero) {
-    state.itemBuild.hero = hero
-  }
 }
 
 export const actions = {
@@ -89,7 +83,6 @@ export const actions = {
       alert(ALERTS.ITEM_SETTING.SAVE_FAIL)
       return false
     }
-    alert(ALERTS.ITEM_SETTING.SAVE_SUCCESS)
     return true
   },
   async DELETE_ITEM_BUILD({ commit }, id) {
@@ -111,7 +104,10 @@ export const actions = {
     }
 
     const hero = res.hero || rootState.heroes.find(hero => hero.imageName === res.characterName)
-    commit('SET_ITEM_BUILD_HERO', hero)
+    commit('EDIT_ITEM_BUILD_DATA', {
+      keyName: 'hero',
+      data: hero
+    })
 
     return res
   }

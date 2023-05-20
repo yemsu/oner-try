@@ -314,11 +314,19 @@ export default {
       this.buildItemsString = JSON.stringify(this.buildItems())
     },
     setTotalOption() {
-      this.buildItems().totalOption = getTotalOption(this.buildItems(), this.buildItems().synergy)
+      const totalOption = getTotalOption(this.buildItems(), this.buildItems().synergy)
+      this.editItemBuildData({
+        keyName: 'totalOption',
+        data: totalOption
+      })
     },
     ProcessAfterUpdateItem(item) {
       if(item.type === 'sailor') {
-        this.buildItems().synergy = getCharacterSynergies(this.buildItems().sailor, this.synergies)
+        const synergy = getCharacterSynergies(this.buildItems().sailor, this.synergies)
+        this.editItemBuildData({
+          keyName: 'synergy',
+          data: synergy
+        })
       } 
       this.setTotalOption()
       this.setBuildItemsString()
