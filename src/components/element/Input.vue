@@ -123,5 +123,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/components/common/BaseInput.scss';
+@import '@/assets/style/components/element/Input.scss';
 </style>

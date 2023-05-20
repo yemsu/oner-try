@@ -39,7 +39,7 @@
       v-if="isActiveReportPopup"
       class="box-item-report"
     >
-      <base-input
+      <element-input
         category="아이템명(선박은 강화수치까지)"
         :value="inputValue"
         size="small"
@@ -51,14 +51,10 @@
 </template>
 
 <script>
-import BaseInput from '@/components/common/BaseInput.vue'
 import { imgSrc } from '@/plugins/utils/item'
 import { postItemName } from '@/plugins/utils/https'
 
 export default {
-  components: {
-    BaseInput
-  },
   props: {
     item: {
       type: Object,

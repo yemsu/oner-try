@@ -12,7 +12,7 @@
       'wrap-search',
       {'compact': size === 'small' && !isSearching}
     ]">
-      <base-input
+      <element-input
         usage="search"
         :size="size"
         :placeholder="placeholder"
@@ -64,13 +64,9 @@
 </template>
 
 <script>
-import BaseInput from '@/components/common/BaseInput.vue'
 import { mapGetters } from 'vuex';
 
 export default {
-  components: {
-    BaseInput
-  },
   props: {
     matchingData: {
       type: Array,
