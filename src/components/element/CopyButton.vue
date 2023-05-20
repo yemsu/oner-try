@@ -4,8 +4,9 @@
     size="small"
     bg="point"
     @click="copyCharacterResult"
+    title="클립보드에 저장"
   >
-    클립보드에 저장
+    <font-awesome-icon icon="fa-clone" />
   </element-button>    
 </template>
 
