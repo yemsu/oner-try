@@ -108,9 +108,6 @@ $chat-status-colors: (
   --bg-dark-gray: var(--color-gray-40);
   --bg-gray: var(--color-gray-80);
   --bg-light-gray: var(--color-gray-95);
-
-  // shadow
-  --color-shadow: var(--color-gray-70);
   
   // common color
   --darker-10: hsla(var(--point-h), 15%, 30%, 10%);
@@ -130,8 +127,13 @@ $chat-status-colors: (
   --font-weight-B: #{$font-weight-700};
   --font-weight-XB: #{$font-weight-800};
 
+  // shadow
+  --color-shadow: var(--color-gray-70);
+
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
+  --bg-popup-dim: hsla(248, 10%, 10%, 0.5);
+  --bg-white-dim: #{colorMaker($color-point-hsl, -30%, 45%, 0.6)};
 
   // 아이템 등급 컬러
   --color-grade-common: hsl(0, 0%, 100%);
@@ -190,9 +192,6 @@ $chat-status-colors: (
   --bg-dark-gray: var(--color-gray-80);
   --bg-gray: var(--color-gray-40);
   --bg-light-gray: var(--color-gray-20);
-
-  // shadow
-  --color-shadow: var(--color-gray-10);
     
   // common color
   --darker-10: hsla(var(--point-h), 6%, 85%, 6%);
@@ -211,9 +210,14 @@ $chat-status-colors: (
   --font-weight-N: #{$font-weight-300};
   --font-weight-B: #{$font-weight-400};
   --font-weight-XB: #{$font-weight-600};
+
+  // shadow
+  --color-shadow: var(--color-gray-10);
   
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
+  --bg-popup-dim: hsla(248, 10%, 0%, 0.5);
+  --bg-white-dim: #{colorMaker($color-point-hsl, -30%, -10%, 0.6)};
 
   // 아이템 등급 컬러
   --color-grade-common: #fff;

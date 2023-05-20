@@ -24,7 +24,11 @@
             v-for="({ text, color }, i) in badgeList"
             :key="`savedItem${i}`"
           >
-            <element-badge :color="color">{{ text }}</element-badge>
+            <element-badge
+              type="round"
+              size="small"
+              :color="color"
+            >{{ text }}</element-badge>
           </li>
         </ul>
       </div>

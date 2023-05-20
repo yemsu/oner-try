@@ -22,6 +22,7 @@
           class="chat-room"
         >
           <card-list-content
+            v-if="members"
             :required-data="{ id, title, badgeList: badgeList(members) }"
             tag-name="button"
             link-title="입장하기"
@@ -38,7 +39,7 @@
       v-if="showCreateChat"
       :show="showCreateChat"
       @close="showCreateChat = false"
-    ></create-party-chat>
+    />
   </div>
 </template>
 

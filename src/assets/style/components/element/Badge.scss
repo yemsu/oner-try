@@ -6,7 +6,6 @@
   word-spacing: -0.1em;
   font-weight: var(--font-weight-B);
   padding: 2px 5px 3px 5px;
-  font-size: var(--font-size-XXS);
   .text {
     display: flex;
     align-items: center;
@@ -14,12 +13,12 @@
   &.size {
     &-small {
       padding: 0 5px;
-      font-size: var(--font-size-XXS-pc);
+      font-size: var(--font-size-XS);
       height: 18px;
     }
     &-medium {
       padding: 0 10px;
-      font-size: var(--font-size-XS-pc);
+      font-size: var(--font-size-XS);
       height: 20px;
     }
     &-big {
@@ -70,6 +69,7 @@
         &-#{$key} {
           background-color: colorMaker($hsl, 0%, 0%, 0.3);
           border: 1px solid colorMaker($hsl);
+          color: var(--color-black);
         }
       }  
     }

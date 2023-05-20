@@ -14,14 +14,14 @@
     max-height: 90vh;
     padding: 20px;
     background-color: var(--bg-light-gray);
-    font-size: var(--font-size-S-pc);
+    font-size: var(--font-size-S);
     @include scrollBar;
     .alarm {
       display: flex;
       align-items: flex-end;
       justify-content: center;
       position: relative;
-      color: var(--text-gray);
+      color: var(--font-gray);
       &:before {
         display: block;
         position: absolute;
@@ -60,7 +60,7 @@
         width: 100%;
         padding: 0 2px;
         background-color: var(--bg-light-gray);
-        font-size: var(--font-size-XS-pc);
+        font-size: var(--font-size-XS);
         color: var(--color-point-sub-bright);
         line-height: 1;
       }
@@ -71,8 +71,8 @@
         border-radius: 5px;
       }
       .time {
-        font-size: var(--font-size-XXS-pc);
-        color: var(--text-gray);
+        font-size: var(--font-size-XXS);
+        color: var(--font-gray);
       }
     }
   }
@@ -84,8 +84,9 @@
   width: 180px;
   padding: 15px;
   border: 1px solid var(--border-light-gray);
-  font-size: var(--font-size-XS-pc);
+  font-size: var(--font-size-S);
   .me {
     color: var(--color-point);
+    font-weight: $font-weight-500;
   }
 }
