@@ -37,9 +37,10 @@
       <element-button
         type="text"
         size="small"
-        @click="$emit('toggleOnBeep')"
+        @click="() => $emit('toggleOnBeep')"
+        :title="`채팅 알람 ${isOnBeep ? '끄기' : '켜기'}`"
       >
-        채팅 알람 {{ isOnBeep ? '끄기' : '켜기' }}
+        <font-awesome-icon :icon="`fa-volume-${isOnBeep ? 'high' : 'xmark'}`" />
       </element-button>
       <ul class="chat-members">
         <li
