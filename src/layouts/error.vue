@@ -33,30 +33,26 @@
       <p class="text-sub">
         에러 문의 및 제보는 사이트 개선에 큰 도움이 됩니다!<br>
         👉
-        <base-button
+        <element-button
           type="text link"
           color="point-sub"
           linkTo="https://open.kakao.com/o/sSXWcmPd"
           button-title="새창(카카오톡 오픈챗)"
-        >muhantry 카카오톡 오픈챗</base-button>
+        >muhantry 카카오톡 오픈챗</element-button>
       </p>
-      <base-button
+      <element-button
         linkTo="/"
         type="square-round"
         bg="point"
-      >메인으로 돌아가기</base-button>
+      >메인으로 돌아가기</element-button>
     </layout-content-wrap>
   </div>
 </template>
 
 <script>
-import BaseButton from '@/components/common/BaseButton.vue'
 import setMeta from '@/plugins/utils/meta';
 
 export default {
-  components: {
-    BaseButton,
-  },
   head() {
     return setMeta ({
       url: this.$route.fullPath,

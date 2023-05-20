@@ -4,7 +4,7 @@
       <div class="inner-size-basic">
         <section class="wrap-category title">
           <h3 class="title-category">제목</h3>
-          <base-input
+          <element-input
             :value="itemBuild.title"
             size="small"
             placeholder="빌드 제목"
@@ -17,7 +17,7 @@
         </section>
         <section class="wrap-category character">
           <h3 class="title-category">캐릭터</h3>
-          <option-bar
+          <element-option-bar
             :options="heroOptions"
             :select-list="[itemBuild.characterName]"
             :can-multi-select="false"
@@ -38,7 +38,7 @@
                 type="list"
               />
             </div>
-            <base-input
+            <element-input
               input-type="number"
               :value="itemStack"
               size="small"
@@ -47,12 +47,12 @@
               :is-on-focus="isOnFocusStack"
               @onUpdateInput="(value) => itemStack = value"
             />
-            <base-button
+            <element-button
               type="round"
               bg="point"
             >
               아이템 추가
-            </base-button>
+            </element-button>
           </form>
         </section>
         <section class="wrap-category item">
@@ -68,7 +68,7 @@
             size="xsmall"
             placeholder="추가할 아이템 검색"
           />
-          <v-tab :tabs="itemTypeDefs" type="basic">
+          <element-v-tab :tabs="itemTypeDefs" type="basic">
             <template v-slot:tab="{ tab: { data } }">
               {{ data.title }}
             </template>
@@ -85,7 +85,7 @@
                 size="small"
               />
             </template>
-          </v-tab>
+          </element-v-tab>
         </section>
       </div>
     </div>
@@ -100,10 +100,6 @@
 import { itemTypeDefs, maxStack, slotNumbers, canEnhance, noEquipOptions, gradesDef, equipmentGrades, sailorGrades } from '@/plugins/utils/item-def';
 import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
 import ItemFilterTable from '@/components/item/ItemFilterTable.vue';
-import BaseButton from '../common/BaseButton.vue';
-import OptionBar from '../common/OptionBar.vue';
-import BaseInput from '../common/BaseInput.vue';
-import VTab from '../common/VTab.vue';
 import { getTypeKorName } from '@/plugins/utils/item';
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
 import { mapGetters, mapActions, mapMutations } from 'vuex';
@@ -112,10 +108,6 @@ export default {
   components: {
     ItemSearchBox,
     ItemFilterTable,
-    BaseButton,
-    OptionBar,
-    BaseInput,
-    VTab
   },
   props: {
     showForm: {
@@ -322,11 +314,19 @@ export default {
       this.buildItemsString = JSON.stringify(this.buildItems())
     },
     setTotalOption() {
-      this.buildItems().totalOption = getTotalOption(this.buildItems(), this.buildItems().synergy)
+      const totalOption = getTotalOption(this.buildItems(), this.buildItems().synergy)
+      this.editItemBuildData({
+        keyName: 'totalOption',
+        data: totalOption
+      })
     },
     ProcessAfterUpdateItem(item) {
       if(item.type === 'sailor') {
-        this.buildItems().synergy = getCharacterSynergies(this.buildItems().sailor, this.synergies)
+        const synergy = getCharacterSynergies(this.buildItems().sailor, this.synergies)
+        this.editItemBuildData({
+          keyName: 'synergy',
+          data: synergy
+        })
       } 
       this.setTotalOption()
       this.setBuildItemsString()

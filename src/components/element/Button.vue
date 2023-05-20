@@ -75,5 +75,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/components/common/BaseButton.scss';
+@import '@/assets/style/components/element/Button.scss';
 </style>

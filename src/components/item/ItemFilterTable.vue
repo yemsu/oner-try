@@ -2,7 +2,7 @@
   <div :class="`item-filter-table size-${size}`">
     <section v-if="gradeMenus || optionMenus">
       <h2 class="ir-hidden">필터 선택</h2>
-      <option-bar
+      <element-option-bar
         v-if="gradeMenus"
         title="등급"
         :options="gradeMenus"
@@ -10,7 +10,7 @@
         :size="size"
         @onChange="(list) => gradesSelected = list"
       />
-      <option-bar
+      <element-option-bar
         v-if="optionMenus"
         title="옵션"
         :options="optionMenus"
@@ -34,11 +34,7 @@
 </template>
 
 <script>
-import OptionBar from '@/components/common/OptionBar.vue';
 export default {
-  components: {
-    OptionBar
-  },
   props: {
     items: {
       type: Array,

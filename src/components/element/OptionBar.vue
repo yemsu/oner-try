@@ -14,7 +14,7 @@
         :class="['menu-filter', {'active': isActiveMenu(key, 'grade')}]"
         :is="title ? 'dd' : 'li'"
       >
-        <base-button
+        <element-button
           @click="onClickButton(key)"
           class="button-filter"
           :size="size"
@@ -22,19 +22,14 @@
           :bg="isActiveMenu(key, 'grade') ? 'active': 'inActive'"
         >
           {{ gradeTitle }}
-        </base-button>
+        </element-button>
       </dd>
     </div>
   </dl>
 </template>
 
 <script>
-import BaseButton from '@/components/common/BaseButton.vue'
-
 export default {
-  components: {
-    BaseButton
-  },
   props: {
     title: {
       type: String,
@@ -87,57 +82,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.option-bar {
-  display: flex;
-  padding: 10px;
-  background-color: var(--color-white);
-  .wrap-menu {
-    display: flex;
-    flex-wrap: wrap;
-    flex: 1;
-  }
-  & + .option-bar {
-    border-top: 1px solid var(--border-light-gray);
-  }
-  &.size {
-    @include pc {
-    &-small {
-      .title {
-        width: 50px;
-        font-size: var(--font-size-XS);
-      }
-      .wrap-menu {
-        gap: 5px;
-      }
-    }
-    &-medium {
-      .title {
-        width: 100px;
-      }
-      .wrap-menu {
-        gap: 10px;
-      }
-    }
-    }
-    @include mobile {
-      &-small {
-        .title {
-          width: 40px;
-          font-size: var(--font-size-XS);
-        }
-        .wrap-menu {
-          gap: 3px;
-        }
-      }
-      &-medium {
-        .title {
-          width: 50px;
-        }
-        .wrap-menu {
-          gap: 6px;
-        }
-      }
-    }
-  }
-}
+@import '@/assets/style/components/element/OptionBar.scss';
 </style>

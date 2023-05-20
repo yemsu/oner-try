@@ -55,12 +55,12 @@
           </div>
         </nuxt-link>
         <div class="wrap-button-delete">
-          <base-button
+          <element-button
             type="text"
             size="xsmall"
             bg="sub"
             @click="$emit('delete', itemBuild.id)"
-          >삭제</base-button>
+          >삭제</element-button>
         </div>
       </div>
     </section>
@@ -68,12 +68,7 @@
 </template>
 
 <script>
-import BaseButton from '../common/BaseButton.vue';
-
 export default {
-  components: {
-    BaseButton,
-  },
   props: {
     itemBuilds: {
       type: Array,

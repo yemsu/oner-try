@@ -2,11 +2,11 @@
   <section class="inner-size-basic mrg-top-medium">
     <div class="area-page-title">
       <h2 class="title badge-text-wrap">🔥 MY 빌드</h2>        
-      <base-button
+      <element-button
         type="square-round"
         bg="point"
         link-to="/item-build/my/new"
-      >+ NEW</base-button>
+      >+ NEW</element-button>
     </div>
     <item-build-list
       v-if="isLogin"
@@ -18,7 +18,6 @@
 
 <script>
 import ItemBuildList from '@/components/item-build/ItemBuildList.vue';
-import BaseButton from '@/components/common/BaseButton.vue'
 import ItemImage from '@/components/item/ItemImage.vue';
 import { mapGetters, mapActions } from 'vuex';
 import setMeta from '@/plugins/utils/meta';
@@ -32,7 +31,6 @@ export default {
     })
   },
   components: {
-    BaseButton,
     ItemImage,
     ItemBuildList
   },
