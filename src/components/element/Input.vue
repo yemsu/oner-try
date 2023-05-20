@@ -8,6 +8,7 @@
       usage
     ]"
   >
+    <label v-if="label" :for="id">{{ label }}</label>
     <input
       ref="baseInput"
       :id="id"
@@ -73,7 +74,11 @@ export default {
     maxlength: {
       type: String,
       default: () => null
-    }
+    },
+    label: {
+      type: String,
+      default: () => ''
+    },
   },
   watch: {
     isOnFocus(crr, prev) {

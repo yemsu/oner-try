@@ -11,10 +11,16 @@
     line-height: 1;
     transition: 0.2s;
     &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button{
+    &::-webkit-inner-spin-button {
       appearance: none;
       margin: 0;
+    }
   }
+  label {
+    display: block;
+    padding: 0 10px;
+    font-size: var(--font-size-MS-pc);
+    line-height: 27px;
   }
   &.searching input {
     border-top-left-radius: 10px;
