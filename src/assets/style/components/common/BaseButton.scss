@@ -51,9 +51,17 @@
   &.square-round {
     border-radius: 5px;
     text-align: center;
+    &.nuxt-link-active,
+    &.is-active {
+      font-weight: 500;
+      .text {
+        opacity: 1;
+      }
+    }
     &.size {
       &-small {
-        padding: 2px 8px;
+        padding: 2px 6px;
+        font-size: var(--font-size-S);
         border-radius: 3px;
       }
       &-medium {
@@ -63,14 +71,6 @@
         line-height: var(--square-btn-medium-line-height);
         .text {
           opacity: .8;
-        }
-        &.nuxt-link-active,
-        &.is-active {
-          font-weight: 500;
-          border-radius: 5px;
-          .text {
-            opacity: 1;
-          }
         }
       }
       &-large {

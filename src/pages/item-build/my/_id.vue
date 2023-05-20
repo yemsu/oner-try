@@ -1,6 +1,6 @@
 <template>
   <section v-if="itemBuild" ref="copyArea" class="copy-area">
-    <div class="content-top">
+    <div v-if="!isMakingMode" class="content-top">
       <div class="inner-size-basic spbw">
         <item-box
           :item="itemBuild.hero"
@@ -15,27 +15,61 @@
           </div>
         </div>
         <common-wrap-buttons position="right">
+          <base-button
+            type="square-round"
+            size="small"
+            bg="point"
+            @click="isMakingMode = true"
+          >수정</base-button>
           <element-copy-button
             :copy-area="$refs.copyArea"
           />
         </common-wrap-buttons>
       </div>
     </div>
-    <div class="inner-size-basic mrg-top-medium">
-      <section>
-        <h2 class="ir-hidden">아이템빌드</h2>
-        <item-build
-          v-if="buildInfoString"
-          :build-info="buildInfoString"
-        />
-      </section>
-    </div>
+    
+    <new-item-build
+      :show-form="isMakingMode"
+      @onEditSave="isMakingMode = false"
+    >
+      <template v-slot="{ data: { buildInfoString, onDeleteBuildItem, onClickSave } }">
+        <div class="inner-size-basic">
+          <section>
+            <h2 class="ir-hidden">아이템빌드</h2>
+            <template v-if="buildInfoString">
+              <item-build
+                v-if="!isMakingMode"
+                :build-info="buildInfoString"
+              />
+              <template v-else>
+                <item-build
+                  :build-info="buildInfoString"
+                  :making-mode="true"
+                  @delete="onDeleteBuildItem"
+                />
+                <wrap-buttons>
+                  <base-button
+                    type="square-round"
+                    size="large"
+                    bg="point"
+                    @click="onClickSave"
+                  >빌드 저장</base-button>
+                </wrap-buttons>
+              </template>
+            </template>
+          </section>
+        </div>
+      </template>
+    </new-item-build>
   </section>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import ItemBuild from '../../../components/item/ItemBuild.vue'
+import ItemBuild from '@/components/item/ItemBuild.vue'
+import NewItemBuild from '@/components/item-build/NewItemBuild.vue';
+import BaseButton from '@/components/common/BaseButton.vue';
+import WrapButtons from '@/components/common/WrapButtons.vue';
 import setMeta from '@/plugins/utils/meta';
 
 export default {
@@ -47,11 +81,15 @@ export default {
     })
   },
   components: {
-    ItemBuild
+    ItemBuild,
+    NewItemBuild,
+    BaseButton,
+    WrapButtons
   },
   data() {
     return {
       buildInfoString: null,
+      isMakingMode: false
     }
   },
   computed: {
