@@ -19,13 +19,15 @@
         <dd class="sailors badges badge-gap">
           <!-- <span class="badge black">선원</span> -->
           <!-- {{ synergy.sailors.join(', ') }} -->
-          <span
+          <element-badge
             v-for="(sailor, i) in synergy.sailors"
             :key="`sailor${i}`"
-            :class="`badge size-${size === 'medium' ? 'big' : size} type-round line-${classNegaPosi(synergy)}`"
+            :size="size === 'medium' ? 'big' : size"
+            type="square-round"
+            :line="classNegaPosi(synergy)"
           >
             {{ sailor }}
-          </span>
+          </element-badge>
         </dd>
       </div>
     </dl>
