@@ -10,7 +10,7 @@
         :key="itemBuild.id"
         class="box-item-build"
       >
-        <nuxt-link :to="`/item-build/my/${itemBuild.id}`">
+        <nuxt-link :to="`/item-build/my/result?id=${itemBuild.id}`">
           <div class="wrap-info-main">
             <div class="main-top">
               <div class="wrap-title">
