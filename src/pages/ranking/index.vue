@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="inner-size-basic">
-      <option-bar
+      <elementoption-bar
         v-if="heroOptions"
         :options="heroOptions"
         :select-list="heroSelected"
@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import OptionBar from '@/components/common/OptionBar.vue';
 import rankingTable from '@/components/pages/ranking/Table.vue'
 import setMeta from '@/plugins/utils/meta';
 import { mapGetters } from 'vuex';
@@ -66,7 +65,6 @@ export default {
   },
   components: {
     rankingTable,
-    OptionBar
   },
   data() {
     return {

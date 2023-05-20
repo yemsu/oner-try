@@ -17,7 +17,7 @@
         </section>
         <section class="wrap-category character">
           <h3 class="title-category">캐릭터</h3>
-          <common-option-bar
+          <element-option-bar
             :options="heroOptions"
             :select-list="[itemBuild.characterName]"
             :can-multi-select="false"
