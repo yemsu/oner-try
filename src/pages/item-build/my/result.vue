@@ -100,7 +100,7 @@ export default {
     }),
   },
   async created() {
-    const res = await this.getItemBuild(this.$route.params.id)
+    const res = await this.getItemBuild(this.$route.query.id)
     if(!res) return
     this.buildInfoString = JSON.stringify(this.itemBuild)
   },
