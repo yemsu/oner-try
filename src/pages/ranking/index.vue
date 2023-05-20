@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="inner-size-basic">
-      <elementoption-bar
+      <element-option-bar
         v-if="heroOptions"
         :options="heroOptions"
         :select-list="heroSelected"
