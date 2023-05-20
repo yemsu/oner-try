@@ -52,6 +52,10 @@
     border-radius: 5px;
     text-align: center;
     &.size {
+      &-small {
+        padding: 2px 8px;
+        border-radius: 3px;
+      }
       &-medium {
         min-width: 50px;
         padding: 0 10px;

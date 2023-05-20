@@ -6,7 +6,11 @@ export const findData = (dataList, key, checkValue) => {
 }
 export const imgSrc = (type, imageName) => {
   if(!type) return ''
-  return `https://oner-image.s3.ap-northeast-2.amazonaws.com/${type}/${imageName}.png`
+  const isVisibleItemBuild = ['colleague', 'equipment', 'hero', 'potion', 'sailor', 'ship'].includes(type)
+  let uri = isVisibleItemBuild
+    ? `${process.env.BASE_URL}/images/items`
+    : 'https://oner-image.s3.ap-northeast-2.amazonaws.com'
+  return `${uri}/${type}/${imageName}.png`
 }
 export const getGradeScore = (key) => {
   return gradeScoresDef[key]

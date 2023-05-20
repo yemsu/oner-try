@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="`wrap-buttons size-${size} align-${align}`"
+    :class="`wrap-buttons size-${size} align-${align} position-${position}`"
   >
     <slot></slot>
   </div>
@@ -16,6 +16,10 @@ export default {
     align: {
       type: String,
       default: () => 'center'
+    },
+    position: {
+      type: String,
+      default: 'bottom' // bottom, side
     }
   },
   data() {
@@ -30,8 +34,15 @@ export default {
   display: flex;
   &.size {
     &-medium {
-      margin-top: 20px;
       gap: 10px;
+    }
+  }
+  &.position {
+    &-bottom {
+      margin-top: 20px;
+    }
+    &-right {
+      margin-left: auto;
     }
   }
   &.align {
