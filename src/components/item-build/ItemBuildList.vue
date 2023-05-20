@@ -15,6 +15,7 @@
             <div class="main-top">
               <div class="wrap-title">
                 <item-box
+                  v-if="itemBuild.hero"
                   :item="itemBuild.hero"
                   size="xsmall"
                   :is-round-img="true"

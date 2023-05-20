@@ -47,6 +47,7 @@ export const getItemBuild = (id) => getApi(`/builds/${id}`)
 export const getItemBuilds = (params) => getApi('/my/builds', { params })
 export const postItemBuild = (itemBuild) => postBodyApi('/builds', itemBuild)
 export const deleteItemBuild = (id) => deleteApi(`/builds/${id}`)
+export const putItemBuild = (itemBuild) => putApi(`/builds/${itemBuild.id}`, itemBuild)
 
 // common
 export const setDefaultHeader = (key, value) => {
@@ -154,6 +155,13 @@ function getApi(url = '', params = { params: {} }) {
     .then(({ data }) => data.result)
     .catch(error => errorHandler(url, error))
 }
+
+function putApi(url = '', payload) {
+  return $axios.put(url, payload)
+    .then((res) => res)
+    .catch(error => errorHandler(url, error))
+}
+
 function getApiReturnData(url = '', params = {}) {
   return $axios.get(url, { params })
     .then(({ data }) => data)

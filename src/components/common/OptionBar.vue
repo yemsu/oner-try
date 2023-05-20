@@ -50,11 +50,10 @@ export default {
     canMultiSelect: {
       type: Boolean,
       default: () => true
-    }
-  },
-  data() {
-    return {
-      selectList: []
+    },
+    selectList: {
+      type: Array,
+      default: () => []
     }
   },
   methods: {
