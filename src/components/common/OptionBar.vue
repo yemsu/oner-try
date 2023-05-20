@@ -14,7 +14,7 @@
         :class="['menu-filter', {'active': isActiveMenu(key, 'grade')}]"
         :is="title ? 'dd' : 'li'"
       >
-        <base-button
+        <element-button
           @click="onClickButton(key)"
           class="button-filter"
           :size="size"
@@ -22,19 +22,14 @@
           :bg="isActiveMenu(key, 'grade') ? 'active': 'inActive'"
         >
           {{ gradeTitle }}
-        </base-button>
+        </element-button>
       </dd>
     </div>
   </dl>
 </template>
 
 <script>
-import BaseButton from '@/components/common/BaseButton.vue'
-
 export default {
-  components: {
-    BaseButton
-  },
   props: {
     title: {
       type: String,

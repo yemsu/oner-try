@@ -17,12 +17,12 @@
           />
         </section>
         <wrap-buttons>
-          <base-button
+          <element-button
             type="square-round"
             size="large"
             bg="point"
             @click="onClickSave"
-          >빌드 저장</base-button>
+          >빌드 저장</element-button>
         </wrap-buttons>
       </template>
     </new-item-build>
@@ -34,7 +34,6 @@ import setMeta from '@/plugins/utils/meta';
 import NewItemBuild from '@/components/item-build/NewItemBuild.vue';
 import WrapButtons from '@/components/common/WrapButtons.vue';
 import ItemBuild from '@/components/item/ItemBuild.vue'
-import BaseButton from '@/components/common/BaseButton.vue';
 
 export default {
   head() {
@@ -48,7 +47,6 @@ export default {
     ItemBuild,
     WrapButtons,
     NewItemBuild,
-    BaseButton
   },
   head() {
     return setMeta({

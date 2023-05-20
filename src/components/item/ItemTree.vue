@@ -7,7 +7,7 @@
           <strong>* 재료로 사용되는 <span class="text-marking">선원의 강화 요구 수치는 10</span> 입니다.</strong> (강화에 필요한 비브르카드 개수는 조합법에 포함되어 있지 않습니다.)
         </p>
         <div class="align-right">
-          <base-button
+          <element-button
             type="icon mode-wide"
             :toggleData="modeWide"
             @click="clickWideMode()"
@@ -66,12 +66,11 @@
 </template>
 
 <script>
-import BaseButton from '@/components/common/BaseButton.vue'
 import ItemTreeDepth from '@/components/item/ItemTreeDepth.vue'
+
 export default {
   components: {
-    ItemTreeDepth,
-    BaseButton
+    ItemTreeDepth
   },
   props: {
     item: {

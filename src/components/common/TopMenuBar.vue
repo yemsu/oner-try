@@ -8,12 +8,12 @@
             v-for="({ path, menuName }, i) in menuList"
             :key="`menu${i}`"
           >
-              <base-button
+              <element-button
                 :linkTo="path"
                 type="square-round"
               >
                 {{ menuName }}
-              </base-button>
+              </element-button>
           </li>
         </ul>
       </nav>
@@ -23,12 +23,12 @@
             v-for="({ path, menuName }, i) in sideMenuList"
             :key="`utilMenu${i}`"
           >
-            <base-button
+            <element-button
               :link-to="path"
               type="square-round"
             >
               {{ menuName }}
-            </base-button>
+            </element-button>
           </li>
         </ul>
       </div>
@@ -37,12 +37,7 @@
 </template>
 
 <script>
-import BaseButton from '@/components/common/BaseButton.vue'
-
 export default {
-  components: {
-    BaseButton
-  },
   props: {
     title: {
       type: String,

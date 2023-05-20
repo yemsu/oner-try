@@ -4,7 +4,7 @@
       <label for="nickName">
         <h2 class="title">ONER TRY에서 사용할 닉네임을 입력해주세요 💀</h2>
       </label>
-      <base-input 
+      <element-input 
         id="nickName"
         size="big"
         category="닉네임"
@@ -37,36 +37,30 @@
         <p class="text-result">{{ this.inputValue }}</p>
       </div>
       <div class="wrap-buttons">
-        <base-button
+        <element-button
           class="btn-confirm"
           bg="active"
           type="square-round"
           size="large"
           @click="joinSuccess"
-        >컨펌 완료 (ctrl enter)</base-button>
-        <base-button
+        >컨펌 완료 (ctrl enter)</element-button>
+        <element-button
           class="btn-re"
           bg="inActive"
           type="square-round"
           size="large"
           @click="joinStep = 1"
-        >다시 정할래요 (backspace)</base-button>
+        >다시 정할래요 (backspace)</element-button>
       </div>
     </section> -->
   </div>
 </template>
 
 <script>
-import BaseInput from '@/components/common/BaseInput.vue'
-import BaseButton from '@/components/common/BaseButton.vue'
 import { getIsDuplNick, postUserJoin } from "@/plugins/utils/https"
 import { mapGetters, mapMutations } from 'vuex';
 
 export default {
-  components: {
-    BaseInput,
-    BaseButton
-  },
   data() {
     return {
       inputValue: '',

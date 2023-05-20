@@ -4,7 +4,7 @@
       <div class="inner-size-basic">
         <section class="wrap-category title">
           <h3 class="title-category">제목</h3>
-          <base-input
+          <element-input
             :value="itemBuild.title"
             size="small"
             placeholder="빌드 제목"
@@ -17,7 +17,7 @@
         </section>
         <section class="wrap-category character">
           <h3 class="title-category">캐릭터</h3>
-          <option-bar
+          <common-option-bar
             :options="heroOptions"
             :select-list="[itemBuild.characterName]"
             :can-multi-select="false"
@@ -38,7 +38,7 @@
                 type="list"
               />
             </div>
-            <base-input
+            <element-input
               input-type="number"
               :value="itemStack"
               size="small"
@@ -47,12 +47,12 @@
               :is-on-focus="isOnFocusStack"
               @onUpdateInput="(value) => itemStack = value"
             />
-            <base-button
+            <element-button
               type="round"
               bg="point"
             >
               아이템 추가
-            </base-button>
+            </element-button>
           </form>
         </section>
         <section class="wrap-category item">
@@ -100,9 +100,6 @@
 import { itemTypeDefs, maxStack, slotNumbers, canEnhance, noEquipOptions, gradesDef, equipmentGrades, sailorGrades } from '@/plugins/utils/item-def';
 import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
 import ItemFilterTable from '@/components/item/ItemFilterTable.vue';
-import BaseButton from '../common/BaseButton.vue';
-import OptionBar from '../common/OptionBar.vue';
-import BaseInput from '../common/BaseInput.vue';
 import VTab from '../common/VTab.vue';
 import { getTypeKorName } from '@/plugins/utils/item';
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
@@ -112,9 +109,6 @@ export default {
   components: {
     ItemSearchBox,
     ItemFilterTable,
-    BaseButton,
-    OptionBar,
-    BaseInput,
     VTab
   },
   props: {

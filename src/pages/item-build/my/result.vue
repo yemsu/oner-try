@@ -15,12 +15,12 @@
           </div>
         </div>
         <common-wrap-buttons position="right">
-          <base-button
+          <element-button
             type="square-round"
             size="small"
             bg="point"
             @click="isMakingMode = true"
-          >수정</base-button>
+          >수정</element-button>
           <element-copy-button
             :copy-area="copyArea"
           />
@@ -48,12 +48,12 @@
                   @delete="onDeleteBuildItem"
                 />
                 <wrap-buttons>
-                  <base-button
+                  <element-button
                     type="square-round"
                     size="large"
                     bg="point"
                     @click="onClickSave"
-                  >빌드 저장</base-button>
+                  >빌드 저장</element-button>
                 </wrap-buttons>
               </template>
             </template>
@@ -68,7 +68,6 @@
 import { mapGetters, mapActions } from 'vuex'
 import ItemBuild from '@/components/item/ItemBuild.vue'
 import NewItemBuild from '@/components/item-build/NewItemBuild.vue';
-import BaseButton from '@/components/common/BaseButton.vue';
 import WrapButtons from '@/components/common/WrapButtons.vue';
 import setMeta from '@/plugins/utils/meta';
 
@@ -83,7 +82,6 @@ export default {
   components: {
     ItemBuild,
     NewItemBuild,
-    BaseButton,
     WrapButtons
   },
   data() {

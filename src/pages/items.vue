@@ -13,12 +13,10 @@
 </template>
 
 <script>
-import BaseButton from '@/components/common/BaseButton.vue'
 import TopMenuBar from '../components/common/TopMenuBar.vue'
 
 export default {
   components: {
-    BaseButton,
     TopMenuBar
   },
   data() {
