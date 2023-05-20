@@ -1,7 +1,7 @@
 <template>
-  <section v-if="itemBuild" ref="copyArea" class="copy-area">
+  <section v-if="itemBuild">
     <div v-if="!isMakingMode" class="content-top">
-      <div class="inner-size-basic spbw">
+      <div class="inner-size-basic spbw" ref="copyArea">
         <item-box
           :item="itemBuild.hero"
           :wanted-paper="true"
@@ -22,7 +22,8 @@
             @click="isMakingMode = true"
           >수정</base-button>
           <element-copy-button
-            :copy-area="$refs.copyArea"
+            v-if="copyArea"
+            :copy-area="copyArea"
           />
         </common-wrap-buttons>
       </div>
@@ -89,7 +90,8 @@ export default {
   data() {
     return {
       buildInfoString: null,
-      isMakingMode: false
+      isMakingMode: false,
+      copyArea: null,
     }
   },
   computed: {
@@ -101,6 +103,14 @@ export default {
     const res = await this.getItemBuild(this.$route.params.id)
     if(!res) return
     this.buildInfoString = JSON.stringify(this.itemBuild)
+  },
+  mounted() {
+    this.$nextTick(() => {
+      // template에 바로 ref적용하면 에러 발생하여 별도 data값에 저장
+      setTimeout(() => {
+      this.copyArea = this.$refs.copyArea
+      }, 500);
+    })
   },
   methods: {
     ...mapActions({

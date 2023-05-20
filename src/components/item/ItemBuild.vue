@@ -131,8 +131,12 @@ export default {
     ))
   },
   mounted() {
-    // template에 바로 ref적용하면 에러 발생하여 별도 data값에 저장
-    this.copyArea = this.$refs.copyArea
+    this.$nextTick(() => {
+      // template에 바로 ref적용하면 에러 발생하여 별도 data값에 저장
+      setTimeout(() => {
+      this.copyArea = this.$refs.copyArea
+      }, 500);
+    })
   },
   computed: {
     buildData() {
