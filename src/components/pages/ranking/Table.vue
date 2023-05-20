@@ -38,6 +38,7 @@
                 :isPirateKing="i === 0"
                 :showBounty="false"
                 :size="i === 0 ? 'medium' : 'small'"
+                img-type="square-round"
               ></item-box>
             </td>
             <td class="level">
@@ -62,7 +63,7 @@
                     :item="sailor"
                     :showName="false"
                     :onlyImg="true"
-                    :isRoundImg="true"
+                    img-type="round"
                     size="small"
                   />
                 </li>
@@ -78,7 +79,7 @@
                     :item="colleague"
                     :showName="false"
                     :onlyImg="true"
-                    :isRoundImg="true"
+                    img-type="round"
                     size="small"
                   />
                 </li>

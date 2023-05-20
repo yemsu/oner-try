@@ -18,7 +18,7 @@
                   v-if="itemBuild.hero"
                   :item="itemBuild.hero"
                   size="xsmall"
-                  :is-round-img="true"
+                  img-type="round"
                   :show-name="false"
                   :title="itemBuild.hero.name"
                 />

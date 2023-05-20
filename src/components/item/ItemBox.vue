@@ -6,7 +6,6 @@
       `size-${size}`,
       `type-${type}`,
       {'wanted-paper': wantedPaper},
-      {'round': isRoundImg},
       {'no-padding': !padding},
     ]">
     <template v-if="item">
@@ -23,7 +22,7 @@
           <div class="area-img">
             <item-image 
               :item="item"
-              :isRoundImg="isRoundImg"
+              :img-type="imgType"
               :isNoDataItem="isNoDataItem"
               :size="size"
               :isComp="isComp"
@@ -78,7 +77,7 @@
         </div>
       </div>
     </template>
-    <item-image v-else :item="item" :size="size" :is-round-img="isRoundImg"/>
+    <item-image v-else :item="item" :size="size" img-type="round" />
   </div>
 </template>
 
@@ -101,6 +100,10 @@ export default {
       type: String,
       default: () => 'basic' // list
     },
+    imgType: {
+      type: String,
+      default: 'square' // square-round, round
+    },
     showTooltip: {
       type: Boolean,
       default: () => true
@@ -118,10 +121,6 @@ export default {
       default: () => true
     },
     onlyImg: {
-      type: Boolean,
-      default: () => false
-    },
-    isRoundImg: {
       type: Boolean,
       default: () => false
     },
