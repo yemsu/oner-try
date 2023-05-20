@@ -45,5 +45,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/components/common/VTab.scss';
+@import '@/assets/style/components/element/VTab.scss';
 </style>

@@ -22,7 +22,7 @@
           :copy-area="$refs.copyArea"
         />
       </div>
-      <v-tab
+      <element-v-tab
         v-if="userCharacters.length !== 0"
         :tabs="userCharacters"
       >
@@ -41,14 +41,13 @@
             <ItemBuild :build-info="JSON.stringify(activeTab)" />
           </section>
         </template>
-      </v-tab>
+      </element-v-tab>
     </section>
   </div>
 </template>
 
 <script>
 import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
-import VTab from '@/components/common/VTab.vue'
 import ItemBuild from "@/components/item/ItemBuild.vue";
 import setMeta from '@/plugins/utils/meta';
 import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
@@ -58,7 +57,6 @@ import { mapGetters, mapActions, mapMutations } from 'vuex';
 export default {
   name: 'character-result',
   components: {
-    VTab,
     CharacterSearchBox,
     ItemBuild
   },

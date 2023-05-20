@@ -68,7 +68,7 @@
             size="xsmall"
             placeholder="추가할 아이템 검색"
           />
-          <v-tab :tabs="itemTypeDefs" type="basic">
+          <element-v-tab :tabs="itemTypeDefs" type="basic">
             <template v-slot:tab="{ tab: { data } }">
               {{ data.title }}
             </template>
@@ -85,7 +85,7 @@
                 size="small"
               />
             </template>
-          </v-tab>
+          </element-v-tab>
         </section>
       </div>
     </div>
@@ -100,7 +100,6 @@
 import { itemTypeDefs, maxStack, slotNumbers, canEnhance, noEquipOptions, gradesDef, equipmentGrades, sailorGrades } from '@/plugins/utils/item-def';
 import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
 import ItemFilterTable from '@/components/item/ItemFilterTable.vue';
-import VTab from '../common/VTab.vue';
 import { getTypeKorName } from '@/plugins/utils/item';
 import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
 import { mapGetters, mapActions, mapMutations } from 'vuex';
@@ -109,7 +108,6 @@ export default {
   components: {
     ItemSearchBox,
     ItemFilterTable,
-    VTab
   },
   props: {
     showForm: {
