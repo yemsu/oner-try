@@ -11,13 +11,21 @@
         </div>
       </div>
     </div>
-    <section class="inner-size-basic mrg-top-small">
+    <section class="character-result inner-size-basic mrg-top-small" ref="characterResult">
       <div class="area-page-title underline">
         <h2 class="title badge-text-wrap">
           <i class="skull">☠</i> 
           {{ nickname }}           
           <span v-if="isBanUser(nickname)" class="badge banned size-big type-round">활동정지</span>
-        </h2>        
+        </h2>    
+        <element-button
+          type="square-round"
+          size="small"
+          bg="point"
+          @click="copyCharacterResult"
+        >
+          클립보드에 저장
+        </element-button>    
       </div>
       <v-tab
         v-if="userCharacters.length !== 0"
@@ -51,6 +59,8 @@ import setMeta from '@/plugins/utils/meta';
 import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
 import { postCharacterPageView, getCharacterPageViews, postMergeCharacterView } from '@/plugins/utils/https'
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+import copyHtml2Img from '@/plugins/utils/copyHtml2Img'
+
 export default {
   name: 'character-result',
   components: {
@@ -127,6 +137,9 @@ export default {
     isBanUser(nickname) {
       const banUserList = []
       return banUserList.includes(nickname)
+    },
+    copyCharacterResult() {
+      copyHtml2Img(this.$refs.characterResult)
     }
   },
 }

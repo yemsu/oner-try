@@ -18,11 +18,13 @@ const ALERTS = {
     DELETE_FAIL: `빌드 삭제에 실패하였습니다. ${FAIL_COMMON}`,
     DELETE_SUCCESS: `빌드가 삭제되었습니다.`,
     DELETE_CONFIRM: `빌드를 삭제하시겠습니까?`,
+    CLIPBOARD_SUCCESS: '빌드 이미지가 클립보드에 저장되었습니다.',
+    CLIPBOARD_FAIL: '빌드 이미지 클립보드 저장에 실패하였습니다.'
   },
   CHAT: {
     CONFIRM_END: '파티 찾기를 종료하시겠습니까?',
     NO_ROOM: '존재하지 않는 파티 찾기 방입니다.',
-  }
+  },
 }
 
 

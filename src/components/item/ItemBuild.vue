@@ -129,7 +129,7 @@ export default {
     buildData() {
       return JSON.parse(this.buildInfo)
     }
-  },
+  }
 }
 </script>
 
