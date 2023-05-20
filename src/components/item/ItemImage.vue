@@ -3,7 +3,7 @@
     :class="[
       'item-img',
       `size-${size}`,
-      {'round': isRoundImg},
+      `type-${imgType}`,
       item && `grade-${item.grade}`
   ]">
     <div v-if="!item" class="item-blank"></div>
@@ -64,9 +64,9 @@ export default {
       type: Object,
       default: () => null
     },
-    isRoundImg: {
-      type: Boolean,
-      default: () => false
+    imgType: {
+      type: String,
+      default: 'square' // square-round, round
     },
     isNoDataItem: {
       type: Boolean,
@@ -102,7 +102,7 @@ export default {
       return imgSrc(type, imageName)
     },
     isReportButton() {
-      return this.isNoDataItem && !this.isRoundImg
+      return this.isNoDataItem && this.imgType !== 'round'
     },
     linkItemComposition() {
       return `/composition/${this.item.type}/${this.item.id}`
