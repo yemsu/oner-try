@@ -462,6 +462,10 @@ div.text-refer {
   }
 }
 
+.copy-area {
+  background-color: var(--bg-body);
+}
+
 @include mobile {
   .wrap-x-scroll {
     overflow-x: auto;

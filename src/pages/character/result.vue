@@ -11,21 +11,16 @@
         </div>
       </div>
     </div>
-    <section class="character-result inner-size-basic mrg-top-small" ref="characterResult">
+    <section class="inner-size-basic mrg-top-small copy-area" ref="copyArea">
       <div class="area-page-title underline">
         <h2 class="title badge-text-wrap">
           <i class="skull">☠</i> 
           {{ nickname }}           
           <span v-if="isBanUser(nickname)" class="badge banned size-big type-round">활동정지</span>
         </h2>    
-        <element-button
-          type="square-round"
-          size="small"
-          bg="point"
-          @click="copyCharacterResult"
-        >
-          클립보드에 저장
-        </element-button>    
+        <element-copy-button
+          :copy-area="$refs.copyArea"
+        />
       </div>
       <v-tab
         v-if="userCharacters.length !== 0"
@@ -59,7 +54,6 @@ import setMeta from '@/plugins/utils/meta';
 import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
 import { postCharacterPageView, getCharacterPageViews, postMergeCharacterView } from '@/plugins/utils/https'
 import { mapGetters, mapActions, mapMutations } from 'vuex';
-import copyHtml2Img from '@/plugins/utils/copyHtml2Img'
 
 export default {
   name: 'character-result',
@@ -109,8 +103,6 @@ export default {
     }),
     ...mapMutations({
       setUserCharacters: 'character/SET_USER_CHARACTERS',
-      setToastPopupMessage: 'toastPopup/SET_MESSAGE',
-      setToastPopupOn: 'toastPopup/SET_IS_TRIGGER_ON',
     }),
     async getUserData(nickName) {
       const result = await this.getUserCharacters({ nickName })
@@ -140,15 +132,6 @@ export default {
       const banUserList = []
       return banUserList.includes(nickname)
     },
-    async copyCharacterResult() {
-      const res = await copyHtml2Img(this.$refs.characterResult)
-      if(!res) {
-        alert(this.$alerts.ITEM_SETTING.CLIPBOARD_FAIL)
-        return
-      }
-      this.setToastPopupMessage(this.$ALERTS.ITEM_SETTING.CLIPBOARD_SUCCESS)
-      this.setToastPopupOn(true)
-    }
   },
 }
 </script>

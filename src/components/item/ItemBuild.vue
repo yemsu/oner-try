@@ -3,14 +3,18 @@
   <div class="text-refer top">
     <p v-if="buildData.saveDate">최근 세이브: {{ buildData.saveDate }}</p>
     <p v-else-if="buildData.regDt">{{ buildData.regDt }}</p>
+    <element-copy-button
+      v-if="copyArea && makingMode"
+      :copy-area="copyArea"
+    />
     <p class="align-right">
       <span class="badge-text-wrap">
-        <span class="badge black line-gold" data-v-21f97cac="">숫자</span>
+        <span class="badge black line-gold">숫자</span>
         : 강화 수치
       </span>
     </p>
   </div>
-  <div class="wrapper">
+  <div class="wrapper copy-area" ref="copyArea">
     <div
       v-if="itemGridInfoList"
       class="wrap-item-build"
@@ -118,12 +122,17 @@ export default {
         // }
       },
       itemGridInfoList: null,
+      copyArea: null,
     }
   },
   created() {
     this.itemGridInfoList = itemTypeDefs.map(itemType => (
       {...itemType, ...this.gridInfos[itemType.type]}
     ))
+  },
+  mounted() {
+    // template에 바로 ref적용하면 에러 발생하여 별도 data값에 저장
+    this.copyArea = this.$refs.copyArea
   },
   computed: {
     buildData() {
