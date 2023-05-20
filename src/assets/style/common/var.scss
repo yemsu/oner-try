@@ -79,6 +79,7 @@ $chat-status-colors: (
   --color-point-sub-bright: #{colorMaker($color-point-sub-hsl, 30%, 25%)};
   // gray
   --point-h: #{nth($color-point-hsl, 1)};
+  --color-gray-10: hsl(var(--point-h), 4%, 10%);
   --color-gray-20: hsl(var(--point-h), 4%, 20%);
   --color-gray-25: hsl(var(--point-h), 4%, 25%);
   --color-gray-30: hsl(var(--point-h), 4%, 30%);
@@ -108,6 +109,9 @@ $chat-status-colors: (
   --bg-gray: var(--color-gray-80);
   --bg-light-gray: var(--color-gray-95);
 
+  // shadow
+  --color-shadow: var(--color-gray-70);
+  
   // common color
   --darker-10: hsla(var(--point-h), 15%, 30%, 10%);
   --darker-20: hsla(var(--point-h), 15%, 30%, 20%);
@@ -187,6 +191,9 @@ $chat-status-colors: (
   --bg-gray: var(--color-gray-40);
   --bg-light-gray: var(--color-gray-20);
 
+  // shadow
+  --color-shadow: var(--color-gray-10);
+    
   // common color
   --darker-10: hsla(var(--point-h), 6%, 85%, 6%);
   --darker-20: hsla(var(--point-h), 6%, 85%, 12%);

@@ -6,14 +6,19 @@ const copyHtml2Img = async (element) => {
     useCORS: true,
     allowTaint: true,
   })
-  canvas.toBlob(blob => {
-    const item = new ClipboardItem({'image/png': blob})
-    try {
-      navigator.clipboard.write([item])
-      alert(ALERTS.ITEM_SETTING.CLIPBOARD_SUCCESS)
-    } catch(e) {
-      alert(ALERTS.ITEM_SETTING.CLIPBOARD_FAIL)
-    }
+  // const resultPromise = (_result) => 
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      const item = new ClipboardItem({'image/png': blob})
+      navigator.clipboard.write([item]).then(
+        () => {
+          resolve(true)
+        },
+        () => {
+          reject()
+        }
+      );
+    })
   })
 }
 

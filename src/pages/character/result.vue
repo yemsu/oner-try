@@ -109,6 +109,8 @@ export default {
     }),
     ...mapMutations({
       setUserCharacters: 'character/SET_USER_CHARACTERS',
+      setToastPopupMessage: 'toastPopup/SET_MESSAGE',
+      setToastPopupOn: 'toastPopup/SET_IS_TRIGGER_ON',
     }),
     async getUserData(nickName) {
       const result = await this.getUserCharacters({ nickName })
@@ -138,8 +140,14 @@ export default {
       const banUserList = []
       return banUserList.includes(nickname)
     },
-    copyCharacterResult() {
-      copyHtml2Img(this.$refs.characterResult)
+    async copyCharacterResult() {
+      const res = await copyHtml2Img(this.$refs.characterResult)
+      if(!res) {
+        alert(this.$alerts.ITEM_SETTING.CLIPBOARD_FAIL)
+        return
+      }
+      this.setToastPopupMessage(this.$ALERTS.ITEM_SETTING.CLIPBOARD_SUCCESS)
+      this.setToastPopupOn(true)
     }
   },
 }

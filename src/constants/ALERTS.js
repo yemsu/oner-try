@@ -1,6 +1,7 @@
 import Vue from "vue"
 
 const FAIL_COMMON = '문제가 지속될 시 개발자에게 문의해주세요.'
+const SUCCESS_EMOJI = '✅ '
 
 const ALERTS = {
   NEED_LOGIN: '로그인 해주세요!',
@@ -18,7 +19,7 @@ const ALERTS = {
     DELETE_FAIL: `빌드 삭제에 실패하였습니다. ${FAIL_COMMON}`,
     DELETE_SUCCESS: `빌드가 삭제되었습니다.`,
     DELETE_CONFIRM: `빌드를 삭제하시겠습니까?`,
-    CLIPBOARD_SUCCESS: '빌드 이미지가 클립보드에 저장되었습니다.',
+    CLIPBOARD_SUCCESS: `${SUCCESS_EMOJI}빌드 이미지가 클립보드에 저장되었습니다.`,
     CLIPBOARD_FAIL: '빌드 이미지 클립보드 저장에 실패하였습니다.'
   },
   CHAT: {
