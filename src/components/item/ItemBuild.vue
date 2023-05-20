@@ -4,7 +4,7 @@
     <p v-if="buildData.saveDate">최근 세이브: {{ buildData.saveDate }}</p>
     <p v-else-if="buildData.regDt">{{ buildData.regDt }}</p>
     <element-copy-button
-      v-if="copyArea && makingMode"
+      v-if="makingMode"
       :copy-area="copyArea"
     />
     <p class="align-right">
@@ -132,10 +132,13 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      // template에 바로 ref적용하면 에러 발생하여 별도 data값에 저장
-      setTimeout(() => {
       this.copyArea = this.$refs.copyArea
-      }, 500);
+      // template에 바로 ref적용하면 에러 발생하여 별도 data값에 저장
+      if(!this.copyArea) {
+        setTimeout(() => {
+        this.copyArea = this.$refs.copyArea
+        }, 800);
+      }
     })
   },
   computed: {
