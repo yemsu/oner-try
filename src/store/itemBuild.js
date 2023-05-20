@@ -92,8 +92,8 @@ export const actions = {
       return false
     }
 
-    alert(ALERTS.ITEM_SETTING.DELETE_SUCCESS)
     commit('DELETE_ITEM_BUILDS', id)
+    return true
   },
   async PUT_ITEM_BUILD({ commit, rootState, dispatch }, itemBuild) {
     if(rootState.heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
