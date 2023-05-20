@@ -1,7 +1,7 @@
 <template>
-  <section v-if="itemBuild">
+  <section v-if="itemBuild" ref="copyArea">
     <div v-if="!isMakingMode" class="content-top">
-      <div class="inner-size-basic spbw" ref="copyArea">
+      <div class="inner-size-basic spbw">
         <item-box
           :item="itemBuild.hero"
           :wanted-paper="true"
