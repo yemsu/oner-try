@@ -17,7 +17,7 @@ const ALERTS = {
     GET_FAIL: `빌드를 가져오지 못하였습니다. ${FAIL_COMMON}`,
     GET_LIST_FAIL: `빌드 리스트 가져오지 못하였습니다. ${FAIL_COMMON}`,
     DELETE_FAIL: `빌드 삭제에 실패하였습니다. ${FAIL_COMMON}`,
-    DELETE_SUCCESS: `빌드가 삭제되었습니다.`,
+    DELETE_SUCCESS: `${SUCCESS_EMOJI} 빌드가 삭제되었습니다.`,
     DELETE_CONFIRM: `빌드를 삭제하시겠습니까?`,
     CLIPBOARD_SUCCESS: `${SUCCESS_EMOJI} 빌드 이미지가 클립보드에 저장되었습니다.`,
     CLIPBOARD_FAIL: '빌드 이미지 클립보드 저장에 실패하였습니다.',

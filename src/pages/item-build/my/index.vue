@@ -19,7 +19,7 @@
 <script>
 import ItemBuildList from '@/components/item-build/ItemBuildList.vue';
 import ItemImage from '@/components/item/ItemImage.vue';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import setMeta from '@/plugins/utils/meta';
 
 export default {
@@ -72,10 +72,17 @@ export default {
       getItemBuilds: 'itemBuild/GET_ITEM_BUILDS',
       deleteItemBuilds: 'itemBuild/DELETE_ITEM_BUILD'
     }),
-    onBuildDelete(id) {
+    ...mapMutations({
+      setToastMessage: 'toastPopup/SET_MESSAGE',
+      setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
+    }),
+    async onBuildDelete(id) {
       const isConfirm = confirm(this.$ALERTS.ITEM_SETTING.DELETE_CONFIRM)
       if(!isConfirm) return
-      this.deleteItemBuilds(id)
+      const res = await this.deleteItemBuilds(id)
+      if(!res) return
+      this.setToastMessage(this.$ALERTS.ITEM_SETTING.DELETE_SUCCESS)
+      this.setToastOn(true)
     }
   }
 }
