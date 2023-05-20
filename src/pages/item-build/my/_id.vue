@@ -7,7 +7,7 @@
           :wanted-paper="true"
           :size="'big'"
           :show-bounty="false"
-          :customBadge="itemBuild.hero.name"
+          :customBadge="itemBuild.hero && itemBuild.hero.name"
         />
         <div class="area-page-title">
           <div class="align-left">

@@ -23,7 +23,7 @@
             :can-multi-select="false"
             size="small"
             @onChange="(list) => editItemBuildData({
-              keyName: 'character',
+              keyName: 'characterName',
               data: list[0]
             })"
           />
@@ -342,7 +342,6 @@ export default {
       let message = ''
       // itemBuild.id가 존재하면 빌드 수정인 것.
       if(this.itemBuild.id) {
-        console.log('dsfdsfs', this.itemBuild.colleague)
         const saveSuccess = await this.editItemBuild(this.getNewItemBuild())
         if(!saveSuccess) return
         this.$emit('onEditSave')
