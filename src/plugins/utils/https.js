@@ -158,7 +158,7 @@ function getApi(url = '', params = { params: {} }) {
 
 function putApi(url = '', payload) {
   return $axios.put(url, payload)
-    .then((res) => res)
+    .then(({ data }) => data.result)
     .catch(error => errorHandler(url, error))
 }
 

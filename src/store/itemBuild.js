@@ -33,6 +33,9 @@ export const mutations = {
   },
   DELETE_ITEM_BUILD_ITEM(state, { type, index }) {
     state.itemBuild[type].splice(index, 1, null)      
+  },
+  SET_ITEM_BUILD_HERO(state, hero) {
+    state.itemBuild.hero = hero
   }
 }
 
@@ -99,13 +102,17 @@ export const actions = {
     alert(ALERTS.ITEM_SETTING.DELETE_SUCCESS)
     commit('DELETE_ITEM_BUILDS', id)
   },
-  async PUT_ITEM_BUILD({}, itemBuild) {
+  async PUT_ITEM_BUILD({ commit, dispatch }, itemBuild) {
     const res = await putItemBuild(itemBuild)
     if(!res) {
       alert(ALERTS.ITEM_SETTING.EDIT_SAVE_FAIL)
       return false
     }
-    console.log('res', res)
+    
+    if(res.hero) {
+      dispatch('SET_ITEM_BUILD_HERO'. res.hero)
+    }
+    commit('SET_ITEM_BUILD', itemBuild)
     return res
   }
 }
