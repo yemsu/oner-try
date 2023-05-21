@@ -58,25 +58,24 @@ export default {
         : this.selectList.includes(key)
       return isActiveMenu
     },
-    toggleMenu(key) {
+    onClickButton(key) {
       if(key === 'all') {
-        this.selectList = []
+        this.$emit('onChange', [])
         return
       }
+
+      let newSelectList = null
+
       if(this.selectList.includes(key)) {
         if(!this.canMultiSelect) return
-        const index = this.selectList.indexOf(key)
-        this.selectList.splice(index, 1)
+        newSelectList = this.selectList.filter(option => option !== key)
       } else {
-        this.canMultiSelect
-          ? this.selectList.push(key)
-          : this.selectList = [key]
+        newSelectList = this.canMultiSelect
+          ? [...this.selectList, key]
+          : [key]
       }    
+      this.$emit('onChange', newSelectList)
     },
-    onClickButton(key) { 
-      this.toggleMenu(key)
-      this.$emit('onChange', this.selectList)
-    }
   }
 }
 </script>
