@@ -135,8 +135,7 @@ export default {
       if(this.peer) return
       this.peer = new this.$Peer(this.nickname, {
         host: process.env.PEER_SERVER,
-        port: 9000,
-        // secure: true
+        secure: true
       })      
       
       this.peer.on('error', async (error) => {

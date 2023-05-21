@@ -7,7 +7,8 @@ export default {
     LOCAL_PORT: process.env.LOCAL_PORT,
     BASE_URL: isDevMode ? `http://localhost:${process.env.LOCAL_PORT}` : process.env.BASE_URL,
     API_PATH: process.env.CONT_PATH,
-    AuthClientId: process.env.OAUTH_CLIENT_ID
+    AuthClientId: process.env.OAUTH_CLIENT_ID,
+    PEER_SERVER: process.env.PEER_SERVER
   },
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
