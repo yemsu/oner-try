@@ -66,6 +66,9 @@
       background-color: var(--color-white);
       color: var(--color-black);
       font-weight: var(--font-weight-N);
+      @media (prefers-color-scheme: dark) {
+        background-color: $color-pure-black;
+      }
     }
     &-black {
       background-color: rgba(0, 0, 0, 0.8);
