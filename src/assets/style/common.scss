@@ -384,6 +384,14 @@ div.text-refer {
     font-weight: var(--font-weight-B);
     font-size: 1.1em;
   }
+  .wrap-title {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    .title-desc {
+      font-size: var(--font-size-MS);
+    }
+  }
 }
 
 // link
