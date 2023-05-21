@@ -41,7 +41,7 @@ export default {
   head() {
     return setMeta({
       url: this.$route.fullPath,
-      title: `${this.chatRoom?.title} - 파티 찾기`,
+      title: `${this.chatRoom?.title ? `${this.chatRoom?.title}`: '채팅방'} | 파티 모집`,
     })
   },
   components: {

@@ -77,8 +77,8 @@ export default {
   head() {
     return setMeta({
       url: this.$route.fullPath,
-      title: `파티 찾기`,
-      description: `꿈RPG를 함께 플레이 할 팀원들을 모아보세요!`,
+      title: `파티 모집`,
+      description: `함께 플레이 할 팀원들을 모아보세요!`,
     })
   },
   components: {
