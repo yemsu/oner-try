@@ -9,7 +9,7 @@
       `type-${inputType}`
     ]"
   >
-    <label v-if="label" :for="id">
+    <label :is="label ? 'label' : 'div'" :for="id">
       <span v-if="inputType !== 'checkbox'" class="label-text">{{ label }}</span>
       <input
         :type="inputType === 'number' ? 'text' : inputType"

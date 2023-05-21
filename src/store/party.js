@@ -5,17 +5,20 @@ import {
   deleteChatRoom,
   postMember,
   deleteMember,
-  putChatRoom
+  putChatRoom,
+  getRoomTypes
  } from '@/api/party'
 
 export const state = () => ({
   chatRooms: null,
   chatRoom: null,
+  roomTypes: [],
 })
 
 export const getters = {
   getChatRooms: (state) => state.chatRooms,
   getChatRoom: (state) => state.chatRoom,
+  getRoomTypes: (state) => state.roomTypes,
 }
 
 export const mutations = {
@@ -47,18 +50,22 @@ export const mutations = {
       ...state.chatRoom,
       ...obj
     }
+  },
+  SET_ROOM_TYPES(state, data) {
+    state.roomTypes = data
   }
 }
 
 export const actions = {
-  async GET_CHAT_ROOMS({ commit }) {
-    const { result, error } = await getChatRooms()    
+  async GET_CHAT_ROOMS({ commit }, params) {
+    const { result, error } = await getChatRooms(params)    
     if(error) {
       const exception = new Error(`CANNOT GET_CHAT_ROOMS : ${error.msg}`)
       throw exception
     }
     // console.log('GET_CHAT_ROOMS', result)
     commit('SET_CHAT_ROOMS', result)
+    return result
   },
   async GET_CHAT_ROOM({ commit }, queryId) {
     const { result, error } = await getChatRoom(queryId)    
@@ -118,6 +125,16 @@ export const actions = {
     }
     console.log('PUT_CHAT_ROOM', result)
     commit('SET_CHAT_ROOM', result)
+    return result
+  },
+  async GET_ROOM_TYPES({ commit }) {
+    const { result, error } = await getRoomTypes()    
+    if(error) {
+      alert(this.$ALERTS.CHAT.GET_ROOM_TYPE_FAIL)
+      return false
+    }
+    console.log('GET_ROOM_TYPES', result)
+    commit('SET_ROOM_TYPES', result)
     return result
   }
 }

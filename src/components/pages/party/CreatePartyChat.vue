@@ -25,6 +25,20 @@
           label="최대 인원"
           @onChange="onChangeRoomCapacity"
         />
+        <element-option-bar
+          title="분류"
+          size="small"
+          :options="roomTypeOptions"
+          :select-list="[selectedRoomType]"
+          :can-multi-select="false"
+          @onChange="(list) => selectedRoomType = list[0]"
+        />
+        <element-input
+          id="needHelper"
+          label="헬퍼 요청"
+          input-type="checkbox"
+          @onUpdateInput="(checked) => isNeedHelper = checked"
+        />
       </layout-create-content>
     </template>
   </top-slide-popup>
@@ -32,7 +46,7 @@
 
 <script>
 import TopSlidePopup from '@/components/common/TopSlidePopup.vue'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -44,15 +58,28 @@ export default {
       required: true
     }
   },
+  computed: {
+    ...mapGetters({
+      roomTypes: 'party/getRoomTypes'
+    })
+  },
   data() {
     return {
       roomTitle: '',
       roomCapacity: 6,
       isFocusTitleInput: false,
+      selectedRoomType: null,
+      roomTypeOptions: {},
+      isNeedHelper: false
     }
+  },
+  async created() {
+    if(this.roomTypes.length === 0) await this.getRoomTypes()
+    this.roomTypeOptions = this.roomTypes.reduce((result, { id, name}) => ({ ...result, [id]: name }), {})
   },
   methods: {
     ...mapActions({
+      getRoomTypes: 'party/GET_ROOM_TYPES',
       postChatRoom: 'party/POST_CHAT_ROOM',
     }),
     onUpdateRoomTitle(value) {
@@ -61,10 +88,13 @@ export default {
     checkValidation() {
       const alertMessages = []
       if(!this.roomTitle) {
-        alertMessages.push('📌 제목을 입력해 주세요')
+        alertMessages.push(this.$ALERTS.VALIDATIONS.TITLE)
       }
       if(!this.roomCapacity) {
-        alertMessages.push('📌 최대 인원을 선택해 주세요')
+        alertMessages.push(this.$ALERTS.VALIDATIONS.TITLE)
+      }
+      if(!this.selectedRoomType) {
+        alertMessages.push(this.$ALERTS.VALIDATIONS.CATEGORY)
       }
 
       if(alertMessages.length > 0) {
@@ -89,7 +119,9 @@ export default {
       const postChatRoom = await this.postChatRoom({
         title: this.roomTitle,
         gameType: 'oner',
-        capacity: this.roomCapacity
+        capacity: this.roomCapacity,
+        roomTypeId: this.selectedRoomType,
+        isNeedHelper: this.isNeedHelper
       })
       if(postChatRoom) {
         this.$router.push({

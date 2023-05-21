@@ -1,8 +1,8 @@
 import Https from "@/plugins/utils/https-new"
 const $axios = new Https('chat-rooms')
 
-export const getChatRooms = () => {
-  return $axios.get()
+export const getChatRooms = (params) => {
+  return $axios.get(null, params)
 }
 export const getChatRoom = (chatRoomId) => {
   return $axios.get(`/${chatRoomId}`)
@@ -21,4 +21,7 @@ export const deleteMember = (chatRoomId, siteNick) => {
 }
 export const putChatRoom = ({ id, payload }) => {
   return $axios.put(`/${id}`, payload)
+}
+export const getRoomTypes = () => {
+  return $axios.get(`/room-types`)
 }

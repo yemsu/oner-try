@@ -17,7 +17,7 @@
       </div>
       <ul v-if="chatRooms" class="list-chat-room">
         <li
-          v-for="({ id, host, title, members, capacity }, i) in chatRooms"
+          v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper }, i) in chatRooms"
           :key="`chatRoom${i}`"
           class="chat-room"
         >
@@ -27,14 +27,24 @@
             tag-name="button"
             link-title="입장하기"
             :top-info="{
-              left: `👑 ${host}`,
-              right: `👨🏾‍🤝‍👨🏼 ${members.length} / ${capacity}`
+              left: {
+                text: `${roomType.name}`,
+                badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
+              },
+              right: {
+                text: `👨🏾‍🤝‍👨🏼 ${memberCount} / ${capacity}`
+              }
             }"
             @click="onClickChatRoom"
           />
         </li>
       </ul>
     </layout-content-wrap>
+    <common-scroll-observer
+      :data="chatRooms || []"
+      :fn-load-data="loadData"
+      :category="selectedRoomType"
+    />
     <create-party-chat
       v-if="showCreateChat"
       :show="showCreateChat"
@@ -64,6 +74,8 @@ export default {
   data() {
     return {
       showCreateChat: false,
+      page: 1,
+      selectedRoomType: 999, /// 999 = all
     }
   },
   computed: {
@@ -73,17 +85,21 @@ export default {
       chatRooms: 'party/getChatRooms',
     })
   },
-  async mounted() {
-    await this.getChatRooms()
-  },
   methods: {
     ...mapActions({
       getChatRooms: 'party/GET_CHAT_ROOMS',
     }),
+    async loadData(page) {
+      await this.getChatRooms({
+        roomTypeId: this.selectedRoomType,
+        page,
+        size: 15
+      })
+    },
     badgeList(members) {
       if(!members) return
       const badgeList = members.map(({ nickname, status }) => ({
-        text: nickname,
+        text: `${this.chatRooms.host === nickname ? '👑' : ''} ${nickname}`,
         color: `status-${status.toLowerCase()}`
       }))
       return badgeList
@@ -102,7 +118,7 @@ export default {
     },
     onClickCreateChat() {
       if(!this.isLogin) {
-        alert(this.$ALERTS.NEED_LOGIN)
+        this.$router.push({ name: 'auth-login' })
         return
       }
       this.showCreateChat = !this.showCreateChat
