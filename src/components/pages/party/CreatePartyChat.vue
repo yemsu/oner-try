@@ -20,7 +20,8 @@
         />
         <element-select
           id="roomCapacity"
-          :options="[2, 3, 4, 5, 6, 7, 8, 9, 10]"
+          :options="[2, 3, 4, 5, 6]"
+          :default-option="roomCapacity"
           label="최대 인원"
           @onChange="onChangeRoomCapacity"
         />
@@ -46,7 +47,7 @@ export default {
   data() {
     return {
       roomTitle: '',
-      roomCapacity: null,
+      roomCapacity: 6,
       isFocusTitleInput: false,
     }
   },
@@ -87,7 +88,7 @@ export default {
     async createChatRoom() {
       const postChatRoom = await this.postChatRoom({
         title: this.roomTitle,
-        type: 'mrpg',
+        gameType: 'oner',
         capacity: this.roomCapacity
       })
       if(postChatRoom) {
