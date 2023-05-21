@@ -32,8 +32,10 @@ $font-weight-800: 800;
 
 // color maker
 $color-point-hsl: (355, 65%, 45%);
-$color-point-sub-hsl: (218, 40%, 45%);
+$color-point-sub-hsl: (32, 90%, 40%);
 $color-point: hsl(355, 65%, 45%);
+$color-point-sub: hsl(32, 90%, 40%);
+$color-positive-hsl: (218, 40%, 45%);
 @function colorMaker($hsl, $calcH: 0%, $calcL: 0%, $a: 100%) {
   @return hsla(
     #{nth($hsl, 1)},
@@ -77,6 +79,8 @@ $chat-status-colors: (
   --color-point-sub: #{colorMaker($color-point-sub-hsl)};
   --color-point-sub-pale: #{colorMaker($color-point-sub-hsl, -15%, 10%)};
   --color-point-sub-bright: #{colorMaker($color-point-sub-hsl, 30%, 25%)};
+  // color positive
+  --color-positive: #{colorMaker($color-positive-hsl, 10%, 5%)};
   // gray
   --point-h: #{nth($color-point-hsl, 1)};
   --color-gray-10: hsl(var(--point-h), 4%, 10%);
@@ -177,6 +181,8 @@ $chat-status-colors: (
   --color-point-sub: #{colorMaker($color-point-sub-hsl, 30%, 18%)};
   --color-point-sub-pale: #{colorMaker($color-point-sub-hsl, 5%, 18%)};
   --color-point-sub-bright: #{colorMaker($color-point-sub-hsl, 30%, 30%)};
+  // color positive
+  --color-positive: #{colorMaker($color-positive-hsl, 20%, 20%)};
 
   // border color
   // 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)

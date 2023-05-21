@@ -34,7 +34,7 @@
   }
   &.line {
     &-positive {
-      border-color: var(--color-point-sub-pale);
+      border-color: var(--color-positive);
     }
     &-negative {
       border-color: var(--color-point-pale);
@@ -62,9 +62,14 @@
         font-weight: 400;
       }
     }   
+    &-none {
+      background-color: var(--color-white);
+      color: var(--color-black);
+      font-weight: var(--font-weight-N);
+    }
     &-black {
       background-color: rgba(0, 0, 0, 0.8);
-      font-weight: 300;
+      font-weight:  $font-weight-300;
       color: #fff;
       letter-spacing: 0;
     }
