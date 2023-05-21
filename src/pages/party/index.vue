@@ -3,7 +3,7 @@
     <layout-content-wrap>
       <div class="area-page-title mb-big">
         <div class="wrap-title">
-          <h2 class="title">🤠 파티 찾기</h2>
+          <h2 class="page-title">🤠 파티 찾기</h2>
           <p class="title-desc">함께 보스를 혼내주러 갈 동료를 찾아보세요!</p>
         </div>
         <element-button
@@ -15,30 +15,55 @@
           + 방 만들기
         </element-button>
       </div>
-      <ul v-if="chatRooms" class="list-chat-room">
-        <li
-          v-for="({ id, host, title, members, capacity }, i) in chatRooms"
-          :key="`chatRoom${i}`"
-          class="chat-room"
-        >
-          <card-list-content
-            :required-data="{ id, title, badgeList: badgeList(members) }"
-            tag-name="button"
-            link-title="입장하기"
-            :top-info="{
-              left: `👑 ${host}`,
-              right: `👨🏾‍🤝‍👨🏼 ${members.length} / ${capacity}`
-            }"
-            @click="onClickChatRoom"
-          />
-        </li>
-      </ul>
+      <element-option-bar
+        v-if="roomTypeOptions"
+        title="분류"
+        :options="roomTypeOptions"
+        :select-list="[selectedRoomType]"
+        :can-multi-select="false"
+        @onChange="(list) => selectedRoomType = list[0]"
+      />
+      <div class="area-chat-room">
+        <ul v-if="chatRooms && chatRooms.length > 0" class="list-chat-room">
+          <li
+            v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper }, i) in chatRooms"
+            :key="`chatRoom${i}`"
+            class="chat-room"
+          >
+            <card-list-content
+              v-if="members"
+              :required-data="{ id, title, badgeList: badgeList(members) }"
+              tag-name="button"
+              link-title="입장하기"
+              :top-info="{
+                left: {
+                  text: `${roomType.name}`,
+                  badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
+                },
+                right: {
+                  text: `👨🏾‍🤝‍👨🏼 ${memberCount} / ${capacity}`
+                }
+              }"
+              @click="onClickChatRoom"
+            />
+          </li>
+        </ul>
+        <element-no-data
+          v-else-if="chatRooms && chatRooms.length === 0"
+          message="파티가 존재하지 않습니다."
+        />
+      </div>
     </layout-content-wrap>
+    <common-scroll-observer
+      :data="chatRooms || []"
+      :fn-load-data="loadData"
+      :category="selectedRoomType"
+    />
     <create-party-chat
       v-if="showCreateChat"
       :show="showCreateChat"
       @close="showCreateChat = false"
-    ></create-party-chat>
+    />
   </div>
 </template>
 
@@ -63,6 +88,9 @@ export default {
   data() {
     return {
       showCreateChat: false,
+      page: 1,
+      selectedRoomType: '999', /// 999 = ALL
+      roomTypeOptions: null,
     }
   },
   computed: {
@@ -70,26 +98,42 @@ export default {
       isLogin: 'auth/getIsLogin',
       nickname: 'auth/getNickname',
       chatRooms: 'party/getChatRooms',
+      roomTypes: 'party/getRoomTypes'
     })
   },
-  async mounted() {
-    await this.getChatRooms()
+  async created() {
+    if(this.roomTypes.length === 0) await this.getRoomTypes()
+    const roomTypeOptions = this.roomTypes.map(({ id, name }) => ({
+      id, text: name
+    }))
+    this.roomTypeOptions = [
+      { id: '999', text: 'ALL'},
+      ...roomTypeOptions
+    ]
+    console.log('ddd', this.roomTypeOptions)
   },
   methods: {
     ...mapActions({
       getChatRooms: 'party/GET_CHAT_ROOMS',
+      getRoomTypes: 'party/GET_ROOM_TYPES',
     }),
+    async loadData(page) {
+      await this.getChatRooms({
+        roomTypeId: this.selectedRoomType,
+        page,
+        size: 15
+      })
+    },
     badgeList(members) {
       if(!members) return
       const badgeList = members.map(({ nickname, status }) => ({
-        text: nickname,
+        text: `${this.chatRooms.host === nickname ? '👑' : ''} ${nickname}`,
         color: `status-${status.toLowerCase()}`
       }))
       return badgeList
     },
     onClickChatRoom(id) {
       if(!this.isLogin) {
-        alert(this.$ALERTS.NEED_LOGIN)
         this.$router.push({ name: 'auth-login' })
         return
       }
@@ -102,7 +146,7 @@ export default {
     },
     onClickCreateChat() {
       if(!this.isLogin) {
-        alert(this.$ALERTS.NEED_LOGIN)
+        this.$router.push({ name: 'auth-login' })
         return
       }
       this.showCreateChat = !this.showCreateChat
@@ -112,6 +156,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.area-chat-room {
+  margin-top: 30px;
+}
 .list-chat-room {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

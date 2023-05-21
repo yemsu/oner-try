@@ -19,13 +19,10 @@
           <h3 class="title-category">캐릭터</h3>
           <element-option-bar
             :options="heroOptions"
-            :select-list="[itemBuild.characterName]"
+            :select-list="[buildCharacterName]"
             :can-multi-select="false"
             size="small"
-            @onChange="(list) => editItemBuildData({
-              keyName: 'characterName',
-              data: list[0]
-            })"
+            @onChange="onChangeCharacter"
           />
         </section>
         <section class="wrap-category selected-item">
@@ -117,11 +114,10 @@ export default {
   },
   data() {
     return {
-      buildTitle: '',
-      buildCharacters: [],
-      commonOption: { all: 'ALL' },
-      heroOptions: {},
-      itemFilterOptions: {},
+      buildCharacterName: '',
+      commonOption: { id: 'all', text: 'ALL' },
+      heroOptions: [],
+      itemFilterOptions: [],
       searchBoxFullData: [],
       selectedItem: null,
       itemStack: 0,
@@ -160,12 +156,15 @@ export default {
     if(this.colleagues.length === 0) await this.getColleagues()
     if(this.heroes.length === 0) await this.getHeroes()
     if(this.synergies.length === 0) await this.getSynergies()
-    this.heroOptions = this.heroes.reduce((result, hero) => {
-      if(hero.name.includes('(스킨)')) return result
-      result[hero.imageName] = hero.name
-      return result
-    }, {})
-    this.itemFilterOptions =  {...this.commonOption, ...noEquipOptions}
+    const pureHeroes = this.heroes.filter(({name}) => !name.includes('(스킨)'))
+    this.heroOptions = pureHeroes.map(({imageName, name}) => ({
+      id: imageName, text: name
+    }))
+    const itemOptions = Object.keys(noEquipOptions).map((key) => ({
+      id: key,
+      text: noEquipOptions[key]
+    }))
+    this.itemFilterOptions =  [this.commonOption, ...itemOptions]
     this.setSearchBoxFullData()
   },
   mounted() {
@@ -240,6 +239,13 @@ export default {
         synergy,
         totalOption,
       }
+    },
+    onChangeCharacter(list) {
+      this.buildCharacterName = list[0]
+      this.editItemBuildData({
+        keyName: 'characterName',
+        data: list[0]
+      })
     },
     setSearchBoxFullData() {
       this.searchBoxFullData = this.items.filter((item) => item.type !== 'etcItem')
@@ -410,16 +416,16 @@ export default {
     },
     getGradeMenu(type) {
       const getGradeMaps = (itemTypeGrades) => {
-        return itemTypeGrades.reduce((result, keyName) => {
-            result[keyName] = gradesDef[keyName]
-            return result
-          }, {})
+        return itemTypeGrades.map((key) => ({
+          id: key,
+          text: gradesDef[key]
+        }))
       }
       switch (type) {
         case 'equipment':
-          return {...this.commonOption, ...getGradeMaps(equipmentGrades)}
+          return [this.commonOption, ...getGradeMaps(equipmentGrades)]
         case 'sailor':
-          return {...this.commonOption, ...getGradeMaps(sailorGrades)}
+          return [this.commonOption, ...getGradeMaps(sailorGrades)]
         case 'ship':
           return null
       }

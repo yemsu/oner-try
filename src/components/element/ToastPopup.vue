@@ -17,7 +17,7 @@ export default {
         setTimeout(() => {
           this.setToastPopupOn(false)
           this.isVisible = false
-        }, 2000)
+        }, 3000)
       }
     }
   },

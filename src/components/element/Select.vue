@@ -13,6 +13,7 @@
         v-for="option, i in options"
         :key="`option${i}`"
         :value="option.value || option"
+        :selected="defaultOption === option"
       >{{ option.text || option }}</option>
     </select>
   </div>
@@ -27,12 +28,16 @@ export default {
     },
     id: {
       type: String,
-      default: () => ''
+      default: ''
     },
     label: {
       type: String,
-      default: () => ''
+      default: ''
     },
+    defaultOption: {
+      type: [String, Number],
+      default: null
+    }
   },
   data() {
     return {
@@ -76,7 +81,7 @@ select {
 label {
   display: block;
   padding: 0 10px;
-  font-size: var(--font-size-MS-pc);
+  font-size: var(--font-size-MS);
   line-height: 27px;
 }
 </style>

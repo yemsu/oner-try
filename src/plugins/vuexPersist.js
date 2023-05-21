@@ -14,6 +14,7 @@ export default ({ store }) => {
       ships_table: state.item.ships_table,
       synergies: state.item.synergies,
       sailors_synergy: state.item.sailors_synergy,
+      chatRoomTypes: state.party.roomTypes,
     })
   }).plugin(store);
 }

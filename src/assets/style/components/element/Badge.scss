@@ -6,20 +6,23 @@
   word-spacing: -0.1em;
   font-weight: var(--font-weight-B);
   padding: 2px 5px 3px 5px;
-  font-size: var(--font-size-XXS);
   .text {
     display: flex;
     align-items: center;
   }
   &.size {
+    &-xsmall {
+      padding: 0 3px;
+      font-size: var(--font-size-XXS);
+      height: 18px;
+    }
     &-small {
       padding: 0 5px;
-      font-size: var(--font-size-XXS-pc);
+      font-size: var(--font-size-XS);
       height: 18px;
     }
     &-medium {
-      padding: 0 10px;
-      font-size: var(--font-size-XS-pc);
+      font-size: var(--font-size-XS);
       height: 20px;
     }
     &-big {
@@ -30,7 +33,7 @@
   }
   &.line {
     &-positive {
-      border-color: var(--color-point-sub-pale);
+      border-color: var(--color-positive);
     }
     &-negative {
       border-color: var(--color-point-pale);
@@ -38,7 +41,12 @@
   }
   &.type {
     &-square-round {
-      border-radius: 5px;
+      border-radius: 4px;
+      &.size {
+        &-big {
+          border-radius: 5px;
+        }
+      }
     }
     &-round {
       border-radius: 50px;
@@ -58,9 +66,17 @@
         font-weight: 400;
       }
     }   
+    &-none {
+      background-color: var(--color-white);
+      color: var(--color-black);
+      font-weight: var(--font-weight-N);
+      @media (prefers-color-scheme: dark) {
+        background-color: $color-pure-black;
+      }
+    }
     &-black {
       background-color: rgba(0, 0, 0, 0.8);
-      font-weight: 300;
+      font-weight:  $font-weight-300;
       color: #fff;
       letter-spacing: 0;
     }
@@ -70,6 +86,7 @@
         &-#{$key} {
           background-color: colorMaker($hsl, 0%, 0%, 0.3);
           border: 1px solid colorMaker($hsl);
+          color: var(--color-black);
         }
       }  
     }

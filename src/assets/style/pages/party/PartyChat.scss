@@ -1,27 +1,30 @@
-
 .party-chat {
   display: flex;
-  width: 700px;
+  gap: 20px;
+  width: 740px;
+  max-width: 100%;
 }
 .area-chat {
   flex: 1;
+  padding: 10px;
+  background-color: var(--bg-light-gray);
+  border-radius: 5px;
   .wrap-messages {
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 5px;
     height: 600px;
-    max-height: 90vh;
-    padding: 20px;
-    background-color: var(--bg-light-gray);
-    font-size: var(--font-size-S-pc);
+    max-height: calc(100vh - var(--header-height) - 170px);
+    padding: 10px;
+    font-size: var(--font-size-S);
     @include scrollBar;
     .alarm {
       display: flex;
       align-items: flex-end;
       justify-content: center;
       position: relative;
-      color: var(--text-gray);
+      color: var(--font-gray);
       &:before {
         display: block;
         position: absolute;
@@ -57,10 +60,11 @@
         }
       }
       .nick {
+        text-align: left;
         width: 100%;
         padding: 0 2px;
         background-color: var(--bg-light-gray);
-        font-size: var(--font-size-XS-pc);
+        font-size: var(--font-size-XS);
         color: var(--color-point-sub-bright);
         line-height: 1;
       }
@@ -71,21 +75,46 @@
         border-radius: 5px;
       }
       .time {
-        font-size: var(--font-size-XXS-pc);
-        color: var(--text-gray);
+        font-size: var(--font-size-XXS);
+        color: var(--font-gray);
       }
     }
   }
 }
+.wrap-chat-side {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-gray);
+  border-radius: 5px;
+}
 .chat-members {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 5px;
   width: 180px;
   padding: 15px;
-  border: 1px solid var(--border-light-gray);
-  font-size: var(--font-size-XS-pc);
+  font-size: var(--font-size-S);
+  > li {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
   .me {
     color: var(--color-point);
+    font-weight: $font-weight-500;
+  }
+}
+.option-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  background-color: var(--bg-light-gray);
+  > button {
+    width: 100%;
+    text-align: center;
+    font-weight: var(--font-weight-N);
   }
 }

@@ -1,7 +1,8 @@
 .wrap-input {
   position: relative;  
   font-size: 15px;
-  input {
+  input[type="text"],
+  input[type="number"] {
     width: 100%;
     min-width: 150px;
     padding: 10px;
@@ -11,10 +12,29 @@
     line-height: 1;
     transition: 0.2s;
     &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button{
+    &::-webkit-inner-spin-button {
       appearance: none;
       margin: 0;
+    }
   }
+  .label-text {
+    display: block;
+    padding: 0 10px;
+    font-size: var(--font-size-MS);
+    line-height: 27px;
+  }
+  &.type {
+    &-checkbox {
+      display: flex;
+      align-items: center;
+      label {
+        display: flex;
+        align-items: center;
+      }
+      .label-text {
+        display: inline;
+      }
+    }
   }
   &.searching input {
     border-top-left-radius: 10px;

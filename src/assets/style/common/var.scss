@@ -32,8 +32,10 @@ $font-weight-800: 800;
 
 // color maker
 $color-point-hsl: (355, 65%, 45%);
-$color-point-sub-hsl: (218, 40%, 45%);
+$color-point-sub-hsl: (32, 90%, 40%);
 $color-point: hsl(355, 65%, 45%);
+$color-point-sub: hsl(32, 90%, 40%);
+$color-positive-hsl: (218, 40%, 45%);
 @function colorMaker($hsl, $calcH: 0%, $calcL: 0%, $a: 100%) {
   @return hsla(
     #{nth($hsl, 1)},
@@ -45,6 +47,7 @@ $color-point: hsl(355, 65%, 45%);
 
 $color-white: hsl(0, 20%, 99%);
 $color-black: hsl(0, 3%, 16%);
+$color-pure-black: hsl(0, 3%, 5%);
 $hsl-white: 0, 0%, 100%;
 $hsl-black: 0, 0%, 0%;
 
@@ -77,6 +80,8 @@ $chat-status-colors: (
   --color-point-sub: #{colorMaker($color-point-sub-hsl)};
   --color-point-sub-pale: #{colorMaker($color-point-sub-hsl, -15%, 10%)};
   --color-point-sub-bright: #{colorMaker($color-point-sub-hsl, 30%, 25%)};
+  // color positive
+  --color-positive: #{colorMaker($color-positive-hsl, 10%, 5%)};
   // gray
   --point-h: #{nth($color-point-hsl, 1)};
   --color-gray-10: hsl(var(--point-h), 4%, 10%);
@@ -108,9 +113,6 @@ $chat-status-colors: (
   --bg-dark-gray: var(--color-gray-40);
   --bg-gray: var(--color-gray-80);
   --bg-light-gray: var(--color-gray-95);
-
-  // shadow
-  --color-shadow: var(--color-gray-70);
   
   // common color
   --darker-10: hsla(var(--point-h), 15%, 30%, 10%);
@@ -130,8 +132,13 @@ $chat-status-colors: (
   --font-weight-B: #{$font-weight-700};
   --font-weight-XB: #{$font-weight-800};
 
+  // shadow
+  --color-shadow: var(--color-gray-70);
+
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
+  --bg-popup-dim: hsla(248, 10%, 10%, 0.5);
+  --bg-white-dim: #{colorMaker($color-point-hsl, -30%, 45%, 0.6)};
 
   // 아이템 등급 컬러
   --color-grade-common: hsl(0, 0%, 100%);
@@ -175,6 +182,8 @@ $chat-status-colors: (
   --color-point-sub: #{colorMaker($color-point-sub-hsl, 30%, 18%)};
   --color-point-sub-pale: #{colorMaker($color-point-sub-hsl, 5%, 18%)};
   --color-point-sub-bright: #{colorMaker($color-point-sub-hsl, 30%, 30%)};
+  // color positive
+  --color-positive: #{colorMaker($color-positive-hsl, 20%, 20%)};
 
   // border color
   // 테이블 및 영역 구분선 (아이콘 및 작은 요소 등은 팔레트에서 컬러 선택하여 별도 적용)
@@ -190,9 +199,6 @@ $chat-status-colors: (
   --bg-dark-gray: var(--color-gray-80);
   --bg-gray: var(--color-gray-40);
   --bg-light-gray: var(--color-gray-20);
-
-  // shadow
-  --color-shadow: var(--color-gray-10);
     
   // common color
   --darker-10: hsla(var(--point-h), 6%, 85%, 6%);
@@ -211,9 +217,14 @@ $chat-status-colors: (
   --font-weight-N: #{$font-weight-300};
   --font-weight-B: #{$font-weight-400};
   --font-weight-XB: #{$font-weight-600};
+
+  // shadow
+  --color-shadow: var(--color-gray-10);
   
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
+  --bg-popup-dim: hsla(248, 10%, 0%, 0.5);
+  --bg-white-dim: #{colorMaker($color-point-hsl, -30%, -10%, 0.6)};
 
   // 아이템 등급 컬러
   --color-grade-common: #fff;
