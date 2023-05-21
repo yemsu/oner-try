@@ -14,21 +14,23 @@
   }
   td {
     vertical-align: middle;
-    padding: 6px 10px;
+    padding: 6px 5px;
     text-align: center;
+    font-size: var(--font-size-M);
   }
   .item-ranking {
     align-items: center;
     border-bottom: 1px solid var(--border-light-gray);
     &.tear-0 {
-      padding: 10px;
       background-color: var(--color-rank-1-bg);
       td {
+        padding-top: 10px;
+        padding-bottom: 10px;
         color: $color-white;
         font-weight: $font-weight-600;
+        font-size: var(--font-size-B);
         > a {
           color: $color-white;
-          font-size: 1.2em;
         }
       }
       .number-rank {

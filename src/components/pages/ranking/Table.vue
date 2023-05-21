@@ -15,6 +15,7 @@
             <th scope="col">현상금</th>
             <th scope="col">선원</th>
             <th scope="col">동료</th>
+            <th scope="col">선박</th>
           </tr>
         </thead>
         <tbody>
@@ -84,6 +85,15 @@
                   />
                 </li>
               </ul>
+            </td>
+            <td class="ship">
+              <item-box
+                :item="user.ship"
+                :showName="false"
+                :onlyImg="true"
+                img-type="round"
+                size="small"
+              />
             </td>
           </tr>
         </tbody>
