@@ -19,13 +19,10 @@
           <h3 class="title-category">캐릭터</h3>
           <element-option-bar
             :options="heroOptions"
-            :select-list="[itemBuild.characterName]"
+            :select-list="[buildCharacterName]"
             :can-multi-select="false"
             size="small"
-            @onChange="(list) => editItemBuildData({
-              keyName: 'characterName',
-              data: list[0]
-            })"
+            @onChange="onChangeCharacter"
           />
         </section>
         <section class="wrap-category selected-item">
@@ -117,8 +114,7 @@ export default {
   },
   data() {
     return {
-      buildTitle: '',
-      buildCharacters: [],
+      buildCharacterName: '',
       commonOption: { all: 'ALL' },
       heroOptions: {},
       itemFilterOptions: {},
@@ -240,6 +236,13 @@ export default {
         synergy,
         totalOption,
       }
+    },
+    onChangeCharacter(list) {
+      this.buildCharacterName = list[0]
+      this.editItemBuildData({
+        keyName: 'characterName',
+        data: list[0]
+      })
     },
     setSearchBoxFullData() {
       this.searchBoxFullData = this.items.filter((item) => item.type !== 'etcItem')
