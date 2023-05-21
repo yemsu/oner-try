@@ -16,11 +16,9 @@ export const postChatRoom = (payload) => {
 export const postMember = (chatRoomId) => {
   return $axios.post(`/${chatRoomId}/members`)
 }
-export const deleteMember = (chatRoomId) => {
-  return $axios.delete(`/${chatRoomId}/members`)
+export const deleteMember = (chatRoomId, siteNick) => {
+  return $axios.delete(`/${chatRoomId}/${siteNick}`)
 }
-
-
-export const patchChatRoom = ({ id, payload }) => {
-  return $axios.patch(`/chatRooms/${id}`, payload)
+export const putChatRoom = ({ id, payload }) => {
+  return $axios.put(`/${id}`, payload)
 }

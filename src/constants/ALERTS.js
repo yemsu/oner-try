@@ -27,6 +27,10 @@ const ALERTS = {
   CHAT: {
     CONFIRM_END: '파티 찾기를 종료하시겠습니까?',
     NO_ROOM: '존재하지 않는 파티 찾기 방입니다.',
+    EDIT_TITLE_SUCCESS: `${SUCCESS_EMOJI} 타이틀이 수정되었습니다.`,
+    CONFIRM_KICK_OUT: (nickname) => `${nickname}님을 파티에서 제외하시겠습니까?`,
+    KICK_OUT: `파티에서 제외되었습니다.`,
+    KICK_OUT_WHO: (nickname) => `${nickname}님이 파티에서 제외되었습니다.`,
   },
 }
 

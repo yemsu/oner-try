@@ -5,6 +5,7 @@ import {
   deleteChatRoom,
   postMember,
   deleteMember,
+  putChatRoom
  } from '@/api/party'
 
 export const state = () => ({
@@ -41,8 +42,11 @@ export const mutations = {
     state.chatRoom.members = state.chatRoom.members
       .filter(({ nickname }) => nickname !== memberNick)
   },
-  CHANGE_HOST(state, memberNick) {
-    state.chatRoom.host = memberNick
+  CHANGE_CHAT_ROOM(state, obj) {
+    state.chatRoom = {
+      ...state.chatRoom,
+      ...obj
+    }
   }
 }
 
@@ -94,24 +98,26 @@ export const actions = {
     // console.log('POST_MEMBER', result)
     commit('ADD_MEMBER', result)
   },
-  async DELETE_MEMBER({ commit }, id) {
-    const { result, error } = await deleteMember(id)
+  async DELETE_MEMBER({ commit }, { id, siteNick }) {
+    const { result, error } = await deleteMember(id, siteNick)
     if(error) {
       console.error(`CANNOT DELETE_MEMBER: ${error.msg}`)
       return false
     }
-    // console.log('DELETE_MEMBER', result)
-    commit('DELETE_MEMBER', result.nickname)
+    console.log('DELETE_MEMBER', result)
+    // commit('DELETE_MEMBER', result.nickname)
     return true
   },
-  async PATCH_HOST({ commit }, { id, host }) {
-    const { result, error } = await patchChatRoom({
+  async PUT_CHAT_ROOM({ commit }, { id, payload }) {
+    const { result, error } = await putChatRoom({
       id,
-      payload: { host }
+      payload
     })
     if(error) {
-      throw new Error(`CANNOT PATCH_HOST: ${error.msg}`)
+      return false
     }
-    commit('CHANGE_HOST', host)
+    console.log('PUT_CHAT_ROOM', result)
+    commit('SET_CHAT_ROOM', result)
+    return result
   }
 }

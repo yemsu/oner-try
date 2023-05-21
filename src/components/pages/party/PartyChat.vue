@@ -52,6 +52,16 @@
             {{ memberNick === chatroom.host ? '👑' : '😊' }}
           </span>
           {{ memberNick }}
+          <element-button
+            v-if="memberNick !== chatroom.host && nickname === chatroom.host"
+            type="text"
+            size="xsmall"
+            bg="sub"
+            title="추방"
+            @click="$emit('kickOut', memberNick)"
+          >
+            <font-awesome-icon icon="fa-xmark" />
+          </element-button>
         </li>
       </ul>
     </div>
