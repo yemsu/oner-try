@@ -138,7 +138,7 @@ export default {
         return
       }
       this.$router.push({
-        name: 'party-view',
+        name: 'party-room',
         query: {
           id
         }
