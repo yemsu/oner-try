@@ -97,8 +97,14 @@ export default {
   },
   async created() {
     if(this.roomTypes.length === 0) await this.getRoomTypes()
-    const roomTypeOptions = this.roomTypes.reduce((result, { id, name}) => ({ ...result, [id]: name }), {})
-    this.roomTypeOptions = {999: 'ALL', ...roomTypeOptions}
+    const roomTypeOptions = this.roomTypes.map(({ id, name }) => ({
+      id, text: name
+    }))
+    this.roomTypeOptions = [
+      { id: '999', text: 'ALL'},
+      ...roomTypeOptions
+    ]
+    console.log('ddd', this.roomTypeOptions)
   },
   methods: {
     ...mapActions({

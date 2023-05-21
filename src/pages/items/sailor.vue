@@ -14,7 +14,8 @@
 <script>
 import ItemFilterTable from '@/components/item/ItemFilterTable.vue';
 import setMeta from '@/plugins/utils/meta';
-import { noEquipOptions, gradesDef, sailorGrades } from '@/plugins/utils/item-def'
+import { noEquipOptions, sailorGrades } from '@/plugins/utils/item-def'
+import { itemFilterOptions } from '@/plugins/utils/item'
 
 export default {
   head() {
@@ -29,13 +30,7 @@ export default {
   },
   async asyncData({ store }) {
     const synergySailors =  await store.dispatch('item/GET_SAILORS_SYNERGY')
-    const commonMenu = { all: 'ALL' }
-    const gradeMaps = sailorGrades.reduce((result, keyName) => {
-      result[keyName] = gradesDef[keyName]
-      return result
-    }, {})
-    const gradeMenus = {...commonMenu, ...gradeMaps}
-    const optionMenus =  {...commonMenu, ...noEquipOptions}
+    const { optionMenus, gradeMenus } = itemFilterOptions(sailorGrades, noEquipOptions)
     return {
       synergySailors,
       optionMenus,

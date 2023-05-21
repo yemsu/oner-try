@@ -69,13 +69,15 @@ export default {
       roomCapacity: 6,
       isFocusTitleInput: false,
       selectedRoomType: null,
-      roomTypeOptions: {},
+      roomTypeOptions: [],
       isNeedHelper: false
     }
   },
   async created() {
     if(this.roomTypes.length === 0) await this.getRoomTypes()
-    this.roomTypeOptions = this.roomTypes.reduce((result, { id, name}) => ({ ...result, [id]: name }), {})
+    this.roomTypeOptions = this.roomTypes.map(({id, name}) => ({
+      id, text: name
+    }))
   },
   methods: {
     ...mapActions({

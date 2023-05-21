@@ -1,5 +1,5 @@
 import { deepClone, getOnlyText, objArrKeys } from '@/plugins/utils'
-import { gradeScoresDef, itemTypeDefs } from '@/plugins/utils/item-def'
+import { gradeScoresDef, itemTypeDefs, gradesDef } from '@/plugins/utils/item-def'
 
 export const findData = (dataList, key, checkValue) => {
   return dataList.find(data => getOnlyText(data[key]) === getOnlyText(checkValue))
@@ -73,4 +73,30 @@ export const fillDefaultList = (items, numberFixed) => {
 }
 export const getTypeKorName = (typeEngName) => {
   return itemTypeDefs.find(({type}) => type === typeEngName).title
+}
+export const itemFilterOptions = (itemGradeArr, optionsObj) => {
+  const commonMenu = { id: 'all', text: 'ALL' }
+  
+  let gradeMenus = null
+  if(itemGradeArr) {
+    const gradeMenu = itemGradeArr.map(key => ({
+      id: key,
+      text: gradesDef[key]
+    }))
+    gradeMenus = [commonMenu, ...gradeMenu]
+  }
+
+  let optionMenus = null
+  if(optionsObj) {
+    const optionMenu = Object.keys(optionsObj).map((key) => ({
+      id: key,
+      text: optionsObj[key]
+    }))
+    optionMenus =  [commonMenu, ...optionMenu]
+  }
+
+  return {
+    gradeMenus,
+    optionMenus
+  }
 }

@@ -115,9 +115,9 @@ export default {
   data() {
     return {
       buildCharacterName: '',
-      commonOption: { all: 'ALL' },
-      heroOptions: {},
-      itemFilterOptions: {},
+      commonOption: { id: 'all', text: 'ALL' },
+      heroOptions: [],
+      itemFilterOptions: [],
       searchBoxFullData: [],
       selectedItem: null,
       itemStack: 0,
@@ -156,12 +156,15 @@ export default {
     if(this.colleagues.length === 0) await this.getColleagues()
     if(this.heroes.length === 0) await this.getHeroes()
     if(this.synergies.length === 0) await this.getSynergies()
-    this.heroOptions = this.heroes.reduce((result, hero) => {
-      if(hero.name.includes('(스킨)')) return result
-      result[hero.imageName] = hero.name
-      return result
-    }, {})
-    this.itemFilterOptions =  {...this.commonOption, ...noEquipOptions}
+    const pureHeroes = this.heroes.filter(({name}) => !name.includes('(스킨)'))
+    this.heroOptions = pureHeroes.map(({imageName, name}) => ({
+      id: imageName, text: name
+    }))
+    const itemOptions = Object.keys(noEquipOptions).map((key) => ({
+      id: key,
+      text: noEquipOptions[key]
+    }))
+    this.itemFilterOptions =  [this.commonOption, ...itemOptions]
     this.setSearchBoxFullData()
   },
   mounted() {
@@ -413,16 +416,16 @@ export default {
     },
     getGradeMenu(type) {
       const getGradeMaps = (itemTypeGrades) => {
-        return itemTypeGrades.reduce((result, keyName) => {
-            result[keyName] = gradesDef[keyName]
-            return result
-          }, {})
+        return itemTypeGrades.map((key) => ({
+          id: key,
+          text: gradesDef[key]
+        }))
       }
       switch (type) {
         case 'equipment':
-          return {...this.commonOption, ...getGradeMaps(equipmentGrades)}
+          return [this.commonOption, ...getGradeMaps(equipmentGrades)]
         case 'sailor':
-          return {...this.commonOption, ...getGradeMaps(sailorGrades)}
+          return [this.commonOption, ...getGradeMaps(sailorGrades)]
         case 'ship':
           return null
       }

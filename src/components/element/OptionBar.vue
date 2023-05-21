@@ -9,19 +9,19 @@
       :is="title ? 'div' : 'ul'"
     >
       <dd
-        v-for="(gradeTitle, key) in options"
-        :key="`gradeTitle${key}`"
-        :class="['menu-filter', {'active': isActiveMenu(key, 'grade')}]"
+        v-for="({ id, text }) in options"
+        :key="`gradeTitle${id}`"
+        :class="['menu-filter', {'active': isActiveMenu(id, 'grade')}]"
         :is="title ? 'dd' : 'li'"
       >
         <element-button
-          @click="onClickButton(key)"
+          @click="onClickButton(id)"
           class="button-filter"
           :size="size"
           type="round"
-          :bg="isActiveMenu(key, 'grade') ? 'active': 'inActive'"
+          :bg="isActiveMenu(id, 'grade') ? 'active': 'inActive'"
         >
-          {{ gradeTitle }}
+          {{ text }}
         </element-button>
       </dd>
     </div>
@@ -35,7 +35,7 @@ export default {
       type: String,
     },
     options: {
-      type: Object,
+      type: Array,
       required: true
     },
     size: {

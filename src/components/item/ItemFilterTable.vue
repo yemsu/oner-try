@@ -49,11 +49,11 @@ export default {
       required: true,
     },
     optionMenus: {
-      type: Object,
+      type: Array,
       default: () => null
     },
     gradeMenus: {
-      type: Object,
+      type: Array,
       default: () => null
     },
     size: {
