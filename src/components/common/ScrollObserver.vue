@@ -1,5 +1,8 @@
 <template>
-  <div ref="checker"></div>
+  <div>
+    <div ref="checker"></div>
+    <common-loading-indicator :is-loading="isDataLoading" />
+  </div>
 </template>
 
 <script>

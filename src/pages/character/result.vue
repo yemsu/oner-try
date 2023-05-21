@@ -14,10 +14,10 @@
     <section class="inner-size-basic mrg-top-small copy-area" ref="copyArea">
       <div class="area-page-title underline">
         <h2 class="title badge-text-wrap">
-          <i class="skull">☠</i> 
-          {{ nickname }}           
+          <i class="skull">☠</i>
+          {{ nickname }}
           <span v-if="isBanUser(nickname)" class="badge banned size-big type-round">활동정지</span>
-        </h2>    
+        </h2>
         <element-copy-button
           :copy-area="$refs.copyArea"
         />
@@ -43,6 +43,7 @@
         </template>
       </element-v-tab>
     </section>
+    <common-loading-indicator :is-loading="isLoading" :full="true" />
   </div>
 </template>
 
@@ -69,7 +70,8 @@ export default {
   },
   data() {
     return {
-      nickname: ''
+      nickname: '',
+      isLoading: true
     }
   },
   watch: {
@@ -103,6 +105,7 @@ export default {
       setUserCharacters: 'character/SET_USER_CHARACTERS',
     }),
     async getUserData(nickName) {
+      this.isLoading = true
       const result = await this.getUserCharacters({ nickName })
       if(!result) {
         alert('존재하지 않는 유저입니다.')
@@ -112,6 +115,7 @@ export default {
       this.nickname = nickName
       this.sendPageView()
       console.log('userCharacters', nickName, this.userCharacters)
+      this.isLoading = false
     },
     async sendPageView() {
       // check window session storage
