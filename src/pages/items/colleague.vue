@@ -14,6 +14,7 @@
 import ItemFilterTable from '@/components/item/ItemFilterTable.vue';
 import setMeta from '@/plugins/utils/meta';
 import { noEquipOptions } from '@/plugins/utils/item-def'
+import { itemFilterOptions } from '@/plugins/utils/item'
 
 export default {
   head() {
@@ -28,8 +29,7 @@ export default {
   },
   async asyncData({ store }) {
     const colleagues = await store.dispatch('item/GET_COLLEAGUES')
-    const commonMenu = { all: 'ALL' }
-    const optionMenus =  Object.assign({...commonMenu}, noEquipOptions)
+    const { optionMenus } = itemFilterOptions(null, noEquipOptions)
     return {
       colleagues,
       optionMenus,

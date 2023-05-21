@@ -94,9 +94,16 @@
       background-color: $color-point;
       color: $color-white;
     }
+    &-point-sub {
+      background-color: $color-point-sub;
+      color: $color-white;
+    }
     &-inActive {
       background-color: var(--bg-light-gray);
       color: var(--font-gray);
+    }
+    &-cancel {
+      background-color: var(--bg-gray);
     }
   }
 }

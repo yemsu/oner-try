@@ -25,9 +25,11 @@ a {
   line-height: 1.5;
 }
 input {
+  background: var(--color-white);
+}
+input:not([type="checkbox"]) {
   appearance: none;
   border: none;
-  background: var(--color-white);
   color: var(--color-black);
 }
 table {

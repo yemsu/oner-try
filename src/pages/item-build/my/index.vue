@@ -61,7 +61,6 @@ export default {
       })
     setTimeout(() => {
       if(!this.isLogin) {
-        alert(this.$ALERTS.NEED_LOGIN)
         this.$router.push({ name: 'auth-login' })
         return
       }

@@ -13,7 +13,8 @@
 <script>
 import ItemFilterTable from '@/components/item/ItemFilterTable.vue';
 import setMeta from '@/plugins/utils/meta';
-import { noEquipOptions, gradesDef, equipmentGrades } from '@/plugins/utils/item-def'
+import { noEquipOptions, equipmentGrades } from '@/plugins/utils/item-def'
+import { itemFilterOptions } from '@/plugins/utils/item'
 
 export default {
   head() {
@@ -28,13 +29,7 @@ export default {
   },
   async asyncData({ store }) {
     const equipments = await store.dispatch('item/GET_EQUIPMENTS_TABLE')
-    const commonMenu = { all: 'ALL' }
-    const gradeMaps = equipmentGrades.reduce((result, keyName) => {
-      result[keyName] = gradesDef[keyName]
-      return result
-    }, {})
-    const gradeMenus = {...commonMenu, ...gradeMaps}
-    const optionMenus =  Object.assign({...commonMenu}, noEquipOptions)
+    const { optionMenus, gradeMenus } = itemFilterOptions(equipmentGrades, noEquipOptions)
     return {
       equipments,
       optionMenus,

@@ -5,19 +5,25 @@
       size,
       {'compact': isCompactMode},
       {'searching': isActive},
-      usage
+      usage,
+      `type-${inputType}`
     ]"
   >
-    <input
-      ref="baseInput"
-      :id="id"
-      :placeholder="placeholder"
-      :value="value"
-      :maxlength="maxlength"
-      @input="onUpdateInput"
-      @focus="onFocusInput"
-      @keydown="onEnter"
-    >
+    <label :is="label ? 'label' : 'div'" :for="id">
+      <span v-if="inputType !== 'checkbox'" class="label-text">{{ label }}</span>
+      <input
+        :type="inputType === 'number' ? 'text' : inputType"
+        ref="baseInput"
+        :id="id"
+        :placeholder="placeholder"
+        :value="value"
+        :maxlength="maxlength"
+        @input="onUpdateInput"
+        @focus="onFocusInput"
+        @keydown="onEnter"
+      >
+      <span v-if="inputType === 'checkbox'" class="label-text">{{ label }}</span>
+    </label>
     <!-- <svg v-show="usage === 'search'" class="svg-icon" viewBox="0 0 20 20">
       <path fill="none" d="M19.129,18.164l-4.518-4.52c1.152-1.373,1.852-3.143,1.852-5.077c0-4.361-3.535-7.896-7.896-7.896
         c-4.361,0-7.896,3.535-7.896,7.896s3.535,7.896,7.896,7.896c1.934,0,3.705-0.698,5.078-1.853l4.52,4.519
@@ -36,7 +42,7 @@ export default {
     },
     inputType: {
       type: String,
-      default: () => 'text', // text, number
+      default: () => 'text', // text, number, checkbox
     },
     placeholder: {
       type: String,
@@ -73,7 +79,11 @@ export default {
     maxlength: {
       type: String,
       default: () => null
-    }
+    },
+    label: {
+      type: String,
+      default: () => ''
+    },
   },
   watch: {
     isOnFocus(crr, prev) {
@@ -84,9 +94,7 @@ export default {
   },
   mounted() {
     if(this.focusOnMounted) {
-      setTimeout(() => {
-        this.focusToInput()
-      }, 100);
+      this.focusToInput()
     }
 
     document.addEventListener('click', e => {
@@ -96,11 +104,15 @@ export default {
   },
   methods: {
     onUpdateInput(e) {
-      if(this.inputType === 'number' && e.target.value) {
-        const number = e.target.value.match(/\d/g)
-        e.target.value = number.join('')
+      let value = e.target.value
+      if(this.inputType === 'number' && value) {
+        const number = value.match(/\d/g)
+        value = number.join('')
       }
-      this.$emit('onUpdateInput', e.target.value)
+      if(this.inputType === 'checkbox') {
+        value = e.target.checked
+      }
+      this.$emit('onUpdateInput',value)
     },
     onFocusInput() {
       this.$emit('onFocusInput')
@@ -116,7 +128,9 @@ export default {
       this.$emit('onEnter', this.value)
     },
     focusToInput() {
-      this.$refs.baseInput.focus()
+      setTimeout(() => {
+        this.$refs.baseInput.focus()
+      }, 100);
     }
   }
 }

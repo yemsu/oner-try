@@ -378,11 +378,20 @@ div.text-refer {
   }
   > .title,
   .page-title {
+    font-size: var(--font-size-title-MS);
     font-weight: var(--font-weight-XB);
   }
   .skull {
     font-weight: var(--font-weight-B);
     font-size: 1.1em;
+  }
+  .wrap-title {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    .title-desc {
+      font-size: var(--font-size-MS);
+    }
   }
 }
 
@@ -428,7 +437,7 @@ div.text-refer {
     margin-top: 5px;
   }
   > .title {
-    font-weight: var(--font-weight-B);
+    font-weight: $font-weight-600;
     margin-bottom: 0.5em;
   }
 }
@@ -436,7 +445,7 @@ div.text-refer {
 // positive / netavie
 .color {
   &-positive {
-    color: var(--color-point-sub)
+    color: var(--color-positive)
   }
   &-negative,
   &-point {

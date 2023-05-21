@@ -6,9 +6,11 @@ const SUCCESS_EMOJI = '✅'
 const ALERTS = {
   NEED_LOGIN: '로그인 해주세요!',
   VALIDATIONS: {
-    TITLE: '제목을 입력해 주세요.',
-    CHARACTER: '캐릭터를 선택해 주세요.',
-    ITEM: '아이템을 선택해 주세요.'
+    TITLE: '📌 제목을 입력해 주세요.',
+    CHARACTER: '📌 캐릭터를 선택해 주세요.',
+    ITEM: '📌 아이템을 선택해 주세요.',
+    MAX_PEOPLE_NUM: '📌 최대 인원을 선택해 주세요',
+    CATEGORY: '📌 분류를 선택해 주세요',
   },
   ITEM_SETTING: {
     SAVE_SUCCESS: `${SUCCESS_EMOJI} 빌드가 저장되었습니다.`,
@@ -27,6 +29,11 @@ const ALERTS = {
   CHAT: {
     CONFIRM_END: '파티 찾기를 종료하시겠습니까?',
     NO_ROOM: '존재하지 않는 파티 찾기 방입니다.',
+    EDIT_TITLE_SUCCESS: `${SUCCESS_EMOJI} 타이틀이 수정되었습니다.`,
+    CONFIRM_KICK_OUT: (nickname) => `${nickname}님을 파티에서 제외하시겠습니까?`,
+    KICK_OUT: `파티에서 제외되었습니다.`,
+    KICK_OUT_WHO: (nickname) => `${nickname}님이 파티에서 제외되었습니다.`,
+    GET_ROOM_TYPE_FAIL: `파티 타입 호출에 실패하였습니다.`,
   },
 }
 

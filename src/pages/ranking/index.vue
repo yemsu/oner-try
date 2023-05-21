@@ -69,7 +69,7 @@ export default {
   data() {
     return {
       pureHeroes: null,
-      heroOptions: null,
+      heroOptions: [],
       heroSelected: []
     }
   },
@@ -81,11 +81,13 @@ export default {
   async created() {
     if(this.heroes.length === 0 ) await this.$store.dispatch('item/GET_HEROES')
     this.pureHeroes = this.heroes.filter(hero => !hero.name.includes('(스킨)'))
-    const heroOptions = this.pureHeroes.reduce((result, {name, imageName}) => {
-      result[imageName] = name
-      return result
-    }, {})
-    this.heroOptions = { all: '👑통합 랭킹👑', ...heroOptions }
+    const heroOptions = this.pureHeroes.map(({imageName, name}) => ({
+      id: imageName, text: name
+    }))
+    this.heroOptions = [
+      { id: 'all', text: '👑통합 랭킹👑' },
+      ...heroOptions
+    ]
   },
 }
 </script>

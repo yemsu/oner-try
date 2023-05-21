@@ -19,7 +19,7 @@ export default {
     },
     position: {
       type: String,
-      default: 'bottom' // bottom, side
+      default: 'bottom' // bottom, top, side
     }
   },
   data() {
@@ -33,11 +33,24 @@ export default {
 .wrap-buttons {
   display: flex;
   &.size {
+    &-small {
+      gap: 5px;
+    }
     &-medium {
       gap: 10px;
     }
   }
   &.position {
+    &-top {
+      &.size {
+        &-small {
+          margin-bottom: 10px;
+        }
+        &-medium {
+          margin-bottom: 20px;
+        }
+      }
+    }
     &-bottom {
       margin-top: 20px;
     }

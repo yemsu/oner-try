@@ -76,7 +76,7 @@ export default {
     width: 100%;
     max-height: calc(100% - var(--header-height));
     padding: 20px 0 30px;
-    background-color: var(--body-bg);
+    background-color: var(--bg-body);
     @include scrollBar;
   }
   .wrap-btns {
@@ -87,6 +87,15 @@ export default {
     grid-column-start: 1;
     grid-column-end: 3;
     text-align: center;
+  }
+  .dim {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: $dim-z-index;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-popup-dim);
   }
 }
 </style>

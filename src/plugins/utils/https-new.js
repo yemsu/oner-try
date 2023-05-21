@@ -51,7 +51,7 @@ class Https {
   put(url = '', payload) {
     // console.log('putApi', payload)
     return this._axios.put(url, payload, { headers: getHeader() })
-      .then((res) => res)
+      .then(({ data }) => data)
       .catch(error => errorHandler('url', error))
   }
 }
