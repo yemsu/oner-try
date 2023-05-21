@@ -19,7 +19,7 @@ export default {
     },
     size: {
       type: String,
-      default: 'medium' // small, medium
+      default: 'medium' // xsmall, small, medium
     },
     line: {
       type: String,
