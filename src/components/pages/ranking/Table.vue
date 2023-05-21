@@ -143,7 +143,6 @@ export default {
       getRanking: 'character/GET_RANKING',
     }),
     ...mapMutations({
-      addRanking: 'character/ADD_RANKING_DATA',
       resetRanking: 'character/RESET_RANKING_DATA',
     }),
     resetRankingData() {

@@ -38,12 +38,6 @@ export const mutations = {
   SET_RANKING(state, data) {     
     state.ranking = [...state.ranking, ...data]
   },
-  ADD_RANKING_DATA(state, { number }) {
-    const { rankingCrr, ranking } = state
-    const thisData = deepClone(ranking).splice(rankingCrr.length, number)
-
-    state.rankingCrr = rankingCrr.concat(thisData)
-  },
   RESET_RANKING_DATA(state, { number }) {
     state.ranking = state.ranking.splice(0, number)
   },
