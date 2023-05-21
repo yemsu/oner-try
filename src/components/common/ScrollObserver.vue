@@ -31,6 +31,7 @@ export default {
       this.page = 1
       this.prevDataLength = 0
       this.isEnd = 0
+      this.loadData()
     }
   },
   mounted() {
