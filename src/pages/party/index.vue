@@ -3,7 +3,7 @@
     <layout-content-wrap>
       <div class="area-page-title mb-big">
         <div class="wrap-title">
-          <h2 class="page-title">🤠 파티 찾기</h2>
+          <h2 class="page-title">🤠 파티 모집</h2>
           <p class="title-desc">함께 보스를 혼내주러 갈 동료를 찾아보세요!</p>
         </div>
         <element-button
@@ -77,8 +77,8 @@ export default {
   head() {
     return setMeta({
       url: this.$route.fullPath,
-      title: `파티 찾기`,
-      description: `꿈RPG를 함께 플레이 할 팀원들을 모아보세요!`,
+      title: `파티 모집`,
+      description: `함께 플레이 할 팀원들을 모아보세요!`,
     })
   },
   components: {
@@ -138,7 +138,7 @@ export default {
         return
       }
       this.$router.push({
-        name: 'party-view',
+        name: 'party-room',
         query: {
           id
         }

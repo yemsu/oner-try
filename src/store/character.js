@@ -101,12 +101,13 @@ export const actions = {
       .catch(error => console.error('GET_GAME_USERS', error))
   },
   async GET_RANKING({ commit, rootState, dispatch }, params) {
-    const { item: { sailors, colleagues }} = rootState
+    const { item: { sailors, colleagues, ships }} = rootState
     if(sailors.length === 0) await dispatch('item/GET_SAILORS','', { root: true })
     if(colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
+    if(ships.length === 0) await dispatch('item/GET_SHIPS','', { root: true })
     return getRanking(params)
       .then((data) => {
-        const { item: { sailors, colleagues } } = rootState
+        const { item: { sailors, colleagues, ships } } = rootState
         const newData = data.map(user => {
           const userSailors = user.sailors !== '[]'
             ? dataParseHandler(sailors, user, 'sailor') 
@@ -114,9 +115,14 @@ export const actions = {
           const userColleagues = user.colleagues !== '[]'
             ? dataParseHandler(colleagues, user, 'colleague')
             : new Array(3).fill(null)
+          const userShip = user.ship !== '빈공간'
+            ? dataParseHandler(ships, user, 'ship')
+            : new Array(1).fill(null)
+            console.log('userShip', userShip)
           return Object.assign(user, {
             sailors: userSailors,
-            colleagues: userColleagues
+            colleagues: userColleagues,
+            ship: userShip[0]
           })
         })
         commit(`SET_RANKING`, newData)

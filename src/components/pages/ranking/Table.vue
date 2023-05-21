@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div v-if="ranking.length === 0" style="margin-top: 300px; font-size: 1.5em; text-align: center;">
-      데이터 로딩중💦 잠시만 기다려 주세요
-    </div>
-    <div v-else class="wrap-x-scroll">
+    <div v-if="ranking.length > 0" class="wrap-x-scroll">
       <table class="list-ranking">
         <caption>랭킹 순위에 따른 랭크, 영웅, 유저명, 현상금, 선원, 동료 정보 테이블</caption>
         <thead>
@@ -15,6 +12,7 @@
             <th scope="col">현상금</th>
             <th scope="col">선원</th>
             <th scope="col">동료</th>
+            <th scope="col">선박</th>
           </tr>
         </thead>
         <tbody>
@@ -84,6 +82,15 @@
                   />
                 </li>
               </ul>
+            </td>
+            <td class="ship">
+              <item-box
+                :item="user.ship"
+                :showName="false"
+                :onlyImg="true"
+                img-type="round"
+                size="small"
+              />
             </td>
           </tr>
         </tbody>

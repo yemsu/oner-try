@@ -15,6 +15,7 @@
                 :title="topInfo.left.title"
               >{{ topInfo.left.text }}</p>
               <element-badge
+                v-if="topInfo.left.badge"
                 type="square-round"
                 size="xsmall"
               >

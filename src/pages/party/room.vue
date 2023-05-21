@@ -35,13 +35,14 @@
 <script>
 import PartyChat from '@/components/pages/party/PartyChat.vue'
 import setMeta from '@/plugins/utils/meta';
+import Beep from '@/plugins/utils/beep';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   head() {
     return setMeta({
       url: this.$route.fullPath,
-      title: `${this.chatRoom?.title} - 파티 찾기`,
+      title: `${this.chatRoom?.title ? `${this.chatRoom?.title}`: '채팅방'} | 파티 모집`,
     })
   },
   components: {
@@ -54,7 +55,7 @@ export default {
       remoteIds: [],
       willLeave: false,
       chatMessages: [],
-      myAudioContext: null,
+      Beep: null,
       isOnBeep: false,
       titleInput: '',
       needCheckRouteLeave: true,
@@ -93,7 +94,7 @@ export default {
       this.createPeer()
       this.subscribeMe()
 
-      this.myAudioContext = new AudioContext()
+      this.Beep = new Beep()
       window.addEventListener('unload', this.destroyPeer)
       window.addEventListener('beforeunload', this.confirmClose)
     }, 200);
@@ -133,8 +134,9 @@ export default {
     createPeer() {
       if(this.peer) return
       this.peer = new this.$Peer(this.nickname, {
-        host: '13.209.11.12',
+        host: process.env.PEER_SERVER,
         port: 9000,
+        // secure: true
       })      
       
       this.peer.on('error', async (error) => {
@@ -339,46 +341,11 @@ export default {
     },
     beepReceiveMessage() {
       if(!this.isOnBeep) return
-      this.beep(50, 250, 2);
+      this.Beep.beep(50, 250, 2);
       setTimeout(() => {
-        this.beep(50, 280, 2)
+        this.Beep.beep(50, 280, 2)
       }, 150)
     },
-    beep(duration, frequency, volume){
-      return new Promise((resolve, reject) => {
-        // Set default duration if not provided
-        duration = duration || 200;
-        frequency = frequency || 440;
-        volume = volume || 2;
-
-        try {
-          const oscillatorNode = this.myAudioContext.createOscillator();
-          const gainNode = this.myAudioContext.createGain();
-          oscillatorNode.connect(gainNode);
-
-          // Set the oscillator frequency in hertz
-          oscillatorNode.frequency.value = frequency;
-
-          // Set the type of oscillator
-          oscillatorNode.type= "square";
-          gainNode.connect(this.myAudioContext.destination);
-
-          // Set the gain to the volume
-          gainNode.gain.value = volume * 0.01;
-
-          // Start audio with the desired duration
-          oscillatorNode.start(this.myAudioContext.currentTime);
-          oscillatorNode.stop(this.myAudioContext.currentTime + duration * 0.001);
-
-          // Resolve the promise when the sound is finished
-          oscillatorNode.onended = () => {
-              resolve();
-          };
-        } catch(error) {
-          reject(error);
-        }
-      })
-    }
   }
 }
 </script>

@@ -127,7 +127,7 @@ export default {
       })
       if(postChatRoom) {
         this.$router.push({
-          name: 'party-view',    
+          name: 'party-room',    
           query: {
             id: postChatRoom.id
           }
