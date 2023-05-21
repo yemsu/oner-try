@@ -23,30 +23,36 @@
         :can-multi-select="false"
         @onChange="(list) => selectedRoomType = list[0]"
       />
-      <ul v-if="chatRooms" class="list-chat-room">
-        <li
-          v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper }, i) in chatRooms"
-          :key="`chatRoom${i}`"
-          class="chat-room"
-        >
-          <card-list-content
-            v-if="members"
-            :required-data="{ id, title, badgeList: badgeList(members) }"
-            tag-name="button"
-            link-title="입장하기"
-            :top-info="{
-              left: {
-                text: `${roomType.name}`,
-                badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
-              },
-              right: {
-                text: `👨🏾‍🤝‍👨🏼 ${memberCount} / ${capacity}`
-              }
-            }"
-            @click="onClickChatRoom"
-          />
-        </li>
-      </ul>
+      <div class="area-chat-room">
+        <ul v-if="chatRooms && chatRooms.length > 0" class="list-chat-room">
+          <li
+            v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper }, i) in chatRooms"
+            :key="`chatRoom${i}`"
+            class="chat-room"
+          >
+            <card-list-content
+              v-if="members"
+              :required-data="{ id, title, badgeList: badgeList(members) }"
+              tag-name="button"
+              link-title="입장하기"
+              :top-info="{
+                left: {
+                  text: `${roomType.name}`,
+                  badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
+                },
+                right: {
+                  text: `👨🏾‍🤝‍👨🏼 ${memberCount} / ${capacity}`
+                }
+              }"
+              @click="onClickChatRoom"
+            />
+          </li>
+        </ul>
+        <element-no-data
+          v-else-if="chatRooms && chatRooms.length === 0"
+          message="파티가 존재하지 않습니다."
+        />
+      </div>
     </layout-content-wrap>
     <common-scroll-observer
       :data="chatRooms || []"
@@ -150,11 +156,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.area-chat-room {
+  margin-top: 30px;
+}
 .list-chat-room {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  margin-top: 30px;
   @include tablet {
     grid-template-columns: repeat(2, 1fr);
   }
