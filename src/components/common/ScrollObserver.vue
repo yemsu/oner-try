@@ -5,13 +5,32 @@
 <script>
 export default {
   props: {
-    isEnd: {
-      type: Boolean,
+    data: {
+      type: Array,
       required: true
-    }
+    },
+    fnLoadData: {
+      type: Function,
+      required: true
+    },
+    category: {
+      type: [String, Number],
+      required: true
+    },
   },
   data() {
     return {
+      isEnd: false,
+      prevDataLength: 0,
+      isDataLoading: false,
+      page: 1,
+    }
+  },
+  watch: {
+    category(crr, prev) {
+      this.page = 1
+      this.prevDataLength = 0
+      this.isEnd = 0
     }
   },
   mounted() {
@@ -32,12 +51,27 @@ export default {
               return
             }
             console.log('infiniteScroll start')
-            this.$emit('endScroll')
+            // this.$emit('endScroll')
+            this.loadData()
           }
         })
       })
 
       io.observe(checker);
+    },
+    async loadData() {
+      if(this.isDataLoading) return 
+      this.isDataLoading = true
+
+      await this.fnLoadData(this.page)
+      if(this.data.length < 15 || this.prevDataLength === this.data.length) {
+        this.isEnd = true
+        this.isDataLoading = false
+        return
+      }
+      this.prevDataLength = this.data.length
+      this.page += 1
+      this.isDataLoading = false
     }
   }
 }

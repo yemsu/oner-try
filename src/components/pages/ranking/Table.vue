@@ -90,8 +90,9 @@
       </table>
     </div>
     <common-scroll-observer
-      :is-end="isInfiniteScrollEnd"
-      @endScroll="loadData()"
+      :data="ranking || []"
+      :fn-load-data="loadData"
+      :category="selectedHero"
     />
   </div>
 </template>
@@ -117,10 +118,6 @@ export default {
   data() {
     return {
       selectedList: null,
-      page: 1,
-      prevRankingDataLength: 0,
-      isInfiniteScrollEnd: false,
-      isDataLoading: false
     }
   },
   computed: {
@@ -136,7 +133,7 @@ export default {
     }
   },
   beforeDestroy() {
-      this.resetRankingData()
+    this.resetRankingData()
   },
   methods: {
     ...mapActions({
@@ -147,9 +144,6 @@ export default {
     }),
     resetRankingData() {
       this.resetRanking({ number: 0 })
-      this.page = 1
-      this.prevRankingDataLength = 0
-      this.isInfiniteScrollEnd = false
     },
     getRankInfo(index) {
       if(index > 12) return false
@@ -164,23 +158,12 @@ export default {
 
       return rankInfo
     },
-    async loadData() {
-      if(this.isDataLoading) return 
-      this.isDataLoading = true
-
+    async loadData(page) {
       await this.getRanking({
         character: this.selectedHero,
-        page: this.page,
+        page,
         size: 15
       })
-      if(this.ranking.length < 15 || this.prevRankingDataLength === this.ranking.length) {
-        this.isInfiniteScrollEnd = true
-        this.isDataLoading = false
-        return
-      }
-      this.prevRankingDataLength = this.ranking.length
-      this.page += 1
-      this.isDataLoading = false
     }
   }
 }
