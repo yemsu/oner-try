@@ -1,7 +1,7 @@
 <template>
   <div class="party-chat">
     <div class="area-chat">
-      <div class="wrap-messages">
+      <div class="wrap-messages" ref="scrollArea">
         <p
           v-for="({ nickname: chatNick, message, time }, i) in chatMessages"
           :key="`chat${i}`"
@@ -100,6 +100,9 @@ export default {
     }
   },
   watch: {
+    chatMessages() {
+      this.fixScrollBottom()
+    }
   },
   computed: {
     ...mapGetters({
@@ -114,10 +117,20 @@ export default {
     sendMessage(message) {
       this.$emit('sendMessage', { nickname: this.peerId, message })
 		},
+    fixScrollBottom() {
+      setTimeout(() => {
+      const scrollArea = this.$refs.scrollArea
+      const { scrollHeight, clientHeight, scrollTop } = scrollArea
+      if(scrollHeight > clientHeight + scrollTop) {
+        scrollArea.scrollTop = scrollHeight
+      }
+      }, 50);
+    },
     setInputValue(value) {
       this.inputValue = value
     },
     onEnterInput(eventKey) {
+      if(this.inputValue === '') return
       this.sendMessage(this.inputValue)
       this.setInputValue('')
     },
