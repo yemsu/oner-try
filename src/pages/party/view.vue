@@ -185,7 +185,7 @@ export default {
             this.closeConnection(connection.peer)
             this.beepReceiveMessage()
           }
-        }, 1000);
+        }, 1500);
       })
       connection.on('disconnected', () => {
         console.log('connection disconnected', connection.peer)
@@ -283,7 +283,10 @@ export default {
         host: peerId
       })
     },
-    destroyPeer() {
+    destroyPeer() {      
+      if(document.readyState == "complete") { // 새로고침 체크
+        return
+      }
       if(this.peer) this.peer.destroy()
       this.onDeleteMember(this.nickname)
     },
