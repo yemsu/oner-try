@@ -129,7 +129,6 @@ export default {
   watch: {
     selectedHero(crr, prev) {
       this.resetRankingData()
-      this.loadData()
     }
   },
   beforeDestroy() {
