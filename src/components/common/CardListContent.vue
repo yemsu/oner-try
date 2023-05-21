@@ -9,8 +9,21 @@
       <div class="wrap-info">
         <div class="wrap-info-top">
           <div class="wrap-text-sub">
-            <p :class="['character', { 'no-title' :!title}]">{{ topInfo.left }}</p>
-            <p>{{ topInfo.right }}</p>
+            <div class="box-text-sub">
+              <p
+                :class="['character', { 'no-title' :!title}]"
+                :title="topInfo.left.title"
+              >{{ topInfo.left.text }}</p>
+              <element-badge
+                type="square-round"
+                size="xsmall"
+              >
+                {{ topInfo.left.badge }}
+              </element-badge>
+            </div>
+            <p
+              :title="topInfo.right.title"
+            >{{ topInfo.right.text }}</p>
           </div>
           <div v-if="title" class="wrap-text-main">
             <div class="text-main">
