@@ -3,7 +3,7 @@
     <layout-content-wrap>
       <div class="area-page-title mb-big">
         <div class="wrap-title">
-          <h2 class="page-title">🤠 파티 찾기</h2>
+          <h2 class="page-title">🤠 파티 모집</h2>
           <p class="title-desc">함께 보스를 혼내주러 갈 동료를 찾아보세요!</p>
         </div>
         <element-button
