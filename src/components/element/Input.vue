@@ -89,9 +89,7 @@ export default {
   },
   mounted() {
     if(this.focusOnMounted) {
-      setTimeout(() => {
-        this.focusToInput()
-      }, 100);
+      this.focusToInput()
     }
 
     document.addEventListener('click', e => {
@@ -121,7 +119,9 @@ export default {
       this.$emit('onEnter', this.value)
     },
     focusToInput() {
-      this.$refs.baseInput.focus()
+      setTimeout(() => {
+        this.$refs.baseInput.focus()
+      }, 100);
     }
   }
 }
