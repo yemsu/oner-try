@@ -15,6 +15,14 @@
           + 방 만들기
         </element-button>
       </div>
+      <element-option-bar
+        v-if="roomTypeOptions"
+        title="분류"
+        :options="roomTypeOptions"
+        :select-list="[selectedRoomType]"
+        :can-multi-select="false"
+        @onChange="(list) => selectedRoomType = list[0]"
+      />
       <ul v-if="chatRooms" class="list-chat-room">
         <li
           v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper }, i) in chatRooms"
@@ -75,7 +83,8 @@ export default {
     return {
       showCreateChat: false,
       page: 1,
-      selectedRoomType: 999, /// 999 = all
+      selectedRoomType: '999', /// 999 = ALL
+      roomTypeOptions: null,
     }
   },
   computed: {
@@ -83,11 +92,18 @@ export default {
       isLogin: 'auth/getIsLogin',
       nickname: 'auth/getNickname',
       chatRooms: 'party/getChatRooms',
+      roomTypes: 'party/getRoomTypes'
     })
+  },
+  async created() {
+    if(this.roomTypes.length === 0) await this.getRoomTypes()
+    const roomTypeOptions = this.roomTypes.reduce((result, { id, name}) => ({ ...result, [id]: name }), {})
+    this.roomTypeOptions = {999: 'ALL', ...roomTypeOptions}
   },
   methods: {
     ...mapActions({
       getChatRooms: 'party/GET_CHAT_ROOMS',
+      getRoomTypes: 'party/GET_ROOM_TYPES',
     }),
     async loadData(page) {
       await this.getChatRooms({
@@ -132,6 +148,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  margin-top: 30px;
   @include tablet {
     grid-template-columns: repeat(2, 1fr);
   }
