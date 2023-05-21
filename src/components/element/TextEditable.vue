@@ -1,7 +1,7 @@
 <template>
   <div class="text-editable">
     <div v-if="!showInput">
-      <p :is="tagname">{{ text }}</p>
+      <slot></slot>
       <common-wrap-buttons v-if="editable" position="side">
         <element-button
           type="text"
@@ -49,10 +49,6 @@ export default {
     text: {
       type: String,
       required: true
-    },
-    tagname: {
-      type: String,
-      default: 'p'
     },
     editable: {
       type: Boolean,

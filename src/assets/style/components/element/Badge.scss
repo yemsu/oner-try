@@ -22,7 +22,6 @@
       height: 18px;
     }
     &-medium {
-      padding: 0 10px;
       font-size: var(--font-size-XS);
       height: 20px;
     }
@@ -42,7 +41,12 @@
   }
   &.type {
     &-square-round {
-      border-radius: 5px;
+      border-radius: 4px;
+      &.size {
+        &-big {
+          border-radius: 5px;
+        }
+      }
     }
     &-round {
       border-radius: 50px;

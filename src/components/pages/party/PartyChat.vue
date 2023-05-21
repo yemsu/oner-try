@@ -26,26 +26,17 @@
       <element-input
         id="newSettingTitle"
         :value="inputValue"
-        label="채팅"
         size="small"
-        placeholder="채팅"
+        placeholder="메세지 보내기"
         @onUpdateInput="setInputValue"
         @onEnter="onEnterInput"
       />
     </div>
-    <div>
-      <element-button
-        type="text"
-        size="small"
-        @click="() => $emit('toggleOnBeep')"
-        :title="`채팅 알람 ${isOnBeep ? '끄기' : '켜기'}`"
-      >
-        <font-awesome-icon :icon="`fa-volume-${isOnBeep ? 'high' : 'xmark'}`" />
-      </element-button>
+    <div class="wrap-chat-side">
       <ul class="chat-members">
         <li
-          v-for="{id, nickname: memberNick} in chatroom.members"
-          :key="`chat-member-${id}`"
+          v-for="{ nickname: memberNick} in chatroom.members"
+          :key="`chat-member-${memberNick}`"
           :class="{ 'me' : memberNick === nickname }"
         >
           <span class="crown-emoji">
@@ -64,6 +55,17 @@
           </element-button>
         </li>
       </ul>
+      <div class="option-buttons">
+        <element-button
+          type="text"
+          size="xsmall"
+          @click="() => $emit('toggleOnBeep')"
+          :title="`채팅 알람 ${isOnBeep ? '끄기' : '켜기'}`"
+        >
+          <font-awesome-icon :icon="`fa-volume-${isOnBeep ? 'high' : 'xmark'}`" />
+          {{ `채팅 알람 ${isOnBeep ? '끄기' : '켜기'}` }}
+        </element-button>
+      </div>
     </div>
   </div>
 </template>

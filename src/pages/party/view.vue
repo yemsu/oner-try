@@ -1,20 +1,34 @@
 <template>
-  <layout-content-wrap v-if="chatRoom && peer">
-    <element-text-editable
-      :text="chatRoom.title"
-      :editable="nickname === chatRoom.host"
-      tagname="h1"
-      @onSubmit="onEditTitle"
-    />
-    <party-chat
-      :peer-id="nickname"
-      :conn="connections"
-      :chat-messages="chatMessages"
-      :is-on-beep="isOnBeep"
-      @sendMessage="sendMessage"
-      @toggleOnBeep="isOnBeep = !isOnBeep"
-      @kickOut="onKickOut"
-    />
+  <layout-content-wrap v-if="chatRoom && peer" :is-main-content="true">
+    <div class="wrap-party-room">
+      <div class="badges">
+        <element-badge
+          type="square-round"
+        >{{ chatRoom.roomType.name }}</element-badge>
+        <element-badge
+          type="square-round"
+          v-if="chatRoom.isNeedHelper"
+        >🐣 헬퍼 요청</element-badge>
+      </div>
+      <div class="area-page-title">
+        <element-text-editable
+          :text="chatRoom.title"
+          :editable="nickname === chatRoom.host"
+          @onSubmit="onEditTitle"
+        >
+          <h2 class="page-title">{{ chatRoom.title }}</h2>
+        </element-text-editable>
+      </div>
+      <party-chat
+        :peer-id="nickname"
+        :conn="connections"
+        :chat-messages="chatMessages"
+        :is-on-beep="isOnBeep"
+        @sendMessage="sendMessage"
+        @toggleOnBeep="isOnBeep = !isOnBeep"
+        @kickOut="onKickOut"
+      />
+    </div>
   </layout-content-wrap>  
 </template>
 
