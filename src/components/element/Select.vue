@@ -81,7 +81,7 @@ select {
 label {
   display: block;
   padding: 0 10px;
-  font-size: var(--font-size-MS-pc);
+  font-size: var(--font-size-MS);
   line-height: 27px;
 }
 </style>
