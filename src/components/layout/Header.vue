@@ -54,10 +54,10 @@ export default {
           path: '/item-build/my',
           menuName: 'MY 빌드',
         },
-        {
-          path: '/party',
-          menuName: '파티모집',
-        },
+        // {
+        //   path: '/party',
+        //   menuName: '파티모집',
+        // },
       ],
       siteSideMenuList: [
         {
