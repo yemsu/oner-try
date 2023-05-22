@@ -209,7 +209,9 @@ export default {
           return
         }
         this.openConnection(connection.peer)
-        this.beepReceiveMessage('chopa2')
+        if(!this.$utils.checkAdmin(this.nickname)) {
+          this.beepReceiveMessage('chopa2')
+        }
       })
       connection.on('close', () => {
         console.log('connection close', connection.peer)

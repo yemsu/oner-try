@@ -33,15 +33,7 @@
             align="left"
             position="top"
           >
-            <element-button
-              size="small"
-              type="text"
-              bg="sub"
-              @click="refreshData"
-            >
-              <font-awesome-icon icon="fa-arrows-rotate" />
-              새로고침
-            </element-button>
+            <element-refresh-button @click="refreshData" />
           </common-wrap-buttons>
           <ul class="list-chat-room">
             <li
@@ -189,7 +181,9 @@ export default {
     },
     refreshData() {
       if(this.refreshTrigger) this.refreshTrigger = false
-      this.refreshTrigger = true
+      setTimeout(() => {
+        this.refreshTrigger = true
+      }, 500);
     },
     onClickCreateChat() {
       if(!this.isLogin) {
