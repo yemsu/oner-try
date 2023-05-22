@@ -19,6 +19,7 @@
         :placeholder="placeholder"
         :value="value"
         :maxlength="maxlength"
+        :autocomplete="autocomplete"
         @input="onUpdateInput"
         @focus="onFocusInput"
         @keydown="onEnter"
@@ -89,6 +90,10 @@ export default {
       type: String,
       default: () => ''
     },
+    autocomplete: {
+      type: Boolean,
+      default: false
+    }
   },
   watch: {
     isOnFocus(crr, prev) {
