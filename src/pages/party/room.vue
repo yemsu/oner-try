@@ -26,7 +26,7 @@
         :is-on-beep="isOnBeep"
         @sendMessage="sendMessage"
         @toggleOnBeep="isOnBeep = !isOnBeep"
-        @kickOut="onKickOut"
+        @kickOut="onClickKickOut"
       />
     </div>
   </layout-content-wrap>  
@@ -209,11 +209,11 @@ export default {
       connection.on("data", (message) => {
         // 타이틀 변경 메세지 수신 했을 때
         if(message.includes(this.TITLE_EDIT_MESSAGE)) {
-          this.reactChangeTitle(message)
+          this.receiveChangeTitleMsg(message)
           return 
         } 
         if(message.includes(this.KICK_OUT_MESSAGE)) {
-          this.reactKickOutMember(message)
+          this.receiveKickOutMsg(message)
           return 
         }
         this.pushChatMessage(connection.peer, message)
@@ -295,14 +295,14 @@ export default {
         }
       })
     },
-    reactChangeTitle(message) {
+    receiveChangeTitleMsg(message) {
       const newTitle = message.split(this.TITLE_EDIT_MESSAGE)[1]
       this.changeChatRoomState({
         title: newTitle
       })
       this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
     },
-    reactKickOutMember(message) {
+    receiveKickOutMsg(message) {
       const memberName = message.split(this.KICK_OUT_MESSAGE)[1]
       // 강퇴 대상자
       if(memberName === this.nickname) {
@@ -310,15 +310,10 @@ export default {
         this.needCheckRouteLeave = false
         this.$router.push({ name: 'party' })
       } else { // 방에 남아있는 멤버들
-        const members = this.chatRoom.members.filter(({nickname}) => nickname !== memberName)
-        this.changeChatRoomState({
-          members
-        })
-        this.kickOutMember = memberName // closeConnection 알람 뜨지 않도록 하는 플래그
-        this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberName))
+        this.fnKickOut(memberName)
       }
     },
-    async onKickOut(memberName) {
+    async onClickKickOut(memberName) {
       const isConfirmed = confirm(this.$ALERTS.CHAT.CONFIRM_KICK_OUT(memberName))
       if(!isConfirmed) return
       this.onDeleteMember(memberName)
@@ -326,6 +321,13 @@ export default {
       this.sendMessage({
         message
       }, false)
+      this.kickOut(memberName)
+    },
+    kickOut(memberName) {
+      const members = this.chatRoom.members.filter(({nickname}) => nickname !== memberName)
+      this.changeChatRoomState({
+        members
+      })
       this.kickOutMember = memberName // closeConnection 알람 뜨지 않도록 하는 플래그
       this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberName))
     },
