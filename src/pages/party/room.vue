@@ -360,6 +360,10 @@ export default {
       this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberName))
     },
     onEditTitle(newTitle) {
+      if(newTitle === '') {
+        alert(this.$ALERTS.VALIDATIONS.TITLE)
+        return
+      }
       const res = this.onEditChatRoom({
         title: newTitle
       })
