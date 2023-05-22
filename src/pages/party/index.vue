@@ -163,18 +163,20 @@ export default {
         this.$router.push({ name: 'auth-login' })
         return
       }
-      // 버그로 인해 채팅방 나가졌는데 업데이트 안된 경우 다시 들어갈 수 있게 수정.
-      let isFull = false
-      const isMemberBug = members.find(({nickname}) => nickname === this.nickname)
-      const res = await this.postMember(id)
-      if(res.msg === '방이 가득찼습니다.') {
-        isFull = true
-      }
-      if(isFull && !isMemberBug) {
-        this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
-        this.setToastOn(true)
-        this.refreshData()
-        return
+      if(!this.$utils.checkAdmin(this.nickname)) {
+        // 버그로 인해 채팅방 나가졌는데 업데이트 안된 경우 다시 들어갈 수 있게 수정.
+        let isFull = false
+        const isMemberBug = members.find(({nickname}) => nickname === this.nickname)
+        const res = await this.postMember(id)
+        if(res.msg === '방이 가득찼습니다.') {
+          isFull = true
+        }
+        if(isFull && !isMemberBug) {
+          this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
+          this.setToastOn(true)
+          this.refreshData()
+          return
+        }
       }
       this.$router.push({
         name: 'party-room',

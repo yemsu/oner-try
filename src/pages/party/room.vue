@@ -107,10 +107,19 @@ export default {
 
     setTimeout(() => {
       if(!this.nickname) {
-        alert(this.$ALERTS.NEED_LOGIN)
         this.$router.push({ name: 'auth-login' })
         return
       }
+
+      if(!this.$utils.checkAdmin(this.nickname)) {
+        const isMember = this.chatRoom.members.find(({nickname}) => nickname === this.nickname)
+        if(!isMember) {
+          alert(this.$ALERTS.CHAT.BLOCK_DIRECT_ROOM)
+          this.$router.push({ name: 'party' })
+          return
+        }
+      }
+
       this.createPeer()
       this.subscribeMe()
 
@@ -233,6 +242,9 @@ export default {
       });
     },
     openConnection(peerId) {
+      if(this.$utils.checkAdmin(peerId)) {
+        return
+      }
       this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
       if(!this.memberNicks.includes(peerId)) {
         this.addMember({ nickname: peerId })
@@ -256,6 +268,9 @@ export default {
       }
     },
     sendMessage({ nickname, message }, sendMe = true) {
+      if(this.$utils.includesAdminId(nickname + message)) {
+        return
+      }
       // 내가 메세지를 보내면
       // 내 화면에 추가되도록 데이터 업데이트
       sendMe && this.pushChatMessage(nickname, message)
@@ -265,6 +280,9 @@ export default {
       }
 		},
     pushChatMessage(nickname, message) {
+      if(this.$utils.includesAdminId(nickname + message)) {
+        return
+      }
       const date = new Date()
       const [time, minute] = date.toLocaleTimeString().split(':')
       // nickname = null 은 알림 메세지
