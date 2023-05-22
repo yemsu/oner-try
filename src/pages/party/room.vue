@@ -23,10 +23,10 @@
         :peer-id="nickname"
         :conn="connections"
         :chat-messages="chatMessages"
-        :is-on-beep="isOnBeep"
-        :beep-volume="Beep.volume"
+        :is-on-beep="!Beep.isMuted"
+        :beep-volume="(Beep.volume / Beep.volumeGap)"
         @sendMessage="sendMessage"
-        @toggleOnBeep="isOnBeep = !isOnBeep"
+        @toggleOnBeep="Beep.isMuted = !Beep.isMuted"
         @kickOut="onClickKickOut"
         @changeBeepVolume="onChangeBeepVolume"
       />
@@ -58,7 +58,7 @@ export default {
       willLeave: false,
       chatMessages: [],
       Beep: null,
-      isOnBeep: true,
+      isBeepMuted: false,
       titleInput: '',
       needCheckRouteLeave: true,
       TITLE_EDIT_MESSAGE: '%TITLE_EDIT_MESSAGE%',
@@ -96,7 +96,7 @@ export default {
       this.createPeer()
       this.subscribeMe()
 
-      this.Beep = new Beep()
+      this.Beep = new Beep(this.isBeepMuted)
       window.addEventListener('unload', this.destroyPeer)
       window.addEventListener('beforeunload', this.confirmClose)
     }, 200);
@@ -345,7 +345,6 @@ export default {
       // chopa1 - 퇴장
       // chopa2 - 입장
       // jigun - 채팅
-      if(!this.isOnBeep) return
       this.Beep.beep(audioName)
     },
     onChangeBeepVolume() {

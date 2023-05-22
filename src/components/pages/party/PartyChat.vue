@@ -85,7 +85,7 @@
           class="control-volume"
           @click="() => $emit('changeBeepVolume')"
         >
-          볼륨 {{ this.beepVolume / 0.25 }}
+          볼륨 {{ this.beepVolume }}
         </element-button>
       </div>
     </div>
@@ -115,7 +115,7 @@ export default {
     },
     beepVolume: {
       type: Number,
-      default: 0.5
+      default: 1
     }
   },
   components: {
