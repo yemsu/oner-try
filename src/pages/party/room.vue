@@ -244,7 +244,7 @@ export default {
       }
     },
     openConnection(peerId) {
-      this.pushChatMessage(null, `${peerId}님이 접속하셨습니다.`)
+      this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
       if(!this.memberNicks.includes(peerId)) {
         this.addMember({ nickname: peerId })
       }
