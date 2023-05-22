@@ -30,6 +30,16 @@
         @kickOut="onClickKickOut"
         @changeBeepVolume="onChangeBeepVolume"
       />
+      <common-wrap-buttons position="bottom">
+        <element-button
+          type="square-round"
+          size="large"
+          bg="point"
+          @click="onClickExit"
+        >
+          방 나가기
+        </element-button>
+      </common-wrap-buttons>
     </div>
   </layout-content-wrap>  
 </template>
@@ -349,6 +359,9 @@ export default {
     },
     onChangeBeepVolume() {
       this.Beep.changeVolume()
+    },
+    onClickExit() {
+      this.$router.push({ name: 'party' })
     }
   }
 }
