@@ -24,6 +24,21 @@
         @onChange="(list) => selectedRoomType = list[0]"
       />
       <div class="area-chat-room">
+        <common-wrap-buttons
+          size="small"
+          align="left"
+          position="top"
+        >
+          <element-button
+            size="small"
+            type="text"
+            bg="sub"
+            @click="refreshData"
+          >
+            <font-awesome-icon icon="fa-arrows-rotate" />
+            새로고침
+          </element-button>
+        </common-wrap-buttons>
         <ul v-if="chatRooms && chatRooms.length > 0" class="list-chat-room">
           <li
             v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper, host }, i) in chatRooms"
