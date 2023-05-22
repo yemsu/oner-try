@@ -291,6 +291,7 @@ export default {
         id: this.$route.query.id,
         payload: {
           ...this.chatRoom,
+          roomTypeId: this.chatRoom.roomType.id,
           ...obj
         }
       })
@@ -338,7 +339,8 @@ export default {
       if(!res) return
       this.sendMessage({
         message: `${this.TITLE_EDIT_MESSAGE}${newTitle}`
-      })
+      }, false)
+      this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
     },
     beepReceiveMessage() {
       if(!this.isOnBeep) return
