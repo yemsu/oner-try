@@ -220,29 +220,6 @@ export default {
         this.beepReceiveMessage()
       });
     },
-    reactChangeTitle(message) {
-      const newTitle = message.split(this.TITLE_EDIT_MESSAGE)[1]
-      this.changeChatRoomState({
-        title: newTitle
-      })
-      this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
-    },
-    reactKickOutMember(message) {
-      const memberName = message.split(this.KICK_OUT_MESSAGE)[1]
-      // 강퇴 대상자
-      if(memberName === this.nickname) {
-        alert(this.$ALERTS.CHAT.KICK_OUT)
-        this.needCheckRouteLeave = false
-        this.$router.push({ name: 'party' })
-      } else { // 방에 남아있는 멤버들
-        const members = this.chatRoom.members.filter(({nickname}) => nickname !== memberName)
-        this.changeChatRoomState({
-          members
-        })
-        this.kickOutMember = memberName // closeConnection 알람 뜨지 않도록 하는 플래그
-        this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberName))
-      }
-    },
     openConnection(peerId) {
       this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
       if(!this.memberNicks.includes(peerId)) {
@@ -309,6 +286,38 @@ export default {
       e.preventDefault();
       e.returnValue = '';
     },
+    async onEditChatRoom(obj) {
+      await this.putChatRoom({
+        id: this.$route.query.id,
+        payload: {
+          ...this.chatRoom,
+          ...obj
+        }
+      })
+    },
+    reactChangeTitle(message) {
+      const newTitle = message.split(this.TITLE_EDIT_MESSAGE)[1]
+      this.changeChatRoomState({
+        title: newTitle
+      })
+      this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
+    },
+    reactKickOutMember(message) {
+      const memberName = message.split(this.KICK_OUT_MESSAGE)[1]
+      // 강퇴 대상자
+      if(memberName === this.nickname) {
+        alert(this.$ALERTS.CHAT.KICK_OUT)
+        this.needCheckRouteLeave = false
+        this.$router.push({ name: 'party' })
+      } else { // 방에 남아있는 멤버들
+        const members = this.chatRoom.members.filter(({nickname}) => nickname !== memberName)
+        this.changeChatRoomState({
+          members
+        })
+        this.kickOutMember = memberName // closeConnection 알람 뜨지 않도록 하는 플래그
+        this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberName))
+      }
+    },
     async onKickOut(memberName) {
       const isConfirmed = confirm(this.$ALERTS.CHAT.CONFIRM_KICK_OUT(memberName))
       if(!isConfirmed) return
@@ -319,15 +328,6 @@ export default {
       }, false)
       this.kickOutMember = memberName // closeConnection 알람 뜨지 않도록 하는 플래그
       this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberName))
-    },
-    async onEditChatRoom(obj) {
-      await this.putChatRoom({
-        id: this.$route.query.id,
-        payload: {
-          ...this.chatRoom,
-          ...obj
-        }
-      })
     },
     onEditTitle(newTitle) {
       const res = this.onEditChatRoom({
