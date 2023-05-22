@@ -55,9 +55,6 @@
       &.my {
         flex-direction: row-reverse;
         margin-left: auto;
-        .message {
-          border-color: var(--color-point-pale);
-        }
       }
       .nick {
         text-align: left;
