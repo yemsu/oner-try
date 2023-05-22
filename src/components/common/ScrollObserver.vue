@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   props: {
     data: {
@@ -43,6 +45,8 @@ export default {
       if(!crr) return
       this.resetStates()
       this.loadData()
+      this.setToastMessage(this.$ALERTS.REFRESH_LIST_SUCCESS)
+      this.setToastOn(true)
     }
   },
   mounted() {
@@ -53,6 +57,10 @@ export default {
     })
   },
   methods: {
+    ...mapMutations({
+      setToastMessage: 'toastPopup/SET_MESSAGE',
+      setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
+    }),
     infiniteScroll() {
       const checker = this.$refs.checker
       const io = new IntersectionObserver(entries => {

@@ -189,7 +189,9 @@ export default {
     },
     refreshData() {
       if(this.refreshTrigger) this.refreshTrigger = false
-      this.refreshTrigger = true
+      setTimeout(() => {
+        this.refreshTrigger = true
+      }, 500);
     },
     onClickCreateChat() {
       if(!this.isLogin) {
