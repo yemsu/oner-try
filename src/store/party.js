@@ -38,6 +38,7 @@ export const mutations = {
     state.chatRoom.members = members
   },
   ADD_MEMBER(state, memberObj) {
+    console.log('state.chatRoom', state.chatRoom)
     state.chatRoom.members = state.chatRoom.members.concat([memberObj])
   },
   DELETE_MEMBER(state, memberNick) {
@@ -103,7 +104,8 @@ export const actions = {
       console.log('CANNOT POST_MEMBER:',error )
       return error
     }
-    commit('ADD_MEMBER', result)
+    console.log('POST_MEMBER', result)
+    // commit('ADD_MEMBER', result)
     return result 
   },
   async DELETE_MEMBER({ commit }, { id, siteNick }) {

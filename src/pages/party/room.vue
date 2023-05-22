@@ -23,12 +23,12 @@
         :peer-id="nickname"
         :conn="connections"
         :chat-messages="chatMessages"
-        :is-on-beep="!Beep.isMuted"
-        :beep-volume="(Beep.volume / Beep.volumeGap)"
+        :is-on-beep="!peer.$beep.isMuted"
+        :beep-volume="(peer.$beep.volume / peer.$beep.volumeGap)"
         @sendMessage="sendMessage"
-        @toggleOnBeep="Beep.isMuted = !Beep.isMuted"
+        @toggleOnBeep="peer.$beep.isMuted = !peer.$beep.isMuted"
         @kickOut="onClickKickOut"
-        @changeBeepVolume="onChangeBeepVolume"
+        @changeBeepVolume="() => peer.changeBeepVolume()"
       />
       <common-wrap-buttons position="bottom">
         <element-button
@@ -47,7 +47,7 @@
 <script>
 import PartyChat from '@/components/pages/party/PartyChat.vue'
 import setMeta from '@/plugins/utils/meta';
-import Beep from '@/plugins/utils/beep';
+import $Peer from '@/plugins/utils/Peer';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
@@ -64,11 +64,8 @@ export default {
     return {
       peer: null,
       connections: [],
-      remoteIds: [],
       willLeave: false,
       chatMessages: [],
-      Beep: null,
-      isBeepMuted: false,
       titleInput: '',
       needCheckRouteLeave: true,
       TITLE_EDIT_MESSAGE: '%TITLE_EDIT_MESSAGE%',
@@ -111,22 +108,45 @@ export default {
         return
       }
 
-      if(!this.$utils.checkAdmin(this.nickname)) {
-        const isMember = this.chatRoom.members.find(({nickname}) => nickname === this.nickname)
-        if(!isMember) {
-          alert(this.$ALERTS.CHAT.BLOCK_DIRECT_ROOM)
-          this.$router.push({ name: 'party' })
-          return
-        }
-      }
+      // 오류 발생으로 추후 확인 필요
+      // if(!this.$utils.checkAdmin(this.nickname)) {
+      //   const isMember = this.chatRoom.members.find(({nickname}) => nickname === this.nickname)
+      //   console.log('isMember', this.chatRoom.members, isMember)
+      //   if(!isMember) {
+      //     alert(this.$ALERTS.CHAT.BLOCK_DIRECT_ROOM)
+      //     this.$router.push({ name: 'party' })
+      //     return
+      //   }
+      // }
 
-      this.createPeer()
-      this.subscribeMe()
+      this.peer = new $Peer(this.nickname, {
+        peerOnOpen: (peerId) => {
+          console.log('peerOnOpen ###', peerId)
+          if(this.isHost && this.chatRoom.members?.length === 1) {
+            this.pushChatMessage(null, `방을 개설하였습니다.`)
+            return
+          }
+          // start connecting 
+          for(const nickname of this.memberNicks) {
+            if(nickname === this.nickname) continue
+            this.peer.startConnecting(nickname)
+          }
+        },
+        afterOnConnect: (peerId) => {
+          this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
+          if(!this.memberNicks.includes(peerId)) {
+            // 화면에 멤버 추가.
+            this.addMember({ nickname: peerId })
+          }
+        },
+        onReceiveMsg: (peerId, message) => this.onReceiveMsg(peerId, message),
+        afterCloseConnection: this.afterCloseConnection,
+        afterDestroyPeer: () => {}
+      })
 
-      this.Beep = new Beep(this.isBeepMuted)
       window.addEventListener('unload', this.destroyPeer)
       window.addEventListener('beforeunload', this.confirmClose)
-    }, 200);
+    }, 500);
   },
   beforeDestroy() {    
     window.removeEventListener('unload', this.destroyPeer);
@@ -141,8 +161,7 @@ export default {
       this.willLeave = confirm(this.$ALERTS.CHAT.CONFIRM_END)
       if(!this.willLeave) return
     }
-    await this.onDeleteMember(this.peer.id)
-    if(this.peer) this.peer.destroy()
+    this.destroyPeer()
     next()
   },
   methods: {
@@ -159,101 +178,18 @@ export default {
       deleteChatRoom: 'party/DELETE_CHAT_ROOM',
       putChatRoom: 'party/PUT_CHAT_ROOM',
     }),
-    createPeer() {
-      if(this.peer) return
-      this.peer = new this.$Peer(this.nickname, {
-        host: process.env.PEER_SERVER,
-        secure: true
-      })      
-      
-      this.peer.on('error', async (error) => {
-        console.error('PEERJS ERROR: ', error)
-      })
-    },
-    subscribeMe() {
-      this.peer.on('open', (id) => {
-        if(this.isHost && this.chatRoom.members?.length === 1) {
-          this.pushChatMessage(null, `방을 개설하였습니다.`)
-        } else {
-          this.startConnection()
-        }
-      })
-      this.peer.on('connection',(dc) => {
-        this.connections.push(dc)
-        this.remoteIds.push(dc.peer)
-        // console.log('connection', dc)
-        this.subscribeMembers(dc)
-      })
-    },
-    startConnection() {
-      // start connecting 
-      for(const nickname of this.memberNicks) {
-        const alreadyConnected = Object.keys(this.peer.connections).includes(nickname)
-        if(alreadyConnected) {
-          continue
-        }
-        const connection = this.peer.connect(nickname)
-        this.connections.push(connection)
-        this.subscribeMembers(connection)
+    onReceiveMsg(peerId, message) {
+      if(message.includes(this.TITLE_EDIT_MESSAGE)) {
+        this.receiveChangeTitleMsg(message)
+        return 
+      } 
+      if(message.includes(this.KICK_OUT_MESSAGE)) {
+        this.receiveKickOutMsg(message)
+        return 
       }
+      this.pushChatMessage(peerId, message)
     },
-    subscribeMembers(connection) {
-      const CHECK_REFRESH_FLAG = 'onertrychatroomRefreshflag'
-      const checkRefreshFlag = () => sessionStorage.getItem(CHECK_REFRESH_FLAG)
-      const deleteRefreshFlag = () => sessionStorage.removeItem(CHECK_REFRESH_FLAG)
-
-      // 다른 멤버가 들어왔을때
-      connection.on('open',() => {
-        if(checkRefreshFlag()) {  // open에 flag 존재하면 새로고침임
-          deleteRefreshFlag()
-          return
-        }
-        this.openConnection(connection.peer)
-        if(!this.$utils.checkAdmin(this.nickname)) {
-          this.beepReceiveMessage('chopa2')
-        }
-      })
-      connection.on('close', () => {
-        console.log('connection close', connection.peer)
-        // 새로고침 했을때
-        sessionStorage.setItem(CHECK_REFRESH_FLAG, '1')
-        setTimeout(() => {
-          if(checkRefreshFlag()) { // close에 flag 존재하면 새로고침 아님
-            deleteRefreshFlag()
-            this.closeConnection(connection.peer)
-            this.beepReceiveMessage('chopa1')
-          }
-        }, 1500);
-      })
-      connection.on('disconnected', () => {
-        console.log('connection disconnected', connection.peer)
-      })
-      // 다른 멤버가 메세지를 보냈을때
-      connection.on("data", (message) => {
-        // 타이틀 변경 메세지 수신 했을 때
-        if(message.includes(this.TITLE_EDIT_MESSAGE)) {
-          this.receiveChangeTitleMsg(message)
-          return 
-        } 
-        if(message.includes(this.KICK_OUT_MESSAGE)) {
-          this.receiveKickOutMsg(message)
-          return 
-        }
-        this.pushChatMessage(connection.peer, message)
-        this.beepReceiveMessage('jigun')
-      });
-    },
-    openConnection(peerId) {
-      if(this.$utils.checkAdmin(peerId)) {
-        return
-      }
-      this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
-      if(!this.memberNicks.includes(peerId)) {
-        this.addMember({ nickname: peerId })
-      }
-    },
-    closeConnection(peerId) {
-      console.log("connection close!", this.willLeave, this.nickname)
+    afterCloseConnection(peerId) {
       if(this.kickOutMember === peerId) {
         this.kickOutMember = null
         return
@@ -277,7 +213,7 @@ export default {
       // 내 화면에 추가되도록 데이터 업데이트
       sendMe && this.pushChatMessage(nickname, message)
       // 멤버들 화면에도 추가되도록 전송
-			for(const connection of this.connections) {
+			for(const connection of this.peer.connections) {
         connection.send(message)
       }
 		},
@@ -308,8 +244,8 @@ export default {
       })
     },
     destroyPeer() {
-      if(this.peer) this.peer.destroy()
-      this.onDeleteMember(this.nickname)
+      if(this.peer.$peer) this.peer.$peer.destroy()
+      // this.onDeleteMember(this.nickname)
     },
     confirmClose(e) {
       e.preventDefault();
@@ -374,15 +310,6 @@ export default {
         message: `${this.TITLE_EDIT_MESSAGE}${newTitle}`
       }, false)
       this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
-    },
-    beepReceiveMessage(audioName) {
-      // chopa1 - 퇴장
-      // chopa2 - 입장
-      // jigun - 채팅
-      this.Beep.beep(audioName)
-    },
-    onChangeBeepVolume() {
-      this.Beep.changeVolume()
     },
     onClickExit() {
       this.$router.push({ name: 'party' })
