@@ -24,9 +24,11 @@
         :conn="connections"
         :chat-messages="chatMessages"
         :is-on-beep="isOnBeep"
+        :beep-volume="Beep.volume"
         @sendMessage="sendMessage"
         @toggleOnBeep="isOnBeep = !isOnBeep"
         @kickOut="onClickKickOut"
+        @changeBeepVolume="onChangeBeepVolume"
       />
     </div>
   </layout-content-wrap>  
@@ -61,7 +63,7 @@ export default {
       needCheckRouteLeave: true,
       TITLE_EDIT_MESSAGE: '%TITLE_EDIT_MESSAGE%',
       KICK_OUT_MESSAGE: '%KICK_OUT_MESSAGE%',
-      kickOutMember: null
+      kickOutMember: null,
     }
   },
   computed: {
@@ -188,7 +190,7 @@ export default {
           return
         }
         this.openConnection(connection.peer)
-        this.beepReceiveMessage()
+        this.beepReceiveMessage('chopa2')
       })
       connection.on('close', () => {
         console.log('connection close', connection.peer)
@@ -198,7 +200,7 @@ export default {
           if(checkRefreshFlag()) { // close에 flag 존재하면 새로고침 아님
             deleteRefreshFlag()
             this.closeConnection(connection.peer)
-            this.beepReceiveMessage()
+            this.beepReceiveMessage('chopa1')
           }
         }, 1500);
       })
@@ -217,7 +219,7 @@ export default {
           return 
         }
         this.pushChatMessage(connection.peer, message)
-        this.beepReceiveMessage()
+        this.beepReceiveMessage('jigun')
       });
     },
     openConnection(peerId) {
@@ -339,13 +341,16 @@ export default {
       }, false)
       this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
     },
-    beepReceiveMessage() {
+    beepReceiveMessage(audioName) {
+      // chopa1 - 퇴장
+      // chopa2 - 입장
+      // jigun - 채팅
       if(!this.isOnBeep) return
-      this.Beep.beep(50, 250, 2);
-      setTimeout(() => {
-        this.Beep.beep(50, 280, 2)
-      }, 150)
+      this.Beep.beep(audioName)
     },
+    onChangeBeepVolume() {
+      this.Beep.changeVolume()
+    }
   }
 }
 </script>

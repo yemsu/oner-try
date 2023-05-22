@@ -79,6 +79,14 @@
           <font-awesome-icon :icon="`fa-volume-${isOnBeep ? 'high' : 'xmark'}`" />
           {{ `채팅 알람 ${isOnBeep ? '끄기' : '켜기'}` }}
         </element-button>
+        <element-button
+          type="text"
+          size="xsmall"
+          class="control-volume"
+          @click="() => $emit('changeBeepVolume')"
+        >
+          볼륨 {{ this.beepVolume / 0.25 }}
+        </element-button>
       </div>
     </div>
   </div>
@@ -105,6 +113,10 @@ export default {
       type: Boolean,
       default: () => false
     },
+    beepVolume: {
+      type: Number,
+      default: 0.5
+    }
   },
   components: {
   },

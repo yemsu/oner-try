@@ -1,9 +1,44 @@
 class Beep {
   constructor(){ 
-    this.myAudioContext = new AudioContext()
-  }
+    this.audioUrl = `${process.env.BASE_URL}/audio/`
+    this.audios = {
+      chopa1: new Audio(`${this.audioUrl}chopa-1.mp3`),
+      chopa2: new Audio(`${this.audioUrl}chopa-2.mp3`),
+      jigun: new Audio(`${this.audioUrl}jigun.mp3`)
+    },
+    this.volume = 0.5
+    this.selectedAudio = 'jigun'
 
-  beep(duration, frequency, volume){
+    this.init()
+  }
+  init() {
+    this.setAudioVolume()
+  }
+  setAudioVolume() {
+    for(const key in this.audios) {
+      this.audios[key].volume = this.volume
+    }
+  }
+  changeVolume() {
+    const changeNum = 0.25
+    this.volume = this.volume >= 1
+      ? changeNum
+      : this.volume + changeNum
+    this.setAudioVolume()
+    this.beep()
+  }
+  beep(selectedAudio){
+    const audioName = selectedAudio || this.selectedAudio
+    this.audios[audioName].pause()
+    this.audios[audioName].currentTime = 0  
+    this.audios[audioName].play();
+    return
+  }
+  bitBeep(duration, frequency, volume) {
+    // this.Beep.beep(50, 250, 2);
+    // setTimeout(() => {
+    //   this.Beep.beep(50, 280, 2)
+    // }, 150)
     return new Promise((resolve, reject) => {
       // Set default duration if not provided
       duration = duration || 200;
