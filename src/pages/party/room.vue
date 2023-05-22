@@ -68,6 +68,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      isLogin: 'auth/getIsLogin',
       nickname: 'auth/getNickname',
       chatRoom: 'party/getChatRoom',
     }),
@@ -78,6 +79,14 @@ export default {
       return this.chatRoom.members.map(({nickname}) => nickname)
     }
   },
+  watch: {
+    isLogin(crr) {
+      if(!crr) {
+        this.needCheckRouteLeave = false
+        this.$router.push({ name: 'party' })
+      }
+    }
+  },
   async mounted() {
     const chatRoom = await this.getChatRoom(this.$route.query.id)
     if(!chatRoom)  {
@@ -85,7 +94,6 @@ export default {
       this.$router.push({ name: 'party' })
       return
     }
-    console.log('this.chatRoom', this.chatRoom)
 
     setTimeout(() => {
       if(!this.nickname) {
@@ -114,7 +122,7 @@ export default {
       this.willLeave = confirm(this.$ALERTS.CHAT.CONFIRM_END)
       if(!this.willLeave) return
     }
-    await this.onDeleteMember(this.nickname)
+    await this.onDeleteMember(this.peer.id)
     if(this.peer) this.peer.destroy()
     next()
   },
