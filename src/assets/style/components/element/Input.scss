@@ -6,7 +6,6 @@
     width: 100%;
     min-width: 150px;
     padding: 10px;
-    border: 1px solid $color-point;
     border-radius: 30px;
     font-size: inherit;
     line-height: 1;
@@ -15,6 +14,11 @@
     &::-webkit-inner-spin-button {
       appearance: none;
       margin: 0;
+    }
+    &.type {
+      &-point {
+        border: 1px solid $color-point;
+      }
     }
   }
   .label-text {

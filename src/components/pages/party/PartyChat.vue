@@ -28,6 +28,7 @@
         :value="inputValue"
         size="small"
         placeholder="메세지 보내기"
+        style-type="none"
         @onUpdateInput="setInputValue"
         @onEnter="onEnterInput"
       />

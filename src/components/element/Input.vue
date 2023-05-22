@@ -6,7 +6,8 @@
       {'compact': isCompactMode},
       {'searching': isActive},
       usage,
-      `type-${inputType}`
+      `type-${inputType}`,
+      `type-${styleType}`,
     ]"
   >
     <label :is="label ? 'label' : 'div'" :for="id">
@@ -55,6 +56,10 @@ export default {
     size: {
       type: String,
       default: () => 'basic' // small, basic, big
+    },
+    styleType: {
+      type: String,
+      default: 'point' // none, point
     },
     isCompactMode: {
       type: Boolean,
