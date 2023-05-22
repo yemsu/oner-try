@@ -57,6 +57,7 @@ export default {
         {
           path: '/party',
           menuName: '파티모집',
+          beta: true
         },
       ],
       siteSideMenuList: [

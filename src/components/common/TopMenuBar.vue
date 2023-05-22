@@ -5,7 +5,7 @@
         <h2 class="ir-hidden">{{ title }}</h2>
         <ul class="menu-list">
           <li
-            v-for="({ path, menuName }, i) in menuList"
+            v-for="({ path, menuName, beta }, i) in menuList"
             :key="`menu${i}`"
           >
               <element-button
@@ -13,6 +13,7 @@
                 type="square-round"
               >
                 {{ menuName }}
+                <common-beta-mark v-if="beta" size="xsmall" />
               </element-button>
           </li>
         </ul>
