@@ -136,7 +136,6 @@ export default {
     }),
     ...mapActions({
       getChatRoom: 'party/GET_CHAT_ROOM',
-      postMember: 'party/POST_MEMBER',
       deleteMember: 'party/DELETE_MEMBER',
       deleteChatRoom: 'party/DELETE_CHAT_ROOM',
       putChatRoom: 'party/PUT_CHAT_ROOM',
@@ -154,11 +153,9 @@ export default {
     },
     subscribeMe() {
       this.peer.on('open', (id) => {
-        console.log('im open', )
         if(this.isHost && this.chatRoom.members?.length === 1) {
           this.pushChatMessage(null, `방을 개설하였습니다.`)
         } else {
-          this.onPostMember(this.nickname)
           this.startConnection()
         }
       })
@@ -168,11 +165,6 @@ export default {
         // console.log('connection', dc)
         this.subscribeMembers(dc)
       })
-    },
-    async onPostMember(peerId) {
-      if(!this.memberNicks.includes(peerId)) {
-        await this.postMember(this.$route.query.id)
-      }
     },
     startConnection() {
       // start connecting 

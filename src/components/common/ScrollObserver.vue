@@ -20,6 +20,10 @@ export default {
       type: [String, Number],
       required: true
     },
+    refreshTrigger: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -31,9 +35,13 @@ export default {
   },
   watch: {
     category(crr, prev) {
-      this.page = 1
-      this.prevDataLength = 0
-      this.isEnd = 0
+      this.resetStates()
+      this.loadData()
+    },
+    refreshTrigger(crr) {
+      console.log('refreshTrigger', crr)
+      if(!crr) return
+      this.resetStates()
       this.loadData()
     }
   },
@@ -76,6 +84,11 @@ export default {
       this.prevDataLength = this.data.length
       this.page += 1
       this.isDataLoading = false
+    },
+    resetStates() {
+      this.page = 1
+      this.prevDataLength = 0
+      this.isEnd = 0
     }
   }
 }
