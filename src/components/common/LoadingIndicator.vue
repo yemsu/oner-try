@@ -74,7 +74,7 @@ export default {
 }
 $totalDuration: 2;
 $emojiNumber: 5;
-$eachDuration: ($totalDuration / $emojiNumber);
+$eachDuration: calc($totalDuration / $emojiNumber);
 $translateX: -12px;
 .loader {
   display: flex;
@@ -87,7 +87,7 @@ $translateX: -12px;
     animation: curtain #{$totalDuration}s infinite;
     @for $i from 1 to ($emojiNumber) {
       &:nth-child(#{$i}) {
-        animation-delay: #{($eachDuration * ($emojiNumber - $i))}s;
+        animation-delay: #{calc($eachDuration * ($emojiNumber - $i))}s;
       }
     }
     &:nth-child(5) {
