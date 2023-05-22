@@ -1,3 +1,5 @@
+import Vue from "vue"
+
 export const deepClone = (data) => {
   return JSON.parse(JSON.stringify(data))
 }
@@ -20,4 +22,22 @@ export const remakeDateStr = (date) => {
   const day = rawDay.replace(/-/gi, '.')
   const [hour, minute] = rawTime.split(':')
   return `${day} ${hour}:${minute}`
+}
+export const checkAdmin = (nickname) => {
+  return nickname === 'mongo23' || nickname === 'yemsu'
+}
+export const includesAdminId = (text) => {
+  return text.match(/mongo23|yemsu/)
+}
+
+
+Vue.prototype.$utils = {
+  deepClone,
+  getOnlyText,
+  isSameText,
+  isOnlyNumber,
+  objArrKeys,
+  remakeDateStr,
+  checkAdmin,
+  includesAdminId
 }

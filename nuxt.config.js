@@ -65,6 +65,7 @@ export default {
     { src: '~/constants/ALERTS', mode: 'client' },
     { src: '~/plugins/peer', mode: 'client' },
     { src: '~/plugins/fontAwesomeIcon', mode: 'client' },
+    { src: '~/plugins/utils/index', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
