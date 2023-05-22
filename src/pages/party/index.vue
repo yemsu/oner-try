@@ -27,45 +27,47 @@
         @onChange="(list) => selectedRoomType = list[0]"
       />
       <div class="area-chat-room">
-        <common-wrap-buttons
-          size="small"
-          align="left"
-          position="top"
-        >
-          <element-button
+        <template v-if="chatRooms && chatRooms.length > 0" >
+          <common-wrap-buttons
             size="small"
-            type="text"
-            bg="sub"
-            @click="refreshData"
+            align="left"
+            position="top"
           >
-            <font-awesome-icon icon="fa-arrows-rotate" />
-            새로고침
-          </element-button>
-        </common-wrap-buttons>
-        <ul v-if="chatRooms && chatRooms.length > 0" class="list-chat-room">
-          <li
-            v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper, host }, i) in chatRooms"
-            :key="`chatRoom${i}`"
-            class="chat-room"
-          >
-            <card-list-content
-              v-if="members"
-              :required-data="{ id, title, badgeList: badgeList(host, members) }"
-              tag-name="button"
-              link-title="입장하기"
-              :top-info="{
-                left: {
-                  text: `${roomType.name}`,
-                  badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
-                },
-                right: {
-                  text: `👨🏾‍🤝‍👨🏼 ${memberCount} / ${capacity}`
-                }
-              }"
-              @click="onClickChatRoom(id, members)"
-            />
-          </li>
-        </ul>
+            <element-button
+              size="small"
+              type="text"
+              bg="sub"
+              @click="refreshData"
+            >
+              <font-awesome-icon icon="fa-arrows-rotate" />
+              새로고침
+            </element-button>
+          </common-wrap-buttons>
+          <ul class="list-chat-room">
+            <li
+              v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper, host }, i) in chatRooms"
+              :key="`chatRoom${i}`"
+              class="chat-room"
+            >
+              <card-list-content
+                v-if="members"
+                :required-data="{ id, title, badgeList: badgeList(host, members) }"
+                tag-name="button"
+                link-title="입장하기"
+                :top-info="{
+                  left: {
+                    text: `${roomType.name}`,
+                    badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
+                  },
+                  right: {
+                    text: `👨🏾‍🤝‍👨🏼 ${memberCount} / ${capacity}`
+                  }
+                }"
+                @click="onClickChatRoom(id, members)"
+              />
+            </li>
+          </ul>
+        </template>
         <element-no-data
           v-else-if="chatRooms && chatRooms.length === 0"
           message="파티가 존재하지 않습니다."
