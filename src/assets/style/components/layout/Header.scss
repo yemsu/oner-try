@@ -20,8 +20,9 @@ header {
   .menu-bar.site {
     position: relative;
     z-index: 1; // 로그아웃 드롭다운 가려져 z index 삽입
-    display: flex;
     align-items: center;
+    display: flex;
+    height: var(--header-site-menu-height);
     padding-right: 15px;
     background-color: $color-black;
     ::v-deep {

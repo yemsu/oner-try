@@ -44,7 +44,7 @@ export default {
       return process.env.NODE_ENV === 'development'
     },
     buttonId() {
-      return this.isInPage ? 'googleLogin' : 'googleLoginInPage'
+      return this.isInPage ? 'googleLoginInPage' : 'googleLogin'
     }
   },
   watch: {
@@ -218,6 +218,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#googleLoginInPage {
+  width: 206px;
+  height: 38px;
+}
+#googleLog {
+  height: 44px;
+}
 .wrap-dropdown {
   position: relative;
   .btn-dropdown {

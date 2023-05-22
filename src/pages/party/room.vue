@@ -23,11 +23,23 @@
         :peer-id="nickname"
         :conn="connections"
         :chat-messages="chatMessages"
-        :is-on-beep="isOnBeep"
+        :is-on-beep="!Beep.isMuted"
+        :beep-volume="(Beep.volume / Beep.volumeGap)"
         @sendMessage="sendMessage"
-        @toggleOnBeep="isOnBeep = !isOnBeep"
-        @kickOut="onKickOut"
+        @toggleOnBeep="Beep.isMuted = !Beep.isMuted"
+        @kickOut="onClickKickOut"
+        @changeBeepVolume="onChangeBeepVolume"
       />
+      <common-wrap-buttons position="bottom">
+        <element-button
+          type="square-round"
+          size="large"
+          bg="point"
+          @click="onClickExit"
+        >
+          방 나가기
+        </element-button>
+      </common-wrap-buttons>
     </div>
   </layout-content-wrap>  
 </template>
@@ -56,16 +68,17 @@ export default {
       willLeave: false,
       chatMessages: [],
       Beep: null,
-      isOnBeep: false,
+      isBeepMuted: false,
       titleInput: '',
       needCheckRouteLeave: true,
       TITLE_EDIT_MESSAGE: '%TITLE_EDIT_MESSAGE%',
       KICK_OUT_MESSAGE: '%KICK_OUT_MESSAGE%',
-      kickOutMember: null
+      kickOutMember: null,
     }
   },
   computed: {
     ...mapGetters({
+      isLogin: 'auth/getIsLogin',
       nickname: 'auth/getNickname',
       chatRoom: 'party/getChatRoom',
     }),
@@ -76,6 +89,14 @@ export default {
       return this.chatRoom.members.map(({nickname}) => nickname)
     }
   },
+  watch: {
+    isLogin(crr) {
+      if(!crr) {
+        this.needCheckRouteLeave = false
+        this.$router.push({ name: 'party' })
+      }
+    }
+  },
   async mounted() {
     const chatRoom = await this.getChatRoom(this.$route.query.id)
     if(!chatRoom)  {
@@ -83,7 +104,6 @@ export default {
       this.$router.push({ name: 'party' })
       return
     }
-    console.log('this.chatRoom', this.chatRoom)
 
     setTimeout(() => {
       if(!this.nickname) {
@@ -94,7 +114,7 @@ export default {
       this.createPeer()
       this.subscribeMe()
 
-      this.Beep = new Beep()
+      this.Beep = new Beep(this.isBeepMuted)
       window.addEventListener('unload', this.destroyPeer)
       window.addEventListener('beforeunload', this.confirmClose)
     }, 200);
@@ -112,7 +132,7 @@ export default {
       this.willLeave = confirm(this.$ALERTS.CHAT.CONFIRM_END)
       if(!this.willLeave) return
     }
-    await this.onDeleteMember(this.nickname)
+    await this.onDeleteMember(this.peer.id)
     if(this.peer) this.peer.destroy()
     next()
   },
@@ -126,7 +146,6 @@ export default {
     }),
     ...mapActions({
       getChatRoom: 'party/GET_CHAT_ROOM',
-      postMember: 'party/POST_MEMBER',
       deleteMember: 'party/DELETE_MEMBER',
       deleteChatRoom: 'party/DELETE_CHAT_ROOM',
       putChatRoom: 'party/PUT_CHAT_ROOM',
@@ -135,8 +154,7 @@ export default {
       if(this.peer) return
       this.peer = new this.$Peer(this.nickname, {
         host: process.env.PEER_SERVER,
-        port: 9000,
-        // secure: true
+        secure: true
       })      
       
       this.peer.on('error', async (error) => {
@@ -145,11 +163,9 @@ export default {
     },
     subscribeMe() {
       this.peer.on('open', (id) => {
-        console.log('im open', )
-        if(this.isHost && this.chatRoom.members.length === 1) {
+        if(this.isHost && this.chatRoom.members?.length === 1) {
           this.pushChatMessage(null, `방을 개설하였습니다.`)
         } else {
-          this.onPostMember(this.nickname)
           this.startConnection()
         }
       })
@@ -159,11 +175,6 @@ export default {
         // console.log('connection', dc)
         this.subscribeMembers(dc)
       })
-    },
-    async onPostMember(peerId) {
-      if(!this.memberNicks.includes(peerId)) {
-        await this.postMember(this.$route.query.id)
-      }
     },
     startConnection() {
       // start connecting 
@@ -189,7 +200,7 @@ export default {
           return
         }
         this.openConnection(connection.peer)
-        this.beepReceiveMessage()
+        this.beepReceiveMessage('chopa2')
       })
       connection.on('close', () => {
         console.log('connection close', connection.peer)
@@ -199,7 +210,7 @@ export default {
           if(checkRefreshFlag()) { // close에 flag 존재하면 새로고침 아님
             deleteRefreshFlag()
             this.closeConnection(connection.peer)
-            this.beepReceiveMessage()
+            this.beepReceiveMessage('chopa1')
           }
         }, 1500);
       })
@@ -210,42 +221,19 @@ export default {
       connection.on("data", (message) => {
         // 타이틀 변경 메세지 수신 했을 때
         if(message.includes(this.TITLE_EDIT_MESSAGE)) {
-          this.reactChangeTitle(message)
+          this.receiveChangeTitleMsg(message)
           return 
         } 
         if(message.includes(this.KICK_OUT_MESSAGE)) {
-          this.reactKickOutMember(message)
+          this.receiveKickOutMsg(message)
           return 
         }
         this.pushChatMessage(connection.peer, message)
-        this.beepReceiveMessage()
+        this.beepReceiveMessage('jigun')
       });
     },
-    reactChangeTitle(message) {
-      const newTitle = message.split(this.TITLE_EDIT_MESSAGE)[1]
-      this.changeChatRoomState({
-        title: newTitle
-      })
-      this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
-    },
-    reactKickOutMember(message) {
-      const memberName = message.split(this.KICK_OUT_MESSAGE)[1]
-      // 강퇴 대상자
-      if(memberName === this.nickname) {
-        alert(this.$ALERTS.CHAT.KICK_OUT)
-        this.needCheckRouteLeave = false
-        this.$router.push({ name: 'party' })
-      } else { // 방에 남아있는 멤버들
-        const members = this.chatRoom.members.filter(({nickname}) => nickname !== memberName)
-        this.changeChatRoomState({
-          members
-        })
-        this.kickOutMember = memberName // closeConnection 알람 뜨지 않도록 하는 플래그
-        this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberName))
-      }
-    },
     openConnection(peerId) {
-      this.pushChatMessage(null, `${peerId}님이 접속하셨습니다.`)
+      this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
       if(!this.memberNicks.includes(peerId)) {
         this.addMember({ nickname: peerId })
       }
@@ -299,10 +287,7 @@ export default {
         host: peerId
       })
     },
-    destroyPeer() {      
-      if(document.readyState == "complete") { // 새로고침 체크
-        return
-      }
+    destroyPeer() {
       if(this.peer) this.peer.destroy()
       this.onDeleteMember(this.nickname)
     },
@@ -310,7 +295,35 @@ export default {
       e.preventDefault();
       e.returnValue = '';
     },
-    async onKickOut(memberName) {
+    async onEditChatRoom(obj) {
+      await this.putChatRoom({
+        id: this.$route.query.id,
+        payload: {
+          ...this.chatRoom,
+          roomTypeId: this.chatRoom.roomType.id,
+          ...obj
+        }
+      })
+    },
+    receiveChangeTitleMsg(message) {
+      const newTitle = message.split(this.TITLE_EDIT_MESSAGE)[1]
+      this.changeChatRoomState({
+        title: newTitle
+      })
+      this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
+    },
+    receiveKickOutMsg(message) {
+      const memberName = message.split(this.KICK_OUT_MESSAGE)[1]
+      // 강퇴 대상자
+      if(memberName === this.nickname) {
+        alert(this.$ALERTS.CHAT.KICK_OUT)
+        this.needCheckRouteLeave = false
+        this.$router.push({ name: 'party' })
+      } else { // 방에 남아있는 멤버들
+        this.fnKickOut(memberName)
+      }
+    },
+    async onClickKickOut(memberName) {
       const isConfirmed = confirm(this.$ALERTS.CHAT.CONFIRM_KICK_OUT(memberName))
       if(!isConfirmed) return
       this.onDeleteMember(memberName)
@@ -318,17 +331,15 @@ export default {
       this.sendMessage({
         message
       }, false)
+      this.kickOut(memberName)
+    },
+    kickOut(memberName) {
+      const members = this.chatRoom.members.filter(({nickname}) => nickname !== memberName)
+      this.changeChatRoomState({
+        members
+      })
       this.kickOutMember = memberName // closeConnection 알람 뜨지 않도록 하는 플래그
       this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberName))
-    },
-    async onEditChatRoom(obj) {
-      await this.putChatRoom({
-        id: this.$route.query.id,
-        payload: {
-          ...this.chatRoom,
-          ...obj
-        }
-      })
     },
     onEditTitle(newTitle) {
       const res = this.onEditChatRoom({
@@ -337,15 +348,21 @@ export default {
       if(!res) return
       this.sendMessage({
         message: `${this.TITLE_EDIT_MESSAGE}${newTitle}`
-      })
+      }, false)
+      this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
     },
-    beepReceiveMessage() {
-      if(!this.isOnBeep) return
-      this.Beep.beep(50, 250, 2);
-      setTimeout(() => {
-        this.Beep.beep(50, 280, 2)
-      }, 150)
+    beepReceiveMessage(audioName) {
+      // chopa1 - 퇴장
+      // chopa2 - 입장
+      // jigun - 채팅
+      this.Beep.beep(audioName)
     },
+    onChangeBeepVolume() {
+      this.Beep.changeVolume()
+    },
+    onClickExit() {
+      this.$router.push({ name: 'party' })
+    }
   }
 }
 </script>

@@ -85,6 +85,9 @@
     &.bg {
       &-sub {
         color: var(--font-gray);
+        path {
+          fill: var(--font-gray);
+        }
       }
     }
   }

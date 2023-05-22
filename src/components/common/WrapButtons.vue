@@ -62,6 +62,9 @@ export default {
     &-center {
       justify-content: center;
     }
+    &-right {
+      justify-content: flex-end;
+    }
   }
 }
 </style>

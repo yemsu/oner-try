@@ -100,10 +100,11 @@ export const actions = {
   async POST_MEMBER({ commit }, id) {
     const { result, error } = await postMember(id)
     if(error) {
-      throw new Error(`CANNOT POST_MEMBER: ${error.msg}`)
+      console.log('CANNOT POST_MEMBER:',error )
+      return error
     }
-    // console.log('POST_MEMBER', result)
     commit('ADD_MEMBER', result)
+    return result 
   },
   async DELETE_MEMBER({ commit }, { id, siteNick }) {
     const { result, error } = await deleteMember(id, siteNick)

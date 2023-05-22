@@ -3,7 +3,10 @@
     <layout-content-wrap>
       <div class="area-page-title mb-big">
         <div class="wrap-title">
-          <h2 class="page-title">🤠 파티 모집</h2>
+          <h2 class="page-title">
+            🤠 파티 모집
+            <common-beta-mark />
+          </h2>
           <p class="title-desc">함께 보스를 혼내주러 갈 동료를 찾아보세요!</p>
         </div>
         <element-button
@@ -24,15 +27,30 @@
         @onChange="(list) => selectedRoomType = list[0]"
       />
       <div class="area-chat-room">
+        <common-wrap-buttons
+          size="small"
+          align="left"
+          position="top"
+        >
+          <element-button
+            size="small"
+            type="text"
+            bg="sub"
+            @click="refreshData"
+          >
+            <font-awesome-icon icon="fa-arrows-rotate" />
+            새로고침
+          </element-button>
+        </common-wrap-buttons>
         <ul v-if="chatRooms && chatRooms.length > 0" class="list-chat-room">
           <li
-            v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper }, i) in chatRooms"
+            v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper, host }, i) in chatRooms"
             :key="`chatRoom${i}`"
             class="chat-room"
           >
             <card-list-content
               v-if="members"
-              :required-data="{ id, title, badgeList: badgeList(members) }"
+              :required-data="{ id, title, badgeList: badgeList(host, members) }"
               tag-name="button"
               link-title="입장하기"
               :top-info="{
@@ -44,7 +62,7 @@
                   text: `👨🏾‍🤝‍👨🏼 ${memberCount} / ${capacity}`
                 }
               }"
-              @click="onClickChatRoom"
+              @click="onClickChatRoom(id, members)"
             />
           </li>
         </ul>
@@ -58,6 +76,7 @@
       :data="chatRooms || []"
       :fn-load-data="loadData"
       :category="selectedRoomType"
+      :refresh-trigger="refreshTrigger"
     />
     <create-party-chat
       v-if="showCreateChat"
@@ -71,7 +90,7 @@
 import CardListContent from '@/components/common/CardListContent.vue'
 import CreatePartyChat from '@/components/pages/party/CreatePartyChat.vue';
 import setMeta from '@/plugins/utils/meta';
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   head() {
@@ -91,6 +110,7 @@ export default {
       page: 1,
       selectedRoomType: '999', /// 999 = ALL
       roomTypeOptions: null,
+      refreshTrigger: false
     }
   },
   computed: {
@@ -116,6 +136,12 @@ export default {
     ...mapActions({
       getChatRooms: 'party/GET_CHAT_ROOMS',
       getRoomTypes: 'party/GET_ROOM_TYPES',
+      postMember: 'party/POST_MEMBER',
+    }),
+    ...mapMutations({
+      setChatRooms: 'party/SET_CHAT_ROOMS',
+      setToastMessage: 'toastPopup/SET_MESSAGE',
+      setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
     }),
     async loadData(page) {
       await this.getChatRooms({
@@ -124,17 +150,30 @@ export default {
         size: 15
       })
     },
-    badgeList(members) {
+    badgeList(host, members) {
       if(!members) return
       const badgeList = members.map(({ nickname, status }) => ({
-        text: `${this.chatRooms.host === nickname ? '👑' : ''} ${nickname}`,
+        text: `${host === nickname ? '👑' : ''} ${nickname}`,
         color: `status-${status.toLowerCase()}`
       }))
       return badgeList
     },
-    onClickChatRoom(id) {
+    async onClickChatRoom(id, members) {
       if(!this.isLogin) {
         this.$router.push({ name: 'auth-login' })
+        return
+      }
+      // 버그로 인해 채팅방 나가졌는데 업데이트 안된 경우 다시 들어갈 수 있게 수정.
+      let isFull = false
+      const isMemberBug = members.find(({nickname}) => nickname === this.nickname)
+      const res = await this.postMember(id)
+      if(res.msg === '방이 가득찼습니다.') {
+        isFull = true
+      }
+      if(isFull && !isMemberBug) {
+        this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
+        this.setToastOn(true)
+        this.refreshData()
         return
       }
       this.$router.push({
@@ -143,6 +182,10 @@ export default {
           id
         }
       })
+    },
+    refreshData() {
+      if(this.refreshTrigger) this.refreshTrigger = false
+      this.refreshTrigger = true
     },
     onClickCreateChat() {
       if(!this.isLogin) {

@@ -28,6 +28,7 @@
         :value="inputValue"
         size="small"
         placeholder="메세지 보내기"
+        style-type="none"
         @onUpdateInput="setInputValue"
         @onEnter="onEnterInput"
       />
@@ -54,6 +55,19 @@
             <font-awesome-icon icon="fa-xmark" />
           </element-button>
         </li>
+        <li
+          v-for="(i) in readyBoxLength"
+          :key="`ready${i}`"
+          class="box-ready"
+        ><span class="ir-hidden">멤버 입장 대기 공간</span></li>
+        <li
+          v-for="(i) in blankBoxLength"
+          :key="`blank${i}`"
+          class="box-blank"
+        >
+          <font-awesome-icon icon="fa-lock"/>
+          <span class="ir-hidden">제한 인원 공간</span>
+        </li>
       </ul>
       <div class="option-buttons">
         <element-button
@@ -64,6 +78,14 @@
         >
           <font-awesome-icon :icon="`fa-volume-${isOnBeep ? 'high' : 'xmark'}`" />
           {{ `채팅 알람 ${isOnBeep ? '끄기' : '켜기'}` }}
+        </element-button>
+        <element-button
+          type="text"
+          size="xsmall"
+          class="control-volume"
+          @click="() => $emit('changeBeepVolume')"
+        >
+          볼륨 {{ this.beepVolume }}
         </element-button>
       </div>
     </div>
@@ -91,6 +113,10 @@ export default {
       type: Boolean,
       default: () => false
     },
+    beepVolume: {
+      type: Number,
+      default: 1
+    }
   },
   components: {
   },
@@ -109,6 +135,12 @@ export default {
       nickname: 'auth/getNickname',
       chatroom: 'party/getChatRoom',
     }),
+    readyBoxLength() {
+      return this.chatroom.capacity - this.chatroom?.members.length
+    },
+    blankBoxLength() {
+      return 6 - this.chatroom.capacity
+    }
   },
   mounted() {
 

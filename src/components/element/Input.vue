@@ -6,7 +6,8 @@
       {'compact': isCompactMode},
       {'searching': isActive},
       usage,
-      `type-${inputType}`
+      `type-${inputType}`,
+      `type-${styleType}`,
     ]"
   >
     <label :is="label ? 'label' : 'div'" :for="id">
@@ -18,6 +19,7 @@
         :placeholder="placeholder"
         :value="value"
         :maxlength="maxlength"
+        :autocomplete="autocomplete"
         @input="onUpdateInput"
         @focus="onFocusInput"
         @keydown="onEnter"
@@ -56,6 +58,10 @@ export default {
       type: String,
       default: () => 'basic' // small, basic, big
     },
+    styleType: {
+      type: String,
+      default: 'point' // none, point
+    },
     isCompactMode: {
       type: Boolean,
       default: () => false
@@ -84,6 +90,10 @@ export default {
       type: String,
       default: () => ''
     },
+    autocomplete: {
+      type: Boolean,
+      default: false
+    }
   },
   watch: {
     isOnFocus(crr, prev) {
