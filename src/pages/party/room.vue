@@ -56,7 +56,7 @@ export default {
       willLeave: false,
       chatMessages: [],
       Beep: null,
-      isOnBeep: false,
+      isOnBeep: true,
       titleInput: '',
       needCheckRouteLeave: true,
       TITLE_EDIT_MESSAGE: '%TITLE_EDIT_MESSAGE%',
