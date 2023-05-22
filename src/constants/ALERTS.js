@@ -34,6 +34,7 @@ const ALERTS = {
     KICK_OUT: `파티에서 제외되었습니다.`,
     KICK_OUT_WHO: (nickname) => `${nickname}님이 파티에서 제외되었습니다.`,
     GET_ROOM_TYPE_FAIL: `파티 타입 호출에 실패하였습니다.`,
+    PARTY_FULL: '파티가 가득 찼어요!'
   },
 }
 

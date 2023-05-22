@@ -26,13 +26,13 @@
       <div class="area-chat-room">
         <ul v-if="chatRooms && chatRooms.length > 0" class="list-chat-room">
           <li
-            v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper }, i) in chatRooms"
+            v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper, host }, i) in chatRooms"
             :key="`chatRoom${i}`"
             class="chat-room"
           >
             <card-list-content
               v-if="members"
-              :required-data="{ id, title, badgeList: badgeList(members) }"
+              :required-data="{ id, title, badgeList: badgeList(host, members) }"
               tag-name="button"
               link-title="입장하기"
               :top-info="{
@@ -44,7 +44,7 @@
                   text: `👨🏾‍🤝‍👨🏼 ${memberCount} / ${capacity}`
                 }
               }"
-              @click="onClickChatRoom"
+              @click="onClickChatRoom(id, capacity === memberCount, members)"
             />
           </li>
         </ul>
@@ -71,7 +71,7 @@
 import CardListContent from '@/components/common/CardListContent.vue'
 import CreatePartyChat from '@/components/pages/party/CreatePartyChat.vue';
 import setMeta from '@/plugins/utils/meta';
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   head() {
@@ -117,6 +117,10 @@ export default {
       getChatRooms: 'party/GET_CHAT_ROOMS',
       getRoomTypes: 'party/GET_ROOM_TYPES',
     }),
+    ...mapMutations({
+      setToastMessage: 'toastPopup/SET_MESSAGE',
+      setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
+    }),
     async loadData(page) {
       await this.getChatRooms({
         roomTypeId: this.selectedRoomType,
@@ -124,17 +128,24 @@ export default {
         size: 15
       })
     },
-    badgeList(members) {
+    badgeList(host, members) {
       if(!members) return
       const badgeList = members.map(({ nickname, status }) => ({
-        text: `${this.chatRooms.host === nickname ? '👑' : ''} ${nickname}`,
+        text: `${host === nickname ? '👑' : ''} ${nickname}`,
         color: `status-${status.toLowerCase()}`
       }))
       return badgeList
     },
-    onClickChatRoom(id) {
+    onClickChatRoom(id, isFull, members) {
       if(!this.isLogin) {
         this.$router.push({ name: 'auth-login' })
+        return
+      }
+      // 버그로 인해 채팅방 나가졌는데 업데이트 안된 경우 다시 들어갈 수 있게 수정.
+      const isMemberBug = members.find(({nickname}) => nickname === this.nickname)
+      if(isFull && !isMemberBug) {
+        this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
+        this.setToastOn(true)
         return
       }
       this.$router.push({

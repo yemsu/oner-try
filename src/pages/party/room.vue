@@ -145,7 +145,7 @@ export default {
     subscribeMe() {
       this.peer.on('open', (id) => {
         console.log('im open', )
-        if(this.isHost && this.chatRoom.members.length === 1) {
+        if(this.isHost && this.chatRoom.members?.length === 1) {
           this.pushChatMessage(null, `방을 개설하였습니다.`)
         } else {
           this.onPostMember(this.nickname)

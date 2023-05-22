@@ -92,14 +92,28 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
   width: 180px;
   padding: 15px;
   font-size: var(--font-size-S);
   > li {
     display: flex;
+    height: 1.3rem;
     gap: 5px;
     align-items: center;
+    &.box-ready,
+    &.box-blank {
+      border-radius: 5px;
+      background-color: var(--bg-light-gray);
+    }
+    &.box-blank {
+      display: flex;
+      justify-content: center;
+      font-size: var(--font-size-XXS);
+      path {
+        fill: var(--bg-gray);
+      }
+    }
   }
   .me {
     color: var(--color-point);

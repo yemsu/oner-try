@@ -55,6 +55,19 @@
             <font-awesome-icon icon="fa-xmark" />
           </element-button>
         </li>
+        <li
+          v-for="(i) in readyBoxLength"
+          :key="`ready${i}`"
+          class="box-ready"
+        ><span class="ir-hidden">멤버 입장 대기 공간</span></li>
+        <li
+          v-for="(i) in blankBoxLength"
+          :key="`blank${i}`"
+          class="box-blank"
+        >
+          <font-awesome-icon icon="fa-lock"/>
+          <span class="ir-hidden">제한 인원 공간</span>
+        </li>
       </ul>
       <div class="option-buttons">
         <element-button
@@ -110,6 +123,12 @@ export default {
       nickname: 'auth/getNickname',
       chatroom: 'party/getChatRoom',
     }),
+    readyBoxLength() {
+      return this.chatroom.capacity - this.chatroom?.members.length
+    },
+    blankBoxLength() {
+      return 6 - this.chatroom.capacity
+    }
   },
   mounted() {
 

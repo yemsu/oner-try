@@ -4,7 +4,7 @@
       :is="tagName"
       :to="linkUrl"
       :title="linkTitle"
-      @click="tagName === 'button' && $emit('click', id)"
+      @click="tagName === 'button' && $emit('click')"
     >
       <div class="wrap-info">
         <div class="wrap-info-top">
