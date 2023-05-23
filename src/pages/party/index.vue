@@ -41,14 +41,14 @@
         @onChange="(list) => selectedRoomType = list[0]"
       />
       <div class="area-chat-room">
+        <common-wrap-buttons
+          size="small"
+          align="left"
+          position="top"
+        >
+          <element-refresh-button @click="refreshData" />
+        </common-wrap-buttons>
         <template v-if="chatRooms && chatRooms.length > 0" >
-          <common-wrap-buttons
-            size="small"
-            align="left"
-            position="top"
-          >
-            <element-refresh-button @click="refreshData" />
-          </common-wrap-buttons>
           <ul class="list-chat-room">
             <li
               v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper, host }, i) in chatRooms"
