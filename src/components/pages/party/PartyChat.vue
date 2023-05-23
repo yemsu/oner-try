@@ -73,7 +73,7 @@
         <element-button
           type="text"
           size="xsmall"
-          @click="() => $emit('toggleOnBeep')"
+          @click="toggleOnBeep"
           :title="`채팅 알람 ${isOnBeep ? '끄기' : '켜기'}`"
         >
           <font-awesome-icon :icon="`fa-volume-${isOnBeep ? 'high' : 'xmark'}`" />
@@ -83,7 +83,7 @@
           type="text"
           size="xsmall"
           class="control-volume"
-          @click="() => $emit('changeBeepVolume')"
+          @click="$Peer.changeBeepVolume"
         >
           볼륨 {{ this.beepVolume }}
         </element-button>
@@ -104,18 +104,6 @@ export default {
     chatMessages: {
       type: Array,
       require: true
-    },
-    peerId: {
-      type: String,
-      default: () => ''
-    },
-    isOnBeep: {
-      type: Boolean,
-      default: () => false
-    },
-    beepVolume: {
-      type: Number,
-      default: 1
     }
   },
   components: {
@@ -140,14 +128,20 @@ export default {
     },
     blankBoxLength() {
       return 6 - this.chatroom.capacity
-    }
+    },
+    isOnBeep() {
+      return this.$Peer.$beep.isMuted
+    },
+    beepVolume() {
+      return this.$Peer.$beep.volume / this.$Peer.$beep.volumeGap
+    },
   },
   mounted() {
 
   },
   methods: {
     sendMessage(message) {
-      this.$emit('sendMessage', { nickname: this.peerId, message })
+      this.$emit('sendMessage', { nickname: this.$Peer.peerId, message })
 		},
     fixScrollBottom() {
       setTimeout(() => {
@@ -166,6 +160,9 @@ export default {
       this.sendMessage(this.inputValue)
       this.setInputValue('')
     },
+    toggleOnBeep() {
+      this.$Peer.$beep.isMuted = !this.$Peer.$beep.isMuted
+    }
   }
 }
 </script>

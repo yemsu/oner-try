@@ -1,5 +1,5 @@
 <template>
-  <layout-content-wrap v-if="chatRoom && peer" :is-main-content="true">
+  <layout-content-wrap v-if="chatRoom && $Peer" :is-main-content="true">
     <div class="wrap-party-room">
       <div class="badges">
         <element-badge
@@ -23,12 +23,8 @@
         :peer-id="nickname"
         :conn="connections"
         :chat-messages="chatMessages"
-        :is-on-beep="!peer.$beep.isMuted"
-        :beep-volume="(peer.$beep.volume / peer.$beep.volumeGap)"
         @sendMessage="sendMessage"
-        @toggleOnBeep="peer.$beep.isMuted = !peer.$beep.isMuted"
         @kickOut="onClickKickOut"
-        @changeBeepVolume="() => peer.changeBeepVolume()"
       />
       <common-wrap-buttons position="bottom">
         <element-button
@@ -47,7 +43,6 @@
 <script>
 import PartyChat from '@/components/pages/party/PartyChat.vue'
 import setMeta from '@/plugins/utils/meta';
-import $Peer from '@/plugins/utils/Peer';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
@@ -119,7 +114,7 @@ export default {
       //   }
       // }
 
-      this.peer = new $Peer(this.nickname, {
+      this.$Peer.init(this.nickname, {
         peerOnOpen: (peerId) => {
           console.log('peerOnOpen ###', peerId)
           if(this.isHost && this.chatRoom.members?.length === 1) {
@@ -129,7 +124,7 @@ export default {
           // start connecting 
           for(const nickname of this.memberNicks) {
             if(nickname === this.nickname) continue
-            this.peer.startConnecting(nickname)
+            this.$Peer.startConnecting(nickname)
           }
         },
         afterOnConnect: (peerId) => {
@@ -154,7 +149,7 @@ export default {
     window.removeEventListener('beforeunload', this.confirmClose);
   },
   async beforeRouteLeave (to, from, next) {
-    if(!this.chatRoom || !this.peer) {
+    if(!this.chatRoom || !this.$Peer) {
       next()
       return
     }
@@ -214,7 +209,7 @@ export default {
       // 내 화면에 추가되도록 데이터 업데이트
       sendMe && this.pushChatMessage(nickname, message)
       // 멤버들 화면에도 추가되도록 전송
-			for(const connection of this.peer.connections) {
+			for(const connection of this.$Peer.connections) {
         connection.send(message)
       }
 		},
@@ -245,7 +240,7 @@ export default {
       })
     },
     destroyPeer() {
-      if(this.peer.$peer) this.peer.$peer.destroy()
+      if(this.$Peer.$peer) this.$Peer.$peer.destroy()
       this.onDeleteMember(this.nickname)
     },
     confirmClose(e) {
