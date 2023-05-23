@@ -11,83 +11,77 @@ class $Peer {
     this.connections = []
     this.isBeepMuted = false
     this.$beep = new Beep(this.isBeepMuted)
-    this.CHECK_REFRESH_FLAG = `onertrychatroomRefreshflag_${this.peerId}`
+    this.CHECK_REFRESH_FLAG_COMMON = `onertrychatroomRefreshflag`
+    this.CHECK_REFRESH_FLAG = null
     // -------------------------------------
-    this.peerOnOpen = () => {}
     this.afterOnConnect = () => {}
-    this.afterCloseConnection = () => {}
     this.onReceiveMsg = () => {}
-    this.afterDestroyPeer = () => {}
+    this.onMemberLeave = () => {}
   }
 
-  init(peerId, {
-    peerOnOpen,
-    afterOnConnect,
-    afterCloseConnection,
-    onReceiveMsg,
-    afterDestroyPeer,
+  setCustomEvents({
+    afterOnConnect = () => {},
+    onReceiveMsg = () => {},
+    onMemberLeave = () => {},
   }) {
-    this.peerId = peerId
-    this.peerOnOpen = peerOnOpen
     this.afterOnConnect = afterOnConnect
-    this.afterCloseConnection = afterCloseConnection
     this.onReceiveMsg = onReceiveMsg
-    this.afterDestroyPeer = afterDestroyPeer
-
-    this.createPeer()
+    this.onMemberLeave = onMemberLeave
   }
-  createPeer() {
+  createPeer(peerId) {
     if(this.$peer) {
       this.$peer = null
     }
 
+    this.peerId = peerId
+    this.CHECK_REFRESH_FLAG = this.CHECK_REFRESH_FLAG_COMMON + peerId
     this.$peer = new Vue.prototype.peer(this.peerId, {
       host: process.env.PEER_SERVER,
       secure: true
     })
-
-    console.log('피어 생성', this.$peer)
     
     this.$peer.on('error', (error) => this.handlerError(error))
-    this.$peer.on('open', (_peerId) => this.peerOnOpen(_peerId))
-    this.$peer.on('connection', (connection) => this.subscribeMember(connection))
+    this.$peer.on('open', (peerId) => {
+      console.log('피어 열림', peerId)
+    })
+    this.$peer.on('connection', (connection) => {
+      this.subscribeMember(connection)
+    })
   }
-  isAlreadyConnected(_connectionId) {
-    const alreadyConnected = this.connections.find(({connectionId}) => connectionId === _connectionId)
-    console.log('alreadyConnected', this.connections, _connectionId)
+  isAlreadyConnected(peerId) {
+    const alreadyConnected = this.connections.find(({peer}) => peer === peerId)
+    console.log('alreadyConnected', !!alreadyConnected, peerId)
     return alreadyConnected
   }
-  startConnecting(memberId) {
-    console.log('this.connections1', this.connections)
-    console.log('방에 들어왔고', memberId)
-    const connection = this.$peer.connect(memberId)
-    console.log('와서 멤버들에게 커넥션을 요청한다.', memberId)
+  startConnecting(memberId, label) {
+    console.log('방에 들어왔고', memberId, label)
+    const connection = this.$peer.connect(memberId, {
+      label
+    })
+    console.log('와서 멤버들에게 커넥션을 요청한다.', connection.peer)
     this.subscribeMember(connection)
   }
   subscribeMember(connection) {
-    console.log('멤버 구독을 시작한다.', connection)
     const peerId = connection.peer
-    if(this.isAlreadyConnected(connection.connectionId)) {
-      if(this.checkRefreshFlag()) {  // open에 flag 존재하면 새로고침임
-        console.log('아? 새로고침이였구나', peerId)
-        this.deleteRefreshFlag()
-      }
-      return
+    // 동시에 여러명이 입장할 경우 커넥션 여러번 추가 되는 이슈 있어 체크
+    if(this.isAlreadyConnected(connection.peer)) {
+      console.log('이미 연결된 멤버. 구독은 따로 안한다.', this.connections)
+    } else {
+      this.connections.push(connection)
+      connection.on('open',() => {
+        console.log('멤버와 연결됐다.', peerId)
+        if(this.checkRefreshFlag()) {  // open에 flag 존재하면 새로고침임
+          console.log('유저가 새로고침을 했다', peerId)
+          this.deleteRefreshFlag()
+        }
+        if(Vue.prototype.$utils.checkAdmin(peerId)) {
+          return
+        }
+        this.afterOnConnect(peerId)
+        this.beepReceiveMessage('chopa2')
+      })
     }
-    console.log('this.connections', this, this.connections)
-    this.connections.push(connection)
-    connection.on('open',() => {
-      console.log('멤버와 연결됐다.', peerId)
-      if(this.checkRefreshFlag()) {  // open에 flag 존재하면 새로고침임
-        console.log('나는 새로고침을 했다', peerId)
-        this.deleteRefreshFlag()
-      }
-      if(Vue.prototype.$utils.checkAdmin(peerId)) {
-        return
-      }
-      this.afterOnConnect(peerId)
-      this.beepReceiveMessage('chopa2')
-    })
+    console.log('멤버 구독을 시작한다.', connection)
 
     connection.on("data", (message) => {
       console.log('message', message)
@@ -96,19 +90,18 @@ class $Peer {
     });
     
     connection.on('close', () => {
-      console.log('멤버와 연결이 잠깐 끊겼다.', peerId)
-      this.connections = this.connections.filter(({peer}) => peer !== peerId)
-      // 새로고침 체크를 위해 플래그 저장
+      console.log('멤버와 연결이 끊겼다. 커넥션 리스트를 정리하자', peerId)
+      // // 새로고침 체크를 위해 플래그 저장
       this.setRefreshFlag()
-      console.log('setRefreshFlag', this.checkRefreshFlag())
+
       // 새로고침이라면 open 에서 플래그가 지워진다.
       // 고로 플래그가 1.5초 뒤에도 존재한다면 유저와 커넥션을 종료한다.
       setTimeout(() => {
         console.log('checkRefreshFlag()', this.checkRefreshFlag())
         if(this.checkRefreshFlag()) {
           console.log('유저가 나갔구나', peerId)
-          this.deleteRefreshFlag()
-          this.closeConnection(connection.peer)
+          this.removeConnection(peerId)
+          this.onMemberLeave(peerId)
           this.beepReceiveMessage('chopa1')
         }
       }, 2000);
@@ -118,27 +111,35 @@ class $Peer {
       console.log('connection disconnected', connection.peer)
     })
   }
-  closeConnection(peerId) {
+  removeConnection(peerId) {
     console.log('유저와의 연결을 종료한다', peerId)
-    this.connections.filter(({peer}) => peer !== peerId)
-    this.afterCloseConnection(peerId)
+    this.connections = this.connections.filter(({peer}) => peer !== peerId)
   }
   destroyPeer() {
     if(!this.$peer) return
     this.$peer.destroy()
     this.$peer = null
-    this.afterDestroyPeer(this.peerId)
+  }
+  disconnectAll() {
+    console.log("연결을 모두 끊는다.")
+    // this.$peer.disconnect() // 연결 껐따가 다시 연결하면 멤버 나갔다 들어왔을때 연결이안됨.
+    this.connections = []
   }
   handlerError(error) {
     console.error('PEERJS ERROR: ', {error})
     console.error(error.message)
     if(error.type === 'unavailable-id') {
-      const newPeerID = error.message.split('"')[1] + `NEW_PEER_ID_1`
-      console.log('newPeerID', newPeerID)
+      this.$peer.reconnect()
     }
     if(error.type === 'network') {
       console.log("서버와 연결이 끊겼습니다. 재연결을 시작합니다.")
       this.$peer.reconnect()
+    }
+    if(error.type === 'peer-unavailable') {
+      const peerId = error.message.split('to peer ')[1]
+      console.log(`유저와 연결이 끊겼습니다. ${peerId}`)
+      this.removeConnection(peerId)
+      this.onNoticeMemberLeave(peerId)
     }
   }
   beepReceiveMessage(audioName) {
@@ -148,6 +149,7 @@ class $Peer {
     this.$beep.beep(audioName)
   }
   changeBeepVolume() {
+    console.log('changeBeepVolume', this.$beep)
     this.$beep.changeVolume()
   }
   setRefreshFlag() {

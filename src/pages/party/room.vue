@@ -65,6 +65,7 @@ export default {
       needCheckRouteLeave: true,
       TITLE_EDIT_MESSAGE: '%TITLE_EDIT_MESSAGE%',
       KICK_OUT_MESSAGE: '%KICK_OUT_MESSAGE%',
+      USER_LEAVE_MESSAGE: '%USER_LEAVE_MESSAGE%',
       kickOutMember: null,
     }
   },
@@ -78,7 +79,9 @@ export default {
       return this.chatRoom?.host === this.nickname
     },
     memberNicks() {
-      return this.chatRoom.members.map(({nickname}) => nickname)
+      return this.chatRoom.members
+        .filter(({nickname}) => nickname !== this.nickname)
+        .map(({nickname}) => nickname)
     }
   },
   watch: {
@@ -86,6 +89,7 @@ export default {
       if(!crr) {
         this.needCheckRouteLeave = false
         this.$router.push({ name: 'party' })
+        this.$Peer.destroyPeer()
       }
     }
   },
@@ -103,6 +107,31 @@ export default {
         return
       }
 
+      console.log('방 입장!', this.$Peer.$peer.disconnected, this.memberNicks)
+      
+      // 파티 모집 - 피어 상태 변화에 따른 이벤트 설정
+      this.$Peer.setCustomEvents({
+        afterOnConnect: (peerId) => {
+          this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
+          if(!this.memberNicks.includes(peerId)) {
+            // 화면에 멤버 추가.
+            this.addMember({ nickname: peerId })
+          }
+        },
+        onReceiveMsg: (peerId, message) => this.onReceiveMsg(peerId, message),
+        onMemberLeave: this.onMemberLeave,
+      })      
+
+      // 피어 입장
+      if(this.memberNicks.length > 0) {
+        for(const nickname of this.memberNicks) {
+          console.log('피어 입장', this.chatRoom.id, this.$Peer.connections)
+          this.$Peer.startConnecting(nickname, this.chatRoom.id)
+        }
+      } else { // 
+        this.pushChatMessage(null, `방을 개설하였습니다.`)
+      }
+
       // 오류 발생으로 추후 확인 필요
       // if(!this.$utils.checkAdmin(this.nickname)) {
       //   const isMember = this.chatRoom.members.find(({nickname}) => nickname === this.nickname)
@@ -114,50 +143,24 @@ export default {
       //   }
       // }
 
-      this.$Peer.init(this.nickname, {
-        peerOnOpen: (peerId) => {
-          console.log('peerOnOpen ###', peerId)
-          if(this.isHost && this.chatRoom.members?.length === 1) {
-            this.pushChatMessage(null, `방을 개설하였습니다.`)
-            return
-          }
-          // start connecting 
-          for(const nickname of this.memberNicks) {
-            if(nickname === this.nickname) continue
-            this.$Peer.startConnecting(nickname)
-          }
-        },
-        afterOnConnect: (peerId) => {
-          this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
-          if(!this.memberNicks.includes(peerId)) {
-            // 화면에 멤버 추가.
-            this.addMember({ nickname: peerId })
-          }
-        },
-        onReceiveMsg: (peerId, message) => this.onReceiveMsg(peerId, message),
-        afterCloseConnection: this.afterCloseConnection,
-        afterDestroyPeer: () => {}
-      })
 
       // // visibilitychange로 변경 필요.
-      // window.addEventListener('unload', this.destroyPeer)
-      window.addEventListener('beforeunload', this.confirmClose)
+      // window.addEventListener('unload', this.onUnload)
+      // window.addEventListener('beforeunload', this.confirmClose)
     }, 500);
   },
   beforeDestroy() {    
-    // window.removeEventListener('unload', this.destroyPeer);
+    window.removeEventListener('unload', this.onUnload);
     window.removeEventListener('beforeunload', this.confirmClose);
   },
   async beforeRouteLeave (to, from, next) {
-    if(!this.chatRoom || !this.$Peer) {
-      next()
-      return
-    }
     if(this.needCheckRouteLeave) {
       this.willLeave = confirm(this.$ALERTS.CHAT.CONFIRM_END)
       if(!this.willLeave) return
     }
-    this.destroyPeer()
+    this.noticeImLeave()
+    this.onDeleteMember(this.$Peer.peerId)
+    this.$Peer.disconnectAll()
     next()
   },
   methods: {
@@ -174,32 +177,46 @@ export default {
       deleteChatRoom: 'party/DELETE_CHAT_ROOM',
       putChatRoom: 'party/PUT_CHAT_ROOM',
     }),
+    onUnload() {
+      this.noticeImLeave()
+      this.onDeleteMember(this.$Peer.peerId)
+      this.$Peer.destroyPeer()
+    },
     onReceiveMsg(peerId, message) {
       if(message.includes(this.TITLE_EDIT_MESSAGE)) {
-        this.receiveChangeTitleMsg(message)
+        const newTitle = message.split(this.TITLE_EDIT_MESSAGE)[1]
+        this.receiveChangeTitleMsg(newTitle)
         return 
       } 
       if(message.includes(this.KICK_OUT_MESSAGE)) {
-        this.receiveKickOutMsg(message)
+        const memberName = message.split(this.KICK_OUT_MESSAGE)[1]
+        this.receiveKickOutMsg(memberName)
+        return 
+      }
+      if(message.includes(this.USER_LEAVE_MESSAGE)) {
+        const peerId = message.split(this.USER_LEAVE_MESSAGE)[1]
+        this.onMemberLeave(peerId)
         return 
       }
       this.pushChatMessage(peerId, message)
     },
-    afterCloseConnection(peerId) {
-      if(this.kickOutMember === peerId) {
-        this.kickOutMember = null
-        return
-      }
-      this.pushChatMessage(null, `${peerId}님이 방을 나가셨습니다.`)
-      if(this.willLeave) return
-      // 다른 멤버가 나갔을때 (본인이 나갈때 실행되지 않도록 willLeave 플래그 체크)
+    noticeImLeave() {
+      console.log('beforeRouteLeave', )
+      this.sendMessage({
+        message: `${this.USER_LEAVE_MESSAGE}${this.$Peer.peerId}`
+      })
+    },
+    onMemberLeave(peerId) {
+      console.log('afterCloseConnection')
       this.deleteMemberState(peerId)
+      this.pushChatMessage(null, `${peerId}님이 방을 나가셨습니다.`)
       if(this.chatRoom.host === peerId) {
         this.changeChatRoomState({
           host: this.chatRoom.members[0].nickname
         })
         this.pushChatMessage(null, `👑 ${this.chatRoom.members[0].nickname}님이 방장이 되셨습니다!`)
       }
+      console.log("?",)
     },
     sendMessage({ nickname, message }, sendMe = true) {
       if(this.$utils.includesAdminId(nickname + message)) {
@@ -239,10 +256,6 @@ export default {
         host: peerId
       })
     },
-    destroyPeer() {
-      if(this.$Peer.$peer) this.$Peer.$peer.destroy()
-      this.onDeleteMember(this.nickname)
-    },
     confirmClose(e) {
       e.preventDefault();
       e.returnValue = '';
@@ -257,15 +270,13 @@ export default {
         }
       })
     },
-    receiveChangeTitleMsg(message) {
-      const newTitle = message.split(this.TITLE_EDIT_MESSAGE)[1]
+    receiveChangeTitleMsg(newTitle) {
       this.changeChatRoomState({
         title: newTitle
       })
       this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
     },
-    receiveKickOutMsg(message) {
-      const memberName = message.split(this.KICK_OUT_MESSAGE)[1]
+    receiveKickOutMsg(memberName) {
       // 강퇴 대상자
       if(memberName === this.nickname) {
         alert(this.$ALERTS.CHAT.KICK_OUT)

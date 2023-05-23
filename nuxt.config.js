@@ -6,7 +6,7 @@ export default {
     APP_TITLE: 'ONER TRY',
     LOCAL_PORT: process.env.LOCAL_PORT,
     BASE_URL: isDevMode ? `http://localhost:${process.env.LOCAL_PORT}` : process.env.BASE_URL,
-    API_PATH: process.env.CONT_PATH,
+    API_PATH: process.env.CONT_PATH_LOCAL,
     AuthClientId: process.env.OAUTH_CLIENT_ID,
     PEER_SERVER: process.env.PEER_SERVER
   },

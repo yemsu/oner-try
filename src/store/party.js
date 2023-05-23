@@ -23,7 +23,7 @@ export const getters = {
 
 export const mutations = {
   SET_CHAT_ROOMS(state, data) {
-    console.log("SET_CHAT_RROMS", data)
+    // console.log("SET_CHAT_RROMS", data)
     state.chatRooms = data
   },
   ADD_CHAT_ROOM(state, data) {
@@ -79,12 +79,13 @@ export const actions = {
     return true
   },
   async POST_CHAT_ROOM({ commit }, chatRoom) {
+    console.log('POST_CHAT_ROOM', chatRoom)
     const { result, error } = await postChatRoom(chatRoom)
     if(error) {
+      console.error(`CANNOT POST_CHAT_ROOM: ${error.msg}`)
       if(error.msg === '이미 입장한 유저입니다.') {
         return true
       }
-      console.error(`CANNOT POST_CHAT_ROOM: ${error.msg}`)
       return false
     }
     commit('ADD_CHAT_ROOM', chatRoom)
@@ -136,7 +137,7 @@ export const actions = {
       alert(this.$ALERTS.CHAT.GET_ROOM_TYPE_FAIL)
       return false
     }
-    console.log('GET_ROOM_TYPES', result)
+    // console.log('GET_ROOM_TYPES', result)
     commit('SET_ROOM_TYPES', result)
     return result
   }

@@ -153,7 +153,12 @@ export default {
       if(userInfo === 'not found token') {
         console.error('getUserInfo : no Authorization : ', this.jToken)
       }
-      userInfo ? this.setIsLogin(true) : this.onClickLogout()
+      if(userInfo) {
+        this.setIsLogin(true)
+        this.$Peer.createPeer(userInfo.siteNick)
+      } else {
+        this.onClickLogout()
+      }
     },
     async onClickLogin(googleUser) {
       console.log('googleUser', googleUser)
