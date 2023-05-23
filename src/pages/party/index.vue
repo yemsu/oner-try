@@ -1,5 +1,19 @@
 <template>
-  <div class="party-index">
+  
+  <layout-content-wrap
+    v-if="true"
+    size="basic"
+    pd-top="none"
+    :is-main-content="true"
+  >
+    <common-main-notice point-text="💪" title="준비 중입니다.">
+      베타 기간을 거친 결과 예상치 못한 버그들이 확인되어, <br>
+      편리한 파티 모집을 위한 안정적인 서비스로 돌아오겠습니다. <br>
+      조금만 기다려 주세요!
+    </common-main-notice>
+  </layout-content-wrap>
+  
+  <div v-else class="party-index">
     <layout-content-wrap>
       <div class="area-page-title mb-big">
         <div class="wrap-title">
