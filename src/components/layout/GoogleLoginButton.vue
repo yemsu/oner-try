@@ -192,7 +192,7 @@ export default {
         this.renderGoogleLoginBtn()
       }, 100);
       // 로그인 관련 페이지에서 로그아웃 했다면 메인으로 이동
-      if(this.$route.path.includes('/my')) this.$router.push('/')
+      if(this.$route.path.includes('/my') || this.$route.path.includes('/party')) this.$router.push('/')
       // 로그아웃 후 alert message 있다면 띄우기
       alertMsg && alert(alertMsg)
       // user dropdown 메뉴 열려있다면 닫기

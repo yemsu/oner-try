@@ -81,6 +81,7 @@
       </div>
     </layout-content-wrap>
     <common-scroll-observer
+      v-if="isLogin"
       :data="chatRooms || []"
       :fn-load-data="loadData"
       :category="selectedRoomType"
@@ -140,6 +141,14 @@ export default {
     ]
     console.log('ddd', this.roomTypeOptions)
   },
+  mounted() {
+    setTimeout(() => {
+      if(!this.isLogin) {
+        this.$router.push({ name: 'auth-login' })
+        return
+      }
+    }, 500)
+  },
   methods: {
     ...mapActions({
       getChatRooms: 'party/GET_CHAT_ROOMS',
@@ -167,10 +176,6 @@ export default {
       return badgeList
     },
     async onClickChatRoom(id, members) {
-      if(!this.isLogin) {
-        this.$router.push({ name: 'auth-login' })
-        return
-      }
       if(!this.$utils.checkAdmin(this.nickname)) {
         // 버그로 인해 채팅방 나가졌는데 업데이트 안된 경우 다시 들어갈 수 있게 수정.
         let isFull = false
@@ -200,10 +205,6 @@ export default {
       }, 500);
     },
     onClickCreateChat() {
-      if(!this.isLogin) {
-        this.$router.push({ name: 'auth-login' })
-        return
-      }
       this.showCreateChat = !this.showCreateChat
     },
   }
