@@ -144,12 +144,13 @@ export default {
         afterDestroyPeer: () => {}
       })
 
-      window.addEventListener('unload', this.destroyPeer)
+      // // visibilitychange로 변경 필요.
+      // window.addEventListener('unload', this.destroyPeer)
       window.addEventListener('beforeunload', this.confirmClose)
     }, 500);
   },
   beforeDestroy() {    
-    window.removeEventListener('unload', this.destroyPeer);
+    // window.removeEventListener('unload', this.destroyPeer);
     window.removeEventListener('beforeunload', this.confirmClose);
   },
   async beforeRouteLeave (to, from, next) {
@@ -245,7 +246,7 @@ export default {
     },
     destroyPeer() {
       if(this.peer.$peer) this.peer.$peer.destroy()
-      // this.onDeleteMember(this.nickname)
+      this.onDeleteMember(this.nickname)
     },
     confirmClose(e) {
       e.preventDefault();
