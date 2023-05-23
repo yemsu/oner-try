@@ -6,30 +6,32 @@
       :is-main-content="true"
     >
       <template v-if="error.statusCode === 600">
-        <h2 class="title">
-          <!-- <span class="error-code">{{error.statusCode}}</span> -->
-          점검 중입니다.🧐
-        </h2>
-        <p class="error-desc">
+        <common-main-notice
+          title="점검 중입니다.🧐"
+          :point-text="error.statusCode"
+        >
           버그 수정 및 새로운 기능 오픈 준비를 위해 점검 중입니다!<br>
           30분 정도 소요될 예정입니다.
-        </p>
+        </common-main-notice>
       </template>
       <template v-else-if="error.statusCode === 404">
-        <h2 class="title">
-          <span class="error-code">{{error.statusCode}}</span>
-          존재하지 않는 페이지 입니다.😫
-        </h2>
-        <p class="error-desc">url을 확인해 주세요!</p>
+        <common-main-notice
+          title="존재하지 않는 페이지 입니다.😫"
+          :point-text="error.statusCode"
+        > 
+          url을 확인해 주세요!
+        </common-main-notice>
       </template>
       <template v-else>
-        <h2 class="title">
-          <span class="error-code">{{error.statusCode}}</span> 에러가 발생하였습니다.😲
-        </h2>
-        <p class="error-desc">새로고침이나 로그인을 다시 시도해봐주시고, <br>문제가 지속되면 해당 화면을 캡쳐하여 개발자에게 문의해주세요!</p>
-        <p class="error-msg">{{ error.message }}</p>
+        <common-main-notice
+          title="에러가 발생하였습니다.😲"
+          :point-text="error.statusCode"
+          :sub-text="error.message"
+        >
+          새로고침이나 로그인을 다시 시도해봐주시고, <br>문제가 지속되면 해당 화면을 캡쳐하여 개발자에게 문의해주세요!
+        </common-main-notice>
       </template>
-      <p class="text-sub">
+      <p class="text-sub-2">
         에러 문의 및 제보는 사이트 개선에 큰 도움이 됩니다!<br>
         👉
         <element-button
@@ -72,31 +74,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wrap-error {
-  .title {
-    font-size: var(--font-size-title-B);
-  }
-  .error-desc {
-    font-size: var(--font-size-B);
-  }
-  .error-msg {
-    font-size: var(--font-size-S);
-    color: var(--font-dark-gray);
-  }
-  .text-sub {
-    color: var(--font-dark-gray);
-    a {
-      color: var(--font-dark-gray);
-      text-decoration: underline;
-    }
-  }
-  .error-code {
-    display: block;
-    font-size: 90px;
+.text-sub-2 {
+  color: var(--font-gray);
+  a {
     color: var(--font-gray);
-    font-weight: var(--font-weight-B);
-    line-height: 1.2;
-    letter-spacing: 0.05em;
+    text-decoration: underline;
   }
 }
 </style>
