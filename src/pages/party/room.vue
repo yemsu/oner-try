@@ -65,6 +65,7 @@ export default {
       needCheckRouteLeave: true,
       TITLE_EDIT_MESSAGE: '%TITLE_EDIT_MESSAGE%',
       KICK_OUT_MESSAGE: '%KICK_OUT_MESSAGE%',
+      USER_LEAVE_MESSAGE: '%USER_LEAVE_MESSAGE%',
       kickOutMember: null,
     }
   },
@@ -78,14 +79,16 @@ export default {
       return this.chatRoom?.host === this.nickname
     },
     memberNicks() {
-      return this.chatRoom.members.map(({nickname}) => nickname)
+      return this.chatRoom.members
+        .filter(({nickname}) => nickname !== this.nickname)
+        .map(({nickname}) => nickname)
     }
   },
   watch: {
     isLogin(crr) {
       if(!crr) {
-        this.needCheckRouteLeave = false
-        this.$router.push({ name: 'party' })
+        this.goPartyList()
+        this.$Peer.destroyPeer()
       }
     }
   },
@@ -93,71 +96,91 @@ export default {
     const chatRoom = await this.getChatRoom(this.$route.query.id)
     if(!chatRoom)  {
       alert(this.$ALERTS.CHAT.NO_ROOM)
-      this.$router.push({ name: 'party' })
+      this.goPartyList()
       return
     }
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if(!this.nickname) {
+        this.needCheckRouteLeave = false
         this.$router.push({ name: 'auth-login' })
         return
       }
 
-      // 오류 발생으로 추후 확인 필요
-      // if(!this.$utils.checkAdmin(this.nickname)) {
-      //   const isMember = this.chatRoom.members.find(({nickname}) => nickname === this.nickname)
-      //   console.log('isMember', this.chatRoom.members, isMember)
-      //   if(!isMember) {
-      //     alert(this.$ALERTS.CHAT.BLOCK_DIRECT_ROOM)
-      //     this.$router.push({ name: 'party' })
-      //     return
-      //   }
-      // }
+      console.log('방 입장!', this.chatRoom.members, this.memberNicks)
 
-      this.$Peer.init(this.nickname, {
-        peerOnOpen: (peerId) => {
-          console.log('peerOnOpen ###', peerId)
-          if(this.isHost && this.chatRoom.members?.length === 1) {
+      // 새로고침 체크 - 서버 멤버에 내가 없어? 다시 보내야지.
+      const postMemberRes = await this.postMember(this.chatRoom.id)
+      console.log('postMemberRes', postMemberRes)
+      if(postMemberRes === 'full') {
+        alert(this.$ALERTS.CHAT.PARTY_FULL)
+        this.goPartyList()
+        return
+      }
+      if(postMemberRes === 'existed') {
+        alert(this.$ALERTS.CHAT.USER_EXISTED)
+        this.goPartyList()
+        return
+      }
+      
+      // 화면에 멤버 추가.
+      const getChatRoomRes = await this.getChatRoom(this.chatRoom.id)
+      if(!getChatRoomRes) {
+        alert('멤버 업데이트에 실패했습니다! 새로 고침을 해주세요.')
+        return
+      }
+
+      // 피어가 없어? 새로 만들어.
+      if(!this.$Peer.$peer) {
+        console.log("피어가 없어? 새로 만들어.")
+        this.$Peer.createPeer(this.nickname)
+      }
+      
+      // 파티 모집 - 피어 상태 변화에 따른 이벤트 설정
+      this.$Peer.setCustomEvents({
+        onOpenPeer: () => {
+          console.log('onOpenPeer',this.memberNicks)
+          if(this.memberNicks.length > 0) {
+            for(const nickname of this.memberNicks) {
+              console.log('피어 입장', this.chatRoom.id, this.$Peer.connections)
+              this.$Peer.startConnecting(nickname, this.chatRoom.id)
+            }
+          } else { // 
             this.pushChatMessage(null, `방을 개설하였습니다.`)
-            return
-          }
-          // start connecting 
-          for(const nickname of this.memberNicks) {
-            if(nickname === this.nickname) continue
-            this.$Peer.startConnecting(nickname)
           }
         },
-        afterOnConnect: (peerId) => {
+        afterOnConnect: async (peerId) => {
           this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
           if(!this.memberNicks.includes(peerId)) {
             // 화면에 멤버 추가.
-            this.addMember({ nickname: peerId })
+            const res = await this.getChatRoom(this.chatRoom.id)
+            if(!res) {
+              alert('멤버 업데이트에 실패했습니다! 새로 고침을 해주세요.')
+              return
+            }
+            this.changeChatRoomState({ members: this.chatRoom.members })
           }
         },
         onReceiveMsg: (peerId, message) => this.onReceiveMsg(peerId, message),
-        afterCloseConnection: this.afterCloseConnection,
-        afterDestroyPeer: () => {}
-      })
+        onMemberLeave: this.onMemberLeave,
+      })      
 
-      // // visibilitychange로 변경 필요.
-      // window.addEventListener('unload', this.destroyPeer)
+      window.addEventListener('pagehide', this.onUnload)
       window.addEventListener('beforeunload', this.confirmClose)
     }, 500);
   },
   beforeDestroy() {    
-    // window.removeEventListener('unload', this.destroyPeer);
+    window.removeEventListener('pagehide', this.onUnload);
     window.removeEventListener('beforeunload', this.confirmClose);
   },
   async beforeRouteLeave (to, from, next) {
-    if(!this.chatRoom || !this.$Peer) {
-      next()
-      return
-    }
     if(this.needCheckRouteLeave) {
       this.willLeave = confirm(this.$ALERTS.CHAT.CONFIRM_END)
       if(!this.willLeave) return
     }
-    this.destroyPeer()
+    this.noticeImLeave()
+    this.onDeleteMember(this.$Peer.peerId)
+    this.$Peer.destroyPeer()
     next()
   },
   methods: {
@@ -169,37 +192,66 @@ export default {
       setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
     }),
     ...mapActions({
+      postMember: 'party/POST_MEMBER',
       getChatRoom: 'party/GET_CHAT_ROOM',
       deleteMember: 'party/DELETE_MEMBER',
       deleteChatRoom: 'party/DELETE_CHAT_ROOM',
       putChatRoom: 'party/PUT_CHAT_ROOM',
     }),
+    goPartyList() {
+      this.needCheckRouteLeave = false
+      this.$router.push({ name: 'party' })
+    },
+    onUnload(e) {
+      this.willLeave = true
+      this.noticeImLeave()
+      this.onDeleteMember(this.$Peer.peerId)
+      this.$Peer.destroyPeer()
+    },
     onReceiveMsg(peerId, message) {
       if(message.includes(this.TITLE_EDIT_MESSAGE)) {
-        this.receiveChangeTitleMsg(message)
+        const newTitle = message.split(this.TITLE_EDIT_MESSAGE)[1]
+        this.receiveChangeTitleMsg(newTitle)
         return 
       } 
       if(message.includes(this.KICK_OUT_MESSAGE)) {
-        this.receiveKickOutMsg(message)
+        const memberName = message.split(this.KICK_OUT_MESSAGE)[1]
+        this.receiveKickOutMsg(memberName)
+        return 
+      }
+      if(message.includes(this.USER_LEAVE_MESSAGE)) {
+        const peerId = message.split(this.USER_LEAVE_MESSAGE)[1]
+        this.onMemberLeave(peerId)
         return 
       }
       this.pushChatMessage(peerId, message)
     },
-    afterCloseConnection(peerId) {
-      if(this.kickOutMember === peerId) {
-        this.kickOutMember = null
-        return
-      }
-      this.pushChatMessage(null, `${peerId}님이 방을 나가셨습니다.`)
+    noticeImLeave() {
+      this.sendMessage({
+        message: `${this.USER_LEAVE_MESSAGE}${this.$Peer.peerId}`
+      })
+    },
+    onMemberLeave(peerId) {
+      console.log('onMemberLeave')
       if(this.willLeave) return
-      // 다른 멤버가 나갔을때 (본인이 나갈때 실행되지 않도록 willLeave 플래그 체크)
       this.deleteMemberState(peerId)
+      this.$Peer.removeConnection(peerId)
+      this.pushChatMessage(null, `${peerId}님이 방을 나가셨습니다.`)
       if(this.chatRoom.host === peerId) {
+        const newHostName = this.chatRoom.members[0].nickname
         this.changeChatRoomState({
-          host: this.chatRoom.members[0].nickname
+          host: newHostName
         })
-        this.pushChatMessage(null, `👑 ${this.chatRoom.members[0].nickname}님이 방장이 되셨습니다!`)
+        // 책임지고 다음 방장이 서버에 데이터 전송
+        if(newHostName === this.nickname) {
+          console.log('다음 방장?', )
+          this.onEditChatRoom({
+            host: newHostName
+          })
+        }
+        this.pushChatMessage(null, `👑 ${newHostName}님이 방장이 되셨습니다!`)
       }
+      console.log("?",)
     },
     sendMessage({ nickname, message }, sendMe = true) {
       if(this.$utils.includesAdminId(nickname + message)) {
@@ -214,7 +266,8 @@ export default {
       }
 		},
     pushChatMessage(nickname, message) {
-      if(this.$utils.includesAdminId(nickname + message)) {
+      console.log('pushChatMessage')
+      if(nickname && this.$utils.includesAdminId(nickname + message)) {
         return
       }
       const date = new Date()
@@ -233,49 +286,36 @@ export default {
       })
       console.log('deleteMember', peerId, deleteMember)
     },
-    async onPatchHost(peerId) {
-      await this.patchChatRoom({
-        id: this.$route.query.id,
-        host: peerId
-      })
-    },
-    destroyPeer() {
-      if(this.$Peer.$peer) this.$Peer.$peer.destroy()
-      this.onDeleteMember(this.nickname)
-    },
     confirmClose(e) {
       e.preventDefault();
       e.returnValue = '';
     },
     async onEditChatRoom(obj) {
+      console.log("onEditChatRoom",obj)
       await this.putChatRoom({
         id: this.$route.query.id,
-        payload: {
-          ...this.chatRoom,
-          roomTypeId: this.chatRoom.roomType.id,
-          ...obj
-        }
+        ...this.chatRoom,
+        roomTypeId: this.chatRoom.roomType.id,
+        ...obj
       })
     },
-    receiveChangeTitleMsg(message) {
-      const newTitle = message.split(this.TITLE_EDIT_MESSAGE)[1]
+    receiveChangeTitleMsg(newTitle) {
       this.changeChatRoomState({
         title: newTitle
       })
       this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
     },
-    receiveKickOutMsg(message) {
-      const memberName = message.split(this.KICK_OUT_MESSAGE)[1]
+    receiveKickOutMsg(memberName) {
       // 강퇴 대상자
       if(memberName === this.nickname) {
         alert(this.$ALERTS.CHAT.KICK_OUT)
-        this.needCheckRouteLeave = false
-        this.$router.push({ name: 'party' })
+        this.goPartyList()
       } else { // 방에 남아있는 멤버들
         this.fnKickOut(memberName)
       }
     },
     async onClickKickOut(memberName) {
+      console.log('onClickKickOut')
       const isConfirmed = confirm(this.$ALERTS.CHAT.CONFIRM_KICK_OUT(memberName))
       if(!isConfirmed) return
       this.onDeleteMember(memberName)
@@ -309,7 +349,8 @@ export default {
     },
     onClickExit() {
       this.$router.push({ name: 'party' })
-    }
+      this.willLeave = true
+    },
   }
 }
 </script>

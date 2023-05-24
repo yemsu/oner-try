@@ -51,7 +51,7 @@
         <template v-if="chatRooms && chatRooms.length > 0" >
           <ul class="list-chat-room">
             <li
-              v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper, host }, i) in chatRooms"
+              v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper, host }, i) in chatRooms.filter(({memberCount}) => memberCount)"
               :key="`chatRoom${i}`"
               class="chat-room"
             >
@@ -127,6 +127,7 @@ export default {
       isLogin: 'auth/getIsLogin',
       nickname: 'auth/getNickname',
       chatRooms: 'party/getChatRooms',
+      chatRoom: 'party/getChatRoom',
       roomTypes: 'party/getRoomTypes'
     })
   },
@@ -139,7 +140,6 @@ export default {
       { id: '999', text: 'ALL'},
       ...roomTypeOptions
     ]
-    console.log('ddd', this.roomTypeOptions)
   },
   mounted() {
     setTimeout(() => {
@@ -152,8 +152,8 @@ export default {
   methods: {
     ...mapActions({
       getChatRooms: 'party/GET_CHAT_ROOMS',
+      getChatRoom: 'party/GET_CHAT_ROOM',
       getRoomTypes: 'party/GET_ROOM_TYPES',
-      postMember: 'party/POST_MEMBER',
     }),
     ...mapMutations({
       setChatRooms: 'party/SET_CHAT_ROOMS',
@@ -178,13 +178,9 @@ export default {
     async onClickChatRoom(id, members) {
       if(!this.$utils.checkAdmin(this.nickname)) {
         // 버그로 인해 채팅방 나가졌는데 업데이트 안된 경우 다시 들어갈 수 있게 수정.
-        let isFull = false
-        const isMemberBug = members.find(({nickname}) => nickname === this.nickname)
-        const res = await this.postMember(id)
-        if(res.msg === '방이 가득찼습니다.') {
-          isFull = true
-        }
-        if(isFull && !isMemberBug) {
+        // const isMemberBug = members.find(({nickname}) => nickname === this.nickname)
+        await this.getChatRoom(id)
+        if(this.chatRoom.memberCount === this.chatRoom.capacity ) {
           this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
           this.setToastOn(true)
           this.refreshData()

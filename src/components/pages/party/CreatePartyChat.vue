@@ -120,7 +120,6 @@ export default {
     async createChatRoom() {
       const postChatRoom = await this.postChatRoom({
         title: this.roomTitle,
-        gameType: 'oner',
         capacity: this.roomCapacity,
         roomTypeId: this.selectedRoomType,
         isNeedHelper: this.isNeedHelper

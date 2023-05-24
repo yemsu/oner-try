@@ -19,8 +19,8 @@ export const postMember = (chatRoomId) => {
 export const deleteMember = (chatRoomId, siteNick) => {
   return $axios.delete(`/${chatRoomId}/${siteNick}`)
 }
-export const putChatRoom = ({ id, payload }) => {
-  return $axios.put(`/${id}`, payload)
+export const putChatRoom = (chatRoom) => {
+  return $axios.put(`/${chatRoom.id}`, chatRoom)
 }
 export const getRoomTypes = () => {
   return $axios.get(`/room-types`)
