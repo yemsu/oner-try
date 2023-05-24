@@ -150,7 +150,6 @@ class $Peer {
       const peerId = error.message.split('to peer ')[1]
       console.log(`유저와 연결이 끊겼습니다. ${peerId}`)
       this.removeConnection(peerId)
-      this.onNoticeMemberLeave(peerId)
     }
   }
   beepReceiveMessage(audioName) {
