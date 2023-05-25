@@ -37,6 +37,12 @@
         </element-button>
       </common-wrap-buttons>
     </div>
+    <element-popup
+      v-if="peerError"
+      :is-visible="peerError"
+      :title="peerError.type"
+      :message="peerError.message"
+    />
   </layout-content-wrap>  
 </template>
 
@@ -67,6 +73,7 @@ export default {
       KICK_OUT_MESSAGE: '%KICK_OUT_MESSAGE%',
       USER_LEAVE_MESSAGE: '%USER_LEAVE_MESSAGE%',
       kickOutMember: null,
+      peerError: null,
     }
   },
   computed: {
@@ -163,6 +170,7 @@ export default {
         },
         onReceiveMsg: (peerId, message) => this.onReceiveMsg(peerId, message),
         onMemberLeave: this.onMemberLeave,
+        onPeerError: this.onPeerError
       })      
 
       window.addEventListener('pagehide', this.onUnload)
@@ -351,6 +359,9 @@ export default {
       this.$router.push({ name: 'party' })
       this.willLeave = true
     },
+    onPeerError(error) {
+      this.peerError = error
+    }
   }
 }
 </script>

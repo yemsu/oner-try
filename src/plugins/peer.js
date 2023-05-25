@@ -22,12 +22,14 @@ class $Peer {
     onReceiveMsg = () => {},
     onMemberLeave = () => {},
     onDuplicateTap = () => {},
+    onPeerError = () => {},
   }) {
     this.onOpenPeer = onOpenPeer
     this.afterOnConnect = afterOnConnect
     this.onReceiveMsg = onReceiveMsg
     this.onMemberLeave = onMemberLeave
     this.onDuplicateTap = onDuplicateTap
+    this.onPeerError = onPeerError
   }
   createPeer(peerId) {
     if(this.$peer) {
@@ -151,6 +153,7 @@ class $Peer {
       console.log(`유저와 연결이 끊겼습니다. ${peerId}`)
       this.removeConnection(peerId)
     }
+    this.onPeerError(error)
   }
   beepReceiveMessage(audioName) {
     // chopa1 - 퇴장
