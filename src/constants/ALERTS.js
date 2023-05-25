@@ -36,7 +36,7 @@ const ALERTS = {
     KICK_OUT_WHO: (nickname) => `${nickname}님이 파티에서 제외되었습니다.`,
     GET_ROOM_TYPE_FAIL: `파티 타입 호출에 실패하였습니다.`,
     PARTY_FULL: '파티가 가득 찼어요!',
-    USER_EXISTED: '이미 참여한 방이 존재합니다!',
+    USER_EXISTED: '한번에 1개의 채팅방에만 입장할 수 있습니다.',
     BLOCK_DIRECT_ROOM: '잘못된 접근입니다!',
   },
 }

@@ -111,7 +111,7 @@ export const actions = {
       if(error.msg === '방이 가득찼습니다.') {
         return 'full'
       }
-      if(error.msg === '한번에 1개의 채팅방에만 입장할 수 있습니다.') {
+      if(error.msg === '이미 다른 채팅방에 입장한 유저입니다.') {
         return 'existed'
       }
       return error
