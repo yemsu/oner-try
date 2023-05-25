@@ -93,6 +93,12 @@
           fill: var(--font-gray);
         }
       }
+      &-point {
+        color: var(--color-point);
+        path {
+          fill: var(--color-point);
+        }
+      }
     }
   }
   &.bg {
