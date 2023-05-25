@@ -76,6 +76,7 @@ export default {
       USER_LEAVE_MESSAGE: '%USER_LEAVE_MESSAGE%',
       kickOutMember: null,
       peerError: null,
+      justLeave: false
     }
   },
   computed: {
@@ -111,7 +112,7 @@ export default {
 
     setTimeout(async () => {
       if(!this.nickname) {
-        this.needCheckRouteLeave = false
+        this.willLeave = true
         this.$router.push({ name: 'auth-login' })
         return
       }
@@ -124,12 +125,6 @@ export default {
         alert('멤버 업데이트에 실패했습니다! 새로 고침을 해주세요.')
         return
       }
-
-      // 피어가 없어? 새로 만들어.
-      if(!this.$Peer.$peer) {
-        console.log("피어가 없어? 새로 만들어.")
-        this.$Peer.createPeer(this.nickname)
-      }
       
       // 파티 모집 - 피어 상태 변화에 따른 이벤트 설정
       this.$Peer.setCustomEvents({
@@ -140,20 +135,35 @@ export default {
         onPeerError: this.onPeerError,
         onDuplicateTap: () => {
           alert(this.$ALERTS.CHAT.USER_EXISTED)
+          this.justLeave = true
           this.goPartyList()
         }
-      })      
+      })
 
-      window.addEventListener('pagehide', this.onUnload)
+      // 피어가 없어? 새로 만들어.
+      if(!this.$Peer.$peer) {
+        console.log("피어가 없어? 새로 만들어.")
+        this.$Peer.createPeer(this.nickname)
+      }
+
+
+      window.addEventListener('unload', this.onUnload)
       window.addEventListener('beforeunload', this.confirmClose)
     }, 500);
   },
   beforeDestroy() {    
-    window.removeEventListener('pagehide', this.onUnload);
+    window.removeEventListener('unload', this.onUnload);
     window.removeEventListener('beforeunload', this.confirmClose);
   },
   async beforeRouteLeave (to, from, next) {
-    if(this.needCheckRouteLeave) {
+    console.log('beforeRouteLeave', this.$Peer.$peer, this.justLeave)
+    if(!this.$Peer.$peer || this.justLeave) {
+      setTimeout(() => {
+        next()
+      }, 500);
+      return
+    }
+    if(!this.willLeave && !this.justLeave) {
       this.willLeave = confirm(this.$ALERTS.CHAT.CONFIRM_END)
       if(!this.willLeave) return
     }
@@ -206,13 +216,17 @@ export default {
     },
     async afterOnConnect(peerId) {
       this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
+      console.log("입장하셨다.", this.memberNicks, peerId)
       if(!this.memberNicks.includes(peerId)) {
+        
+      console.log("없던유저.", this.memberNicks, peerId)
         // 화면에 멤버 추가.
         const res = await this.getChatRoom(this.chatRoom.id)
         if(!res) {
           alert('멤버 업데이트에 실패했습니다! 새로 고침을 해주세요.')
           return
         }
+      console.log("getChatRoom res.", res, this.chatRoom)
         this.changeChatRoomState({ members: this.chatRoom.members })
       }
     },
@@ -254,16 +268,16 @@ export default {
         }
         this.pushChatMessage(null, `👑 ${newHostName}님이 방장이 되셨습니다!`)
       }
-      console.log("?",)
     },
     onPeerError(error) {
       this.peerError = error
     },
     goPartyList() {
-      this.needCheckRouteLeave = false
+      this.willLeave = true
       this.$router.push({ name: 'party' })
     },
     onUnload(e) {
+      console.log('onUnload')
       this.willLeave = true
       this.noticeImLeave()
       this.onDeleteMember(this.$Peer.peerId)
@@ -365,8 +379,8 @@ export default {
       this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberName))
     },
     onClickExit() {
-      this.$router.push({ name: 'party' })
       this.willLeave = true
+      this.$router.push({ name: 'party' })
     },
     confirmClose(e) {
       e.preventDefault();

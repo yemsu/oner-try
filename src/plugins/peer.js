@@ -36,20 +36,26 @@ class $Peer {
       this.$peer = null
     }
 
-    this.peerId = peerId
+    
     this.CHECK_REFRESH_FLAG = this.CHECK_REFRESH_FLAG_COMMON + peerId
-    this.$peer = new Vue.prototype.peer(this.peerId, {
+    const newPeer = new Vue.prototype.peer(peerId, {
       host: process.env.PEER_SERVER,
       secure: true
     })
+    Vue.prototype.$set(this, 'disconnected', false)
+    console.log("추케추케", this.disconnected)
     
-    this.$peer.on('error', (error) => this.handlerError(error))
-    this.$peer.on('open', (peerId) => {
-      console.log('피어 열림', peerId)
+    newPeer.on('error', (error) => this.handlerError(error))
+    newPeer.on('open', (peerId) => {
+      this.peerId = peerId
+      this.$peer = newPeer
       this.onOpenPeer()
     })
-    this.$peer.on('connection', (connection) => {
+    newPeer.on('connection', (connection) => {
       this.subscribeMember(connection)
+    })
+    newPeer.on('disconnected', (connection) => {
+      console.log('disconnected!', connection)
     })
   }
   isAlreadyConnected(peerId) {
@@ -130,28 +136,32 @@ class $Peer {
     console.log("destroyPeer", !!this.$peer)
     if(!this.$peer) return
     this.$peer.destroy()
-    this.$peer = null
-    this.connections = []
+    this.resetPeer()
   }
-  disconnectAll() {
-    console.log("연결을 모두 끊는다.")
-    // this.$peer.disconnect() // 연결 껐따가 다시 연결하면 멤버 나갔다 들어왔을때 연결이안됨.
+  resetPeer() {
+    this.$peer = null
+    this.peerId = null
     this.connections = []
   }
   handlerError(error) {
     console.error('PEERJS ERROR: ', {error})
     console.error(error.message)
     if(error.type === 'unavailable-id') {
+      // "ID "sssjsjj1" is taken"
       // 채팅방에서 새 탭을 열었을때
       this.onDuplicateTap()
+      return
     }
     if(error.type === 'network') {
       console.log("서버와 연결이 끊겼습니다. 페이지를 새로고침 해주세요.")
+      console.log("network", this.$Peer.$peer)
+      return
     }
     if(error.type === 'peer-unavailable') {
       const peerId = error.message.split('to peer ')[1]
       console.log(`유저와 연결이 끊겼습니다. ${peerId}`)
       this.removeConnection(peerId)
+      return
     }
     this.onPeerError(error)
   }

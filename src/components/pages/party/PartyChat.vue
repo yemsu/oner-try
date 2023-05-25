@@ -54,6 +54,17 @@
           >
             <font-awesome-icon icon="fa-xmark" />
           </element-button>
+          <element-button
+            v-if="$Peer.$peer && memberNick === nickname"
+            type="text"
+            size="xsmall"
+            :is-no-function="!isMyPeerDisconnected(memberNick)"
+            :bg="$Peer.$peer.disconnected ? 'point' : 'sub'"
+            :title="$Peer.$peer.disconnected ? '연결 끊김': '연결됨'"
+            @click="() => reconnectMyPeer(memberNick)"
+          >
+            <font-awesome-icon icon="fa-signal" />
+          </element-button>
         </li>
         <li
           v-for="(i) in readyBoxLength"
@@ -177,6 +188,13 @@ export default {
     },
     toggleOnBeep() {
       this.$Peer.$beep.isMuted = !this.$Peer.$beep.isMuted
+    },
+    isMyPeerDisconnected(memberNick) {
+      return memberNick === this.nickname && this.$Peer.$peer.disconnected
+    },
+    reconnectMyPeer(memberNick) {
+      if(!this.isMyPeerDisconnected(memberNick)) return
+      this.$Peer.$peer.reconnect()
     }
   }
 }
