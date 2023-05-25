@@ -55,12 +55,12 @@
             <font-awesome-icon icon="fa-xmark" />
           </element-button>
           <element-button
-            v-if="$Peer.$peer && memberNick === nickname"
+            v-if="peer && memberNick === nickname"
             type="text"
             size="xsmall"
             :is-no-function="!isMyPeerDisconnected(memberNick)"
-            :bg="$Peer.$peer.disconnected ? 'point' : 'sub'"
-            :title="$Peer.$peer.disconnected ? '연결 끊김': '연결됨'"
+            :bg="peer.disconnected ? 'point' : 'sub'"
+            :title="peer.disconnected ? '연결 끊김': '연결됨'"
             @click="() => reconnectMyPeer(memberNick)"
           >
             <font-awesome-icon icon="fa-signal" />
@@ -80,7 +80,7 @@
           <span class="ir-hidden">제한 인원 공간</span>
         </li>
       </ul>
-      <div class="option-buttons">
+      <div v-if="beep" class="option-buttons">
         <element-button
           type="text"
           size="xsmall"
@@ -94,9 +94,9 @@
           type="text"
           size="xsmall"
           class="control-volume"
-          @click="$Peer.changeBeepVolume"
+          @click="beep.changeVolume"
         >
-          볼륨 {{ this.beepVolume }}
+          볼륨 {{ beepVolume }}
         </element-button>
       </div>
     </div>
@@ -127,12 +127,14 @@ export default {
   watch: {
     chatMessages() {
       this.fixScrollBottom()
-    }
+    },
   },
   computed: {
     ...mapGetters({
       nickname: 'auth/getNickname',
       chatroom: 'party/getChatRoom',
+      peer: 'peer/getPeer',
+      beep: 'peer/getBeep',
     }),
     chatMembers() {
       return this.chatroom.members
@@ -155,10 +157,10 @@ export default {
       return 6 - this.chatroom.capacity
     },
     isOnBeep() {
-      return this.$Peer.$beep.isMuted
+      return this.beep?.isMuted
     },
     beepVolume() {
-      return this.$Peer.$beep.volume / this.$Peer.$beep.volumeGap
+      return this.beep?.volume / this.beep?.volumeGap
     },
   },
   mounted() {
@@ -166,7 +168,7 @@ export default {
   },
   methods: {
     sendMessage(message) {
-      this.$emit('sendMessage', { nickname: this.$Peer.peerId, message })
+      this.$emit('sendMessage', { nickname: this.peer.id, message })
 		},
     fixScrollBottom() {
       setTimeout(() => {
@@ -187,14 +189,14 @@ export default {
       this.setInputValue('')
     },
     toggleOnBeep() {
-      this.$Peer.$beep.isMuted = !this.$Peer.$beep.isMuted
+      this.beep.isMuted = !this.beep.isMuted
     },
     isMyPeerDisconnected(memberNick) {
-      return memberNick === this.nickname && this.$Peer.$peer.disconnected
+      return memberNick === this.nickname && this.peer.disconnected
     },
     reconnectMyPeer(memberNick) {
       if(!this.isMyPeerDisconnected(memberNick)) return
-      this.$Peer.$peer.reconnect()
+      this.peer.reconnect()
     }
   }
 }

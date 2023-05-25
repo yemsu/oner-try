@@ -1,6 +1,7 @@
 <template>
  <div id="app">
     <layout-header />
+    <common-chat />
      <base-adsense
       v-if="showSideFixAds"
       ad-slot="6463699903"
