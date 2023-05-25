@@ -118,20 +118,6 @@ export default {
 
       console.log('방 입장!', this.chatRoom.members, this.memberNicks)
 
-      // 새로고침 체크 - 서버 멤버에 내가 없어? 다시 보내야지.
-      const postMemberRes = await this.postMember(this.chatRoom.id)
-      console.log('postMemberRes', postMemberRes)
-      if(postMemberRes === 'full') {
-        alert(this.$ALERTS.CHAT.PARTY_FULL)
-        this.goPartyList()
-        return
-      }
-      if(postMemberRes === 'existed') {
-        alert(this.$ALERTS.CHAT.USER_EXISTED)
-        this.goPartyList()
-        return
-      }
-      
       // 화면에 멤버 추가.
       const getChatRoomRes = await this.getChatRoom(this.chatRoom.id)
       if(!getChatRoomRes) {
@@ -191,9 +177,25 @@ export default {
       deleteChatRoom: 'party/DELETE_CHAT_ROOM',
       putChatRoom: 'party/PUT_CHAT_ROOM',
     }),
-    onOpenPeer() {
+    async hereIAm() {
+      // 새로고침 체크 - 서버 멤버에 내가 없어? 다시 보내야지.
+      const postMemberRes = await this.postMember(this.chatRoom.id)
+      console.log('postMemberRes', postMemberRes)
+      if(postMemberRes === 'full') {
+        alert(this.$ALERTS.CHAT.PARTY_FULL)
+        this.goPartyList()
+        return
+      }
+      if(postMemberRes === 'existed') {
+        alert(this.$ALERTS.CHAT.USER_EXISTED)
+        this.goPartyList()
+        return
+      }
+    },
+     onOpenPeer() {
       console.log('onOpenPeer',this.memberNicks)
-      if(this.memberNicks.length > 0) {
+      if(this.memberNicks.length > 0) {      
+        this.hereIAm()
         for(const nickname of this.memberNicks) {
           console.log('피어 입장', this.chatRoom.id, this.$Peer.connections)
           this.$Peer.startConnecting(nickname, this.chatRoom.id)
