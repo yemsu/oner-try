@@ -3,6 +3,15 @@
     <section class="popup" @click="blockBubbling">
       <h2 class="title">{{ title }}</h2>
       <p class="desc">{{ message }}</p>
+      <common-wrap-buttons>
+        <element-button
+          type="square-round"
+          bg="point"
+          @click="$emit('confirm')"
+        >
+          {{ buttonText }}
+        </element-button>
+      </common-wrap-buttons>
       <div class="box-close-button">
         <element-button
           type="text"
@@ -31,6 +40,10 @@ export default {
     message: {
       type: String,
       default: ''
+    },
+    buttonText: {
+      type: String,
+      default: '확인'
     }
   },
   data() {

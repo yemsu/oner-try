@@ -42,6 +42,8 @@
       :is-visible="peerError"
       :title="peerError.type"
       :message="peerError.message"
+      button-text="파티 모집 바로가기"
+      @confirm="goPartyList"
     />
   </layout-content-wrap>  
 </template>
