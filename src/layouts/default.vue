@@ -19,6 +19,7 @@
       <error v-if="false"></error>
       <nuxt v-else />
     </div>
+    <!-- <common-chat v-if="isLogin && chatRoom && $route.path !== '/party/room'" /> -->
     <element-toast-popup />
     <floating-menu />
     <layout-footer />
@@ -29,6 +30,7 @@
 import BaseAdsense from '@/components/common/BaseAdsense.vue';
 import Error from './error.vue';
 import FloatingMenu from '../components/layout/FloatingMenu.vue';
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -40,6 +42,12 @@ export default {
     return {
       showSideFixAds: false,
     }
+  },
+  computed: {
+    ...mapGetters({
+      isLogin: 'auth/getIsLogin',
+      chatRoom: 'party/getChatRoom',
+    })
   },
   watch: {
     '$route.name'(crr, prev) {

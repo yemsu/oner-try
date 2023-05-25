@@ -14,12 +14,14 @@ export const state = () => ({
   chatRooms: null,
   chatRoom: null,
   roomTypes: [],
+  disconnectedMembers: [],
 })
 
 export const getters = {
   getChatRooms: (state) => state.chatRooms,
   getChatRoom: (state) => state.chatRoom,
   getRoomTypes: (state) => state.roomTypes,
+  getDisconnectedMembers: (state) => state.disconnectedMembers,
 }
 
 export const mutations = {
@@ -38,10 +40,17 @@ export const mutations = {
   SET_MEMBER(state, members) {
     state.chatRoom.members = members
   },
+  ADD_DISCONNECTED_MEMBER(state, memberNick) {
+    state.disconnectedMembers = [...state.disconnectedMembers, memberNick]
+  },
+  REMOVE_DISCONNECTED_MEMBER(state, memberNick) {
+    state.disconnectedMembers = state.disconnectedMembers
+    .filter((nickname) => nickname !== memberNick)
+  },
   ADD_MEMBER(state, memberObj) {
     if(!state.chatRoom || checkAdmin(memberObj.nickname)) return
     console.log('state.chatRoom', state.chatRoom)
-    state.chatRoom.members = state.chatRoom.members.concat([memberObj])
+    state.chatRoom.members = [...state.chatRoom.members, memberObj]
   },
   DELETE_MEMBER(state, memberNick) {
     console.log('DELETE_MEMBER', memberNick)
@@ -106,6 +115,7 @@ export const actions = {
   },
   async POST_MEMBER({ commit }, id) {
     const { result, error } = await postMember(id)
+    console.log('POST_MEMBER', result)
     if(error) {
       console.log('CANNOT POST_MEMBER:', error)
       if(error.msg === '방이 가득찼습니다.') {
@@ -116,7 +126,6 @@ export const actions = {
       }
       return error
     }
-    console.log('POST_MEMBER', result)
     commit('ADD_MEMBER', result)
     return result 
   },

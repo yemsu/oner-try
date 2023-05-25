@@ -44,23 +44,27 @@
             {{ memberNick === chatroom.host ? '👑' : '😊' }}
           </span>
           {{ memberNick }}
+          <span
+            v-if="disconnectedMembers.includes(memberNick)"
+            title="연결 끊김"
+          >❗</span>
           <element-button
             v-if="memberNick !== chatroom.host && nickname === chatroom.host"
             type="text"
             size="xsmall"
             bg="sub"
             title="추방"
-            @click="$emit('kickOut', memberNick)"
+            @click="onClickKickOut(memberNick)"
           >
             <font-awesome-icon icon="fa-xmark" />
           </element-button>
           <element-button
-            v-if="$Peer.$peer && memberNick === nickname"
+            v-if="peer && memberNick === nickname"
             type="text"
             size="xsmall"
             :is-no-function="!isMyPeerDisconnected(memberNick)"
-            :bg="$Peer.$peer.disconnected ? 'point' : 'sub'"
-            :title="$Peer.$peer.disconnected ? '연결 끊김': '연결됨'"
+            :bg="peer.disconnected ? 'point' : 'sub'"
+            :title="peer.disconnected ? '연결 끊김': '연결됨'"
             @click="() => reconnectMyPeer(memberNick)"
           >
             <font-awesome-icon icon="fa-signal" />
@@ -80,7 +84,7 @@
           <span class="ir-hidden">제한 인원 공간</span>
         </li>
       </ul>
-      <div class="option-buttons">
+      <div v-if="beep" class="option-buttons">
         <element-button
           type="text"
           size="xsmall"
@@ -94,9 +98,9 @@
           type="text"
           size="xsmall"
           class="control-volume"
-          @click="$Peer.changeBeepVolume"
+          @click="() => beep.changeVolume()"
         >
-          볼륨 {{ this.beepVolume }}
+          볼륨 {{ beepVolume }}
         </element-button>
       </div>
     </div>
@@ -108,14 +112,26 @@ import { mapGetters } from 'vuex'
 
 export default {
   props: {
-    conn: {
-      type: Array,
-      default: () => null
+    peer: {
+      type: Object,
+      require: true
+    },
+    beep: {
+      type: Object,
+      require: true
     },
     chatMessages: {
       type: Array,
       require: true
-    }
+    },
+    sendMessage: {
+      type: Function,
+      require: true
+    },
+    kickOut: {
+      type: Function,
+      require: true
+    },
   },
   components: {
   },
@@ -127,26 +143,26 @@ export default {
   watch: {
     chatMessages() {
       this.fixScrollBottom()
-    }
+    },
   },
   computed: {
     ...mapGetters({
       nickname: 'auth/getNickname',
       chatroom: 'party/getChatRoom',
+      disconnectedMembers: 'party/getDisconnectedMembers',
     }),
     chatMembers() {
-      return this.chatroom.members
+      const chatMembers = this.chatroom.members
         .filter(({nickname}) => (!this.$utils.checkAdmin(nickname)))
         .sort((a, b) => {
           const getIndex = (member) => {
-            if(member.nickname === this.chatroom.host) {
-              return 0
-            }
-            return member.id
+            return member.nickname === this.chatroom.host
+              ? 0
+              : member.id
           }
-          console.log(getIndex(a), a, getIndex(b), b)
-          getIndex(a) - getIndex(b)
+          return getIndex(a) - getIndex(b)
         })
+      return chatMembers
     },
     readyBoxLength() {
       return this.chatroom.capacity - this.chatroom?.members.length
@@ -155,19 +171,16 @@ export default {
       return 6 - this.chatroom.capacity
     },
     isOnBeep() {
-      return this.$Peer.$beep.isMuted
+      return this.beep?.isMuted
     },
     beepVolume() {
-      return this.$Peer.$beep.volume / this.$Peer.$beep.volumeGap
+      return this.beep?.volume / this.beep?.volumeGap
     },
   },
   mounted() {
 
   },
   methods: {
-    sendMessage(message) {
-      this.$emit('sendMessage', { nickname: this.$Peer.peerId, message })
-		},
     fixScrollBottom() {
       setTimeout(() => {
         const scrollArea = this.$refs.scrollArea
@@ -183,18 +196,21 @@ export default {
     },
     onEnterInput(eventKey) {
       if(this.inputValue === '') return
-      this.sendMessage(this.inputValue)
+      this.sendMessage({ 
+        nickname: this.peer.id,
+        message: this.inputValue
+      })
       this.setInputValue('')
     },
     toggleOnBeep() {
-      this.$Peer.$beep.isMuted = !this.$Peer.$beep.isMuted
+      this.beep.isMuted = !this.beep.isMuted
     },
     isMyPeerDisconnected(memberNick) {
-      return memberNick === this.nickname && this.$Peer.$peer.disconnected
+      return memberNick === this.nickname && this.peer.disconnected
     },
     reconnectMyPeer(memberNick) {
       if(!this.isMyPeerDisconnected(memberNick)) return
-      this.$Peer.$peer.reconnect()
+      // this.peer.reconnect()
     }
   }
 }
