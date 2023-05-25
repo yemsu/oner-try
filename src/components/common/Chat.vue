@@ -312,6 +312,7 @@ export default {
       // 강퇴 대상자
       if(memberName === this.nickname) {
         alert(this.$ALERTS.CHAT.KICK_OUT)
+        this.destroyPeer()
         this.goPartyList()
       } else { // 방에 남아있는 멤버들
         this.fnKickOut(memberName)
@@ -353,7 +354,6 @@ export default {
       console.log('onUnload')
       this.willLeave = true
       this.noticeImLeave()
-      this.onDeleteMember(this.peerId)
       this.destroyPeer()
     },
     confirmClose(e) {
@@ -361,6 +361,7 @@ export default {
       e.returnValue = '';
     },
     noticeImLeave() {
+      this.onDeleteMember(this.peerId)
       this.sendMessage({
         message: `${this.USER_LEAVE_MESSAGE}${this.peerId}`
       }, false)

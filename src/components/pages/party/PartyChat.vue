@@ -128,7 +128,7 @@ export default {
       type: Function,
       require: true
     },
-    kickOut: {
+    onClickKickOut: {
       type: Function,
       require: true
     },

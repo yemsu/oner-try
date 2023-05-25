@@ -35,7 +35,7 @@
             :beep="beep"
             :chat-messages="chatMessages"
             :send-message="sendMessage"
-            :kick-out="onClickKickOut"
+            :on-click-kick-out="onClickKickOut"
           />
           <common-wrap-buttons position="bottom">
             <element-button
