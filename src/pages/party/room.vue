@@ -145,32 +145,15 @@ export default {
       
       // 파티 모집 - 피어 상태 변화에 따른 이벤트 설정
       this.$Peer.setCustomEvents({
-        onOpenPeer: () => {
-          console.log('onOpenPeer',this.memberNicks)
-          if(this.memberNicks.length > 0) {
-            for(const nickname of this.memberNicks) {
-              console.log('피어 입장', this.chatRoom.id, this.$Peer.connections)
-              this.$Peer.startConnecting(nickname, this.chatRoom.id)
-            }
-          } else { // 
-            this.pushChatMessage(null, `방을 개설하였습니다.`)
-          }
-        },
-        afterOnConnect: async (peerId) => {
-          this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
-          if(!this.memberNicks.includes(peerId)) {
-            // 화면에 멤버 추가.
-            const res = await this.getChatRoom(this.chatRoom.id)
-            if(!res) {
-              alert('멤버 업데이트에 실패했습니다! 새로 고침을 해주세요.')
-              return
-            }
-            this.changeChatRoomState({ members: this.chatRoom.members })
-          }
-        },
+        onOpenPeer: this.onOpenPeer,
+        afterOnConnect: this.afterOnConnect,
         onReceiveMsg: (peerId, message) => this.onReceiveMsg(peerId, message),
         onMemberLeave: this.onMemberLeave,
-        onPeerError: this.onPeerError
+        onPeerError: this.onPeerError,
+        onDuplicateTap: () => {
+          alert(this.$ALERTS.CHAT.USER_EXISTED)
+          this.goPartyList()
+        }
       })      
 
       window.addEventListener('pagehide', this.onUnload)
@@ -206,15 +189,28 @@ export default {
       deleteChatRoom: 'party/DELETE_CHAT_ROOM',
       putChatRoom: 'party/PUT_CHAT_ROOM',
     }),
-    goPartyList() {
-      this.needCheckRouteLeave = false
-      this.$router.push({ name: 'party' })
+    onOpenPeer() {
+      console.log('onOpenPeer',this.memberNicks)
+      if(this.memberNicks.length > 0) {
+        for(const nickname of this.memberNicks) {
+          console.log('피어 입장', this.chatRoom.id, this.$Peer.connections)
+          this.$Peer.startConnecting(nickname, this.chatRoom.id)
+        }
+      } else { // 
+        this.pushChatMessage(null, `방을 개설하였습니다.`)
+      }
     },
-    onUnload(e) {
-      this.willLeave = true
-      this.noticeImLeave()
-      this.onDeleteMember(this.$Peer.peerId)
-      this.$Peer.destroyPeer()
+    async afterOnConnect(peerId) {
+      this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
+      if(!this.memberNicks.includes(peerId)) {
+        // 화면에 멤버 추가.
+        const res = await this.getChatRoom(this.chatRoom.id)
+        if(!res) {
+          alert('멤버 업데이트에 실패했습니다! 새로 고침을 해주세요.')
+          return
+        }
+        this.changeChatRoomState({ members: this.chatRoom.members })
+      }
     },
     onReceiveMsg(peerId, message) {
       if(message.includes(this.TITLE_EDIT_MESSAGE)) {
@@ -233,11 +229,6 @@ export default {
         return 
       }
       this.pushChatMessage(peerId, message)
-    },
-    noticeImLeave() {
-      this.sendMessage({
-        message: `${this.USER_LEAVE_MESSAGE}${this.$Peer.peerId}`
-      }, false)
     },
     onMemberLeave(peerId) {
       console.log('onMemberLeave')
@@ -260,6 +251,24 @@ export default {
         this.pushChatMessage(null, `👑 ${newHostName}님이 방장이 되셨습니다!`)
       }
       console.log("?",)
+    },
+    onPeerError(error) {
+      this.peerError = error
+    },
+    goPartyList() {
+      this.needCheckRouteLeave = false
+      this.$router.push({ name: 'party' })
+    },
+    onUnload(e) {
+      this.willLeave = true
+      this.noticeImLeave()
+      this.onDeleteMember(this.$Peer.peerId)
+      this.$Peer.destroyPeer()
+    },
+    noticeImLeave() {
+      this.sendMessage({
+        message: `${this.USER_LEAVE_MESSAGE}${this.$Peer.peerId}`
+      }, false)
     },
     sendMessage({ nickname, message }, sendMe = true) {
       if(this.$utils.includesAdminId(nickname + message)) {
@@ -294,10 +303,6 @@ export default {
       })
       console.log('deleteMember', peerId, deleteMember)
     },
-    confirmClose(e) {
-      e.preventDefault();
-      e.returnValue = '';
-    },
     async onEditChatRoom(obj) {
       console.log("onEditChatRoom",obj)
       await this.putChatRoom({
@@ -307,12 +312,6 @@ export default {
         ...obj
       })
     },
-    receiveChangeTitleMsg(newTitle) {
-      this.changeChatRoomState({
-        title: newTitle
-      })
-      this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
-    },
     receiveKickOutMsg(memberName) {
       // 강퇴 대상자
       if(memberName === this.nickname) {
@@ -321,6 +320,26 @@ export default {
       } else { // 방에 남아있는 멤버들
         this.fnKickOut(memberName)
       }
+    },
+    onEditTitle(newTitle) {
+      if(newTitle === '') {
+        alert(this.$ALERTS.VALIDATIONS.TITLE)
+        return
+      }
+      const res = this.onEditChatRoom({
+        title: newTitle
+      })
+      if(!res) return
+      this.sendMessage({
+        message: `${this.TITLE_EDIT_MESSAGE}${newTitle}`
+      }, false)
+      this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
+    },
+    receiveChangeTitleMsg(newTitle) {
+      this.changeChatRoomState({
+        title: newTitle
+      })
+      this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
     },
     async onClickKickOut(memberName) {
       console.log('onClickKickOut')
@@ -341,27 +360,14 @@ export default {
       this.kickOutMember = memberName // closeConnection 알람 뜨지 않도록 하는 플래그
       this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberName))
     },
-    onEditTitle(newTitle) {
-      if(newTitle === '') {
-        alert(this.$ALERTS.VALIDATIONS.TITLE)
-        return
-      }
-      const res = this.onEditChatRoom({
-        title: newTitle
-      })
-      if(!res) return
-      this.sendMessage({
-        message: `${this.TITLE_EDIT_MESSAGE}${newTitle}`
-      }, false)
-      this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
-    },
     onClickExit() {
       this.$router.push({ name: 'party' })
       this.willLeave = true
     },
-    onPeerError(error) {
-      this.peerError = error
-    }
+    confirmClose(e) {
+      e.preventDefault();
+      e.returnValue = '';
+    },
   }
 }
 </script>
