@@ -237,7 +237,7 @@ export default {
     noticeImLeave() {
       this.sendMessage({
         message: `${this.USER_LEAVE_MESSAGE}${this.$Peer.peerId}`
-      })
+      }, false)
     },
     onMemberLeave(peerId) {
       console.log('onMemberLeave')
