@@ -10,8 +10,8 @@
           title="점검 중입니다.🧐"
           :point-text="error.statusCode"
         >
-          버그 수정 및 새로운 기능 오픈 준비를 위해 점검 중입니다!<br>
-          30분 정도 소요될 예정입니다.
+          <!-- 버그 수정 및 새로운 기능 오픈 준비를 위해 점검 중입니다!<br> -->
+          약 15분 소요될 예정입니다.
         </common-main-notice>
       </template>
       <template v-else-if="error.statusCode === 404">
