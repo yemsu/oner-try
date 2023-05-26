@@ -182,9 +182,13 @@ export default {
       this.inputValue = value
     },
     onEnterInput(eventKey) {
+      console.log("enterinput", this.chatroom.members, this.peer.id)
       if(this.inputValue === '') return
+      
+      const { nickname } = this.chatroom.members
+        .find(({nickname: _nickname}) => this.peer.id.includes(_nickname))
       this.sendMessage({ 
-        nickname: this.peer.id,
+        nickname,
         message: this.inputValue
       })
       this.setInputValue('')

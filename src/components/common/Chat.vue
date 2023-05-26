@@ -107,8 +107,8 @@ export default {
         console.log("getChatRoom res.", res, this.chatRoom)
     },
     createPeer() {
-      console.log(11)
-      this.peerId = this.nickname
+      if(!this.peerId) this.peerId = this.nickname
+      console.log('createPeer', this.peerId)
       this.peer = new this.$Peer(this.peerId, {
         host: process.env.PEER_SERVER,
         secure: true
@@ -167,27 +167,26 @@ export default {
       console.log('postMemberRes', postMemberRes)
       if(postMemberRes === 'full') {
         alert(this.$ALERTS.CHAT.PARTY_FULL)
-        // this.goPartyList()
+        this.goPartyList()
         return
       }
       if(postMemberRes === 'existed') {
-        alert(this.$ALERTS.CHAT.USER_EXISTED)
-        // this.goPartyList()
+        this.handlerExistedUser()
         return
       }
     },
     subscribeMember(connection) {
       const peerId = connection.peer
-      if(!this.isAlreadyConnected(connection.peer)) { 
+      // if(!this.isAlreadyConnected(connection.peer)) { 
         console.log('dfsdf')
         this.addConnection(connection)
-        connection.on('open',() => this.onConnectionOpen(peerId))
-      } else {
-        console.log('이미 연결된 멤버. 구독은 따로 안한다.', this.connections)
-      }
+        connection.on('open',() => this.onConnectionOpen(this.getMemberNick(peerId)))
+      // } else {
+      //   console.log('이미 연결된 멤버. 구독은 따로 안한다.', this.connections)
+      // }
       connection.on("data", (message) => {
         console.log('message', message)
-        this.onReceiveMsg(peerId, message)
+        this.onReceiveMsg(this.getMemberNick(peerId), message)
         this.beepReceiveMessage('jigun')
       });
       connection.on('close', () => {
@@ -204,7 +203,7 @@ export default {
             if(this.willLeave) return
             console.log('유저가 나갔구나', peerId)
             this.removeConnection(peerId)
-            this.onMemberLeave(peerId)
+            this.onMemberLeave(this.getMemberNick(peerId))
             this.beepReceiveMessage('chopa1')
           // }
         // }, 1500);
@@ -213,20 +212,23 @@ export default {
         console.log('connection disconnected', connection.peer)
       })
     },
-    async onConnectionOpen(peerId) {
-      this.removeDisconnectedMember(peerId)
+    getMemberNick(peerId) {
+      const { nickname } = this.chatroom.members.find(({peerId: _peerId}) => _peerId === peerId)
+      return nickname
+    },
+    async onConnectionOpen(memberNick) {
+      // this.removeDisconnectedMember(peerId)
       // if(this.checkRefreshFlag()) {  // open에 flag 존재하면 새로고침임
       //   console.log('유저가 새로고침을 했다', peerId)
       //   this.deleteRefreshFlag()
       // }
-      if(this.$utils.checkAdmin(peerId)) {
+      if(this.$utils.checkAdmin(memberNick)) {
         return
       }
-      this.pushChatMessage(null, `${peerId}님이 입장하셨습니다.`)
-      console.log("입장하셨다.", this.memberNicks, peerId)
-      console.log("추케추케", this.peer.disconnected)
-      if(!this.memberNicks.includes(peerId)) {
-        console.log("없던유저.", this.memberNicks, peerId)
+      this.pushChatMessage(null, `${memberNick}님이 입장하셨습니다.`)
+      console.log("입장하셨다.", this.memberNicks, memberNick)
+      if(!this.memberNicks.includes(memberNick)) {
+        console.log("없던유저.", this.memberNicks, memberNick)
           // 화면에 멤버 추가.
           // 들어온 멤버가 서버에 업데이트 된 후 chatroom get되어야 하기 때문에 settimeout
         setTimeout(async () => {
@@ -236,7 +238,7 @@ export default {
       }
       this.beepReceiveMessage('chopa2')
     },
-    onReceiveMsg(peerId, message) {
+    onReceiveMsg(memberNick, message) {
       if(message.includes(this.TITLE_EDIT_MESSAGE)) {
         const newTitle = message.split(this.TITLE_EDIT_MESSAGE)[1]
         this.receiveChangeTitleMsg(newTitle)
@@ -248,24 +250,24 @@ export default {
         return 
       }
       if(message.includes(this.USER_LEAVE_MESSAGE)) {
-        const peerId = message.split(this.USER_LEAVE_MESSAGE)[1]
-        this.onMemberLeave(peerId)
+        const memberNick = message.split(this.USER_LEAVE_MESSAGE)[1]
+        this.onMemberLeave(memberNick)
         return 
       }
-      this.pushChatMessage(peerId, message)
+      this.pushChatMessage(memberNick, message)
     },
-    onMemberLeave(peerId) {
-      console.log('onMemberLeave')
+    onMemberLeave(memberNick) {
+      console.log('onMemberLeave', memberNick)
       if(this.willLeave) return
-      this.deleteMemberState(peerId)
-      this.removeConnection(peerId)
-      let message = `${peerId}님이 방을 나가셨습니다.`
+      this.deleteMemberState(memberNick)
+      this.removeConnection(memberNick)
+      let message = `${memberNick}님이 방을 나가셨습니다.`
       if(this.isMemberKickedOut) {
         message = `${memberName}님이 파티에서 제외되었습니다.`
         this.isMemberKickedOut = false
       }
       this.pushChatMessage(null, message)
-      if(this.chatRoom.host === peerId) {
+      if(this.chatRoom.host === memberNick) {
         const newHostName = this.chatRoom.members[0].nickname
         this.changeChatRoomState({
           host: newHostName
@@ -280,40 +282,51 @@ export default {
         this.pushChatMessage(null, `👑 ${newHostName}님이 방장이 되셨습니다!`)
       }
     },
-    async onDeleteMember(peerId) {
+    onHostChange(memberNick) {
+      if(memberNick === this.nickname) {
+        this.onEditChatRoom({
+          host: memberNick
+        })
+      }
+      this.changeChatRoomState({
+        host: memberNick
+      })
+      this.pushChatMessage(null, `👑 ${memberNick}님이 방장이 되셨습니다!`)
+    },
+    async onDeleteMember(memberNick) {
       const deleteMember = await this.deleteMember({
         id: this.$route.query.id,
-        siteNick: peerId
+        siteNick: memberNick
       })
-      console.log('deleteMember', peerId, deleteMember)
+      console.log('deleteMember', memberNick, deleteMember)
     },
-    async onClickKickOut(memberName) {
-      console.log('onClickKickOut')
-      const isConfirmed = confirm(this.$ALERTS.CHAT.CONFIRM_KICK_OUT(memberName))
+    async onClickKickOut(memberNick) {
+      const isConfirmed = confirm(this.$ALERTS.CHAT.CONFIRM_KICK_OUT(memberNick))
       if(!isConfirmed) return
-      this.onDeleteMember(memberName)
-      const message = `${this.KICK_OUT_MESSAGE}${memberName}`
+      this.onDeleteMember(memberNick)
+      const message = `${this.KICK_OUT_MESSAGE}${memberNick}`
       this.sendMessage({
         message
       }, false)
-      this.kickOut(memberName)
+      this.kickOut(memberNick)
     },
-    kickOut(memberName) {
-      const members = this.chatRoom.members.filter(({nickname}) => nickname !== memberName)
+    kickOut(memberNick) {
+      const members = this.chatRoom.members.filter(({nickname}) => nickname !== memberNick)
       this.changeChatRoomState({
         members
       })
-      this.kickOutMember = memberName // closeConnection 알람 뜨지 않도록 하는 플래그
-      this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberName))
+      this.kickOutMember = memberNick // closeConnection 알람 뜨지 않도록 하는 플래그
+      this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberNick))
     },
     async onEditChatRoom(obj) {
-      console.log("onEditChatRoom",obj)
-      await this.putChatRoom({
+      const newChatroom = {
         id: this.$route.query.id,
         ...this.chatRoom,
         roomTypeId: this.chatRoom.roomType.id,
         ...obj
-      })
+      }
+      console.log("onEditChatRoom",newChatroom)
+      await this.putChatRoom(newChatroom)
     },
     receiveKickOutMsg(memberName) {
       // 강퇴 대상자
@@ -347,6 +360,7 @@ export default {
       this.pushChatMessage(null, `방 제목이 변경되었습니다.`)
     },
     sendMessage({ nickname, message }, sendMe = true) {
+      console.log('sendMessage', message)
       if(this.$utils.includesAdminId(nickname + message)) {
         return
       }
@@ -369,9 +383,9 @@ export default {
       e.returnValue = '';
     },
     noticeImLeave() {
-      this.onDeleteMember(this.peerId)
+      this.onDeleteMember(this.nickname)
       this.sendMessage({
-        message: `${this.USER_LEAVE_MESSAGE}${this.peerId}`
+        message: `${this.USER_LEAVE_MESSAGE}${this.nickname}`
       }, false)
     },
     onError(error) {
@@ -380,7 +394,7 @@ export default {
       if(error.type === 'unavailable-id') {
         // "ID "sssjsjj1" is taken"
         // 채팅방에서 새 탭을 열었을때
-        this.handlerExistedUser()
+        this.handlerUnAvailableId(true)
         return
       }
       if(error.type === 'network') {
@@ -427,8 +441,19 @@ export default {
       this.connections = this.connections = this.connections.filter(({peer}) => peer !== peerId)
     },
     handlerExistedUser() {
+      console.log('handlerExistedUser!!')
       alert(this.$ALERTS.CHAT.USER_EXISTED)
-      // this.goPartyList()
+      this.onDeleteMember(this.nickname)
+      this.resetChat()
+      this.goPartyList()
+    },
+    handlerUnAvailableId() {
+      console.log('handlerUnAvailableId!!')
+      const peerId = this.peerId
+      this.onDeleteMember(this.nickname)
+      this.resetChat()
+      this.peerId = peerId + '_1'
+      this.createPeer()
     },
     goPartyList() {
       this.willLeave = true
@@ -438,7 +463,7 @@ export default {
       this.willLeave = confirm(this.$ALERTS.CHAT.CONFIRM_END)
       if(!this.willLeave) return
       this.noticeImLeave()
-      this.onDeleteMember(this.peerId)
+      // this.onDeleteMember(this.nickname)
       this.destroyPeer()
       this.$router.push({ name: 'party' })
     },
