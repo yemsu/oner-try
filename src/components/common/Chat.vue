@@ -1,23 +1,62 @@
 <template>
   <div class="wrap-peer" v-if="peer">
-    <slot :peer="{
-      peer,
-      beep,
-      chatMessages,
-      sendMessage,
-      onClickKickOut,
-      onEditTitle,
-      onClickExit,
-      peerError,
-    }"></slot>
+    <div class="wrap-party-room">
+      <div class="badges">
+        <element-badge
+          type="square-round"
+        >{{ chatRoom.roomType.name }}</element-badge>
+        <element-badge
+          type="square-round"
+          v-if="chatRoom.isNeedHelper"
+        >🐣 헬퍼 요청</element-badge>
+      </div>
+      <div class="area-page-title">
+        <element-text-editable
+          :text="chatRoom.title"
+          :editable="nickname === chatRoom.host"
+          @onSubmit="onEditTitle"
+        >
+          <h2 class="page-title">{{ chatRoom.title }}</h2>
+        </element-text-editable>
+      </div>
+      <party-chat
+        :peer="peer"
+        :beep="beep"
+        :chat-messages="chatMessages"
+        :send-message="sendMessage"
+        :on-click-kick-out="onClickKickOut"
+      />
+      <common-wrap-buttons position="bottom">
+        <element-button
+          type="square-round"
+          size="large"
+          bg="point"
+          @click="onClickExit"
+        >
+          방 나가기
+        </element-button>
+      </common-wrap-buttons>
+    </div>
+    <element-popup
+      v-if="peerError"
+      :is-visible="peerError"
+      :title="peerError.type"
+      :message="peerError.message"
+      button-text="파티 모집 바로가기"
+      @confirm="goPartyList"
+    />
   </div>
 </template>
 
 <script>
+import PartyChat from '@/components/pages/party/PartyChat.vue'
 import Beep from '@/plugins/utils/beep';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
+  components: {
+    PartyChat
+  },
   data() {
     return {
       peer: null,
