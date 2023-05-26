@@ -190,7 +190,7 @@ export default {
       sessionStorage.removeItem('JUID')
       // store user data reset
       this.setIsLogin(false)
-      this.setUserInfo({})
+      this.setUserInfo(null)
       // render google login button
       setTimeout(() => {
         this.renderGoogleLoginBtn()
