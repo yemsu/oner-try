@@ -132,7 +132,7 @@ export default {
           }
         })
       } else {
-        alert(this.$msg.failCreate)
+        alert(this.$ALERTS.CHAT.CREATE_FAIL)
       }
       this.resetData()
     },

@@ -28,6 +28,7 @@ const ALERTS = {
     EDIT_SAVE_FAIL: `빌드 수정에 실패하였습니다. ${FAIL_COMMON}`,
   },
   CHAT: {
+    CREATE_FAIL: `채팅 방 생성에 실패하였습니다. ${FAIL_COMMON}`,
     CONFIRM_END: '파티 찾기를 종료하시겠습니까?',
     NO_ROOM: '존재하지 않는 파티 찾기 방입니다.',
     EDIT_TITLE_SUCCESS: `${SUCCESS_EMOJI} 타이틀이 수정되었습니다.`,
