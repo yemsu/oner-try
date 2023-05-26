@@ -51,7 +51,7 @@
         <template v-if="chatRooms && chatRooms.length > 0" >
           <ul class="list-chat-room">
             <li
-              v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper, host }, i) in chatRooms.filter(({memberCount}) => memberCount)"
+              v-for="({ id, title, members, capacity, roomType, isNeedHelper, host }, i) in chatRooms.filter(({members}) => members && members.length)"
               :key="`chatRoom${i}`"
               class="chat-room"
             >
@@ -66,7 +66,7 @@
                     badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
                   },
                   right: {
-                    text: `👨🏾‍🤝‍👨🏼 ${memberCount} / ${capacity}`
+                    text: `👨🏾‍🤝‍👨🏼 ${members.length} / ${capacity}`
                   }
                 }"
                 @click="onClickChatRoom(id, members)"
@@ -180,7 +180,7 @@ export default {
         // 버그로 인해 채팅방 나가졌는데 업데이트 안된 경우 다시 들어갈 수 있게 수정.
         // const isMemberBug = members.find(({nickname}) => nickname === this.nickname)
         await this.getChatRoom(id)
-        if(this.chatRoom.memberCount === this.chatRoom.capacity ) {
+        if(this.chatRoom.members.length === this.chatRoom.capacity ) {
           this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
           this.setToastOn(true)
           this.refreshData()
