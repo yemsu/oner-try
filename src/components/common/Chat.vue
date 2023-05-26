@@ -55,8 +55,8 @@ export default {
   watch: {
     isLogin(crr) {
       if(!crr) {
-        this.goPartyList()
         this.destroyPeer()
+        if(this.$route.path === '/party/room') this.goPartyList()
       }
     },
   },
