@@ -72,8 +72,9 @@ export const actions = {
   async GET_CHAT_ROOMS({ commit }, params) {
     const { result, error } = await getChatRooms(params)    
     if(error) {
-      const exception = new Error(`CANNOT GET_CHAT_ROOMS : ${error.msg}`)
-      throw exception
+      console.error(`CANNOT GET_CHAT_ROOMS`, error)
+      alert('멤버 업데이트에 실패했습니다! 새로 고침을 해주세요.')
+      return false
     }
     console.log('GET_CHAT_ROOMS', result)
     commit('SET_CHAT_ROOMS', result)
