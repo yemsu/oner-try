@@ -81,7 +81,7 @@ export default {
   methods: {
     ...mapMutations({
       changeChatRoomState: 'party/CHANGE_CHAT_ROOM',
-      deleteMemberState: 'party/DELETE_MEMBER',
+      deleteMemberState: 'party/DELETE_MEMBER_STATE',
       addMember: 'party/ADD_MEMBER',
       setChatRoom: 'party/SET_CHAT_ROOM',
       removeDisconnectedMember: 'party/REMOVE_DISCONNECTED_MEMBER',

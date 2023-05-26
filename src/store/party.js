@@ -52,7 +52,7 @@ export const mutations = {
     console.log('state.chatRoom', state.chatRoom)
     state.chatRoom.members = [...state.chatRoom.members, memberObj]
   },
-  DELETE_MEMBER(state, memberNick) {
+  DELETE_MEMBER_STATE(state, memberNick) {
     console.log('DELETE_MEMBER', memberNick)
     state.chatRoom.members = state.chatRoom.members
       .filter(({ nickname }) => nickname !== memberNick)
