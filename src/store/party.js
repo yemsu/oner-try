@@ -123,8 +123,8 @@ export const actions = {
     }
     // console.log('DELETE_CHAT_ROOM', id)
   },
-  async POST_MEMBER({ commit }, id) {
-    const { result, error } = await postMember(id)
+  async POST_MEMBER({ commit }, { chatRoomId, peerId }) {
+    const { result, error } = await postMember(chatRoomId, peerId)
     console.log('POST_MEMBER', result)
     if(error) {
       console.log('CANNOT POST_MEMBER:', error)

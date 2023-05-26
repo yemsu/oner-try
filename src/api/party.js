@@ -13,8 +13,8 @@ export const deleteChatRoom = (chatRoomId) => {
 export const postChatRoom = (payload) => {
   return $axios.post(null, payload)
 }
-export const postMember = (chatRoomId) => {
-  return $axios.post(`/${chatRoomId}/members`)
+export const postMember = (chatRoomId, peerId) => {
+  return $axios.post(`/${chatRoomId}/members`, { peerId })
 }
 export const deleteMember = (chatRoomId, siteNick) => {
   return $axios.delete(`/${chatRoomId}/${siteNick}`)

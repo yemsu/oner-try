@@ -167,8 +167,8 @@ export default {
     },
     onOpen() {
       console.log('onOpenPeer',this.memberNicks)
+      this.hereIAm()
       if(this.memberNicks.length > 0) {      
-        this.hereIAm()
         for(const memberId of this.memberNicks) {
           console.log('피어 입장', this.chatRoom.id, this.connections)
           console.log('방에 들어왔고', memberId, this.chatRoom.id)
@@ -178,11 +178,7 @@ export default {
           console.log('와서 멤버들에게 커넥션을 요청한다.', connection.peer)
           this.subscribeMember(connection)
         }
-      } else { // 
-        // 혼자 방에 있는데 새로고침 한 경우
-        if(this.chatRoom.members.length === 0) {
-          this.hereIAm()
-        }
+      } else {
         this.pushChatMessage(null, `방을 개설하였습니다.`)
       }
     },
@@ -202,7 +198,10 @@ export default {
     },
     async hereIAm() {
       // 새로고침 체크 - 서버 멤버에 내가 없어? 다시 보내야지.
-      const postMemberRes = await this.postMember(this.chatRoom.id)
+      const postMemberRes = await this.postMember({
+        chatRoomId: this.chatRoom.id,
+        peerId: this.peerId
+      })
       console.log('postMemberRes', postMemberRes)
       if(postMemberRes === 'full') {
         alert(this.$ALERTS.CHAT.PARTY_FULL)
