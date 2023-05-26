@@ -24,9 +24,8 @@ export default {
       peerId: null,
       connections: [],
       beep: null,
-      willLeave: false,
+      willLeave: false, // 나가는 사람 본인인지 체크하는 플래그 - 커넥션 끊겨도 채팅방 업데이트 할 필요 없음
       kickOutMember: null,
-      willLeave: false,
       chatMessages: [],
       titleInput: '',
       refreshChecker: `onertrychatroomRefreshflag`,
@@ -34,6 +33,7 @@ export default {
       KICK_OUT_MESSAGE: '%KICK_OUT_MESSAGE%',
       USER_LEAVE_MESSAGE: '%USER_LEAVE_MESSAGE%',
       peerError: null,
+      isMemberKickedOut: false,
     }
   },
   computed: {
@@ -200,6 +200,8 @@ export default {
         // setTimeout(() => {
         //   console.log('checkRefreshFlag()', this.checkRefreshFlag())
           // if(this.checkRefreshFlag()) {
+            
+            if(this.willLeave) return
             console.log('유저가 나갔구나', peerId)
             this.removeConnection(peerId)
             this.onMemberLeave(peerId)
@@ -257,7 +259,12 @@ export default {
       if(this.willLeave) return
       this.deleteMemberState(peerId)
       this.removeConnection(peerId)
-      this.pushChatMessage(null, `${peerId}님이 방을 나가셨습니다.`)
+      let message = `${peerId}님이 방을 나가셨습니다.`
+      if(this.isMemberKickedOut) {
+        message = `${memberName}님이 파티에서 제외되었습니다.`
+        this.isMemberKickedOut = false
+      }
+      this.pushChatMessage(null, message)
       if(this.chatRoom.host === peerId) {
         const newHostName = this.chatRoom.members[0].nickname
         this.changeChatRoomState({
@@ -312,10 +319,11 @@ export default {
       // 강퇴 대상자
       if(memberName === this.nickname) {
         alert(this.$ALERTS.CHAT.KICK_OUT)
+        this.willLeave = true
         this.destroyPeer()
         this.goPartyList()
       } else { // 방에 남아있는 멤버들
-        this.fnKickOut(memberName)
+        this.isMemberKickedOut = true
       }
     },
     onEditTitle(newTitle) {
