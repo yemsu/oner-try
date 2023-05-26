@@ -251,7 +251,7 @@ export default {
       })
     },
     getMemberNick(peerId) {
-      const { nickname } = this.chatroom.members.find(({peerId: _peerId}) => _peerId === peerId)
+      const { nickname } = this.chatRoom.members.find(({peerId: _peerId}) => _peerId === peerId)
       return nickname
     },
     async onConnectionOpen(memberNick) {
