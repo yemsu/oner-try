@@ -36,7 +36,7 @@
     <div class="wrap-chat-side">
       <ul class="chat-members">
         <li
-          v-for="{ nickname: memberNick} in chatMembers"
+          v-for="{ nickname: memberNick} in chatroom.members"
           :key="`chat-member-${memberNick}`"
           :class="{ 'me' : memberNick === nickname }"
         >
@@ -151,19 +151,6 @@ export default {
       chatroom: 'party/getChatRoom',
       disconnectedMembers: 'party/getDisconnectedMembers',
     }),
-    chatMembers() {
-      const chatMembers = this.chatroom.members
-        .filter(({nickname}) => (!this.$utils.checkAdmin(nickname)))
-        .sort((a, b) => {
-          const getIndex = (member) => {
-            return member.nickname === this.chatroom.host
-              ? 0
-              : member.id
-          }
-          return getIndex(a) - getIndex(b)
-        })
-      return chatMembers
-    },
     readyBoxLength() {
       return this.chatroom.capacity - this.chatroom?.members.length
     },

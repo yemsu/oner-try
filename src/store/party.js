@@ -53,7 +53,7 @@ export const mutations = {
     state.chatRoom.members = [...state.chatRoom.members, memberObj]
   },
   DELETE_MEMBER_STATE(state, memberNick) {
-    console.log('DELETE_MEMBER', memberNick)
+    console.log('DELETE_MEMBER_STATE', memberNick)
     state.chatRoom.members = state.chatRoom.members
       .filter(({ nickname }) => nickname !== memberNick)
   },
@@ -75,7 +75,7 @@ export const actions = {
       const exception = new Error(`CANNOT GET_CHAT_ROOMS : ${error.msg}`)
       throw exception
     }
-    // console.log('GET_CHAT_ROOMS', result)
+    console.log('GET_CHAT_ROOMS', result)
     commit('SET_CHAT_ROOMS', result)
     return result
   },
@@ -86,7 +86,17 @@ export const actions = {
       return false
     } 
     // console.log('GET_CHAT_ROOM', result)
-    commit('SET_CHAT_ROOM', result)
+    const members = result.members
+    .filter(({nickname}) => (!checkAdmin(nickname)))
+    .sort((a, b) => {
+      const getIndex = (member) => {
+        return member.nickname === result.host
+          ? 0
+          : member.id
+      }
+      return getIndex(a) - getIndex(b)
+    })
+    commit('SET_CHAT_ROOM', {...result, members})
     return true
   },
   async POST_CHAT_ROOM({ commit }, chatRoom) {
@@ -136,7 +146,7 @@ export const actions = {
       return false
     }
     console.log('DELETE_MEMBER', result)
-    commit('DELETE_MEMBER', siteNick)
+    commit('DELETE_MEMBER_STATE', siteNick)
     return true
   },
   async PUT_CHAT_ROOM({ commit }, payload) {
