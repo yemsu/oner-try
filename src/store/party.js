@@ -40,12 +40,12 @@ export const mutations = {
   SET_MEMBER(state, members) {
     state.chatRoom.members = members
   },
-  ADD_DISCONNECTED_MEMBER(state, memberNick) {
-    state.disconnectedMembers = [...state.disconnectedMembers, memberNick]
+  ADD_DISCONNECTED_MEMBER(state, peerId) {
+    state.disconnectedMembers = [...state.disconnectedMembers, peerId]
   },
-  REMOVE_DISCONNECTED_MEMBER(state, memberNick) {
+  REMOVE_DISCONNECTED_MEMBER(state, peerId) {
     state.disconnectedMembers = state.disconnectedMembers
-    .filter((nickname) => nickname !== memberNick)
+    .filter((_peerId) => _peerId !== peerId)
   },
   ADD_MEMBER(state, memberObj) {
     if(!state.chatRoom || checkAdmin(memberObj.nickname)) return

@@ -36,7 +36,7 @@
     <div class="wrap-chat-side">
       <ul class="chat-members">
         <li
-          v-for="{ nickname: memberNick} in chatroom.members"
+          v-for="{ nickname: memberNick, peerId: memberPeerId } in chatroom.members"
           :key="`chat-member-${memberNick}`"
           :class="{ 'me' : memberNick === nickname }"
         >
@@ -45,7 +45,7 @@
           </span>
           {{ memberNick }}
           <span
-            v-if="disconnectedMembers.includes(memberNick)"
+            v-if="disconnectedMembers.includes(memberPeerId)"
             title="연결 끊김"
           >❗</span>
           <element-button

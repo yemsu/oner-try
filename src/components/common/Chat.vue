@@ -250,9 +250,9 @@ export default {
         //   console.log('checkRefreshFlag()', this.checkRefreshFlag())
           // if(this.checkRefreshFlag()) {
             
-            if(this.willLeave || !this.getMemberNick(peerId)) return
+            if(this.willLeave) return
             console.log('유저가 나갔구나', peerId) 
-            this.onMemberLeave(this.getMemberNick(peerId))
+            this.onMemberLeave(peerId)
             this.beepReceiveMessage('chopa1')
           // }
         // }, 1500);
@@ -301,18 +301,18 @@ export default {
       }
       // if(message.includes(this.USER_LEAVE_MESSAGE)) {
       //   const memberNick = message.split(this.USER_LEAVE_MESSAGE)[1]
-      //   this.onMemberLeave(memberNick)
+      //   this.onMemberLeave(peerId)
       //   return 
       // }
       this.pushChatMessage(memberNick, message)
       this.beepReceiveMessage('jigun')
     },
-    onMemberLeave(memberNick) {
-      console.log('onMemberLeave', memberNick)
-      if(this.willLeave) return
+    onMemberLeave(peerId) {
+      const memberNick = this.getMemberNick(peerId)
+      if(this.willLeave || !memberNick) return
       this.deleteMemberState(memberNick)
-      this.removeConnection(memberNick)
-      let message = `${memberNick}님이 방을 나가셨습니다.`
+      this.removeConnection(peerId)
+      let message = `${memberNick}님이2 방을 나가셨습니다.`
       if(this.isMemberKickedOut) {
         message = `${memberName}님이 파티에서 제외되었습니다.`
         this.isMemberKickedOut = false
@@ -470,6 +470,7 @@ export default {
       this.connections = [...this.connections, connection]
     },
     removeConnection(peerId) {
+      this.removeDisconnectedMember(peerId)
       this.connections = this.connections.filter(({peer}) => peer !== peerId)
     },
     handlerExistedUser() {
