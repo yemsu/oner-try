@@ -1,45 +1,34 @@
 <template>
-  <div class="wrap-peer">
-    <layout-content-wrap :is-main-content="true" pd-top="none">
-      <div class="wrap-party-room">
-        <div class="badges">
-          <element-badge
-            type="square-round"
-          >{{ chatRoom.roomType.name }}</element-badge>
-          <element-badge
-            type="square-round"
-            v-if="chatRoom.isNeedHelper"
-          >🐣 헬퍼 요청</element-badge>
-        </div>
-        <div class="area-page-title">
-          <element-text-editable
-            :text="chatRoom.title"
-            :editable="nickname === chatRoom.host"
-            @onSubmit="onEditTitle"
-          >
-            <h2 class="page-title">{{ chatRoom.title }}</h2>
-          </element-text-editable>
-        </div>
-        <party-chat
-          :peer="peer"
-          :beep="beep"
-          :chat-messages="chatMessages"
-          :send-message="sendMessage"
-          :on-click-kick-out="onClickKickOut"
-        />
-        <common-wrap-buttons position="bottom">
-          <element-button
-            type="square-round"
-            size="large"
-            bg="point"
-            @click="onClickExit"
-          >
-            방 나가기
-          </element-button>
-        </common-wrap-buttons>
+  <common-chat-popup>
+    <div class="wrap-party-room">
+      <div class="badges">
+        <element-badge
+          type="square-round"
+        >{{ chatRoom.roomType.name }}</element-badge>
+        <element-badge
+          type="square-round"
+          v-if="chatRoom.isNeedHelper"
+        >🐣 헬퍼 요청</element-badge>
       </div>
-    </layout-content-wrap>
-  </div>
+      <div class="area-page-title">
+        <element-text-editable
+          :text="chatRoom.title"
+          :editable="nickname === chatRoom.host"
+          @onSubmit="onEditTitle"
+        >
+          <h2 class="page-title">{{ chatRoom.title }}</h2>
+        </element-text-editable>
+      </div>
+      <party-chat
+        :peer="peer"
+        :beep="beep"
+        :chat-messages="chatMessages"
+        :send-message="sendMessage"
+        :on-click-kick-out="onClickKickOut"
+        :on-click-exit="onClickExit"
+      />
+    </div>
+  </common-chat-popup>
 </template>
 
 <script>
@@ -467,6 +456,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import '@/assets/style/components/common/Chat.scss';
-</style>
+<style></style>

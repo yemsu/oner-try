@@ -34,6 +34,24 @@
       />
     </div>
     <div class="wrap-chat-side">
+      <div v-if="beep" class="option-buttons">
+        <element-button
+          type="text"
+          size="xsmall"
+          @click="toggleOnBeep"
+          :title="`채팅 알람 ${isOnBeep ? '끄기' : '켜기'}`"
+        >
+          <font-awesome-icon :icon="`fa-volume-${isOnBeep ? 'high' : 'xmark'}`" />
+          {{ `채팅 알람 ${isOnBeep ? '끄기' : '켜기'}` }}
+        </element-button>
+        <element-button
+          type="text"
+          size="xsmall"
+          @click="() => beep.changeVolume()"
+        >
+          볼륨 {{ beepVolume }}
+        </element-button>
+      </div>
       <ul class="chat-members">
         <li
           v-for="{ nickname: memberNick, peerId: memberPeerId } in chatroom.members"
@@ -84,23 +102,14 @@
           <span class="ir-hidden">제한 인원 공간</span>
         </li>
       </ul>
-      <div v-if="beep" class="option-buttons">
+      <div class="option-buttons bottom">
         <element-button
           type="text"
-          size="xsmall"
-          @click="toggleOnBeep"
-          :title="`채팅 알람 ${isOnBeep ? '끄기' : '켜기'}`"
+          size="small"
+          @click="onClickExit"
         >
-          <font-awesome-icon :icon="`fa-volume-${isOnBeep ? 'high' : 'xmark'}`" />
-          {{ `채팅 알람 ${isOnBeep ? '끄기' : '켜기'}` }}
-        </element-button>
-        <element-button
-          type="text"
-          size="xsmall"
-          class="control-volume"
-          @click="() => beep.changeVolume()"
-        >
-          볼륨 {{ beepVolume }}
+          <font-awesome-icon icon="fa-arrow-right-from-bracket"/>
+          나가기
         </element-button>
       </div>
     </div>
@@ -129,6 +138,10 @@ export default {
       require: true
     },
     onClickKickOut: {
+      type: Function,
+      require: true
+    },
+    onClickExit: {
       type: Function,
       require: true
     },

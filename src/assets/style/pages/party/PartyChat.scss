@@ -121,12 +121,14 @@
   align-items: center;
   justify-content: center;
   background-color: var(--bg-light-gray);
+  &.bottom {
+    background-color: var(--color-white);
+  }
   > button {
+    flex-grow: 1;
+    flex-shrink: 0;
     padding: 5px 10px;
     text-align: center;
     font-weight: var(--font-weight-N);
-    &.control-volume {
-      width: 65px;
-    }
   }
 }
