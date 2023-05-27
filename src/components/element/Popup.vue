@@ -1,15 +1,22 @@
 <template>
-  <div v-if="isVisible" class="area-popup" @click="$emit('close')">
-    <section class="popup" @click="blockBubbling">
-      <h2 class="title">{{ title }}</h2>
-      <p class="desc">{{ message }}</p>
+  <div
+    v-if="isVisible"
+    class="area-popup"
+    @click="$emit('close')"
+  >
+    <section
+      class="popup"
+      @click="blockBubbling"
+    >
+      <h2 v-if="content.title" class="title">{{ content.title }}</h2>
+      <p v-if="content.message" class="desc">{{ content.message }}</p>
       <common-wrap-buttons>
         <element-button
           type="square-round"
           bg="point"
-          @click="$emit('confirm')"
+          @click="toggleIsVisible"
         >
-          {{ buttonText }}
+          확인
         </element-button>
       </common-wrap-buttons>
       <div class="box-close-button">
@@ -17,7 +24,7 @@
           type="text"
           size="large"
           title="팝업 닫기"
-          @click="$emit('close')"
+          @click="toggleIsVisible"
         >
           <font-awesome-icon icon="fa-xmark" />
         </element-button>
@@ -27,30 +34,19 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+
 export default {
-  props: {
-    isVisible: {
-      type: Boolean,
-      required: true
-    },
-    title: {
-      type: String,
-      default: '팝업'
-    },
-    message: {
-      type: String,
-      default: ''
-    },
-    buttonText: {
-      type: String,
-      default: '확인'
-    }
-  },
-  data() {
-    return {
-    }
+  computed: {
+    ...mapGetters({
+      isVisible: 'popup/getIsVisible',
+      content: 'popup/getContent'
+    })
   },
   methods: {
+    ...mapMutations({
+      toggleIsVisible: 'popup/TOGGLE_IS_VISIBLE'
+    }),
     blockBubbling(e) {
       e.stopPropagation()
     }
@@ -66,6 +62,8 @@ $padding-padding-mo: 10px;
   align-items: center;
   justify-content: center;
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: $dim-z-index;
   width: 100%;
   height: 100%;
@@ -76,15 +74,14 @@ $padding-padding-mo: 10px;
   flex-direction: column;
   gap: 10px;
   position: relative;
-  max-width: 400px;
+  min-width: 300px;
   padding: $padding-padding-pc;
   background-color: var(--bg-body);
   border-radius: 10px;
+  text-align: center;
   .title {
-    
   }
   .desc {
-    
   }
 }
 .box-close-button {

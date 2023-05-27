@@ -38,14 +38,6 @@
           </element-button>
         </common-wrap-buttons>
       </div>
-      <element-popup
-        v-if="peerError"
-        :is-visible="!!peerError"
-        :title="peerError.type"
-        :message="peerError.message"
-        button-text="파티 모집 바로가기"
-        @confirm="goPartyList"
-      />
     </layout-content-wrap>
   </div>
 </template>
@@ -73,7 +65,6 @@ export default {
       TITLE_EDIT_MESSAGE: '%TITLE_EDIT_MESSAGE%',
       KICK_OUT_MESSAGE: '%KICK_OUT_MESSAGE%',
       USER_LEAVE_MESSAGE: '%USER_LEAVE_MESSAGE%',
-      peerError: null,
       isMemberKickedOut: false,
     }
   },
@@ -129,8 +120,8 @@ export default {
       setChatRoom: 'party/SET_CHAT_ROOM',
       removeDisconnectedMember: 'party/REMOVE_DISCONNECTED_MEMBER',
       addDisconnectedMember: 'party/ADD_DISCONNECTED_MEMBER',
-      setToastMessage: 'toastPopup/SET_MESSAGE',
-      setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
+      togglePopupIsVisible: 'popup/TOGGLE_IS_VISIBLE',
+      setPopupContent: 'popup/SET_CONTENT',
     }),
     ...mapActions({
       postMember: 'party/POST_MEMBER',
@@ -415,7 +406,11 @@ export default {
         this.addDisconnectedMember(peerId)
         return
       }
-      this.peerError = error
+      this.togglePopupIsVisible()
+      this.setPopupContent({
+        title: error.type,
+        message: error.message
+      })
     },
     isAlreadyConnected(peerId) {
       return this.connections.find(({peer}) => peer === peerId)

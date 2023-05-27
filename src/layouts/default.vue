@@ -21,6 +21,7 @@
     </div>
     <common-chat v-if="chatRoom" />
     <element-toast-popup />
+    <element-popup />
     <item-bookmark-floating />
     <layout-footer />
  </div>
@@ -43,7 +44,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-    chatRoom: 'party/getChatRoom',
+      chatRoom: 'party/getChatRoom',
     })
   },
   watch: {
