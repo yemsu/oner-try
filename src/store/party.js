@@ -6,7 +6,8 @@ import {
   postMember,
   deleteMember,
   putChatRoom,
-  getRoomTypes
+  getRoomTypes,
+  getUserChatRoom
  } from '@/api/party'
  import { checkAdmin } from '@/plugins/utils/index'
 
@@ -130,15 +131,6 @@ export const actions = {
     console.log('POST_MEMBER', result)
     if(error) {
       console.log('CANNOT POST_MEMBER:', error)
-      if(error.msg === '방이 가득찼습니다.') {
-        return 'full'
-      }
-      if(error.msg === '이미 입장한 유저입니다.') {
-        return 'existed'
-      }
-      if(error.msg.includes('이미 다른 채팅방')) {
-        return `hasParty-${error.msg.split('"')[1]}`
-      }
       return error
     }
     commit('ADD_MEMBER', result)
@@ -177,5 +169,15 @@ export const actions = {
     // console.log('GET_ROOM_TYPES', result)
     commit('SET_ROOM_TYPES', result)
     return result
-  }
+  },
+  async GET_USER_CHAT_ROOM({ commit }, siteNick) {
+    const { result, error } = await getUserChatRoom(siteNick)    
+    if(error || !result) {
+      console.log('GET_USER_CHAT_ROOM ERROR', error)
+      return false
+    }
+    console.log('GET_USER_CHAT_ROOM', result)
+    // commit('SET_ROOM_TYPES', result)
+    return result
+  },
 }

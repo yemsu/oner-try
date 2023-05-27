@@ -25,3 +25,6 @@ export const putChatRoom = (chatRoom) => {
 export const getRoomTypes = () => {
   return $axios.get(`/room-types`)
 }
+export const getUserChatRoom = (siteNick) => {
+  return $axios.get(`/members/${siteNick}`)
+}

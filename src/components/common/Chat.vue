@@ -199,19 +199,6 @@ export default {
         peerId: this.peerId
       })
       console.log('postMemberRes', postMemberRes)
-      if(postMemberRes === 'full') {
-        alert(this.$ALERTS.CHAT.PARTY_FULL)
-        this.goPartyList()
-        return
-      }
-      if(postMemberRes === 'existed') {
-        this.handlerExistedUser()
-        return
-      }
-      if(postMemberRes.includes('hasParty')) {
-        this.handlerExistedUser(postMemberRes.split('-')[1])
-        return
-      }
     },
     subscribeMember(connection) {
       const peerId = connection.peer
@@ -452,7 +439,6 @@ export default {
       this.peer = null
       this.peerId = null
       this.connections = []
-      localStorage.removeItem(this.flagAlreadyHasParty)
       this.setChatRoom(null)
     },
     addConnection(connection) {
@@ -464,13 +450,6 @@ export default {
       console.log('removeConnection', peerId, connection)
       if(connection) connection.close()
       this.connections = this.connections.filter(({_peerId}) => _peerId !== peerId)
-    },
-    async handlerExistedUser(otherChatRoomId) {
-      console.log('handlerExistedUser!!')
-      alert(this.$ALERTS.CHAT.USER_EXISTED)
-      this.onDeleteMember(this.nickname, otherChatRoomId)
-      this.destroyPeer()
-      this.goPartyList()
     },
     handlerUnAvailableId() {
       console.log('handlerUnAvailableId!!')

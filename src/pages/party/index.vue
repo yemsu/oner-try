@@ -69,7 +69,7 @@
                     text: `👨🏾‍🤝‍👨🏼 ${members.length} / ${capacity}`
                   }
                 }"
-                @click="onClickChatRoom(id, members)"
+                @click="onClickChatRoom(id, members.length === capacity)"
               />
             </li>
           </ul>
@@ -154,6 +154,8 @@ export default {
       getChatRooms: 'party/GET_CHAT_ROOMS',
       getChatRoom: 'party/GET_CHAT_ROOM',
       getRoomTypes: 'party/GET_ROOM_TYPES',
+      getUserChatRoom: 'party/GET_USER_CHAT_ROOM',
+      deleteMember: 'party/DELETE_MEMBER',
     }),
     ...mapMutations({
       setChatRooms: 'party/SET_CHAT_ROOMS',
@@ -175,18 +177,27 @@ export default {
       }))
       return badgeList
     },
-    async onClickChatRoom(id, members) {
-      if(!this.$utils.checkAdmin(this.nickname)) {
-        // 버그로 인해 채팅방 나가졌는데 업데이트 안된 경우 다시 들어갈 수 있게 수정.
-        // const isMemberBug = members.find(({nickname}) => nickname === this.nickname)
-        await this.getChatRoom(id)
-        if(this.chatRoom.members.length === this.chatRoom.capacity ) {
-          this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
-          this.setToastOn(true)
-          this.refreshData()
-          return
-        }
+    async onClickChatRoom(id, isFull) {
+      if(isFull) {
+        this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
+        this.setToastOn(true)
+        this.refreshData()
+        return
       }
+      const userChatRoomId = await this.getUserChatRoom(this.nickname)
+      if(userChatRoomId) {
+        console.log('userChatRoomId', userChatRoomId)
+        const willLeavePrevRoom = confirm(this.$ALERTS.CHAT.USER_EXISTED)
+        if(!willLeavePrevRoom) return
+        await this.deleteMember({
+          id: userChatRoomId,
+          siteNick: this.nickname
+        })
+        this.setToastMessage(this.$ALERTS.CHAT.LEAVE_PREV_CHATROOM)
+        this.setToastOn(true)
+        await this.refreshData()
+      }
+      await this.getChatRoom(id)
       this.$router.push({
         name: 'party-room',
         query: {

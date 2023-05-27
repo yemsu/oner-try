@@ -38,7 +38,8 @@ const ALERTS = {
     GET_ROOM_TYPE_FAIL: `파티 타입 호출에 실패하였습니다.`,
     PARTY_FULL: '파티가 가득 찼어요!',
     USER_ALREADY_HAS_PARTY: '한번에 1개의 파티에 입장할 수 있습니다.',
-    USER_EXISTED: '이미 파티에 입장한 상태예요!\n모든 파티에서 제외됩니다. 재참여 해주세요.',
+    USER_EXISTED: '이미 파티에 입장한 상태예요!\n새로운 파티에 참여 하시겠어요?\n기존 파티에서는 제외됩니다.',
+    LEAVE_PREV_CHATROOM: '기존 채팅방에서 나왔습니다.',
     BLOCK_DIRECT_ROOM: '잘못된 접근입니다!',
   },
 }
