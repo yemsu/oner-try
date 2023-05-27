@@ -54,6 +54,7 @@ export const mutations = {
   },
   DELETE_MEMBER_STATE(state, memberNick) {
     console.log('DELETE_MEMBER_STATE', memberNick)
+    if(!state.chatRoom) return
     state.chatRoom.members = state.chatRoom.members
       .filter(({ nickname }) => nickname !== memberNick)
   },
@@ -132,8 +133,11 @@ export const actions = {
       if(error.msg === '방이 가득찼습니다.') {
         return 'full'
       }
-      if(error.msg === '이미 다른 채팅방에 입장한 유저입니다.') {
+      if(error.msg === '이미 입장한 유저입니다.') {
         return 'existed'
+      }
+      if(error.msg.includes('이미 다른 채팅방')) {
+        return `hasParty-${error.msg.split('"')[1]}`
       }
       return error
     }
