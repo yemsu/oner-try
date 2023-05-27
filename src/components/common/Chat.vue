@@ -431,7 +431,9 @@ export default {
       }
       if(error.type === 'network') {
         console.log("서버와 연결이 끊겼습니다. 페이지를 새로고침 해주세요.")
-        console.log("network", this.peer)
+        console.log("network", this.peer.destroyed, this.peer.disconnected)
+        this.peer.destroyed()
+        this.createPeer()
         return
       }
       if(error.type === 'peer-unavailable') {
