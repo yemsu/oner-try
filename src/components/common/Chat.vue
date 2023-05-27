@@ -454,9 +454,7 @@ export default {
     destroyPeer() {
       console.log("destroyPeer!!!!", this.peer)
       this.peer.destroy()
-      setTimeout(() => {
-        this.resetChat()
-      }, 500);
+      this.resetChat()
     },
     resetChat() {      
       this.beep = null
@@ -471,7 +469,10 @@ export default {
     },
     removeConnection(peerId) {
       this.removeDisconnectedMember(peerId)
-      this.connections = this.connections.filter(({peer}) => peer !== peerId)
+      const connection = this.connections.find(({_peerId}) => _peerId === peerId)
+      console.log('removeConnection', peerId, connection)
+      if(connection) connection.close()
+      this.connections = this.connections.filter(({_peerId}) => _peerId !== peerId)
     },
     handlerExistedUser() {
       console.log('handlerExistedUser!!')
