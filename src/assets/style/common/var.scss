@@ -118,7 +118,7 @@ $chat-status-colors: (
   --darker-10: hsla(var(--point-h), 15%, 30%, 10%);
   --darker-20: hsla(var(--point-h), 15%, 30%, 20%);
   --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
-  --lighter-10: hsla(var(--point-h), 15%, 98%, 35%);
+  --lighter-10: hsla(var(--point-h), 15%, 98%, 70%);
 
   // font color
   --font-dark: var(--color-gray-20);
@@ -219,7 +219,7 @@ $chat-status-colors: (
   --font-weight-XB: #{$font-weight-600};
 
   // shadow
-  --color-shadow: var(--color-gray-10);
+  --color-shadow: var(--color-gray-20);
   
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);

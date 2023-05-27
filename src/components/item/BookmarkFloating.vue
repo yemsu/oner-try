@@ -54,15 +54,14 @@ export default {
   max-width: 80px;
   border: 2px solid var(--color-black);
   transition: border-radius .3s;
+  box-shadow: 5px 5px 10px var(--color-shadow);
   &:not(.is-toggle-on) {
     background-color: hsl(var(--hsl-white), 80%);
     border-radius: 30px;
-    box-shadow: 3px 3px 10px 0px hsl(var(--hsl-black), 10%);
   }
   &.is-toggle-on {
     background-color: hsl(var(--hsl-white), 80%);
     border-radius: 5px;
-    box-shadow: 3px 3px 10px 0px hsl(var(--hsl-black), 10%);
   }
   > h2 {
     font-size: var(--font-size-S);

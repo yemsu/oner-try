@@ -1,116 +1,151 @@
 <template>
-  <div class="party-chat">
-    <div class="area-chat">
-      <div class="wrap-messages" ref="scrollArea">
-        <p
-          v-for="({ nickname: chatNick, message, time }, i) in chatMessages"
-          :key="`chat${i}`"
-          :class="[
-            { 'my' : chatNick === nickname },
-            chatNick ? 'chat' : 'alarm'
-          ]"
-        >
-          <span
-            v-if="chatNick && chatNick !== nickname"
-            class="nick"
-          >{{ chatNick }}</span>
-          <span class="message">
-            {{ message }}
-          </span>
-          <span
-            v-if="chatNick"
-            class="time"
-          >{{ time }}</span>
-        </p>
+  <div
+    :class="[
+      'party-chat',
+      `mode-${isMinimize ? 'mini' : 'max'}`
+    ]"
+  >
+    <div class="party-chat-top">
+      <div class="badges">
+        <element-badge
+          type="square-round"
+        >{{ chatRoom.roomType.name }}</element-badge>
+        <element-badge
+          type="square-round"
+          v-if="chatRoom.isNeedHelper"
+        >🐣 헬퍼 요청</element-badge>
       </div>
-      <element-input
-        id="newSettingTitle"
-        :value="inputValue"
-        size="small"
-        placeholder="메세지 보내기"
-        style-type="none"
-        @onUpdateInput="setInputValue"
-        @onEnter="onEnterInput"
-      />
+      <div class="area-page-title">
+        <element-text-editable
+          :text="chatRoom.title"
+          :editable="!isMinimize && nickname === chatRoom.host"
+          @onSubmit="onEditTitle"
+        >
+          <h2 class="page-title" :title="chatRoom.title">{{ chatRoom.title }}</h2>
+        </element-text-editable>
+      </div>
     </div>
-    <div class="wrap-chat-side">
-      <div v-if="beep" class="option-buttons">
-        <element-button
-          type="text"
-          size="xsmall"
-          @click="toggleOnBeep"
-          :title="`채팅 알람 ${isOnBeep ? '끄기' : '켜기'}`"
-        >
-          <font-awesome-icon :icon="`fa-volume-${isOnBeep ? 'high' : 'xmark'}`" />
-          {{ `채팅 알람 ${isOnBeep ? '끄기' : '켜기'}` }}
-        </element-button>
-        <element-button
-          type="text"
-          size="xsmall"
-          @click="() => beep.changeVolume()"
-        >
-          볼륨 {{ beepVolume }}
-        </element-button>
-      </div>
-      <ul class="chat-members">
-        <li
-          v-for="{ nickname: memberNick, peerId: memberPeerId } in chatroom.members"
-          :key="`chat-member-${memberNick}`"
-          :class="{ 'me' : memberNick === nickname }"
-        >
-          <span class="crown-emoji">
-            {{ memberNick === chatroom.host ? '👑' : '😊' }}
-          </span>
-          {{ memberNick }}
-          <span
-            v-if="disconnectedMembers.includes(memberPeerId)"
-            title="연결 끊김"
-          >❗</span>
-          <element-button
-            v-if="memberNick !== chatroom.host && nickname === chatroom.host"
-            type="text"
-            size="xsmall"
-            bg="sub"
-            title="추방"
-            @click="onClickKickOut(memberNick)"
+    <div class="wrap-content">
+      <div v-if="!isMinimize" class="area-message">
+        <div class="wrap-messages" ref="scrollArea">
+          <p
+            v-for="({ nickname: chatNick, message, time }, i) in chatMessages"
+            :key="`chat${i}`"
+            :class="[
+              { 'my' : chatNick === nickname },
+              chatNick ? 'chat' : 'alarm'
+            ]"
           >
-            <font-awesome-icon icon="fa-xmark" />
-          </element-button>
-          <element-button
-            v-if="peer && memberNick === nickname"
-            type="text"
-            size="xsmall"
-            :is-no-function="!isMyPeerDisconnected(memberNick)"
-            :bg="peer.disconnected ? 'point' : 'sub'"
-            :title="peer.disconnected ? '연결 끊김': '연결됨'"
-            @click="() => reconnectMyPeer(memberNick)"
-          >
-            <font-awesome-icon icon="fa-signal" />
-          </element-button>
-        </li>
-        <li
-          v-for="(i) in readyBoxLength"
-          :key="`ready${i}`"
-          class="box-ready"
-        ><span class="ir-hidden">멤버 입장 대기 공간</span></li>
-        <li
-          v-for="(i) in blankBoxLength"
-          :key="`blank${i}`"
-          class="box-blank"
-        >
-          <font-awesome-icon icon="fa-lock"/>
-          <span class="ir-hidden">제한 인원 공간</span>
-        </li>
-      </ul>
-      <div class="option-buttons bottom">
-        <element-button
-          type="text"
+            <span
+              v-if="chatNick && chatNick !== nickname"
+              class="nick"
+            >{{ chatNick }}</span>
+            <span class="message">
+              {{ message }}
+            </span>
+            <span
+              v-if="chatNick"
+              class="time"
+            >{{ time }}</span>
+          </p>
+        </div>
+        <element-input
+          id="newSettingTitle"
+          :value="inputValue"
           size="small"
-          @click="onClickExit"
-        >
-          <font-awesome-icon icon="fa-arrow-right-from-bracket"/>
-          나가기
-        </element-button>
+          placeholder="메세지 보내기"
+          style-type="none"
+          @onUpdateInput="setInputValue"
+          @onEnter="onEnterInput"
+        />
+      </div>
+      <div class="wrap-chat-side">
+        <div class="option-buttons top">
+          <element-button
+            type="text"
+            size="xsmall"
+            @click="toggleOnBeep"
+            :title="`채팅 알람 ${isOnBeep ? '끄기' : '켜기'}`"
+          >
+            <font-awesome-icon :icon="`fa-volume-${isOnBeep ? 'high' : 'xmark'}`" />
+            <template v-if="!isMinimize">
+              {{ `채팅 알람 ${isOnBeep ? '끄기' : '켜기'}` }}
+            </template>
+          </element-button>
+          <element-button
+            v-if="!isMinimize"
+            type="text"
+            size="xsmall"
+            @click="() => beep.changeVolume()"
+          >
+            볼륨 {{ beepVolume }}
+          </element-button>
+        </div>
+        <ul class="chat-members">
+          <li
+            v-for="{ nickname: memberNick, peerId: memberPeerId } in chatRoom.members"
+            :key="`chat-member-${memberNick}`"
+            :class="{ 'me' : memberNick === nickname }"
+          >
+            <span class="member-emoji">
+              {{ memberNick === chatRoom.host ? '👑' : '😊' }}
+            </span>
+            {{ memberNick }}
+            <template v-if="!isMinimize">
+              <span
+                v-if="disconnectedMembers.includes(memberPeerId)"
+                title="연결 끊김"
+              >❗</span>
+              <element-button
+                v-if="memberNick !== chatRoom.host && nickname === chatRoom.host"
+                type="text"
+                size="xsmall"
+                bg="sub"
+                title="추방"
+                @click="onClickKickOut(memberNick)"
+              >
+                <font-awesome-icon icon="fa-xmark" />
+              </element-button>
+              <element-button
+                v-if="peer && memberNick === nickname"
+                type="text"
+                size="xsmall"
+                :is-no-function="!isMyPeerDisconnected(memberNick)"
+                :bg="peer.disconnected ? 'point' : 'sub'"
+                :title="peer.disconnected ? '연결 끊김': '연결됨'"
+                @click="() => reconnectMyPeer(memberNick)"
+              >
+                <font-awesome-icon icon="fa-signal" />
+              </element-button>
+            </template>
+          </li>
+          <template v-if="!isMinimize">
+            <li
+              v-for="(i) in readyBoxLength"
+              :key="`ready${i}`"
+              class="box-ready"
+            ><span class="ir-hidden">멤버 입장 대기 공간</span></li>
+            <li
+              v-for="(i) in blankBoxLength"
+              :key="`blank${i}`"
+              class="box-blank"
+            >
+              <font-awesome-icon icon="fa-lock"/>
+              <span class="ir-hidden">제한 인원 공간</span>
+            </li>
+          </template>
+        </ul>
+        <div class="option-buttons bottom">
+          <element-button
+            type="text"
+            size="small"
+            @click="onClickExit"
+            title="나가기"
+          >
+            <font-awesome-icon icon="fa-arrow-right-from-bracket"/>
+            <template v-if="!isMinimize">나가기</template>
+          </element-button>
+        </div>
       </div>
     </div>
   </div>
@@ -145,6 +180,14 @@ export default {
       type: Function,
       require: true
     },
+    onEditTitle: {
+      type: Function,
+      require: true
+    },
+    isMinimize: {
+      type: Boolean,
+      require: true
+    },
   },
   components: {
   },
@@ -161,14 +204,14 @@ export default {
   computed: {
     ...mapGetters({
       nickname: 'auth/getNickname',
-      chatroom: 'party/getChatRoom',
+      chatRoom: 'party/getChatRoom',
       disconnectedMembers: 'party/getDisconnectedMembers',
     }),
     readyBoxLength() {
-      return this.chatroom.capacity - this.chatroom?.members.length
+      return this.chatRoom.capacity - this.chatRoom?.members.length
     },
     blankBoxLength() {
-      return 6 - this.chatroom.capacity
+      return 6 - this.chatRoom.capacity
     },
     isOnBeep() {
       return this.beep?.isMuted
@@ -195,10 +238,10 @@ export default {
       this.inputValue = value
     },
     onEnterInput(eventKey) {
-      console.log("enterinput", this.chatroom.members, this.peer.id)
+      console.log("enterinput", this.chatRoom.members, this.peer.id)
       if(this.inputValue === '') return
       
-      const { nickname } = this.chatroom.members
+      const { nickname } = this.chatRoom.members
         .find(({nickname: _nickname}) => this.peer.id.includes(_nickname))
       this.sendMessage({ 
         nickname,

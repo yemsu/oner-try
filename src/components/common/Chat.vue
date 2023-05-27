@@ -1,24 +1,6 @@
 <template>
   <common-chat-popup>
-    <div class="wrap-party-room">
-      <div class="badges">
-        <element-badge
-          type="square-round"
-        >{{ chatRoom.roomType.name }}</element-badge>
-        <element-badge
-          type="square-round"
-          v-if="chatRoom.isNeedHelper"
-        >🐣 헬퍼 요청</element-badge>
-      </div>
-      <div class="area-page-title">
-        <element-text-editable
-          :text="chatRoom.title"
-          :editable="nickname === chatRoom.host"
-          @onSubmit="onEditTitle"
-        >
-          <h2 class="page-title">{{ chatRoom.title }}</h2>
-        </element-text-editable>
-      </div>
+    <template v-slot="{ isMinimize }">
       <party-chat
         :peer="peer"
         :beep="beep"
@@ -26,8 +8,10 @@
         :send-message="sendMessage"
         :on-click-kick-out="onClickKickOut"
         :on-click-exit="onClickExit"
+        :on-edit-title="onEditTitle"
+        :is-minimize="isMinimize"
       />
-    </div>
+    </template>
   </common-chat-popup>
 </template>
 
