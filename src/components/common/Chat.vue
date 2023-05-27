@@ -1,50 +1,52 @@
 <template>
-  <div class="wrap-peer" v-if="peer">
-    <div class="wrap-party-room">
-      <div class="badges">
-        <element-badge
-          type="square-round"
-        >{{ chatRoom.roomType.name }}</element-badge>
-        <element-badge
-          type="square-round"
-          v-if="chatRoom.isNeedHelper"
-        >🐣 헬퍼 요청</element-badge>
+  <div class="wrap-peer">
+    <layout-content-wrap :is-main-content="true" pd-top="none">
+      <div class="wrap-party-room">
+        <div class="badges">
+          <element-badge
+            type="square-round"
+          >{{ chatRoom.roomType.name }}</element-badge>
+          <element-badge
+            type="square-round"
+            v-if="chatRoom.isNeedHelper"
+          >🐣 헬퍼 요청</element-badge>
+        </div>
+        <div class="area-page-title">
+          <element-text-editable
+            :text="chatRoom.title"
+            :editable="nickname === chatRoom.host"
+            @onSubmit="onEditTitle"
+          >
+            <h2 class="page-title">{{ chatRoom.title }}</h2>
+          </element-text-editable>
+        </div>
+        <party-chat
+          :peer="peer"
+          :beep="beep"
+          :chat-messages="chatMessages"
+          :send-message="sendMessage"
+          :on-click-kick-out="onClickKickOut"
+        />
+        <common-wrap-buttons position="bottom">
+          <element-button
+            type="square-round"
+            size="large"
+            bg="point"
+            @click="onClickExit"
+          >
+            방 나가기
+          </element-button>
+        </common-wrap-buttons>
       </div>
-      <div class="area-page-title">
-        <element-text-editable
-          :text="chatRoom.title"
-          :editable="nickname === chatRoom.host"
-          @onSubmit="onEditTitle"
-        >
-          <h2 class="page-title">{{ chatRoom.title }}</h2>
-        </element-text-editable>
-      </div>
-      <party-chat
-        :peer="peer"
-        :beep="beep"
-        :chat-messages="chatMessages"
-        :send-message="sendMessage"
-        :on-click-kick-out="onClickKickOut"
+      <element-popup
+        v-if="peerError"
+        :is-visible="!!peerError"
+        :title="peerError.type"
+        :message="peerError.message"
+        button-text="파티 모집 바로가기"
+        @confirm="goPartyList"
       />
-      <common-wrap-buttons position="bottom">
-        <element-button
-          type="square-round"
-          size="large"
-          bg="point"
-          @click="onClickExit"
-        >
-          방 나가기
-        </element-button>
-      </common-wrap-buttons>
-    </div>
-    <element-popup
-      v-if="peerError"
-      :is-visible="!!peerError"
-      :title="peerError.type"
-      :message="peerError.message"
-      button-text="파티 모집 바로가기"
-      @confirm="goPartyList"
-    />
+    </layout-content-wrap>
   </div>
 </template>
 
@@ -275,11 +277,6 @@ export default {
         this.receiveKickOutMsg(memberName)
         return 
       }
-      // if(message.includes(this.USER_LEAVE_MESSAGE)) {
-      //   const memberNick = message.split(this.USER_LEAVE_MESSAGE)[1]
-      //   this.onMemberLeave(peerId)
-      //   return 
-      // }
       this.pushChatMessage(memberNick, message)
       this.beepReceiveMessage('jigun')
     },
@@ -312,7 +309,7 @@ export default {
     },
     async onDeleteMember(memberNick, chatRoomId) {
       const deleteMember = await this.deleteMember({
-        id: chatRoomId || this.$route.query.id,
+        id: chatRoomId || this.chatRoom.id,
         siteNick: memberNick
       })
       console.log('deleteMember', memberNick, deleteMember)
@@ -333,7 +330,7 @@ export default {
     },
     async onEditChatRoom(obj) {
       const newChatroom = {
-        id: this.$route.query.id,
+        id: this.chatRoom.id,
         ...this.chatRoom,
         roomTypeId: this.chatRoom.roomType.id,
         ...obj
@@ -475,5 +472,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import '@/assets/style/components/common/Chat.scss';
 </style>

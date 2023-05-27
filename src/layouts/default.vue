@@ -19,6 +19,7 @@
       <error v-if="false"></error>
       <nuxt v-else />
     </div>
+    <common-chat v-if="chatRoom" />
     <element-toast-popup />
     <item-bookmark-floating />
     <layout-footer />
@@ -28,6 +29,7 @@
 <script>
 import BaseAdsense from '@/components/common/BaseAdsense.vue';
 import Error from './error.vue';
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -38,6 +40,11 @@ export default {
     return {
       showSideFixAds: false,
     }
+  },
+  computed: {
+    ...mapGetters({
+    chatRoom: 'party/getChatRoom',
+    })
   },
   watch: {
     '$route.name'(crr, prev) {

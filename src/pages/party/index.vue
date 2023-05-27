@@ -1,5 +1,4 @@
-<template>
-  
+<template>  
   <layout-content-wrap
     v-if="false"
     size="basic"
@@ -198,12 +197,6 @@ export default {
         await this.refreshData()
       }
       await this.getChatRoom(id)
-      this.$router.push({
-        name: 'party-room',
-        query: {
-          id
-        }
-      })
     },
     refreshData() {
       if(this.refreshTrigger) this.refreshTrigger = false

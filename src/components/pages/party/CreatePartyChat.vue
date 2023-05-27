@@ -83,6 +83,7 @@ export default {
     ...mapActions({
       getRoomTypes: 'party/GET_ROOM_TYPES',
       postChatRoom: 'party/POST_CHAT_ROOM',
+      getChatRoom: 'party/GET_CHAT_ROOM',
     }),
     onUpdateRoomTitle(value) {
       this.roomTitle = value
@@ -124,16 +125,11 @@ export default {
         roomTypeId: this.selectedRoomType,
         isNeedHelper: this.isNeedHelper
       })
-      if(postChatRoom) {
-        this.$router.push({
-          name: 'party-room',    
-          query: {
-            id: postChatRoom.id
-          }
-        })
-      } else {
+      if(!postChatRoom) {
         alert(this.$ALERTS.CHAT.CREATE_FAIL)
+        return
       }
+      this.getChatRoom(postChatRoom.id)
       this.resetData()
     },
     resetData() {

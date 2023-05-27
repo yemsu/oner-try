@@ -85,20 +85,19 @@ export const actions = {
   async GET_CHAT_ROOM({ commit }, queryId) {
     const { result, error } = await getChatRoom(queryId)    
     if(error) {
-      console.error(`CANNOT GET_CHAT_ROOM : ${error.msg}`)
+      console.error(`CANNOT GET_CHAT_ROOM`, error)
       return false
     } 
-    // console.log('GET_CHAT_ROOM', result)
     const members = result.members
-    .filter(({nickname}) => (!checkAdmin(nickname)))
-    .sort((a, b) => {
-      const getIndex = (member) => {
-        return member.nickname === result.host
-          ? 0
-          : member.id
-      }
-      return getIndex(a) - getIndex(b)
-    })
+      .filter(({nickname}) => (!checkAdmin(nickname)))
+      .sort((a, b) => {
+        const getIndex = (member) => {
+          return member.nickname === result.host
+            ? 0
+            : member.id
+        }
+        return getIndex(a) - getIndex(b)
+      })
     commit('SET_CHAT_ROOM', {...result, members})
     return true
   },
