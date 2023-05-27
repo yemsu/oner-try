@@ -39,7 +39,7 @@
     </div>
     <element-popup
       v-if="peerError"
-      :is-visible="peerError"
+      :is-visible="!!peerError"
       :title="peerError.type"
       :message="peerError.message"
       button-text="파티 모집 바로가기"
