@@ -30,7 +30,7 @@
 <script>
 import BaseAdsense from '@/components/common/BaseAdsense.vue';
 import Error from './error.vue';
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -40,10 +40,12 @@ export default {
   data() {
     return {
       showSideFixAds: false,
+      ONER_TRY_CHAT_REFRESH: 'ONER_TRY_CHAT_REFRESH',
     }
   },
   computed: {
     ...mapGetters({
+      isLogin: 'auth/getIsLogin',
       chatRoom: 'party/getChatRoom',
     })
   },
@@ -55,9 +57,16 @@ export default {
   },
   mounted() {
     this.removeSideFixAdsFor(this.$route.name)
+    setTimeout(() => {
+      this.checkRefreshChat()
+    }, 600);
     // return this.$nuxt.error({ statusCode: 600, message: '점검 중입니다' })
   },
   methods: {
+    ...mapActions({
+      getChatRoom: 'party/GET_CHAT_ROOM',
+      getUserChatRoom: 'party/GET_USER_CHAT_ROOM',
+    }),
     removeSideFixAdsFor(routeName) {
       this.showSideFixAds = false
       this.showContentTopAd = false
@@ -74,6 +83,15 @@ export default {
         }
         this.showContentBottomAd = true
       }, 10);
+    },
+    async checkRefreshChat() {
+      if(!this.isLogin) return
+      const prevChatRoomId = sessionStorage.getItem(this.ONER_TRY_CHAT_REFRESH)
+      if(!prevChatRoomId) return
+
+      const goAgainParty = confirm('채팅방에 참여하신 상태로 새로고침을 하신 것 같네요! 해당 채팅방에 바로 재참여하시려면 확인을 눌러주세요.')
+      if(!goAgainParty) return
+      await this.getChatRoom(prevChatRoomId)
     }
   }
 }

@@ -35,6 +35,7 @@ export default {
       chatMessages: [],
       titleInput: '',
       refreshChecker: `onertrychatroomRefreshflag`,
+      ONER_TRY_CHAT_REFRESH: 'ONER_TRY_CHAT_REFRESH',
       TITLE_EDIT_MESSAGE: '%TITLE_EDIT_MESSAGE%',
       KICK_OUT_MESSAGE: '%KICK_OUT_MESSAGE%',
       USER_LEAVE_MESSAGE: '%USER_LEAVE_MESSAGE%',
@@ -67,7 +68,7 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted() {    
     setTimeout(async () => {
       // 화면에 멤버 추가.
       await this.getChatRoom(this.chatRoom.id)
@@ -358,11 +359,15 @@ export default {
         connection.send(message)
       }
 		},
+    saveChatRoomIdForRefresh() {
+      sessionStorage.setItem(this.ONER_TRY_CHAT_REFRESH, this.chatRoom.id)
+    },
     onUnload(e) {
       console.log('onUnload')
       this.willLeave = true
       this.onDeleteMember(this.nickname)
       this.destroyPeer()
+      this.saveChatRoomIdForRefresh()
     },
     confirmClose(e) {
       e.preventDefault();
@@ -416,6 +421,7 @@ export default {
       this.peer = null
       this.peerId = null
       this.connections = []
+      sessionStorage.removeItem(this.ONER_TRY_CHAT_REFRESH)
     },
     addConnection(connection) {
       this.connections = [...this.connections, connection]
