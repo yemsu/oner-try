@@ -41,6 +41,7 @@ const ALERTS = {
     USER_EXISTED: '이미 파티에 입장한 상태예요!\n새로운 파티에 참여 하시겠어요?\n기존 파티에서는 제외됩니다.',
     LEAVE_PREV_CHATROOM: '기존 채팅방에서 나왔습니다.',
     BLOCK_DIRECT_ROOM: '잘못된 접근입니다!',
+    CHANGE_CAPACITY: `${SUCCESS_EMOJI} 파티 최대 인원이 변경 되었습니다.`,
   },
 }
 

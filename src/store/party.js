@@ -180,7 +180,7 @@ export const actions = {
     console.log('DELETE_CHAT_USER', siteNick, result)
     return true
   },
-  async PUT_CHAT_ROOM({ commit }, { chatRoom, updateState }) {
+  async PUT_CHAT_ROOM({ commit }, { chatRoom, updateState = true }) {
     const { result, error } = await putChatRoom({
       ...chatRoom,
       gameType: 'oner'

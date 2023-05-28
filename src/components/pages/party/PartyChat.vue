@@ -134,17 +134,22 @@
           </li>
           <template v-if="!isMinimize">
             <li
-              v-for="(i) in readyBoxLength"
-              :key="`ready${i}`"
-              class="box-ready"
-            ><span class="ir-hidden">멤버 입장 대기 공간</span></li>
-            <li
-              v-for="(i) in blankBoxLength"
-              :key="`blank${i}`"
-              class="box-blank"
+              v-for="(type, i) in emptyList"
+              :key="`blank-list-${i}`"
+              :class="`box-${type}`"
             >
-              <font-awesome-icon icon="fa-lock"/>
-              <span class="ir-hidden">제한 인원 공간</span>
+              <element-button
+                type="text"
+                size="xsmall"
+                @click="onClickNoMemberList(type)"
+              >
+                <font-awesome-icon
+                  :icon="`fa-${type === 'wait' ? 'user' : 'lock'}`"
+                />
+                <span class="ir-hidden">
+                  {{ type === 'wait' ? '멤버 입장 대기 공간' : '제한 인원 공간' }}
+                </span>
+              </element-button>
             </li>
           </template>
         </ul>
@@ -165,7 +170,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   props: {
@@ -229,11 +234,12 @@ export default {
       disconnectedMembers: 'party/getDisconnectedMembers',
       isMinimize: 'party/getIsMinimize'
     }),
-    readyBoxLength() {
-      return this.chatRoom.capacity - this.chatRoom?.members.length
-    },
-    blankBoxLength() {
-      return 6 - this.chatRoom.capacity
+    emptyList() {
+      const waitListLength = this.chatRoom.capacity - this.chatRoom?.members.length
+      const blankListLength = 6 - this.chatRoom.capacity
+      const waitList = new Array(waitListLength).fill('wait')
+      const blankList = new Array(blankListLength).fill('blank')
+      return [...waitList, ...blankList]
     },
     isMuted() {
       return this.beep?.isMuted
@@ -243,6 +249,13 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      putChatRoom: 'party/PUT_CHAT_ROOM',
+    }),
+    ...mapMutations({
+      setToastMessage: 'toastPopup/SET_MESSAGE',
+      setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
+    }),
     fixScrollBottom() {
       setTimeout(() => {
         const scrollArea = this.$refs.scrollArea
@@ -277,6 +290,23 @@ export default {
     reconnectMyPeer(memberNick) {
       if(!this.isMyPeerDisconnected(memberNick)) return
       // this.peer.reconnect()
+    },
+    onClickNoMemberList(type) {
+      console.log('onClickNoMemberList', type)
+      // 대기 리스트를 클릭시 capacity -1 시킨다. 
+      const isMinusCapacity = type === 'wait'
+      const numChanger = isMinusCapacity ? -1 : 1
+      const newChatroom = {
+        id: this.chatRoom.id,
+        ...this.chatRoom,
+        capacity: this.chatRoom.capacity + numChanger,
+        roomTypeId: this.chatRoom.roomType.id,
+      }
+      this.putChatRoom({
+        chatRoom: newChatroom
+      })
+      this.setToastMessage(this.$ALERTS.CHAT.CHANGE_CAPACITY)
+      this.setToastOn(true)
     }
   }
 }

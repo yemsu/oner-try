@@ -100,17 +100,28 @@
       height: 1.3rem;
       gap: 5px;
       align-items: center;
-      &.box-ready,
-      &.box-blank {
-        border-radius: 5px;
-        background-color: var(--bg-light-gray);
+      &.box-wait {
+        background-color: var(--darker-10);
+        border: 1px solid var(--border-dark-gray);
+        path {
+          fill: var(--darker-20);
+        }
       }
+      &.box-blank {
+        background-color: var(--bg-light-gray);
+        path {
+          fill: var(--bg-gray);
+        }
+      }
+      &.box-wait,
       &.box-blank {
         display: flex;
         justify-content: center;
+        border-radius: 5px;
         font-size: var(--font-size-XXS);
-        path {
-          fill: var(--bg-gray);
+        button {
+          width: 100%;
+          text-align: center;
         }
       }
     }
