@@ -37,7 +37,7 @@ export default {
       required: true
     },
     dataType: {
-      type: String,
+      type: [String, Number],
       required: true
     },
     showLength: {
