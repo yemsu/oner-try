@@ -12,13 +12,13 @@
         type="text"
         size="medium"
         @click="toggleMinimize"
-        :title="isMinimize ? '최대화' : '최소화'"
+        :title="isMinimize ? '확장' : '축소'"
       >
         <font-awesome-icon
-          :icon="isMinimize ? 'fa-maximize' : 'fa-down-left-and-up-right-to-center'"
+          :icon="isMinimize ? 'fa-solid fa-arrow-up-right-from-square' : 'fa-down-left-and-up-right-to-center'"
         />
         <template v-if="!isMinimize">
-          채팅방 {{ isMinimize ? '최대화' : '최소화' }}
+          채팅방 {{ isMinimize ? '확장' : '축소' }}
         </template>
       </element-button>
     </div>
