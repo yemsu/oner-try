@@ -5,13 +5,16 @@ import {
   deleteChatRoom,
   postMember,
   deleteMember,
+  deleteChatUser,
   putChatRoom,
   getRoomTypes,
-  getUserChatRoom
+  getUserChatRoom,
+  getMembers,
  } from '@/api/party'
  import { checkAdmin } from '@/plugins/utils/index'
 
 export const state = () => ({
+  allMembers: [],
   chatRooms: null,
   chatRoom: null,
   roomTypes: [],
@@ -19,6 +22,7 @@ export const state = () => ({
 })
 
 export const getters = {
+  getAllMembers: (state) => state.allMembers,
   getChatRooms: (state) => state.chatRooms,
   getChatRoom: (state) => state.chatRoom,
   getRoomTypes: (state) => state.roomTypes,
@@ -26,6 +30,10 @@ export const getters = {
 }
 
 export const mutations = {
+  SET_ALL_MEMBERS(state, data) {
+    // console.log("SET_CHAT_RROMS", data)
+    state.allMembers = data
+  },
   SET_CHAT_ROOMS(state, data) {
     // console.log("SET_CHAT_RROMS", data)
     state.chatRooms = data
@@ -71,6 +79,16 @@ export const mutations = {
 }
 
 export const actions = {
+  async GET_ALL_MEMBERS({ commit }) {
+    const { result, error } = await getMembers()    
+    if(error || !result) {
+      console.log('GET_ALL_MEMBERS ERROR', error)
+      return false
+    }
+    console.log('GET_ALL_MEMBERS', result)
+    commit('SET_ALL_MEMBERS', result)
+    return result
+  },
   async GET_CHAT_ROOMS({ commit }, params) {
     const { result, error } = await getChatRooms(params)    
     if(error) {
@@ -143,6 +161,15 @@ export const actions = {
     }
     console.log('DELETE_MEMBER', result)
     commit('DELETE_MEMBER_STATE', siteNick)
+    return true
+  },
+  async DELETE_CHAT_USER({ commit }, siteNick) {
+    const { result, error } = await deleteChatUser(siteNick)
+    if(error) {
+      console.error(`CANNOT DELETE_CHAT_USER: ${error.msg}`)
+      return false
+    }
+    console.log('DELETE_CHAT_USER', siteNick, result)
     return true
   },
   async PUT_CHAT_ROOM({ commit }, payload) {

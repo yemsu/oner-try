@@ -155,6 +155,8 @@ export default {
       getRoomTypes: 'party/GET_ROOM_TYPES',
       getUserChatRoom: 'party/GET_USER_CHAT_ROOM',
       deleteMember: 'party/DELETE_MEMBER',
+      deleteChatUser: 'party/DELETE_CHAT_USER',
+      getAllMembers: 'party/GET_ALL_MEMBERS'
     }),
     ...mapMutations({
       setChatRooms: 'party/SET_CHAT_ROOMS',
@@ -162,11 +164,34 @@ export default {
       setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
     }),
     async loadData(page) {
+      await this.cleanDisconnectedMember()
       await this.getChatRooms({
         roomTypeId: this.selectedRoomType,
         page,
         size: 15
       })
+    },
+    async cleanDisconnectedMember() {
+      return new Promise(async (resolve) => {
+        const allMembers = await this.getAllMembers()
+        const peer = new this.$Peer({
+          host: process.env.PEER_SERVER,
+          secure: true        
+        })
+        peer.listAllPeers(async (peerIdList) => {
+          const disconnectedMembers = allMembers.filter(({peerId}) => (
+            !peerIdList.includes(peerId)
+          ))
+          if(disconnectedMembers.length === 0) {
+            resolve(true)
+            return
+          }
+          for(const { nickname } of disconnectedMembers) {
+            await this.deleteChatUser(nickname)
+          }
+          resolve(true)
+        })
+      }) 
     },
     badgeList(host, members) {
       if(!members) return

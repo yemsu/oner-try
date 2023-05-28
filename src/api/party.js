@@ -19,6 +19,9 @@ export const postMember = (chatRoomId, peerId) => {
 export const deleteMember = (chatRoomId, siteNick) => {
   return $axios.delete(`/${chatRoomId}/${siteNick}`)
 }
+export const deleteChatUser = (siteNick) => {
+  return $axios.delete(`/members/${siteNick}`)
+}
 export const putChatRoom = (chatRoom) => {
   return $axios.put(`/${chatRoom.id}`, chatRoom)
 }
@@ -27,4 +30,7 @@ export const getRoomTypes = () => {
 }
 export const getUserChatRoom = (siteNick) => {
   return $axios.get(`/members/${siteNick}`)
+}
+export const getMembers = () => {
+  return $axios.get(`/members`)
 }
