@@ -47,11 +47,11 @@ export default {
   left: 50%;
   min-width: 250px;
   padding: 10px 20px;
-  background-color: var(--color-white);
+  background-color: var(--color-pure-white);
   border: 1px solid var(--color-point);
   border-radius: 10px;
   transform: translateX(-50%);
   text-align: center;
-  box-shadow: 5px 10px 20px var(--color-shadow);
+  box-shadow: 0 0 30px 15px var(--color-shadow);
 }
 </style>

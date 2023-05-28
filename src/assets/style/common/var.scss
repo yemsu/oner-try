@@ -69,6 +69,7 @@ $chat-status-colors: (
 :root {
   // pallette
   --color-white: #{$color-white};
+  --color-pure-white: #{$color-white};
   --color-black: #{$color-black};
   --hsl-white: #{$hsl-white};
   --hsl-black: #{$hsl-black};
@@ -171,6 +172,7 @@ $chat-status-colors: (
 :root {
   // pallette
   --color-white: #{$color-black};
+  --color-pure-white: #{$color-pure-black};
   --color-black: #{$color-white};
   --hsl-white: #{$hsl-black};
   --hsl-black: #{$hsl-white};
@@ -219,7 +221,7 @@ $chat-status-colors: (
   --font-weight-XB: #{$font-weight-600};
 
   // shadow
-  --color-shadow: var(--color-gray-20);
+  --color-shadow: hsla(var(--point-h), 4%, 15%);
   
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);

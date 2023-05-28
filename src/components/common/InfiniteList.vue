@@ -2,9 +2,12 @@
   <div class="list-infinite">
     <template v-if="dataList && dataList.length > 0" >
       <div class="text-refer top">
-        <p>총 {{ dataList.length }}개</p>
+        <p v-if="showLength">총 {{ dataList.length }}개</p>
+        <element-refresh-button @click="refreshData" />
         <div class="align-right">
-          <element-refresh-button @click="refreshData" />
+          <span v-if="textNotice">
+            {{ textNotice }}
+          </span>
         </div>
       </div>
       <slot></slot>
@@ -37,9 +40,17 @@ export default {
       type: String,
       required: true
     },
+    showLength: {
+      type: Boolean,
+      default: false
+    },
     noDataMessage: {
       type: String,
-      default: () => ''
+      default: ''
+    },
+    textNotice: {
+      type: String,
+      default: ''
     },
   },
   data() {
