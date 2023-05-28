@@ -221,7 +221,7 @@ export default {
       setTimeout(async () => {
         await this.getChatRoom(this.chatRoom.id)
         const memberNick = this.getMemberNick(peerId)
-        if(this.$utils.checkAdmin(memberNick)) {
+        if(this.$utils.checkAdmin(memberNick) || !memberNick) {
           return
         }
         this.pushChatMessage(null, `${memberNick}님이 입장하셨습니다.`)
@@ -394,6 +394,7 @@ export default {
       // chopa1 - 퇴장
       // chopa2 - 입장
       // jigun - 채팅
+      console.log('beepReceiveMessage', audioName)
       this.beep.beep(audioName)
     },
     destroyPeer() {
