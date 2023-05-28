@@ -125,8 +125,17 @@ export default {
       nickname: 'auth/getNickname',
       chatRooms: 'party/getChatRooms',
       chatRoom: 'party/getChatRoom',
-      roomTypes: 'party/getRoomTypes'
+      roomTypes: 'party/getRoomTypes',
+      isMinimize: 'party/getIsMinimize'
     })
+  },
+  watch: {
+    isMinimize(crr) {
+      // 리스트 페이지에서 채팅방 최소화 시 데이터 새로고침
+      if(crr) {
+        this.refreshData()
+      }
+    }
   },
   async created() {
     if(this.roomTypes.length === 0) await this.getRoomTypes()
