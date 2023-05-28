@@ -24,8 +24,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: map-get($layout-sizes, 'basic');
-        max-width: 100%;
       }
       .button-toggle-size {
         bottom: 0;

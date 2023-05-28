@@ -4,8 +4,12 @@
       'popup-chat',
       `mode-${isMinimize ? 'mini' : 'max'}`
     ]"
+    @click="toggleMinimize"
   >
-    <div class="wrap-content">
+    <div
+      class="wrap-content"
+      @click="blockBubbling"
+    >
       <slot :isMinimize="isMinimize"></slot>
       <element-button
         class="button-toggle-size"
@@ -35,6 +39,9 @@ export default {
   methods: {
     toggleMinimize() {
       this.isMinimize = !this.isMinimize
+    },
+    blockBubbling(e) {
+      e.stopPropagation()
     }
   }
 }
