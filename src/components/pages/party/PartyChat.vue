@@ -78,11 +78,11 @@
             type="text"
             size="xsmall"
             @click="toggleOnBeep"
-            :title="`채팅 알람 ${isOnBeep ? '끄기' : '켜기'}`"
+            :title="`채팅 알람 ${isMuted ? '켜기' : '끄기'}`"
           >
-            <font-awesome-icon :icon="`fa-volume-${isOnBeep ? 'high' : 'xmark'}`" />
+            <font-awesome-icon :icon="`fa-volume-${isMuted ? 'high' : 'xmark'}`" />
             <template v-if="!isMinimize">
-              {{ `채팅 알람 ${isOnBeep ? '끄기' : '켜기'}` }}
+              {{ `채팅 알람 ${isMuted ? '켜기' : '끄기'}` }}
             </template>
           </element-button>
           <element-button
@@ -240,7 +240,7 @@ export default {
     blankBoxLength() {
       return 6 - this.chatRoom.capacity
     },
-    isOnBeep() {
+    isMuted() {
       return this.beep?.isMuted
     },
     beepVolume() {
@@ -277,7 +277,7 @@ export default {
       this.setInputValue('')
     },
     toggleOnBeep() {
-      this.beep.isMuted = !this.beep.isMuted
+      this.beep.toggleMuted()
     },
     isMyPeerDisconnected(memberNick) {
       return memberNick === this.nickname && this.peer.disconnected

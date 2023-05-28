@@ -111,7 +111,7 @@ export default {
         secure: true
       })
       console.log('peer created', this.peer.id, this.peer,)
-      this.beep = new Beep()
+      this.createBeep()
       this.peer.on('error', this.onError)
       this.peer.on('open', this.onOpen)
       this.peer.on('connection', this.subscribeMember)
@@ -122,6 +122,11 @@ export default {
         console.log('peer close!', this.peer, peerId)
       })
       this.refreshChecker += this.nickname
+    },
+    createBeep() {
+      const savedVolume = localStorage.getItem('ONER_TRY_CHAT_VOLUME') * 1
+      const savedIsMuted = localStorage.getItem('ONER_TRY_CHAT_MUTED') === 'true'
+      this.beep = new Beep(savedIsMuted, savedVolume)
     },
     onOpen() {
       console.log('onOpenPeer', this.chatRoom.members)
@@ -195,7 +200,6 @@ export default {
             if(this.willLeave) return
             console.log('유저가 나갔구나', peerId) 
             this.onMemberLeave(peerId)
-            this.beepReceiveMessage('chopa1')
           // }
         // }, 1500);
       })
@@ -225,7 +229,7 @@ export default {
           return
         }
         this.pushChatMessage(null, `${memberNick}님이 입장하셨습니다.`)
-        this.beepReceiveMessage('chopa2')
+        if(memberNick !== this.nickname) this.beepReceiveMessage('chopa2')
       }, 500);
           // this.changeChatRoomState({ members: this.chatRoom.members })
       // }
@@ -255,6 +259,7 @@ export default {
         this.isMemberKickedOut = false
       }
       this.pushChatMessage(null, message)
+      this.beepReceiveMessage('chopa1')
       // 나간 멤버가 방장?
       if(this.chatRoom.host !== memberNick) return
       this.onHostLeave()  
