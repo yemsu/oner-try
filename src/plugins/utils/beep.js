@@ -6,7 +6,7 @@ class Beep {
       chopa2: new Audio(`${this.audioUrl}chopa-2.mp3`),
       jigun: new Audio(`${this.audioUrl}jigun.mp3`)
     },
-    this.isMuted = isMuted || true
+    this.isMuted = isMuted || false
     this.volumeGap = 0.125
     this.volume = 0.25
     this.selectedAudio = 'jigun'
