@@ -19,6 +19,7 @@ export const state = () => ({
   chatRoom: null,
   roomTypes: [],
   disconnectedMembers: [],
+  isMinimize: false
 })
 
 export const getters = {
@@ -27,6 +28,7 @@ export const getters = {
   getChatRoom: (state) => state.chatRoom,
   getRoomTypes: (state) => state.roomTypes,
   getDisconnectedMembers: (state) => state.disconnectedMembers,
+  getIsMinimize: (state) => state.isMinimize,
 }
 
 export const mutations = {
@@ -75,7 +77,10 @@ export const mutations = {
   },
   SET_ROOM_TYPES(state, data) {
     state.roomTypes = data
-  }
+  },
+  SET_IS_MINIMIZE(state, data) {
+    state.isMinimize = data
+  },
 }
 
 export const actions = {

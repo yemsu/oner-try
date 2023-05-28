@@ -1,17 +1,14 @@
 <template>
   <common-chat-popup>
-    <template v-slot="{ isMinimize }">
-      <party-chat
-        :peer="peer"
-        :beep="beep"
-        :chat-messages="chatMessages"
-        :send-message="sendMessage"
-        :on-click-kick-out="onClickKickOut"
-        :on-click-exit="onClickExit"
-        :on-edit-title="onEditTitle"
-        :is-minimize="isMinimize"
-      />
-    </template>
+    <party-chat
+      :peer="peer"
+      :beep="beep"
+      :chat-messages="chatMessages"
+      :send-message="sendMessage"
+      :on-click-kick-out="onClickKickOut"
+      :on-click-exit="onClickExit"
+      :on-edit-title="onEditTitle"
+    />
   </common-chat-popup>
 </template>
 

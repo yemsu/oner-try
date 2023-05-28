@@ -197,12 +197,6 @@ export default {
       type: Function,
       require: true
     },
-    isMinimize: {
-      type: Boolean,
-      require: true
-    },
-  },
-  components: {
   },
   data() {
     return {
@@ -233,6 +227,7 @@ export default {
       nickname: 'auth/getNickname',
       chatRoom: 'party/getChatRoom',
       disconnectedMembers: 'party/getDisconnectedMembers',
+      isMinimize: 'party/getIsMinimize'
     }),
     readyBoxLength() {
       return this.chatRoom.capacity - this.chatRoom?.members.length
@@ -246,9 +241,6 @@ export default {
     beepVolume() {
       return this.beep?.volume / this.beep?.volumeGap
     },
-  },
-  mounted() {
-
   },
   methods: {
     fixScrollBottom() {

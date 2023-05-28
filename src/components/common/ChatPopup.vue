@@ -13,7 +13,8 @@
       class="wrap-content"
       @click="blockBubbling"
     >
-      <slot :isMinimize="isMinimize"></slot>
+      <!-- slot -->
+      <slot></slot>
       <element-button
         class="button-toggle-size"
         type="text"
@@ -33,15 +34,20 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+
 export default {
-  data() {
-    return {
-      isMinimize: false
-    }
+  computed: {
+    ...mapGetters({
+      isMinimize: 'party/getIsMinimize'
+    })
   },
   methods: {
+    ...mapMutations({
+      setIsMinimize: 'party/SET_IS_MINIMIZE'
+    }),
     toggleMinimize() {
-      this.isMinimize = !this.isMinimize
+      this.setIsMinimize(!this.isMinimize)
     },
     blockBubbling(e) {
       e.stopPropagation()
