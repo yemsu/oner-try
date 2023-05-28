@@ -38,7 +38,11 @@
         <template v-slot:content="{ activeTab }">
           <section>
             <h2 class="ir-hidden">캐릭터 빌드 - {{ activeTab.heroName }} (레벨:{{ activeTab.lv }}) </h2>
-            <ItemBuild :build-info="JSON.stringify(activeTab)" />
+            <ItemBuild
+              :build-info="JSON.stringify(activeTab)"
+              :use-refresh="true"
+              @refresh="loadData"
+            />
           </section>
         </template>
       </element-v-tab>
@@ -103,8 +107,12 @@ export default {
     }),
     ...mapMutations({
       setUserCharacters: 'character/SET_USER_CHARACTERS',
+      setToastMessage: 'toastPopup/SET_MESSAGE',
+      setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
     }),
-    async getUserData(nickName) {
+    async loadData(nickName) {
+      const isRefresh = !nickName
+      nickName = nickName || this.nickname
       this.isLoading = true
       const result = await this.getUserCharacters({ nickName })
       if(!result) {
@@ -112,10 +120,17 @@ export default {
         this.$router.push({ name: 'character'})
         return
       }
+      if(isRefresh) {
+        this.setToastMessage(this.$ALERTS.REFRESH_SUCCESS)
+        this.setToastOn(true)
+      }
+      this.isLoading = false
+    },
+    async getUserData(nickName) {
+      this.loadData(nickName)
       this.nickname = nickName
       this.sendPageView()
       console.log('userCharacters', nickName, this.userCharacters)
-      this.isLoading = false
     },
     async sendPageView() {
       // check window session storage

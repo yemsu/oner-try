@@ -45,7 +45,7 @@ export default {
       if(!crr) return
       this.resetStates()
       this.loadData()
-      this.setToastMessage(this.$ALERTS.REFRESH_LIST_SUCCESS)
+      this.setToastMessage(this.$ALERTS.REFRESH_SUCCESS)
       this.setToastOn(true)
     }
   },

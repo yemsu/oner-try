@@ -1,15 +1,15 @@
 <template>
   <div class="list-infinite">
-    <template v-if="dataList && dataList.length > 0" >
-      <div class="text-refer top">
-        <p v-if="showLength">총 {{ dataList.length }}개</p>
-        <element-refresh-button @click="refreshData" />
-        <div class="align-right">
-          <span v-if="textNotice">
-            {{ textNotice }}
-          </span>
-        </div>
+    <div class="text-refer top">
+      <p v-if="dataList && showLength">총 {{ dataList.length }}개</p>
+      <element-refresh-button @click="refreshData" />
+      <div class="align-right">
+        <span v-if="textNotice">
+          {{ textNotice }}
+        </span>
       </div>
+    </div>
+    <template v-if="dataList && dataList.length > 0" >
       <slot></slot>
     </template>
     <element-no-data

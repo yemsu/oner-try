@@ -12,7 +12,7 @@ const ALERTS = {
     MAX_PEOPLE_NUM: '📌 최대 인원을 선택해 주세요',
     CATEGORY: '📌 분류를 선택해 주세요',
   },
-  REFRESH_LIST_SUCCESS: '리스트가 업데이트 되었습니다.',
+  REFRESH_SUCCESS: `${SUCCESS_EMOJI} 새로고침이 완료되었습니다.`,
   ITEM_SETTING: {
     SAVE_SUCCESS: `${SUCCESS_EMOJI} 빌드가 저장되었습니다.`,
     SAVE_FAIL: `빌드 저장에 실패하였습니다. ${FAIL_COMMON}`,
