@@ -5,20 +5,21 @@
   position: fixed;
   z-index: $dim-z-index;
   max-width: 100%;
-  background-color: var(--bg-body);
-  transition: 0.5s;
+  transition: background-color 0.5s, transform 0.5s;
   .button-toggle-size {
     position: absolute;
   }
   &.mode {
     &-max {
-      top: var(--header-height);
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: 0;
+      left: -50%;
+      transform: translateX(50%);
+      width: 100%;
       height: calc(100% - var(--header-height));
-      margin: 0 auto;
       padding-top: 20px;
       padding-bottom: 20px;
+      background-color: var(--bg-white-dim);
+      backdrop-filter: blur(2px);
       .wrap-content {
         display: flex;
         flex-direction: column;
@@ -44,9 +45,14 @@
       overflow: hidden;
       bottom: 20px;
       left: 20px;
+      width: 100px;
       border: 1px solid var(--border-gray);
       border-radius: 10px;
       box-shadow: 5px 5px 10px var(--color-shadow);
+      background-color: transparent;
+      .wrap-content {
+        width: 100%;
+      }
       .button-toggle-size {
         font-size: 12px;
         top: 4px;

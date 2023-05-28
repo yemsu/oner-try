@@ -139,7 +139,7 @@ $chat-status-colors: (
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
   --bg-popup-dim: hsla(248, 10%, 10%, 0.5);
-  --bg-white-dim: #{colorMaker($color-point-hsl, -30%, 45%, 0.6)};
+  --bg-white-dim: #{colorMaker($color-point-hsl, -60%, 35%, 0.8)};
 
   // 아이템 등급 컬러
   --color-grade-common: hsl(0, 0%, 100%);
@@ -226,7 +226,7 @@ $chat-status-colors: (
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
   --bg-popup-dim: hsla(248, 10%, 0%, 0.5);
-  --bg-white-dim: #{colorMaker($color-point-hsl, -30%, -10%, 0.6)};
+  --bg-white-dim: #{colorMaker($color-point-hsl, -60%, -40%, 0.8)};
 
   // 아이템 등급 컬러
   --color-grade-common: #fff;

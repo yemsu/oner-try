@@ -94,6 +94,7 @@
     gap: 10px;
     padding: 15px;
     font-size: var(--font-size-S);
+    background-color: var(--bg-body);
     > li {
       display: flex;
       height: 1.3rem;
@@ -153,7 +154,7 @@
     }
   }
   &.mode-mini {
-    width: 100px;
+    width: 100%;
     .party-chat-top {
       padding: 6px 6px 0;
       background-color: var(--lighter-10);
