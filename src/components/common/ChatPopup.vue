@@ -6,6 +6,9 @@
     ]"
     @click="toggleMinimize"
   >
+    <div v-if="!isMinimize" class="box-text-notice">
+      <p>❗❗ 브라우저 새로고침 시, 파티에서 나가지니 주의하세요! ❗❗</p>
+    </div>
     <div
       class="wrap-content"
       @click="blockBubbling"

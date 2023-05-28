@@ -9,6 +9,16 @@
   .button-toggle-size {
     position: absolute;
   }
+  .box-text-notice {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 8px;
+    background-color: $color-pure-black;
+    color: $color-white;
+    font-size: var(--font-size-S);
+    text-align: center;
+  }
   &:before {
     display: block;
     position: absolute;
@@ -30,8 +40,6 @@
       transform: translateX(50%);
       width: 100%;
       height: calc(100% - var(--header-height));
-      padding-top: 20px;
-      padding-bottom: 20px;
       &:before {
         opacity: 1;
         transition: opacity 0.5s;
@@ -46,6 +54,8 @@
         left: 50%;
         padding: 10px;
         background-color: $color-pure-black;
+        border: 1px solid var(--border-gray);
+        border-bottom: none;
         color: $color-white;
         transform: translateX(-50%);
         border-top-left-radius: 10px;
