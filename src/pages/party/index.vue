@@ -39,53 +39,48 @@
         :can-multi-select="false"
         @onChange="(list) => selectedRoomType = list[0]"
       />
-      <div class="area-chat-room">
-        <common-wrap-buttons
-          size="small"
-          align="left"
-          position="top"
-        >
-          <element-refresh-button @click="refreshData" />
-        </common-wrap-buttons>
-        <template v-if="chatRooms && chatRooms.length > 0" >
-          <ul class="list-chat-room">
-            <li
-              v-for="({ id, title, members, capacity, roomType, isNeedHelper, host }, i) in chatRooms"
-              :key="`chatRoom${i}`"
-              class="chat-room"
-            >
-              <card-list-content
-                v-if="members"
-                :required-data="{ id, title, badgeList: badgeList(host, members) }"
-                tag-name="button"
-                link-title="입장하기"
-                :top-info="{
-                  left: {
-                    text: `${roomType.name}`,
-                    badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
-                  },
-                  right: {
-                    text: `👨🏾‍🤝‍👨🏼 ${members.length} / ${capacity}`
-                  }
-                }"
-                @click="onClickChatRoom(id, members.length === capacity)"
-              />
-            </li>
-          </ul>
-        </template>
-        <element-no-data
-          v-else
-          message="파티가 존재하지 않습니다."
-        />
-      </div>
+      <infinite-list
+        v-if="isLogin"
+        class="area-chat-room"
+        :data-list="chatRooms"
+        :load-data="loadData"
+        :data-type="selectedRoomType"
+        no-data-message="파티가 존재하지 않습니다."
+      >
+        <ul class="list-column">
+          <li
+            v-for="({
+            id,
+            title,
+            members,
+            capacity,
+            roomType,
+            isNeedHelper,
+            host 
+          }, i) in chatRooms"
+            :key="`data${i}`"
+            class="chat-room"
+          >
+            <card-list-content
+              v-if="members"
+              :required-data="{ id, title, badgeList: badgeList(host, members) }"
+              tag-name="button"
+              link-title="입장하기"
+              :top-info="{
+                left: {
+                  text: `${roomType.name}`,
+                  badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
+                },
+                right: {
+                  text: `👨🏾‍🤝‍👨🏼 ${members.length} / ${capacity}`
+                }
+              }"
+              @click="onClickChatRoom(id, members.length === capacity)"
+            />
+          </li>
+        </ul>
+      </infinite-list>
     </layout-content-wrap>
-    <common-scroll-observer
-      v-if="isLogin"
-      :data="chatRooms || []"
-      :fn-load-data="loadData"
-      :category="selectedRoomType"
-      :refresh-trigger="refreshTrigger"
-    />
     <create-party-chat
       v-if="showCreateChat"
       :show="showCreateChat"
@@ -97,6 +92,7 @@
 <script>
 import CardListContent from '@/components/common/CardListContent.vue'
 import CreatePartyChat from '@/components/pages/party/CreatePartyChat.vue';
+import InfiniteList from '@/components/common/InfiniteList.vue';
 import setMeta from '@/plugins/utils/meta';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
@@ -110,7 +106,8 @@ export default {
   },
   components: {
     CreatePartyChat,
-    CardListContent
+    CardListContent,
+    InfiniteList
   },
   data() {
     return {
@@ -118,7 +115,6 @@ export default {
       page: 1,
       selectedRoomType: '999', /// 999 = ALL
       roomTypeOptions: null,
-      refreshTrigger: false
     }
   },
   computed: {
@@ -223,12 +219,6 @@ export default {
       }
       await this.getChatRoom(id)
     },
-    refreshData() {
-      if(this.refreshTrigger) this.refreshTrigger = false
-      setTimeout(() => {
-        this.refreshTrigger = true
-      }, 500);
-    },
     onClickCreateChat() {
       this.showCreateChat = !this.showCreateChat
     },
@@ -240,7 +230,7 @@ export default {
 .area-chat-room {
   margin-top: 30px;
 }
-.list-chat-room {
+.list-column {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
