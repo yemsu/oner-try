@@ -96,8 +96,11 @@ export const actions = {
       alert('멤버 업데이트에 실패했습니다! 새로 고침을 해주세요.')
       return false
     }
-    console.log('GET_CHAT_ROOMS', result)
-    commit('SET_CHAT_ROOMS', result)
+
+    const resultHasMembers = result
+      .filter(({members}) => members && members.length)
+
+    commit('SET_CHAT_ROOMS', resultHasMembers)
     return result
   },
   async GET_CHAT_ROOM({ commit }, queryId) {

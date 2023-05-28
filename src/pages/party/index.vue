@@ -50,7 +50,7 @@
         <template v-if="chatRooms && chatRooms.length > 0" >
           <ul class="list-chat-room">
             <li
-              v-for="({ id, title, members, capacity, roomType, isNeedHelper, host }, i) in chatRooms.filter(({members}) => members && members.length)"
+              v-for="({ id, title, members, capacity, roomType, isNeedHelper, host }, i) in chatRooms"
               :key="`chatRoom${i}`"
               class="chat-room"
             >
@@ -74,7 +74,7 @@
           </ul>
         </template>
         <element-no-data
-          v-else-if="chatRooms && chatRooms.length === 0"
+          v-else
           message="파티가 존재하지 않습니다."
         />
       </div>
