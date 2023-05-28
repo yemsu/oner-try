@@ -181,8 +181,11 @@
       color: $color-white;
     }
     .party-chat-top {
+      overflow: hidden;
       padding: 6px 6px 0;
       background-color: var(--lighter-10);
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
       .badge {
         height: 1.6em;
         margin-left: -2px;
