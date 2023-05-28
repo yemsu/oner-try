@@ -5,6 +5,19 @@
       `mode-${isMinimize ? 'mini' : 'max'}`
     ]"
   >
+    <span
+      v-if="newMessage"
+      class="alarm-new-message"
+    >
+      {{ newMessage }}
+    </span>
+    <span
+      v-if="newMessageLength"
+      class="alarm-message-length"
+      :title="`읽지 않은 메세지 ${newMessageLength}개`"
+    >
+      {{ newMessageLength }}
+    </span>
     <div class="party-chat-top">
       <div class="badges">
         <element-badge
@@ -26,7 +39,7 @@
       </div>
     </div>
     <div class="wrap-content">
-      <div v-if="!isMinimize" class="area-message">
+      <div v-show="!isMinimize" class="area-message">
         <div class="wrap-messages" ref="scrollArea">
           <p
             v-for="({ nickname: chatNick, message, time }, i) in chatMessages"
@@ -194,12 +207,26 @@ export default {
   data() {
     return {
       inputValue: '',
+      newMessageLength: 0,
+      newMessage: null,
+      newMessageTimer: null
     }
   },
   watch: {
-    chatMessages() {
-      this.fixScrollBottom()
+    chatMessages(crr) {
+      !this.isMinimize && this.fixScrollBottom()
+      if(this.isMinimize) {
+        this.newMessageLength += 1
+        this.newMessage = crr[crr.length - 1].message
+        if(this.newMessageTimer) clearTimeout(this.newMessageTimer)
+        this.newMessageTimer = setTimeout(() => {
+          this.newMessage = null
+        }, 3000)
+      }
     },
+    isMinimize(crr, prev) {
+      if(!crr && this.newMessageLength) this.newMessageLength = 0
+    }
   },
   computed: {
     ...mapGetters({

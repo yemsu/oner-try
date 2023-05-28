@@ -154,6 +154,32 @@
     }
   }
   &.mode-mini {
+    .alarm-new-message {
+      position: absolute;
+      top: -15px;
+      left: 0;
+      padding: 5px;
+      transform: translateY(-100%);
+      background-color: var(--lighter-10);
+      border: 1px solid var(--border-gray);
+      border-radius: 10px;
+      font-size: var(--font-size-XXS);
+    }
+    .alarm-message-length {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+      width: 15px;
+      height: 15px;
+      background-color: $color-point;
+      border-radius: 100%;
+      font-size: 10px;
+      color: $color-white;
+    }
     .party-chat-top {
       padding: 6px 6px 0;
       background-color: var(--lighter-10);

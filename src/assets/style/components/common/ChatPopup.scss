@@ -40,12 +40,13 @@
       }
     }
     &-mini {
-      overflow: hidden;
       bottom: 20px;
       left: 20px;
       width: 100px;
       border: 1px solid var(--border-gray);
       border-radius: 10px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
       box-shadow: 5px 5px 10px var(--color-shadow);
       background-color: transparent;
       .wrap-content {
