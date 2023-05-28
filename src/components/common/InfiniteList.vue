@@ -52,10 +52,20 @@ export default {
       type: String,
       default: ''
     },
+    parentRefreshTrigger: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
       refreshTrigger: false
+    }
+  },
+  watch: {
+    parentRefreshTrigger(crr) {
+      if(!crr) return
+      this.refreshData()
     }
   },
   methods: {

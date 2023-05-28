@@ -45,6 +45,7 @@
         :data-list="chatRooms"
         :load-data="loadData"
         :data-type="selectedRoomType"
+        :parent-refresh-trigger="refreshTrigger"
         no-data-message="파티가 존재하지 않습니다."
       >
         <ul class="list-column">
@@ -115,6 +116,7 @@ export default {
       page: 1,
       selectedRoomType: '999', /// 999 = ALL
       roomTypeOptions: null,
+      refreshTrigger: false
     }
   },
   computed: {
@@ -204,9 +206,9 @@ export default {
         this.refreshData()
         return
       }
+      // 채팅방에서 나왔는데 delete member가 안된 버그가 발생한 경우
       const userChatRoomId = await this.getUserChatRoom(this.nickname)
       if(userChatRoomId) {
-        console.log('userChatRoomId', userChatRoomId)
         const willLeavePrevRoom = confirm(this.$ALERTS.CHAT.USER_EXISTED)
         if(!willLeavePrevRoom) return
         await this.deleteMember({
@@ -215,9 +217,15 @@ export default {
         })
         this.setToastMessage(this.$ALERTS.CHAT.LEAVE_PREV_CHATROOM)
         this.setToastOn(true)
-        await this.refreshData()
+        this.refreshData()
       }
       await this.getChatRoom(id)
+    },
+    refreshData() {
+      if(this.refreshTrigger) this.refreshTrigger = false
+      setTimeout(() => {
+        this.refreshTrigger = true
+      }, 500);
     },
     onClickCreateChat() {
       this.showCreateChat = !this.showCreateChat
