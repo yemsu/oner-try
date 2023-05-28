@@ -249,7 +249,7 @@ export default {
       if(this.willLeave || !memberNick) return
       this.deleteMemberState(memberNick)
       this.removeConnection(peerId)
-      let message = `${memberNick}님이2 방을 나가셨습니다.`
+      let message = `${memberNick}님이 방을 나가셨습니다.`
       if(this.isMemberKickedOut) {
         message = `${memberName}님이 파티에서 제외되었습니다.`
         this.isMemberKickedOut = false
@@ -272,8 +272,10 @@ export default {
       this.pushChatMessage(null, `👑 ${newHostName}님이 방장이 되셨습니다!`)
     },
     async onDeleteMember(memberNick, chatRoomId) {
+      const id = chatRoomId || this.chatRoom?.id
+      if(!id) return
       const deleteMember = await this.deleteMember({
-        id: chatRoomId || this.chatRoom.id,
+        id,
         siteNick: memberNick
       })
       console.log('deleteMember', memberNick, deleteMember)
@@ -404,7 +406,6 @@ export default {
       this.peer = null
       this.peerId = null
       this.connections = []
-      this.setChatRoom(null)
     },
     addConnection(connection) {
       this.connections = [...this.connections, connection]
@@ -419,7 +420,8 @@ export default {
     handlerUnAvailableId() {
       console.log('handlerUnAvailableId!!')
       const peerId = this.peerId
-      this.onDeleteMember(this.nickname)
+      const checkBug = this.chatRoom.members.find(({nickname}) => nickname === this.nickname)
+      if(checkBug) this.onDeleteMember(this.nickname)      
       this.resetChat()
       this.peerId = peerId + '_1'
       this.createPeer()
@@ -434,6 +436,7 @@ export default {
       this.onDeleteMember(this.nickname)
       // this.onDeleteMember(this.nickname)
       this.destroyPeer()
+      this.setChatRoom(null)
       this.$router.push({ name: 'party' })
     },
   },
