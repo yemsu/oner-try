@@ -318,6 +318,7 @@ export default {
         alert(this.$ALERTS.CHAT.KICK_OUT)
         this.willLeave = true
         this.onDeleteMember(memberNick)
+        this.setChatRoom(null)
         this.destroyPeer()
         this.goPartyList()
       } else { // 방에 남아있는 멤버들
