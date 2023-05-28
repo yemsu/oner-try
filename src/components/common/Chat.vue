@@ -269,7 +269,7 @@ export default {
       if(newHostName === this.nickname) {
         this.onEditChatRoom({
           host: newHostName
-        })
+        }, false)
       }
       this.changeChatRoomState({
         host: newHostName
@@ -299,7 +299,7 @@ export default {
       // this.kickOutMember = memberNick // closeConnection 알람 뜨지 않도록 하는 플래그
       this.pushChatMessage(null, this.$ALERTS.CHAT.KICK_OUT_WHO(memberNick))
     },
-    async onEditChatRoom(obj) {
+    async onEditChatRoom(obj, updateState = true) {
       const newChatroom = {
         id: this.chatRoom.id,
         ...this.chatRoom,
@@ -307,7 +307,10 @@ export default {
         ...obj
       }
       console.log("onEditChatRoom",newChatroom)
-      await this.putChatRoom(newChatroom)
+      await this.putChatRoom({
+        chatRoom: newChatroom,
+        updateState
+      })
     },
     receiveKickOutMsg(memberNick) {
       // 강퇴 대상자

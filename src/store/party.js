@@ -175,10 +175,9 @@ export const actions = {
     console.log('DELETE_CHAT_USER', siteNick, result)
     return true
   },
-  async PUT_CHAT_ROOM({ commit }, payload) {
-    const { id } = payload
+  async PUT_CHAT_ROOM({ commit }, { chatRoom, updateState }) {
     const { result, error } = await putChatRoom({
-      ...payload,
+      ...chatRoom,
       gameType: 'oner'
     })
     if(error) {
@@ -186,7 +185,7 @@ export const actions = {
       return false
     }
     console.log('PUT_CHAT_ROOM', result)
-    commit('SET_CHAT_ROOM', result)
+    updateState && commit('SET_CHAT_ROOM', result)
     return result
   },
   async GET_ROOM_TYPES({ commit }) {
