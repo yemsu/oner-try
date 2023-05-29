@@ -78,11 +78,11 @@
             type="text"
             size="xsmall"
             @click="toggleOnBeep"
-            :title="`채팅 알람 ${isMuted ? '켜기' : '끄기'}`"
+            :title="`알람 ${isMuted ? 'OFF' : 'ON'}`"
           >
             <font-awesome-icon :icon="`fa-volume-${isMuted ? 'high' : 'xmark'}`" />
             <template v-if="!isMinimize">
-              {{ `채팅 알람 ${isMuted ? '켜기' : '끄기'}` }}
+              {{ `채팅 알람 ${isMuted ? 'OFF' : 'ON'}` }}
             </template>
           </element-button>
           <element-button
