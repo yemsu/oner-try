@@ -384,10 +384,9 @@ export default {
         return
       }
       if(error.type === 'network') {
-        console.log("서버와 연결이 끊겼습니다. 페이지를 새로고침 해주세요.")
+        alert("채팅 서버와 연결이 끊겼습니다!\n파티에서 제외됩니다. 재입장 해주세요.")
         console.log("network", this.peer?.destroyed, this.peer?.disconnected)
-        this.destroyPeer()
-        this.createPeer()
+        this.onUnload()
         return
       }
       if(error.type === 'peer-unavailable') {
