@@ -70,9 +70,13 @@ export default {
     ...mapActions({
       getChatRoom: 'party/GET_CHAT_ROOM',
       getUserChatRoom: 'party/GET_USER_CHAT_ROOM',
+      deleteMember: 'party/DELETE_MEMBER',
     }),
     ...mapMutations({
-      setIsMinimize: 'party/SET_IS_MINIMIZE'
+      setIsMinimize: 'party/SET_IS_MINIMIZE',
+      setToastMessage: 'toastPopup/SET_MESSAGE',
+      setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
+      setIsLoading: 'common/SET_IS_LOADING',
     }),
     removeSideFixAdsFor(routeName) {
       this.showSideFixAds = false
@@ -95,11 +99,13 @@ export default {
       if(!this.isLogin) return
       const prevChatRoomId = sessionStorage.getItem(this.ONER_TRY_CHAT_REFRESH)
       if(!prevChatRoomId) return
-
+      this.setIsLoading(true)
       const goAgainParty = confirm('채팅방에 참여하신 상태로 새로고침을 하신 것 같네요! 해당 채팅방에 바로 재참여하시려면 확인을 눌러주세요.')
       if(!goAgainParty) return
       setTimeout(() => {
-        this.getChatRoom(prevChatRoomId)
+        this.getChatRoom(prevChatRoomId, true)
+        sessionStorage.removeItem(this.ONER_TRY_CHAT_REFRESH)
+        this.setIsLoading(false)
       }, 500);
     }
   }

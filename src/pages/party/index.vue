@@ -173,6 +173,7 @@ export default {
     }),
     ...mapMutations({
       setChatRooms: 'party/SET_CHAT_ROOMS',
+      setChatRoom: 'party/SET_CHAT_ROOM',
       setToastMessage: 'toastPopup/SET_MESSAGE',
       setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
     }),
@@ -222,19 +223,32 @@ export default {
         return
       }
       // 채팅방에서 나왔는데 delete member가 안된 버그가 발생한 경우
-      const userChatRoomId = await this.getUserChatRoom(this.nickname)
-      if(userChatRoomId) {
+      const goToNewChatRoom = await this.handleAlreadyHasParty() 
+      if(!goToNewChatRoom) return
+      await this.getChatRoom(id)
+    },
+    async handleAlreadyHasParty() {
+      return new Promise(async (resolve) => {
+        const userChatRoomId = await this.getUserChatRoom(this.nickname)
+        if(!userChatRoomId) {
+          resolve(true)
+          return
+        }
         const willLeavePrevRoom = confirm(this.$ALERTS.CHAT.USER_EXISTED)
-        if(!willLeavePrevRoom) return
+        if(!willLeavePrevRoom) {
+          resolve(false)
+          return
+        }
         await this.deleteMember({
           id: userChatRoomId,
           siteNick: this.nickname
         })
+        this.setChatRoom(null)
         this.setToastMessage(this.$ALERTS.CHAT.LEAVE_PREV_CHATROOM)
         this.setToastOn(true)
         this.refreshData()
-      }
-      await this.getChatRoom(id)
+        resolve(true)
+      })
     },
     refreshData() {
       if(this.refreshTrigger) this.refreshTrigger = false
@@ -242,7 +256,9 @@ export default {
         this.refreshTrigger = true
       }, 500);
     },
-    onClickCreateChat() {
+    async onClickCreateChat() {
+      const goToNewChatRoom = await this.handleAlreadyHasParty() 
+      if(!goToNewChatRoom) return
       this.showCreateChat = !this.showCreateChat
     },
   }
