@@ -144,6 +144,7 @@
               <element-button
                 type="text"
                 size="xsmall"
+                :is-no-function="chatRoom.host !== nickname"
                 @click="onClickNoMemberList(type)"
               >
                 <font-awesome-icon
