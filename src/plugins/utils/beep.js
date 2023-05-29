@@ -2,8 +2,8 @@ class Beep {
   constructor(isMuted, volume){ 
     this.audioUrl = `${process.env.BASE_URL}/audio/`
     this.audios = {
-      chopa1: new Audio(`${this.audioUrl}chopa-1.mp3`),
-      chopa2: new Audio(`${this.audioUrl}chopa-2.mp3`),
+      chopa1: new Audio(`${this.audioUrl}chopa-1.mp3`), //호도도도오
+      chopa2: new Audio(`${this.audioUrl}chopa-2.mp3`), // 아도오
       jigun: new Audio(`${this.audioUrl}jigun.mp3`)
     },
     this.isMuted = isMuted || false
@@ -39,6 +39,7 @@ class Beep {
   }
   toggleMuted() {
     this.setMuted(!this.isMuted)
+    if(!this.isMuted) this.beep('chopa2')
   }
   beep(selectedAudio){
     if(this.isMuted) return
