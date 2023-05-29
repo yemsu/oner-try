@@ -119,6 +119,7 @@
                 :is-no-function="!isMyPeerDisconnected(memberNick)"
                 :bg="peer.disconnected ? 'point' : 'sub'"
                 :title="peer.disconnected ? '연결 끊김': '연결됨'"
+                :class="{'member-disconnected': peer.disconnected}"
                 @click="() => reconnectMyPeer(memberNick)"
               >
                 <font-awesome-icon icon="fa-signal" />
