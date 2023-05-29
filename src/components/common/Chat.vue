@@ -133,6 +133,8 @@ export default {
         for(const member of this.chatRoom.members) {
           console.log('피어 입장', this.chatRoom.id, this.connections)
           console.log('방에 들어왔고', member.peerId, this.chatRoom.id)
+          // 가끔 새로고침 시 내가 나가지지 않은 채로 members 데이터가 넘어옴
+          if(member.nickname === this.nickname) continue
           const connection = this.peer.connect(member.peerId, {
             label: this.chatRoom.id
           })
