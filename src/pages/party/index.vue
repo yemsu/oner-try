@@ -257,8 +257,11 @@ export default {
       }, 500);
     },
     async onClickCreateChat() {
-      const goToNewChatRoom = await this.handleAlreadyHasParty() 
-      if(!goToNewChatRoom) return
+      const userChatRoomId = await this.getUserChatRoom(this.nickname)
+      if(userChatRoomId) {
+        alert(this.$ALERTS.CHAT.USER_ALREADY_HAS_PARTY)
+        return
+      }
       this.showCreateChat = !this.showCreateChat
     },
   }
