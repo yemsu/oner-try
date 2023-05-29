@@ -3,7 +3,6 @@
   align-items: center;
   justify-content: center;
   position: fixed;
-  z-index: $dim-z-index;
   max-width: 100%;
   transition: transform 0.5s;
   .button-toggle-size {
@@ -37,6 +36,7 @@
     &-max {
       bottom: 0;
       left: -50%;
+      z-index: $dim-z-index;
       transform: translateX(50%);
       width: 100%;
       height: calc(100% - var(--header-height));
@@ -68,6 +68,7 @@
     &-mini {
       bottom: 20px;
       left: 20px;
+      z-index: ($ad-z-index + 1);
       width: 100px;
       border: 1px solid var(--border-gray);
       border-radius: 10px;
