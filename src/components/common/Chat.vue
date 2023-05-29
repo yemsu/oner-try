@@ -69,6 +69,7 @@ export default {
     setTimeout(async () => {
       // 화면에 멤버 추가.
       await this.getChatRoom(this.chatRoom.id)
+      this.setIsMinimize(false)
       // 피어가 없어? 새로 만들어.
       if(!this.peer) {
         console.log("피어가 없어? 새로 만들어.")
@@ -91,6 +92,7 @@ export default {
       setChatRoom: 'party/SET_CHAT_ROOM',
       removeDisconnectedMember: 'party/REMOVE_DISCONNECTED_MEMBER',
       addDisconnectedMember: 'party/ADD_DISCONNECTED_MEMBER',
+      setIsMinimize: 'party/SET_IS_MINIMIZE',
       togglePopupIsVisible: 'popup/TOGGLE_IS_VISIBLE',
       setPopupContent: 'popup/SET_CONTENT',
     }),
