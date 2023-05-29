@@ -25,7 +25,11 @@ export default {
     refreshTrigger: {
       type: Boolean,
       default: false
-    }
+    },
+    noToastPopup: {
+      type: Boolean,
+      default: false
+    },
   },
   data() {
     return {
@@ -45,6 +49,7 @@ export default {
       if(!crr) return
       this.resetStates()
       this.loadData()
+      if(this.noToastPopup) return
       this.setToastMessage(this.$ALERTS.REFRESH_SUCCESS)
       this.setToastOn(true)
     }

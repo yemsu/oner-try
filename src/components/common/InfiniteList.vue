@@ -21,6 +21,7 @@
       :fn-load-data="loadData"
       :category="dataType"
       :refresh-trigger="refreshTrigger"
+      :no-toast-popup="noToastPopup"
     />
   </div>
 </template>
@@ -59,20 +60,23 @@ export default {
   },
   data() {
     return {
-      refreshTrigger: false
+      refreshTrigger: false,
+      noToastPopup: false
     }
   },
   watch: {
     parentRefreshTrigger(crr) {
       if(!crr) return
-      this.refreshData()
+      this.refreshData(true)
     }
   },
   methods: {
-    refreshData() {
+    refreshData(noToastPopup) {
       if(this.refreshTrigger) this.refreshTrigger = false
+      if(this.noToastPopup) this.noToastPopup = false
       setTimeout(() => {
         this.refreshTrigger = true
+        this.noToastPopup = noToastPopup
       }, 500);
     },
   }
