@@ -63,6 +63,11 @@ export default {
         this.destroyPeer()
         if(this.$route.path === '/party/room') this.goPartyList()
       }
+    },
+    isLogin(crr) {
+      if(!crr && this.chatRoom) {
+        this.onUnload()
+      }
     }
   },
   mounted() {    
@@ -368,6 +373,7 @@ export default {
       this.willLeave = true
       this.onDeleteMember(this.nickname)
       this.destroyPeer()
+      this.setChatRoom(null)
       this.saveChatRoomIdForRefresh()
     },
     confirmClose(e) {
