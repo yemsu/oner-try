@@ -155,9 +155,51 @@ export default {
       }
       if(userInfo) {
         this.setIsLogin(true)
+        this.fnEventSource()
       } else {
         this.onClickLogout()
       }
+    },
+    fnEventSource() {
+      // const subscribeUrl = 
+      const eventSource = new EventSource(`${process.env.API_PATH}/sub`);
+      console.log('eventSource',eventSource)
+      eventSource.onopen = () => {
+        console.log('연결 성공');
+      };
+      // eventSource.onmessage = (event) {
+      //     console.log('이벤트 수신:', event.data);
+      //     // 수신한 이벤트 데이터 처리 로직을 여기에 작성
+      // };
+      eventSource.onerror = (error) => {
+        console.log('에러:', error);
+      };
+      eventSource.onclose = () => {
+        console.log('연결 종료');
+      };
+      eventSource.addEventListener("addComment", (event) => {
+        const message = event.data;
+        console.log('message', message)
+        this.showAlarmNotification("채팅방  생성", message);
+      })
+      eventSource.addEventListener("error", (event) => {
+        eventSource.close()
+      })
+    },
+    showAlarmNotification(title, body) {
+      // 브라우저가 알림을 지원하는지 확인
+      if (!("Notification" in window)) {
+        console.log("브라우저가 알림을 지원하지 않습니다.");
+        return;
+      }
+      // 사용자에게 알림 권한 요청
+      Notification.requestPermission().then((permission) => {
+        console.log('permission', permission, title, body)
+        if (permission === "granted") {
+          // 알림 생성
+          new Notification(title, {body});
+        }
+      });
     },
     async onClickLogin(googleUser) {
       console.log('googleUser', googleUser)
