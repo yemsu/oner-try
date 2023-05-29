@@ -124,6 +124,11 @@
           text-align: center;
         }
       }
+      .member-disconnected {
+        path {
+          fill: var(--color-point);
+        }
+      }
     }
     .me {
       color: var(--color-point);

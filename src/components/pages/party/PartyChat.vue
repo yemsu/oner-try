@@ -108,17 +108,10 @@
               <span
                 v-if="disconnectedMembers.includes(memberPeerId)"
                 title="연결 끊김"
-              >❗</span>
-              <element-button
-                v-if="memberNick !== chatRoom.host && nickname === chatRoom.host"
-                type="text"
-                size="xsmall"
-                bg="sub"
-                title="추방"
-                @click="onClickKickOut(memberNick)"
+                class="member-disconnected"
               >
-                <font-awesome-icon icon="fa-xmark" />
-              </element-button>
+                <font-awesome-icon icon="fa-signal" />
+              </span>
               <element-button
                 v-if="peer && memberNick === nickname"
                 type="text"
@@ -129,6 +122,16 @@
                 @click="() => reconnectMyPeer(memberNick)"
               >
                 <font-awesome-icon icon="fa-signal" />
+              </element-button>
+              <element-button
+                v-if="memberNick !== chatRoom.host && nickname === chatRoom.host"
+                type="text"
+                size="xsmall"
+                bg="sub"
+                title="추방"
+                @click="onClickKickOut(memberNick)"
+              >
+                <font-awesome-icon icon="fa-xmark" />
               </element-button>
             </template>
           </li>
