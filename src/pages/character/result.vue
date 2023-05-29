@@ -47,7 +47,6 @@
         </template>
       </element-v-tab>
     </section>
-    <common-loading-indicator :is-loading="isLoading" :full="true" />
   </div>
 </template>
 
@@ -75,7 +74,6 @@ export default {
   data() {
     return {
       nickname: '',
-      isLoading: true
     }
   },
   watch: {
@@ -109,11 +107,12 @@ export default {
       setUserCharacters: 'character/SET_USER_CHARACTERS',
       setToastMessage: 'toastPopup/SET_MESSAGE',
       setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
+      setIsLoading: 'common/SET_IS_LOADING',
     }),
     async loadData(nickName) {
       const isRefresh = !nickName
       nickName = nickName || this.nickname
-      this.isLoading = true
+      this.setIsLoading(true)
       const result = await this.getUserCharacters({ nickName })
       if(!result) {
         alert('존재하지 않는 유저입니다.')
@@ -124,7 +123,7 @@ export default {
         this.setToastMessage(this.$ALERTS.REFRESH_SUCCESS)
         this.setToastOn(true)
       }
-      this.isLoading = false
+      this.setIsLoading(false)
     },
     async getUserData(nickName) {
       this.loadData(nickName)

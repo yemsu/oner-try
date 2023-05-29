@@ -24,6 +24,7 @@
     <element-popup />
     <item-bookmark-floating />
     <layout-footer />
+    <common-loading-indicator :is-loading="isLoading" :full="true" />
  </div>
 </template>
 
@@ -46,6 +47,7 @@ export default {
   computed: {
     ...mapGetters({
       isLogin: 'auth/getIsLogin',
+      isLoading: 'common/getIsLoading',
       chatRoom: 'party/getChatRoom',
     })
   },
@@ -91,7 +93,9 @@ export default {
 
       const goAgainParty = confirm('채팅방에 참여하신 상태로 새로고침을 하신 것 같네요! 해당 채팅방에 바로 재참여하시려면 확인을 눌러주세요.')
       if(!goAgainParty) return
-      await this.getChatRoom(prevChatRoomId)
+      setTimeout(() => {
+        this.getChatRoom(prevChatRoomId)
+      }, 500);
     }
   }
 }
