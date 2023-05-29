@@ -19,6 +19,7 @@
 <script>
 import { postGoogleCredential, setDefaultHeader, deleteUser } from "@/plugins/utils/https"
 import Https from "@/plugins/utils/https-new"
+import { eventSourceConnect } from "@/plugins/utils/chatRoom"
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
@@ -39,6 +40,7 @@ export default {
     ...mapGetters({
       isLogin: 'auth/getIsLogin',
       userInfo: 'auth/getUserInfo',
+      roomTypes: 'party/getRoomTypes',
     }),
     isDevEnv() {
       return process.env.NODE_ENV === 'development'
@@ -91,7 +93,8 @@ export default {
       setUserInfo: 'auth/SET_USER_INFO'
     }),
     ...mapActions({
-      getUserInfo: 'auth/GET_USER_INFO'
+      getUserInfo: 'auth/GET_USER_INFO',
+      getRoomTypes: 'party/GET_ROOM_TYPES',
     }),
     sendJTokenToNewTab() {
       const TRIGGER_NAME = 'trigger--new-tab'
@@ -149,57 +152,17 @@ export default {
       Https.prototype.jToken = this.jToken
       setDefaultHeader('Authorization', this.jToken)
       const userInfo = await this.getUserInfo()
-      console.log('fnLogin userInfo', { userInfo }, this.isLogin)
+      // console.log('fnLogin userInfo', { userInfo }, this.isLogin)
       if(userInfo === 'not found token') {
         console.error('getUserInfo : no Authorization : ', this.jToken)
       }
       if(userInfo) {
         this.setIsLogin(true)
-        this.fnEventSource()
+        if(this.roomTypes.length === 0) await this.getRoomTypes()
+        eventSourceConnect(this.roomTypes)
       } else {
         this.onClickLogout()
       }
-    },
-    fnEventSource() {
-      // const subscribeUrl = 
-      const eventSource = new EventSource(`${process.env.API_PATH}/sub`);
-      console.log('eventSource',eventSource)
-      eventSource.onopen = () => {
-        console.log('연결 성공');
-      };
-      // eventSource.onmessage = (event) {
-      //     console.log('이벤트 수신:', event.data);
-      //     // 수신한 이벤트 데이터 처리 로직을 여기에 작성
-      // };
-      eventSource.onerror = (error) => {
-        console.log('에러:', error);
-      };
-      eventSource.onclose = () => {
-        console.log('연결 종료');
-      };
-      eventSource.addEventListener("addComment", (event) => {
-        const message = event.data;
-        console.log('message', message)
-        this.showAlarmNotification("채팅방  생성", message);
-      })
-      eventSource.addEventListener("error", (event) => {
-        eventSource.close()
-      })
-    },
-    showAlarmNotification(title, body) {
-      // 브라우저가 알림을 지원하는지 확인
-      if (!("Notification" in window)) {
-        console.log("브라우저가 알림을 지원하지 않습니다.");
-        return;
-      }
-      // 사용자에게 알림 권한 요청
-      Notification.requestPermission().then((permission) => {
-        console.log('permission', permission, title, body)
-        if (permission === "granted") {
-          // 알림 생성
-          new Notification(title, {body});
-        }
-      });
     },
     async onClickLogin(googleUser) {
       console.log('googleUser', googleUser)
