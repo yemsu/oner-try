@@ -80,7 +80,7 @@
             @click="toggleOnBeep"
             :title="`알람 ${isMuted ? 'OFF' : 'ON'}`"
           >
-            <font-awesome-icon :icon="`fa-volume-${isMuted ? 'high' : 'xmark'}`" />
+            <font-awesome-icon :icon="`fa-volume-${isMuted ? 'xmark' : 'high'}`" />
             <template v-if="!isMinimize">
               {{ `채팅 알람 ${isMuted ? 'OFF' : 'ON'}` }}
             </template>
