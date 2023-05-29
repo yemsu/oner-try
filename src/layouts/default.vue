@@ -16,7 +16,7 @@
       name="side_fix_right"
      />
     <div class="container">
-      <error v-if="true"></error>
+      <error v-if="false"></error>
       <nuxt v-else />
     </div>
     <element-toast-popup />
