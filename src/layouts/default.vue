@@ -101,7 +101,10 @@ export default {
       if(!prevChatRoomId) return
       this.setIsLoading(true)
       const goAgainParty = confirm('채팅방에 참여하신 상태로 새로고침을 하신 것 같네요! 해당 채팅방에 바로 재참여하시려면 확인을 눌러주세요.')
-      if(!goAgainParty) return
+      if(!goAgainParty) {
+        this.setIsLoading(false)
+        return
+      }
       setTimeout(() => {
         this.getChatRoom(prevChatRoomId, true)
         sessionStorage.removeItem(this.ONER_TRY_CHAT_REFRESH)
