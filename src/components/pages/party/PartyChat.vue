@@ -18,7 +18,7 @@
     >
       {{ newMessageLength }}
     </span>
-    <div class="party-chat-top">
+    <div class="party-chat-top" @click="maximizeChat">
       <div class="badges">
         <element-badge
           type="square-round"
@@ -259,6 +259,7 @@ export default {
     ...mapMutations({
       setToastMessage: 'toastPopup/SET_MESSAGE',
       setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
+      setIsMinimize: 'party/SET_IS_MINIMIZE',
     }),
     fixScrollBottom() {
       setTimeout(() => {
@@ -311,6 +312,10 @@ export default {
       })
       this.setToastMessage(this.$ALERTS.CHAT.CHANGE_CAPACITY)
       this.setToastOn(true)
+    },
+    maximizeChat() {
+      console.log('maximizeChat')
+      this.isMinimize && this.setIsMinimize(false)
     }
   }
 }
