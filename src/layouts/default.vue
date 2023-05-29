@@ -31,7 +31,7 @@
 <script>
 import BaseAdsense from '@/components/common/BaseAdsense.vue';
 import Error from './error.vue';
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   components: {
@@ -48,6 +48,7 @@ export default {
     ...mapGetters({
       isLogin: 'auth/getIsLogin',
       isLoading: 'common/getIsLoading',
+      isMinimize: 'party/getIsMinimize',
       chatRoom: 'party/getChatRoom',
     })
   },
@@ -55,7 +56,8 @@ export default {
     '$route.name'(crr, prev) {
       this.removeSideFixAdsFor(crr)
       // return this.$nuxt.error({ statusCode: 600, message: '점검 중입니다' })
-    }
+      if(!this.isMinimize) this.setIsMinimize(true)
+    },
   },
   mounted() {
     this.removeSideFixAdsFor(this.$route.name)
@@ -68,6 +70,9 @@ export default {
     ...mapActions({
       getChatRoom: 'party/GET_CHAT_ROOM',
       getUserChatRoom: 'party/GET_USER_CHAT_ROOM',
+    }),
+    ...mapMutations({
+      setIsMinimize: 'party/SET_IS_MINIMIZE'
     }),
     removeSideFixAdsFor(routeName) {
       this.showSideFixAds = false
