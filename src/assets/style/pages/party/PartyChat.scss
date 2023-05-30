@@ -254,7 +254,6 @@
       }
     }
     @include mobile {
-      width: calc(100vw - 85px);
       .wrap-content {
         width: 100%;
       }
