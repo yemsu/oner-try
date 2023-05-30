@@ -373,8 +373,8 @@ export default {
       this.willLeave = true
       this.onDeleteMember(this.nickname)
       this.destroyPeer()
-      this.setChatRoom(null)
       this.saveChatRoomIdForRefresh()
+      this.setChatRoom(null)
     },
     confirmClose(e) {
       e.preventDefault();
