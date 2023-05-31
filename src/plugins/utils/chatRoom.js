@@ -18,7 +18,7 @@ export function eventSourceConnect(roomTypes) {
     showAlarmNotification(name, '파티가 생성되었습니다.');
   })
   eventSource.onerror = (error) => {
-    console.log('EVNET SOURCE 에러:', error);
+    console.log('EVNET SOURCE 에러:', error, timeStamp());
   };
   eventSource.addEventListener("error", (event) => {
     eventSource.close()
