@@ -176,7 +176,6 @@ export default {
         chatRoomId: this.chatRoom.id,
         peerId: this.peerId
       })
-      console.log('postMemberRes', postMemberRes)
       if(error) {
         this.setPopupContent({
           title: '파티 멤버 등록에 실패 실패하였습니다.',
