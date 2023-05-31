@@ -23,6 +23,7 @@
     <element-toast-popup />
     <element-popup />
     <item-bookmark-floating />
+    <common-banner-floating />
     <layout-footer />
     <common-loading-indicator :is-loading="isLoading" :full="true" />
  </div>
