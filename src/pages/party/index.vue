@@ -1,7 +1,6 @@
-<template>
-  
+<template>  
   <layout-content-wrap
-    v-if="true"
+    v-if="false"
     size="basic"
     pd-top="none"
     :is-main-content="true"
@@ -40,52 +39,49 @@
         :can-multi-select="false"
         @onChange="(list) => selectedRoomType = list[0]"
       />
-      <div class="area-chat-room">
-        <template v-if="chatRooms && chatRooms.length > 0" >
-          <common-wrap-buttons
-            size="small"
-            align="left"
-            position="top"
+      <infinite-list
+        v-if="isLogin"
+        class="area-chat-room"
+        :data-list="chatRooms"
+        :load-data="loadData"
+        :data-type="selectedRoomType"
+        :parent-refresh-trigger="refreshTrigger"
+        no-data-message="파티가 존재하지 않습니다."
+      >
+        <ul class="list-column">
+          <li
+            v-for="({
+            id,
+            title,
+            members,
+            capacity,
+            roomType,
+            isNeedHelper,
+            host 
+          }, i) in chatRooms"
+            :key="`data${i}`"
+            class="chat-room"
           >
-            <element-refresh-button @click="refreshData" />
-          </common-wrap-buttons>
-          <ul class="list-chat-room">
-            <li
-              v-for="({ id, title, members, memberCount, capacity, roomType, isNeedHelper, host }, i) in chatRooms"
-              :key="`chatRoom${i}`"
-              class="chat-room"
-            >
-              <card-list-content
-                v-if="members"
-                :required-data="{ id, title, badgeList: badgeList(host, members) }"
-                tag-name="button"
-                link-title="입장하기"
-                :top-info="{
-                  left: {
-                    text: `${roomType.name}`,
-                    badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
-                  },
-                  right: {
-                    text: `👨🏾‍🤝‍👨🏼 ${memberCount} / ${capacity}`
-                  }
-                }"
-                @click="onClickChatRoom(id, members)"
-              />
-            </li>
-          </ul>
-        </template>
-        <element-no-data
-          v-else-if="chatRooms && chatRooms.length === 0"
-          message="파티가 존재하지 않습니다."
-        />
-      </div>
+            <card-list-content
+              v-if="members"
+              :required-data="{ id, title, badgeList: badgeList(host, members) }"
+              tag-name="button"
+              link-title="입장하기"
+              :top-info="{
+                left: {
+                  text: `${roomType.name}`,
+                  badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
+                },
+                right: {
+                  text: `👨🏾‍🤝‍👨🏼 ${members.length} / ${capacity}`
+                }
+              }"
+              @click="onClickChatRoom(id, members.length === capacity)"
+            />
+          </li>
+        </ul>
+      </infinite-list>
     </layout-content-wrap>
-    <common-scroll-observer
-      :data="chatRooms || []"
-      :fn-load-data="loadData"
-      :category="selectedRoomType"
-      :refresh-trigger="refreshTrigger"
-    />
     <create-party-chat
       v-if="showCreateChat"
       :show="showCreateChat"
@@ -97,6 +93,7 @@
 <script>
 import CardListContent from '@/components/common/CardListContent.vue'
 import CreatePartyChat from '@/components/pages/party/CreatePartyChat.vue';
+import InfiniteList from '@/components/common/InfiniteList.vue';
 import setMeta from '@/plugins/utils/meta';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
@@ -110,7 +107,8 @@ export default {
   },
   components: {
     CreatePartyChat,
-    CardListContent
+    CardListContent,
+    InfiniteList
   },
   data() {
     return {
@@ -126,8 +124,24 @@ export default {
       isLogin: 'auth/getIsLogin',
       nickname: 'auth/getNickname',
       chatRooms: 'party/getChatRooms',
-      roomTypes: 'party/getRoomTypes'
+      chatRoom: 'party/getChatRoom',
+      roomTypes: 'party/getRoomTypes',
+      isMinimize: 'party/getIsMinimize'
     })
+  },
+  watch: {
+    isMinimize(crr) {
+      // 리스트 페이지에서 채팅방 최소화 시 데이터 새로고침
+      if(crr) {
+        this.refreshData()
+      }
+    },
+    chatRoom(crr) {
+      // 리스트 페이지에서 방 나갔을 경우 데이터 새로고침
+      if(!crr) {
+        this.refreshData()
+      }
+    }
   },
   async created() {
     if(this.roomTypes.length === 0) await this.getRoomTypes()
@@ -138,25 +152,60 @@ export default {
       { id: '999', text: 'ALL'},
       ...roomTypeOptions
     ]
-    console.log('ddd', this.roomTypeOptions)
+  },
+  mounted() {
+    setTimeout(() => {
+      if(!this.isLogin) {
+        this.$router.push({ name: 'auth-login' })
+        return
+      }
+    }, 500)
   },
   methods: {
     ...mapActions({
       getChatRooms: 'party/GET_CHAT_ROOMS',
+      getChatRoom: 'party/GET_CHAT_ROOM',
       getRoomTypes: 'party/GET_ROOM_TYPES',
-      postMember: 'party/POST_MEMBER',
+      getUserChatRoom: 'party/GET_USER_CHAT_ROOM',
+      deleteMember: 'party/DELETE_MEMBER',
+      deleteChatUser: 'party/DELETE_CHAT_USER',
+      getAllMembers: 'party/GET_ALL_MEMBERS'
     }),
     ...mapMutations({
       setChatRooms: 'party/SET_CHAT_ROOMS',
+      setChatRoom: 'party/SET_CHAT_ROOM',
       setToastMessage: 'toastPopup/SET_MESSAGE',
       setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
     }),
     async loadData(page) {
+      await this.cleanDisconnectedMember()
       await this.getChatRooms({
         roomTypeId: this.selectedRoomType,
         page,
         size: 15
       })
+    },
+    async cleanDisconnectedMember() {
+      return new Promise(async (resolve) => {
+        const allMembers = await this.getAllMembers()
+        const peer = new this.$Peer({
+          host: process.env.PEER_SERVER,
+          secure: true        
+        })
+        peer.listAllPeers(async (peerIdList) => {
+          const disconnectedMembers = allMembers.filter(({peerId}) => (
+            !peerIdList.includes(peerId)
+          ))
+          if(disconnectedMembers.length === 0) {
+            resolve(true)
+            return
+          }
+          for(const { nickname } of disconnectedMembers) {
+            await this.deleteChatUser(nickname)
+          }
+          resolve(true)
+        })
+      }) 
     },
     badgeList(host, members) {
       if(!members) return
@@ -166,31 +215,39 @@ export default {
       }))
       return badgeList
     },
-    async onClickChatRoom(id, members) {
-      if(!this.isLogin) {
-        this.$router.push({ name: 'auth-login' })
+    async onClickChatRoom(id, isFull) {
+      if(isFull) {
+        this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
+        this.setToastOn(true)
+        this.refreshData()
         return
       }
-      if(!this.$utils.checkAdmin(this.nickname)) {
-        // 버그로 인해 채팅방 나가졌는데 업데이트 안된 경우 다시 들어갈 수 있게 수정.
-        let isFull = false
-        const isMemberBug = members.find(({nickname}) => nickname === this.nickname)
-        const res = await this.postMember(id)
-        if(res.msg === '방이 가득찼습니다.') {
-          isFull = true
-        }
-        if(isFull && !isMemberBug) {
-          this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
-          this.setToastOn(true)
-          this.refreshData()
+      // 채팅방에서 나왔는데 delete member가 안된 버그가 발생한 경우
+      const goToNewChatRoom = await this.handleAlreadyHasParty() 
+      if(!goToNewChatRoom) return
+      await this.getChatRoom(id)
+    },
+    async handleAlreadyHasParty() {
+      return new Promise(async (resolve) => {
+        const userChatRoomId = await this.getUserChatRoom(this.nickname)
+        if(!userChatRoomId) {
+          resolve(true)
           return
         }
-      }
-      this.$router.push({
-        name: 'party-room',
-        query: {
-          id
+        const willLeavePrevRoom = confirm(this.$ALERTS.CHAT.USER_EXISTED)
+        if(!willLeavePrevRoom) {
+          resolve(false)
+          return
         }
+        await this.deleteMember({
+          id: userChatRoomId,
+          siteNick: this.nickname
+        })
+        this.setChatRoom(null)
+        this.setToastMessage(this.$ALERTS.CHAT.LEAVE_PREV_CHATROOM)
+        this.setToastOn(true)
+        this.refreshData()
+        resolve(true)
       })
     },
     refreshData() {
@@ -199,9 +256,10 @@ export default {
         this.refreshTrigger = true
       }, 500);
     },
-    onClickCreateChat() {
-      if(!this.isLogin) {
-        this.$router.push({ name: 'auth-login' })
+    async onClickCreateChat() {
+      const userChatRoomId = await this.getUserChatRoom(this.nickname)
+      if(userChatRoomId) {
+        alert(this.$ALERTS.CHAT.USER_ALREADY_HAS_PARTY)
         return
       }
       this.showCreateChat = !this.showCreateChat
@@ -214,7 +272,7 @@ export default {
 .area-chat-room {
   margin-top: 30px;
 }
-.list-chat-room {
+.list-column {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;

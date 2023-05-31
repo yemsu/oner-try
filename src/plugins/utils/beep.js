@@ -1,14 +1,14 @@
 class Beep {
-  constructor(isMuted){ 
+  constructor(isMuted, volume){ 
     this.audioUrl = `${process.env.BASE_URL}/audio/`
     this.audios = {
-      chopa1: new Audio(`${this.audioUrl}chopa-1.mp3`),
-      chopa2: new Audio(`${this.audioUrl}chopa-2.mp3`),
+      chopa1: new Audio(`${this.audioUrl}chopa-1.mp3`), //호도도도오
+      chopa2: new Audio(`${this.audioUrl}chopa-2.mp3`), // 아도오
       jigun: new Audio(`${this.audioUrl}jigun.mp3`)
     },
     this.isMuted = isMuted || false
     this.volumeGap = 0.125
-    this.volume = 0.25
+    this.volume = volume || 0.25
     this.selectedAudio = 'jigun'
 
     this.init()
@@ -22,12 +22,24 @@ class Beep {
     }
   }
   changeVolume() {
+    this.setVolume()
+    this.setAudioVolume()
+    if(this.isMuted) this.setMuted(false)
+    this.beep()
+  }
+  setVolume() {
     this.volume = this.volume >= 0.5
       ? this.volumeGap
       : this.volume + this.volumeGap
-    this.setAudioVolume()
-    if(this.isMuted) this.isMuted = false
-    this.beep()
+    localStorage.setItem('ONER_TRY_CHAT_VOLUME', `${this.volume}`)
+  }
+  setMuted(isMuted) {
+    this.isMuted = isMuted
+    localStorage.setItem('ONER_TRY_CHAT_MUTED', `${isMuted}`)
+  }
+  toggleMuted() {
+    this.setMuted(!this.isMuted)
+    if(!this.isMuted) this.beep('chopa2')
   }
   beep(selectedAudio){
     if(this.isMuted) return

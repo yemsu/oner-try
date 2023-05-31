@@ -2,6 +2,10 @@
 <div>
   <div class="text-refer top">
     <p v-if="buildData.saveDate">최근 세이브: {{ buildData.saveDate }}</p>
+    <element-refresh-button
+      v-if="useRefresh"
+      @click="$emit('refresh')"
+    />
     <p v-else-if="buildData.regDt">{{ buildData.regDt }}</p>
     <element-copy-button
       v-if="makingMode"
@@ -89,17 +93,21 @@ export default {
   props: {
     buildInfo: {
       type: String, // stringify json
-      default: () => '{}',
+      default: '{}',
       required: true,
     },
     showRangeValue: {
       type: Boolean,
-      default: () => false
+      default: false
     },
     makingMode: {
       type: Boolean,
-      default: () => false
-    }
+      default: false
+    },
+    useRefresh: {
+      type: Boolean,
+      default: false
+    },
   },
   data() {
     return {

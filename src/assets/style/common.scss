@@ -319,7 +319,7 @@ p.text-refer {
 div.text-refer {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   font-size: var(--font-size-XS);
   &.top {
     margin-bottom: 6px;
@@ -330,6 +330,7 @@ div.text-refer {
   > [class*=align-] {
     display: inline-flex;
     align-items: center;
+    gap: 10px;
     > p:nth-child(n + 2) {
       position: relative;
       padding-left: 10px;

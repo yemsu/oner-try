@@ -16,7 +16,7 @@ export const mutations = {
     state.isLogin = data
   },
   SET_USER_INFO(state, data) {
-    console.log('SET_USER_INFO', data)
+    // console.log('SET_USER_INFO', data)
     state.userInfo = Object.assign({}, data)
   },
 }

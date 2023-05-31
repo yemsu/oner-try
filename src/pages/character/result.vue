@@ -38,12 +38,15 @@
         <template v-slot:content="{ activeTab }">
           <section>
             <h2 class="ir-hidden">캐릭터 빌드 - {{ activeTab.heroName }} (레벨:{{ activeTab.lv }}) </h2>
-            <ItemBuild :build-info="JSON.stringify(activeTab)" />
+            <ItemBuild
+              :build-info="JSON.stringify(activeTab)"
+              :use-refresh="true"
+              @refresh="loadData"
+            />
           </section>
         </template>
       </element-v-tab>
     </section>
-    <common-loading-indicator :is-loading="isLoading" :full="true" />
   </div>
 </template>
 
@@ -71,7 +74,6 @@ export default {
   data() {
     return {
       nickname: '',
-      isLoading: true
     }
   },
   watch: {
@@ -103,19 +105,31 @@ export default {
     }),
     ...mapMutations({
       setUserCharacters: 'character/SET_USER_CHARACTERS',
+      setToastMessage: 'toastPopup/SET_MESSAGE',
+      setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
+      setIsLoading: 'common/SET_IS_LOADING',
     }),
-    async getUserData(nickName) {
-      this.isLoading = true
+    async loadData(nickName) {
+      const isRefresh = !nickName
+      nickName = nickName || this.nickname
+      this.setIsLoading(true)
       const result = await this.getUserCharacters({ nickName })
       if(!result) {
         alert('존재하지 않는 유저입니다.')
         this.$router.push({ name: 'character'})
         return
       }
+      if(isRefresh) {
+        this.setToastMessage(this.$ALERTS.REFRESH_SUCCESS)
+        this.setToastOn(true)
+      }
+      this.setIsLoading(false)
+    },
+    async getUserData(nickName) {
+      this.loadData(nickName)
       this.nickname = nickName
       this.sendPageView()
       console.log('userCharacters', nickName, this.userCharacters)
-      this.isLoading = false
     },
     async sendPageView() {
       // check window session storage

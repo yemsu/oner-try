@@ -50,6 +50,10 @@ export default {
       type: String,
       default: () => ''
     },
+    isNoFunction: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -63,7 +67,9 @@ export default {
       return !this.isOuterLink && this.linkTo
     },
     tagName() {
-      return this.isOuterLink ? 'a' : 'button'
+      return this.isOuterLink ? 'a'
+        : this.isNoFunction ? 'span' 
+        : 'button'
     }
   },
   methods: {

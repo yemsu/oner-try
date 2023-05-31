@@ -5,25 +5,39 @@ import {
   deleteChatRoom,
   postMember,
   deleteMember,
+  deleteChatUser,
   putChatRoom,
-  getRoomTypes
+  getRoomTypes,
+  getUserChatRoom,
+  getMembers,
  } from '@/api/party'
+ import { checkAdmin } from '@/plugins/utils/index'
 
 export const state = () => ({
+  allMembers: [],
   chatRooms: null,
   chatRoom: null,
   roomTypes: [],
+  disconnectedMembers: [],
+  isMinimize: false
 })
 
 export const getters = {
+  getAllMembers: (state) => state.allMembers,
   getChatRooms: (state) => state.chatRooms,
   getChatRoom: (state) => state.chatRoom,
   getRoomTypes: (state) => state.roomTypes,
+  getDisconnectedMembers: (state) => state.disconnectedMembers,
+  getIsMinimize: (state) => state.isMinimize,
 }
 
 export const mutations = {
+  SET_ALL_MEMBERS(state, data) {
+    // console.log("SET_CHAT_RROMS", data)
+    state.allMembers = data
+  },
   SET_CHAT_ROOMS(state, data) {
-    console.log("SET_CHAT_RROMS", data)
+    // console.log("SET_CHAT_RROMS", data)
     state.chatRooms = data
   },
   ADD_CHAT_ROOM(state, data) {
@@ -37,11 +51,21 @@ export const mutations = {
   SET_MEMBER(state, members) {
     state.chatRoom.members = members
   },
-  ADD_MEMBER(state, memberObj) {
-    state.chatRoom.members = state.chatRoom.members.concat([memberObj])
+  ADD_DISCONNECTED_MEMBER(state, peerId) {
+    state.disconnectedMembers = [...state.disconnectedMembers, peerId]
   },
-  DELETE_MEMBER(state, memberNick) {
-    console.log('DELETE_MEMBER', memberNick)
+  REMOVE_DISCONNECTED_MEMBER(state, peerId) {
+    state.disconnectedMembers = state.disconnectedMembers
+    .filter((_peerId) => _peerId !== peerId)
+  },
+  ADD_MEMBER(state, memberObj) {
+    if(!state.chatRoom || checkAdmin(memberObj.nickname)) return
+    console.log('state.chatRoom', state.chatRoom)
+    state.chatRoom.members = [...state.chatRoom.members, memberObj]
+  },
+  DELETE_MEMBER_STATE(state, memberNick) {
+    console.log('DELETE_MEMBER_STATE', memberNick)
+    if(!state.chatRoom) return
     state.chatRoom.members = state.chatRoom.members
       .filter(({ nickname }) => nickname !== memberNick)
   },
@@ -53,37 +77,67 @@ export const mutations = {
   },
   SET_ROOM_TYPES(state, data) {
     state.roomTypes = data
-  }
+  },
+  SET_IS_MINIMIZE(state, data) {
+    state.isMinimize = data
+  },
 }
 
 export const actions = {
+  async GET_ALL_MEMBERS({ commit }) {
+    const { result, error } = await getMembers()    
+    if(error || !result) {
+      console.log('GET_ALL_MEMBERS ERROR', error)
+      return false
+    }
+    console.log('GET_ALL_MEMBERS', result)
+    commit('SET_ALL_MEMBERS', result)
+    return result
+  },
   async GET_CHAT_ROOMS({ commit }, params) {
     const { result, error } = await getChatRooms(params)    
     if(error) {
-      const exception = new Error(`CANNOT GET_CHAT_ROOMS : ${error.msg}`)
-      throw exception
+      console.error(`CANNOT GET_CHAT_ROOMS`, error)
+      alert('멤버 업데이트에 실패했습니다! 새로 고침을 해주세요.')
+      return false
     }
-    // console.log('GET_CHAT_ROOMS', result)
-    commit('SET_CHAT_ROOMS', result)
+
+    const resultHasMembers = result
+      .filter(({members}) => members && members.length)
+
+    commit('SET_CHAT_ROOMS', resultHasMembers)
     return result
   },
   async GET_CHAT_ROOM({ commit }, queryId) {
     const { result, error } = await getChatRoom(queryId)    
     if(error) {
-      console.error(`CANNOT GET_CHAT_ROOM : ${error.msg}`)
+      console.error(`CANNOT GET_CHAT_ROOM`, error)
       return false
     } 
-    // console.log('GET_CHAT_ROOM', result)
-    commit('SET_CHAT_ROOM', result)
+    const members = result.members
+      .filter(({nickname}) => (!checkAdmin(nickname)))
+      .sort((a, b) => {
+        const getIndex = (member) => {
+          return member.nickname === result.host
+            ? 0
+            : member.id
+        }
+        return getIndex(a) - getIndex(b)
+      })
+    commit('SET_CHAT_ROOM', {...result, members})
     return true
   },
   async POST_CHAT_ROOM({ commit }, chatRoom) {
-    const { result, error } = await postChatRoom(chatRoom)
+    console.log('POST_CHAT_ROOM', chatRoom)
+    const { result, error } = await postChatRoom({
+      ...chatRoom, 
+      gameType: 'oner'
+    })
     if(error) {
+      console.error(`CANNOT POST_CHAT_ROOM: ${error.msg}`)
       if(error.msg === '이미 입장한 유저입니다.') {
         return true
       }
-      console.error(`CANNOT POST_CHAT_ROOM: ${error.msg}`)
       return false
     }
     commit('ADD_CHAT_ROOM', chatRoom)
@@ -97,10 +151,11 @@ export const actions = {
     }
     // console.log('DELETE_CHAT_ROOM', id)
   },
-  async POST_MEMBER({ commit }, id) {
-    const { result, error } = await postMember(id)
+  async POST_MEMBER({ commit }, { chatRoomId, peerId }) {
+    const { result, error } = await postMember(chatRoomId, peerId)
+    console.log('POST_MEMBER', result)
     if(error) {
-      console.log('CANNOT POST_MEMBER:',error )
+      console.log('CANNOT POST_MEMBER:', error)
       return error
     }
     commit('ADD_MEMBER', result)
@@ -113,19 +168,29 @@ export const actions = {
       return false
     }
     console.log('DELETE_MEMBER', result)
-    // commit('DELETE_MEMBER', result.nickname)
+    commit('DELETE_MEMBER_STATE', siteNick)
     return true
   },
-  async PUT_CHAT_ROOM({ commit }, { id, payload }) {
+  async DELETE_CHAT_USER({ commit }, siteNick) {
+    const { result, error } = await deleteChatUser(siteNick)
+    if(error) {
+      console.error(`CANNOT DELETE_CHAT_USER: ${error.msg}`)
+      return false
+    }
+    console.log('DELETE_CHAT_USER', siteNick, result)
+    return true
+  },
+  async PUT_CHAT_ROOM({ commit }, { chatRoom, updateState = true }) {
     const { result, error } = await putChatRoom({
-      id,
-      payload
+      ...chatRoom,
+      gameType: 'oner'
     })
     if(error) {
+      console.error('PUT_CHAT_ROOM ERROR', {error})
       return false
     }
     console.log('PUT_CHAT_ROOM', result)
-    commit('SET_CHAT_ROOM', result)
+    updateState && commit('SET_CHAT_ROOM', result)
     return result
   },
   async GET_ROOM_TYPES({ commit }) {
@@ -134,8 +199,18 @@ export const actions = {
       alert(this.$ALERTS.CHAT.GET_ROOM_TYPE_FAIL)
       return false
     }
-    console.log('GET_ROOM_TYPES', result)
+    // console.log('GET_ROOM_TYPES', result)
     commit('SET_ROOM_TYPES', result)
     return result
-  }
+  },
+  async GET_USER_CHAT_ROOM({ commit }, siteNick) {
+    const { result, error } = await getUserChatRoom(siteNick)    
+    if(error || !result) {
+      console.log('GET_USER_CHAT_ROOM ERROR', error)
+      return false
+    }
+    console.log('GET_USER_CHAT_ROOM', result)
+    // commit('SET_ROOM_TYPES', result)
+    return result
+  },
 }

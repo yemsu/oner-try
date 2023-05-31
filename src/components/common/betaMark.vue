@@ -1,6 +1,6 @@
 <template>
   <span :class="`beta size-${size}`">
-    준비중
+    beta
   </span>
 </template>
 

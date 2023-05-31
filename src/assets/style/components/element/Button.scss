@@ -25,6 +25,10 @@
       font-size: var(--font-size-S);
     }
     &-medium {
+      font-size: var(--font-size-MS);
+    }
+    &-large {
+      font-size: var(--font-size-B);
     }
   }
   &.round {
@@ -87,6 +91,12 @@
         color: var(--font-gray);
         path {
           fill: var(--font-gray);
+        }
+      }
+      &-point {
+        color: var(--color-point);
+        path {
+          fill: var(--color-point);
         }
       }
     }
