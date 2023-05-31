@@ -172,11 +172,20 @@ export default {
       // }
       console.log('hereIAm', this.peerId)
       // 새로고침 체크 - 서버 멤버에 내가 없어? 다시 보내야지.
-      const postMemberRes = await this.postMember({
+      const { error } = await this.postMember({
         chatRoomId: this.chatRoom.id,
         peerId: this.peerId
       })
       console.log('postMemberRes', postMemberRes)
+      if(error) {
+        this.setPopupContent({
+          title: '파티 멤버 등록에 실패 실패하였습니다.',
+          message: `파티에 재입장 해주세요! :: Error - ${error.msg}`
+        })
+        this.togglePopupIsVisible()
+        this.onUnload()
+        return
+      }
     },
     subscribeMember(connection) {
       const peerId = connection.peer
@@ -368,7 +377,7 @@ export default {
     saveChatRoomIdForRefresh() {
       sessionStorage.setItem(this.ONER_TRY_CHAT_REFRESH, this.chatRoom.id)
     },
-    onUnload(e) {
+    onUnload() {
       console.log('onUnload')
       this.willLeave = true
       this.onDeleteMember(this.nickname)
@@ -401,11 +410,11 @@ export default {
         this.addDisconnectedMember(peerId)
         return
       }
-      this.togglePopupIsVisible()
       this.setPopupContent({
         title: error.type,
         message: error.message
       })
+      this.togglePopupIsVisible()
     },
     isAlreadyConnected(peerId) {
       return this.connections.find(({peer}) => peer === peerId)
