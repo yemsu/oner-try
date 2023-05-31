@@ -1,0 +1,101 @@
+.popup-chat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  max-width: 100%;
+  transition: transform 0.5s;
+  .button-toggle-size {
+    position: absolute;
+  }
+  .box-text-notice {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 8px;
+    background-color: $color-pure-black;
+    color: $color-white;
+    font-size: var(--font-size-S);
+    text-align: center;
+  }
+  &:before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-white-dim);
+    backdrop-filter: blur(2px);
+    opacity: 1;
+    transition: opacity 0.5s;
+    content: '';
+  }
+  &.mode {
+    &-max {
+      bottom: 0;
+      left: -50%;
+      z-index: $dim-z-index;
+      transform: translateX(50%);
+      width: 100%;
+      height: calc(100% - var(--header-height));
+      &:before {
+        opacity: 1;
+        transition: opacity 0.5s;
+      }
+      .wrap-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 100%;
+      }
+      .button-toggle-size {
+        bottom: 0;
+        left: 50%;
+        padding: 10px;
+        background-color: $color-pure-black;
+        border: 1px solid var(--border-gray);
+        border-bottom: none;
+        color: $color-white;
+        transform: translateX(-50%);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+      @include mobile {
+        padding: 10px;
+      }
+    }
+    &-mini {
+      bottom: 20px;
+      left: 20px;
+      z-index: ($ad-z-index + 1);
+      width: 100px;
+      border: 1px solid var(--border-gray);
+      border-radius: 10px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      box-shadow: 5px 5px 10px var(--color-shadow);
+      background-color: transparent;
+      &:before {
+        opacity: 0;
+      }
+      .wrap-content {
+        width: 100%;
+      }
+      .button-toggle-size {
+        font-size: 12px;
+        top: 4px;
+        right: 5px;
+        font-weight: var(--font-weight-L);
+      }
+      @include mobile {
+        width: calc(100vw - 105px);
+        bottom: 0;
+        left: 0;
+        border-radius: 0;
+        border-top-right-radius: 10px;
+      }
+    }
+  }
+}

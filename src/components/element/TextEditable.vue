@@ -92,8 +92,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.text-editable > * {
-  display: flex;
-  gap: 10px;
+.text-editable {
+  max-width: 100%; // for text overflow ellipsis
+  & > * {
+    display: flex;
+    gap: 10px;
+  }
 }
 </style>

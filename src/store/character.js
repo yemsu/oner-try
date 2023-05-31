@@ -118,7 +118,6 @@ export const actions = {
           const userShip = user.ship !== '빈공간'
             ? dataParseHandler(ships, user, 'ship')
             : new Array(1).fill(null)
-            console.log('userShip', userShip)
           return Object.assign(user, {
             sailors: userSailors,
             colleagues: userColleagues,

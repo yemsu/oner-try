@@ -14,7 +14,8 @@ export default {
     isTriggerOn(crr, prev) {
       if(crr) {
         this.isVisible = true
-        setTimeout(() => {
+        if(this.timer) clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
           this.setToastPopupOn(false)
           this.isVisible = false
         }, 3000)
@@ -29,7 +30,8 @@ export default {
   },
   data() {
     return {
-      isVisible: false
+      isVisible: false,
+      timer: null
     }
   },
   methods: {
@@ -45,13 +47,14 @@ export default {
   position: fixed;
   bottom: 40px;
   left: 50%;
+  z-index: $toast-popup-z-index;
   min-width: 250px;
   padding: 10px 20px;
-  background-color: var(--color-white);
+  background-color: var(--color-pure-white);
   border: 1px solid var(--color-point);
   border-radius: 10px;
   transform: translateX(-50%);
   text-align: center;
-  box-shadow: 5px 10px 20px var(--color-shadow);
+  box-shadow: 0 0 30px 15px var(--color-shadow);
 }
 </style>

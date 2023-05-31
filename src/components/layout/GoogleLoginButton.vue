@@ -19,6 +19,7 @@
 <script>
 import { postGoogleCredential, setDefaultHeader, deleteUser } from "@/plugins/utils/https"
 import Https from "@/plugins/utils/https-new"
+// import { eventSourceConnect } from "@/plugins/utils/chatRoom"
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
@@ -39,6 +40,7 @@ export default {
     ...mapGetters({
       isLogin: 'auth/getIsLogin',
       userInfo: 'auth/getUserInfo',
+      roomTypes: 'party/getRoomTypes',
     }),
     isDevEnv() {
       return process.env.NODE_ENV === 'development'
@@ -91,7 +93,8 @@ export default {
       setUserInfo: 'auth/SET_USER_INFO'
     }),
     ...mapActions({
-      getUserInfo: 'auth/GET_USER_INFO'
+      getUserInfo: 'auth/GET_USER_INFO',
+      getRoomTypes: 'party/GET_ROOM_TYPES',
     }),
     sendJTokenToNewTab() {
       const TRIGGER_NAME = 'trigger--new-tab'
@@ -149,11 +152,17 @@ export default {
       Https.prototype.jToken = this.jToken
       setDefaultHeader('Authorization', this.jToken)
       const userInfo = await this.getUserInfo()
-      console.log('fnLogin userInfo', { userInfo }, this.isLogin)
+      // console.log('fnLogin userInfo', { userInfo }, this.isLogin)
       if(userInfo === 'not found token') {
         console.error('getUserInfo : no Authorization : ', this.jToken)
       }
-      userInfo ? this.setIsLogin(true) : this.onClickLogout()
+      if(userInfo) {
+        this.setIsLogin(true)
+        // if(this.roomTypes.length === 0) await this.getRoomTypes()
+        // eventSourceConnect(this.roomTypes)
+      } else {
+        this.onClickLogout()
+      }
     },
     async onClickLogin(googleUser) {
       console.log('googleUser', googleUser)
@@ -186,13 +195,13 @@ export default {
       sessionStorage.removeItem('JUID')
       // store user data reset
       this.setIsLogin(false)
-      this.setUserInfo({})
+      this.setUserInfo(null)
       // render google login button
       setTimeout(() => {
         this.renderGoogleLoginBtn()
       }, 100);
       // 로그인 관련 페이지에서 로그아웃 했다면 메인으로 이동
-      if(this.$route.path.includes('/my')) this.$router.push('/')
+      if(this.$route.path.includes('/my') || this.$route.path.includes('/party')) this.$router.push('/')
       // 로그아웃 후 alert message 있다면 띄우기
       alertMsg && alert(alertMsg)
       // user dropdown 메뉴 열려있다면 닫기

@@ -1,113 +1,119 @@
 <template>
   <div>
-    <div v-if="ranking.length > 0" class="wrap-x-scroll">
-      <table class="list-ranking">
-        <caption>랭킹 순위에 따른 랭크, 영웅, 유저명, 현상금, 선원, 동료 정보 테이블</caption>
-        <thead>
-          <tr>
-            <th scope="col">랭크</th>
-            <th scope="col">영웅</th>
-            <th scope="col">레벨</th>
-            <th scope="col">유저명</th>
-            <th scope="col">현상금</th>
-            <th scope="col">선원</th>
-            <th scope="col">동료</th>
-            <th scope="col">선박</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            :class="`item-ranking tear-${getRankInfo(i).index}`"
-            v-for="(user, i) in ranking"
-            :key="`user${i}`"
-          >
-            <td class="rank">
-              <span :class="`rank-title type-${getRankInfo(i).index}`" v-if="i <= 11 && selectedHero === 'all'">
-                <span class="skull">☠</span>
-                {{ getRankInfo(i).title }}
-              </span>
-              <span class="number-rank" v-else>{{ i + 1 }}</span>
-            </td>
-            <td class="thumb-hero">
-              <item-box
-                :item="user.hero"
-                :showName="false"
-                :wantedPaper="i === 0"
-                :isPirateKing="i === 0"
-                :showBounty="false"
-                :size="i === 0 ? 'medium' : 'small'"
-                img-type="square-round"
-              ></item-box>
-            </td>
-            <td class="level">
-              {{ user.lv }}
-            </td>
-            <td class="nickname">
-              <router-link
-                :to="`/character/result?nickname=${user.nickName}`"
-                title="유저 캐릭터 보러가기"
-              >
-                {{ user.nickName }}
-              </router-link>
-            </td>
-            <td class="bounty">$ {{ user.bounty.toLocaleString() }}</td>
-            <td class="sailors">
-              <ul class="list-items">
-                <li
-                  v-for="(sailor, i) in user.sailors"
-                  :key="`sailor${i}`"
+    <infinite-list
+      :data-list="ranking || []"
+      :load-data="loadData"
+      :data-type="selectedHero"
+      text-notice="* 랭킹 등록 조건: 캐릭터 검색 이용 유저, 현상금 20만 이상 (갱신 주기 30분)"
+    >
+      <div v-if="ranking.length > 0" class="wrap-x-scroll">
+        <table class="list-ranking">
+          <caption>랭킹 순위에 따른 랭크, 영웅, 유저명, 현상금, 선원, 동료 정보 테이블</caption>
+          <thead>
+            <tr>
+              <th scope="col">랭크</th>
+              <th scope="col">영웅</th>
+              <th scope="col">레벨</th>
+              <th scope="col">유저명</th>
+              <th scope="col">현상금</th>
+              <th scope="col">선원</th>
+              <th scope="col">동료</th>
+              <th scope="col">선박</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              :class="`item-ranking tear-${getRankInfo(i).index}`"
+              v-for="(user, i) in ranking"
+              :key="`user${i}`"
+            >
+              <td class="rank">
+                <span :class="`rank-title type-${getRankInfo(i).index}`" v-if="i <= 11 && selectedHero === 'all'">
+                  <span class="skull">☠</span>
+                  {{ getRankInfo(i).title }}
+                </span>
+                <span class="number-rank" v-else>{{ i + 1 }}</span>
+              </td>
+              <td class="thumb-hero">
+                <item-box
+                  :item="user.hero"
+                  :showName="false"
+                  :wantedPaper="i === 0"
+                  :isPirateKing="i === 0"
+                  :showBounty="false"
+                  :size="i === 0 ? 'medium' : 'small'"
+                  img-type="square-round"
+                ></item-box>
+              </td>
+              <td class="level">
+                {{ user.lv }}
+              </td>
+              <td class="nickname">
+                <router-link
+                  :to="`/character/result?nickname=${user.nickName}`"
+                  title="유저 캐릭터 보러가기"
                 >
-                  <item-box
-                    :item="sailor"
-                    :showName="false"
-                    :onlyImg="true"
-                    img-type="round"
-                    size="small"
-                  />
-                </li>
-              </ul>
-            </td>
-            <td class="colleagues">
-              <ul class="list-items">
-                <li
-                  v-for="(colleague, i) in user.colleagues"
-                  :key="`colleague${i}`"
-                >
-                  <item-box
-                    :item="colleague"
-                    :showName="false"
-                    :onlyImg="true"
-                    img-type="round"
-                    size="small"
-                  />
-                </li>
-              </ul>
-            </td>
-            <td class="ship">
-              <item-box
-                :item="user.ship"
-                :showName="false"
-                :onlyImg="true"
-                img-type="round"
-                size="small"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <common-scroll-observer
-      :data="ranking || []"
-      :fn-load-data="loadData"
-      :category="selectedHero"
-    />
+                  {{ user.nickName }}
+                </router-link>
+              </td>
+              <td class="bounty">$ {{ user.bounty.toLocaleString() }}</td>
+              <td class="sailors">
+                <ul class="list-items">
+                  <li
+                    v-for="(sailor, i) in user.sailors"
+                    :key="`sailor${i}`"
+                  >
+                    <item-box
+                      :item="sailor"
+                      :showName="false"
+                      :onlyImg="true"
+                      img-type="round"
+                      size="small"
+                    />
+                  </li>
+                </ul>
+              </td>
+              <td class="colleagues">
+                <ul class="list-items">
+                  <li
+                    v-for="(colleague, i) in user.colleagues"
+                    :key="`colleague${i}`"
+                  >
+                    <item-box
+                      :item="colleague"
+                      :showName="false"
+                      :onlyImg="true"
+                      img-type="round"
+                      size="small"
+                    />
+                  </li>
+                </ul>
+              </td>
+              <td class="ship">
+                <item-box
+                  :item="user.ship"
+                  :showName="false"
+                  :onlyImg="true"
+                  img-type="round"
+                  size="small"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </infinite-list>
   </div>
 </template>
 
 <script>
+import InfiniteList from '@/components/common/InfiniteList.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
+  components: {
+    InfiniteList
+  },
   props: {
     defaultDataNum: {
       type: Number,

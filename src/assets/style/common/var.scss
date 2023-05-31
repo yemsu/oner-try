@@ -9,10 +9,11 @@ $layout-sizes: (
 );
 
 // z-index
-$ad-z-index: 9;
-$floating-z-index: 10;
-$dim-z-index: 11;
+$ad-z-index: 11;
+$floating-z-index: 9;
+$dim-z-index: 10;
 $popup-z-index: 12;
+$toast-popup-z-index: 15;
 
 // list padding, gap
 $list-gap-basic: 10px;
@@ -69,6 +70,7 @@ $chat-status-colors: (
 :root {
   // pallette
   --color-white: #{$color-white};
+  --color-pure-white: #{$color-white};
   --color-black: #{$color-black};
   --hsl-white: #{$hsl-white};
   --hsl-black: #{$hsl-black};
@@ -118,7 +120,7 @@ $chat-status-colors: (
   --darker-10: hsla(var(--point-h), 15%, 30%, 10%);
   --darker-20: hsla(var(--point-h), 15%, 30%, 20%);
   --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
-  --lighter-10: hsla(var(--point-h), 15%, 98%, 35%);
+  --lighter-10: hsla(var(--point-h), 15%, 98%, 70%);
 
   // font color
   --font-dark: var(--color-gray-20);
@@ -138,7 +140,7 @@ $chat-status-colors: (
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
   --bg-popup-dim: hsla(248, 10%, 10%, 0.5);
-  --bg-white-dim: #{colorMaker($color-point-hsl, -30%, 45%, 0.6)};
+  --bg-white-dim: #{colorMaker($color-point-hsl, -60%, 35%, 0.8)};
 
   // 아이템 등급 컬러
   --color-grade-common: hsl(0, 0%, 100%);
@@ -171,6 +173,7 @@ $chat-status-colors: (
 :root {
   // pallette
   --color-white: #{$color-black};
+  --color-pure-white: #{$color-pure-black};
   --color-black: #{$color-white};
   --hsl-white: #{$hsl-black};
   --hsl-black: #{$hsl-white};
@@ -219,12 +222,12 @@ $chat-status-colors: (
   --font-weight-XB: #{$font-weight-600};
 
   // shadow
-  --color-shadow: var(--color-gray-10);
+  --color-shadow: hsla(var(--point-h), 4%, 15%);
   
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
   --bg-popup-dim: hsla(248, 10%, 0%, 0.5);
-  --bg-white-dim: #{colorMaker($color-point-hsl, -30%, -10%, 0.6)};
+  --bg-white-dim: #{colorMaker($color-point-hsl, -60%, -40%, 0.8)};
 
   // 아이템 등급 컬러
   --color-grade-common: #fff;

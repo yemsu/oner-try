@@ -20,7 +20,7 @@
         />
         <element-select
           id="roomCapacity"
-          :options="[2, 3, 4, 5, 6]"
+          :options="[1, 2, 3, 4, 5, 6]"
           :default-option="roomCapacity"
           label="최대 인원"
           @onChange="onChangeRoomCapacity"
@@ -83,6 +83,7 @@ export default {
     ...mapActions({
       getRoomTypes: 'party/GET_ROOM_TYPES',
       postChatRoom: 'party/POST_CHAT_ROOM',
+      getChatRoom: 'party/GET_CHAT_ROOM',
     }),
     onUpdateRoomTitle(value) {
       this.roomTitle = value
@@ -120,21 +121,15 @@ export default {
     async createChatRoom() {
       const postChatRoom = await this.postChatRoom({
         title: this.roomTitle,
-        gameType: 'oner',
         capacity: this.roomCapacity,
         roomTypeId: this.selectedRoomType,
         isNeedHelper: this.isNeedHelper
       })
-      if(postChatRoom) {
-        this.$router.push({
-          name: 'party-room',    
-          query: {
-            id: postChatRoom.id
-          }
-        })
-      } else {
-        alert(this.$msg.failCreate)
+      if(!postChatRoom) {
+        alert(this.$ALERTS.CHAT.CREATE_FAIL)
+        return
       }
+      this.getChatRoom(postChatRoom.id)
       this.resetData()
     },
     resetData() {

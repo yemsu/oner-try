@@ -37,11 +37,6 @@
           </button>
         </li>
       </ul> -->
-      <div class="text-refer top">
-        <p class="align-right">
-          * 랭킹 등록 조건: 캐릭터 검색 이용 유저, 현상금 20만 이상 (갱신 주기 30분)
-        </p>
-      </div>
       <ranking-table
         :selected-hero="heroSelected[0]"
         :defaultDataNum="15"

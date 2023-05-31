@@ -12,7 +12,7 @@ const ALERTS = {
     MAX_PEOPLE_NUM: '📌 최대 인원을 선택해 주세요',
     CATEGORY: '📌 분류를 선택해 주세요',
   },
-  REFRESH_LIST_SUCCESS: '리스트가 업데이트 되었습니다.',
+  REFRESH_SUCCESS: `${SUCCESS_EMOJI} 새로고침이 완료되었습니다.`,
   ITEM_SETTING: {
     SAVE_SUCCESS: `${SUCCESS_EMOJI} 빌드가 저장되었습니다.`,
     SAVE_FAIL: `빌드 저장에 실패하였습니다. ${FAIL_COMMON}`,
@@ -28,6 +28,7 @@ const ALERTS = {
     EDIT_SAVE_FAIL: `빌드 수정에 실패하였습니다. ${FAIL_COMMON}`,
   },
   CHAT: {
+    CREATE_FAIL: `채팅 방 생성에 실패하였습니다. ${FAIL_COMMON}`,
     CONFIRM_END: '파티 찾기를 종료하시겠습니까?',
     NO_ROOM: '존재하지 않는 파티 찾기 방입니다.',
     EDIT_TITLE_SUCCESS: `${SUCCESS_EMOJI} 타이틀이 수정되었습니다.`,
@@ -36,7 +37,11 @@ const ALERTS = {
     KICK_OUT_WHO: (nickname) => `${nickname}님이 파티에서 제외되었습니다.`,
     GET_ROOM_TYPE_FAIL: `파티 타입 호출에 실패하였습니다.`,
     PARTY_FULL: '파티가 가득 찼어요!',
+    USER_ALREADY_HAS_PARTY: '이미 파티에 입장한 상태입니다!',
+    USER_EXISTED: '이미 파티에 입장한 상태입니다!\n새로운 파티에 참여 하시겠어요?\n기존 파티에서는 제외됩니다.',
+    LEAVE_PREV_CHATROOM: '기존 채팅방에서 나왔습니다.',
     BLOCK_DIRECT_ROOM: '잘못된 접근입니다!',
+    CHANGE_CAPACITY: `${SUCCESS_EMOJI} 파티 최대 인원이 변경 되었습니다.`,
   },
 }
 
