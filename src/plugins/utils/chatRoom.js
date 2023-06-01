@@ -2,11 +2,11 @@ const timeStamp = () => {
   const date = new Date()
   return date.toLocaleTimeString()
 }
-export function eventSourceConnect(roomTypes) {
+export function eventSourceConnect(roomTypes, isRestart) {
   // const subscribeUrl = 
   const eventSource = new EventSource(`${process.env.API_PATH}/sub`);
   eventSource.onopen = () => {
-    console.log('EVNET SOURCE 연결 성공');
+    console.log('EVENT SOURCE 연결 성공', isRestart ? '재시도!!!!' : '');
   };
   eventSource.addEventListener("refresh", (event) => {
     console.log("SSE refresh!", event.data, timeStamp())
@@ -14,17 +14,18 @@ export function eventSourceConnect(roomTypes) {
   eventSource.addEventListener("createRoom", (event) => {
     const chatRoomTypeId = event.data
     const { name } = roomTypes.find(({id}) => id === chatRoomTypeId*1)
-    console.log('EVNET SOURCE message', name, timeStamp())
+    console.log('EVENT SOURCE message', name, timeStamp())
     showAlarmNotification(name, '파티가 생성되었습니다.');
   })
   eventSource.onerror = (error) => {
-    console.log('EVNET SOURCE 에러:', error, timeStamp());
+    console.log('EVENT SOURCE 에러:', error, timeStamp());
+    eventSourceConnect(roomTypes, true)
   };
   eventSource.addEventListener("error", (event) => {
     eventSource.close()
   })
   eventSource.onclose = () => {
-    console.log('EVNET SOURCE 연결 종료');
+    console.log('EVENT SOURCE 연결 종료');
   };
 }
 export function showAlarmNotification(title, body) {
