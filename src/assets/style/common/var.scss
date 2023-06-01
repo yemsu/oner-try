@@ -136,6 +136,7 @@ $chat-status-colors: (
 
   // shadow
   --color-shadow: var(--color-gray-70);
+  --color-shadow-light: hsla(0, 0%, 0%, 0.3);
 
   // tooltip bg
   --bg-tooltip-dim: hsla(0, 0%, 0%, 0.8);
