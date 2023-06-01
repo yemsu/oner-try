@@ -31,6 +31,7 @@
         padding: var(--top-menu-bar-vtc-pd) 10px;
         .area-side-menu {
           display: flex;
+          align-items: center;
           margin-left: auto;
           word-break: keep-all;
           a {

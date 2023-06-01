@@ -14,9 +14,14 @@
     <top-menu-bar
       title="원피스 RPG 사이트 메뉴"
       :menuList="siteMenuList"
-      :sideMenuList="siteSideMenuList"
       class="game-menu"
     >
+      <element-toggle-button
+        :is-on="isCreatePartyAlarmOn"
+        button-text="파티 생성 알림"
+        :icon-name="['fa-bell', 'fa-bell-slash']"
+        @click="setIsCreatePartyAlarmOn(!isCreatePartyAlarmOn)"
+      />
       <element-button
         link-to="https://m16tool.xyz/Game/ONERPG/Download/Index"
         type="square-round"
@@ -31,6 +36,7 @@
 import GoogleLoginButton from './GoogleLoginButton.vue'
 import MainLogo from '../common/MainLogo.vue';
 import TopMenuBar from '../common/TopMenuBar.vue';
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   components: {
@@ -69,6 +75,16 @@ export default {
       ],
     }
   },
+  computed: {
+    ...mapGetters({
+      isCreatePartyAlarmOn: 'party/getIsCreatePartyAlarmOn'
+    })
+  },
+  methods: {
+    ...mapMutations({
+      setIsCreatePartyAlarmOn: 'party/SET_IS_CREATE_PARTY_ALARM_ON'
+    })
+  }
 }
 </script>
 
