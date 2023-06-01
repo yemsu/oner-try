@@ -28,6 +28,34 @@ export function eventSourceConnect(roomTypes, isRestart) {
     console.log('EVENT SOURCE 연결 종료');
   };
 }
+export function saveAlarmSetting(data) {
+  localStorage.setItem('ONER_TRY_IS_CPA', data)
+}
+export function getSavedAlarmSetting() {
+  return JSON.parse(localStorage.getItem('ONER_TRY_IS_CPA'))
+}
+export function getPermissionIsGranted() {
+  return new Promise((resolve) => {
+    Notification.requestPermission().then((permission) => {
+      console.log("Notification getAlarmSetting", permission)
+      resolve(permission === "granted")
+    })
+  })
+}
+export function requestPermission() {
+  return new Promise((resolve) => {
+    Notification.requestPermission().then((permission) => {
+      console.log("Notification getAlarmSetting", permission)
+      if(permission === "granted") {
+        new Notification('파티 생성 알림이 설정되었습니다!')
+        afterPermissionGranted(permission)
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    })
+  })
+}
 export function showAlarmNotification(title, body) {
   // 브라우저가 알림을 지원하는지 확인
   if (!("Notification" in window)) {
@@ -37,22 +65,28 @@ export function showAlarmNotification(title, body) {
   // 사용자에게 알림 권한 요청
   Notification.requestPermission().then((permission) => {
     console.log("Notification,", permission)
-    if (permission === "granted") {
-      // 알림 생성
-      const notification = new Notification(title, {body});
-      console.log("Notification granted", notification)
-      notification.onclick = (e) => {
-        console.log("notification! @click", e)
-      }
-      notification.onclose = (e) => {
-        console.log("notification! @close", e)
-      }
-      notification.onerror = (e) => {
-        console.log("notification! @error", e)
-      }
-      notification.onshow = (e) => {
-        console.log("notification! @show", e)
-      }
-    }
   });
+}
+export function afterPermissionGranted(permission) {
+  const isSavedSettingOn = getSavedAlarmSetting()
+  if (permission === "granted" && isSavedSettingOn) {
+    // 알림 생성
+    const notification = new Notification(title, {body});
+    console.log("Notification granted", notification)
+    notificationHandler()
+  }
+}
+export function notificationHandler(notification) {
+  notification.onclick = (e) => {
+    console.log("notification! @click", e)
+  }
+  notification.onclose = (e) => {
+    console.log("notification! @close", e)
+  }
+  notification.onerror = (e) => {
+    console.log("notification! @error", e)
+  }
+  notification.onshow = (e) => {
+    console.log("notification! @show", e)
+  }
 }

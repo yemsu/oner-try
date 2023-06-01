@@ -20,7 +20,6 @@ export const state = () => ({
   roomTypes: [],
   disconnectedMembers: [],
   isMinimize: false,
-  isCreatePartyAlarmOn: false,
 })
 
 export const getters = {
@@ -30,7 +29,6 @@ export const getters = {
   getRoomTypes: (state) => state.roomTypes,
   getDisconnectedMembers: (state) => state.disconnectedMembers,
   getIsMinimize: (state) => state.isMinimize,
-  getIsCreatePartyAlarmOn: (state) => state.isCreatePartyAlarmOn,
 }
 
 export const mutations = {
@@ -82,9 +80,6 @@ export const mutations = {
   },
   SET_IS_MINIMIZE(state, data) {
     state.isMinimize = data
-  },
-  SET_IS_CREATE_PARTY_ALARM_ON(state, data) {
-    state.isCreatePartyAlarmOn = data
   },
 }
 

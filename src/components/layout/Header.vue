@@ -14,14 +14,13 @@
     <top-menu-bar
       title="원피스 RPG 사이트 메뉴"
       :menuList="siteMenuList"
-      :sideMenuList="siteSideMenuList"
       class="game-menu"
     >
       <element-toggle-button
         :is-on="isCreatePartyAlarmOn"
         button-text="파티 생성 알림"
         :icon-name="['fa-bell', 'fa-bell-slash']"
-        @click="setIsCreatePartyAlarmOn(!isCreatePartyAlarmOn)"
+        @click="toggleCreatePartyAlarm"
       />
       <element-button
         link-to="https://m16tool.xyz/Game/ONERPG/Download/Index"
@@ -37,7 +36,7 @@
 import GoogleLoginButton from './GoogleLoginButton.vue'
 import MainLogo from '../common/MainLogo.vue';
 import TopMenuBar from '../common/TopMenuBar.vue';
-import { mapGetters, mapMutations } from 'vuex'
+import { getPermissionIsGranted, getSavedAlarmSetting, requestPermission, saveAlarmSetting } from '../../plugins/utils/chatRoom';
 
 export default {
   components: {
@@ -74,17 +73,27 @@ export default {
           beta: true
         },
       ],
+      isCreatePartyAlarmOn: false
     }
   },
-  computed: {
-    ...mapGetters({
-      isCreatePartyAlarmOn: 'party/getIsCreatePartyAlarmOn'
-    })
+  async mounted() {
+    const isSavedSettingOn = getSavedAlarmSetting()
+    let isCreatePartyAlarmOn = true
+    if(isSavedSettingOn) {
+      isCreatePartyAlarmOn = await getPermissionIsGranted()
+    }
+    this.isCreatePartyAlarmOn = isSavedSettingOn &&isSavedSettingOn === isCreatePartyAlarmOn
   },
   methods: {
-    ...mapMutations({
-      setIsCreatePartyAlarmOn: 'party/SET_IS_CREATE_PARTY_ALARM_ON'
-    })
+    async toggleCreatePartyAlarm() {
+      let isGranted = true
+      if(!this.isCreatePartyAlarmOn) {
+        isGranted = await requestPermission()
+      }
+      if(!isGranted) return
+      this.isCreatePartyAlarmOn = !this.isCreatePartyAlarmOn
+      saveAlarmSetting(this.isCreatePartyAlarmOn)
+    }
   }
 }
 </script>
