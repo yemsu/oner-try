@@ -8,30 +8,18 @@
             v-for="({ path, menuName, beta }, i) in menuList"
             :key="`menu${i}`"
           >
-              <element-button
-                :linkTo="path"
-                type="square-round"
-              >
-                {{ menuName }}
-                <common-beta-mark v-if="beta" size="xsmall" />
-              </element-button>
-          </li>
-        </ul>
-      </nav>
-      <div v-if="sideMenuList.length > 0" class="area-side-menu">
-        <ul class="menu-list-side">
-          <li
-            v-for="({ path, menuName }, i) in sideMenuList"
-            :key="`utilMenu${i}`"
-          >
             <element-button
-              :link-to="path"
+              :linkTo="path"
               type="square-round"
             >
               {{ menuName }}
+              <common-beta-mark v-if="beta" size="xsmall" />
             </element-button>
           </li>
         </ul>
+      </nav>
+      <div class="area-side-menu">
+        <slot></slot>
       </div>
     </div>
   </div>
@@ -45,10 +33,6 @@ export default {
       default: () => '상단 메뉴'
     },
     menuList: {
-      type: Array,
-      default: () => []
-    },
-    sideMenuList: {
       type: Array,
       default: () => []
     },

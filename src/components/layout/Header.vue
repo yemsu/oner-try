@@ -16,7 +16,14 @@
       :menuList="siteMenuList"
       :sideMenuList="siteSideMenuList"
       class="game-menu"
-    />
+    >
+      <element-button
+        link-to="https://m16tool.xyz/Game/ONERPG/Download/Index"
+        type="square-round"
+      >
+        맵/확장팩 다운로드
+      </element-button>
+    </top-menu-bar>
   </header>
 </template>
 
@@ -60,12 +67,6 @@ export default {
           beta: true
         },
       ],
-      siteSideMenuList: [
-        {
-          path: 'https://m16tool.xyz/Game/ONERPG/Download/Index',
-          menuName: '맵/확장팩 다운로드'
-        }
-      ]
     }
   },
 }
