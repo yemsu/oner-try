@@ -19,7 +19,7 @@
 <script>
 import { postGoogleCredential, setDefaultHeader, deleteUser } from "@/plugins/utils/https"
 import Https from "@/plugins/utils/https-new"
-import { eventSourceConnect } from "@/plugins/utils/chatRoom"
+// import { eventSourceConnect } from "@/plugins/utils/chatRoom"
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
@@ -159,8 +159,8 @@ export default {
       }
       if(userInfo) {
         this.setIsLogin(true)
-        if(this.roomTypes.length === 0) await this.getRoomTypes()
-        eventSourceConnect(this.roomTypes)
+        // if(this.roomTypes.length === 0) await this.getRoomTypes()
+        // eventSourceConnect(this.roomTypes)
       } else {
         this.onClickLogout()
       }
