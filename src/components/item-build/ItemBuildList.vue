@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="itemBuilds">
     <template v-if="itemBuilds.length > 0">
       <div class="text-refer top">
         <p>총 {{ itemBuilds.length }}개</p>
@@ -77,8 +77,8 @@
 export default {
   props: {
     itemBuilds: {
-      type: Array,
-      required: true
+      type: [Array, null],
+      default: null
     }
   },
   data() {

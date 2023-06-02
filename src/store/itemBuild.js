@@ -3,7 +3,7 @@ import { parseItemBuildData } from '@/plugins/utils/item-build'
 import ALERTS from "../constants/ALERTS"
 
 export const state = () => ({
-  itemBuilds: [],
+  itemBuilds: null,
   itemBuild: null,
 })
 

@@ -41,30 +41,19 @@ export default {
   computed: {
     ...mapGetters({
       isLogin: 'auth/getIsLogin',
-      itemBuilds: 'itemBuild/getItemBuilds'
+      itemBuilds: 'itemBuild/getItemBuilds',
+      nowCheckingLogin: 'auth/getNowCheckingLogin',
     })
   },
   watch: {
     isLogin(crr, prev) {
-      if(crr && crr !== prev) {
-        this.getItemBuilds({
-          character: 'all',
-          page: 1
-        })
+      console.log("@#@@@@isLogin", crr, prev)
+      if(crr) {
+        this.startGetItemBuilds()
+      } else {
+        this.$router.push({ name: 'auth-login' })
       }
     }
-  },
-  async mounted() {
-    this.isLogin && await this.getItemBuilds({
-        character: 'all',
-        page: 1
-      })
-    setTimeout(() => {
-      if(!this.isLogin) {
-        this.$router.push({ name: 'auth-login' })
-        return
-      }
-    }, 500)
   },
   methods: {
     ...mapActions({
@@ -74,7 +63,16 @@ export default {
     ...mapMutations({
       setToastMessage: 'toastPopup/SET_MESSAGE',
       setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
+      setIsLoading: 'common/SET_IS_LOADING'
     }),
+    async startGetItemBuilds() {
+      this.setIsLoading(true)
+      await this.getItemBuilds({
+        character: 'all',
+        page: 1
+      })
+      this.setIsLoading(false)
+    },
     async onBuildDelete(id) {
       const isConfirm = confirm(this.$ALERTS.ITEM_SETTING.DELETE_CONFIRM)
       if(!isConfirm) return
