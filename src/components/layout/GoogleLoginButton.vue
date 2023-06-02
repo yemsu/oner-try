@@ -90,7 +90,7 @@ export default {
   methods: {
     ...mapMutations({
       setIsLogin: 'auth/SET_IS_LOGIN',
-      setIsLoading: 'auth/SET_IS_LOADING',
+      setIsLoading: 'common/SET_IS_LOADING',
       setUserInfo: 'auth/SET_USER_INFO'
     }),
     ...mapActions({
@@ -187,6 +187,7 @@ export default {
           console.error('onClickLogin: 로그인 결과 응답 type 확인 필요')
           break;
       }
+      
       this.setIsLoading(false)
     },
     setJToken(token) {
