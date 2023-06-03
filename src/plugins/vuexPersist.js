@@ -9,7 +9,7 @@ export default ({ store }) => {
       heroes: state.item.heroes,
       etcItems: state.item.etcItems,
       colleagues: state.item.colleagues,
-      equipments: state.item.equipments,
+      // equipments: state.item.equipments,
       ships: state.item.ships,
       ships_table: state.item.ships_table,
       synergies: state.item.synergies,

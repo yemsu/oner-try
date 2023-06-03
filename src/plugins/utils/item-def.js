@@ -25,6 +25,7 @@ export const gradesDef = {
   uncommon: '언커먼',
   common: '커먼',
   legend: '전설',
+  eternal: '영원',
   // epic: '에픽',
   // rare: '레어',
   normal: '일반',
@@ -32,7 +33,7 @@ export const gradesDef = {
   dedicated: '전용무기',
 }
 export const sailorGrades = ['special', 'uncommon', 'common']
-export const equipmentGrades = ['legend', 'magic',  'normal', 'dedicated']
+export const equipmentGrades = ['eternal', 'legend', 'magic',  'normal', 'dedicated']
 export const gradeScoresDef = {
   special: 3,
   uncommon: 2,
