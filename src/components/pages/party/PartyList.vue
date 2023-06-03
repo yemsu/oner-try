@@ -136,6 +136,7 @@ export default {
     async onClickChatRoom(id, isFull) {
       if(!this.isLogin) {
         this.$router.push({ name: 'auth-login' })
+        return
       }
       if(id === this.chatRoom?.id) {
         this.setIsMinimize(false)

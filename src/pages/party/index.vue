@@ -99,6 +99,7 @@ export default {
     async onClickCreateChat() {
       if(!this.isLogin) {
         this.$router.push({ name: 'auth-login' })
+        return
       }
       const userChatRoomId = await this.getUserChatRoom(this.nickname)
       if(userChatRoomId) {
