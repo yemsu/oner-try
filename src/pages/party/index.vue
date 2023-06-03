@@ -115,15 +115,17 @@ export default {
 .area-chat-room {
   margin-top: 30px;
 }
-.list-column {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  @include tablet {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @include mobile {
-    grid-template-columns: repeat(1, 1fr);
+::v-deep {
+  .list-column {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include mobile {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 }
 </style>

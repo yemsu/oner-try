@@ -6,7 +6,6 @@
   gap: 10px;
   position: relative;
   height: 100%;
-  padding: 10px 8px 8px;
   background-color: var(--bg-light-gray);
   &.no-gap {
     gap: 0;
@@ -30,6 +29,7 @@
       .wrap-text-sub {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         margin-bottom: 8px;
         font-size: var(--font-size-XS);
         p {
@@ -89,5 +89,41 @@
   .btn-delete {
     line-height: 1;
     padding-right: 0;
+  }
+  &.size {
+    &-medium {
+      padding: 10px 8px 8px;
+    }
+    &-small {
+      min-width: 100px;
+      padding: 6px;
+      .wrap-info {
+        gap: 6px;
+        &-top {
+          .wrap-text-sub {
+            margin-bottom: 5px;
+            font-size: var(--font-size-XXXS);
+          }
+          .wrap-text-main {
+            padding-right: 0;
+            .text-main {
+              .title {
+                font-size: var(--font-size-XS);
+              }
+              .desc {
+                margin-top: 4px;
+                font-size: var(--font-size-XXS);
+              }
+            }
+          }
+        }
+        &-bottom {
+          font-size: var(--font-size-XXS);
+          .box-left {
+            gap: 5px;
+          }
+        }
+      }
+    }
   }
 }

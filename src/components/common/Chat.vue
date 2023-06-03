@@ -467,7 +467,6 @@ export default {
       // this.onDeleteMember(this.nickname)
       this.destroyPeer()
       this.setChatRoom(null)
-      this.$router.push({ name: 'party' })
     },
   },
 }

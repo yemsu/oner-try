@@ -72,6 +72,7 @@ export default {
     overflow-y: auto;
     position: fixed;
     top: var(--header-height);
+    left: 0;
     z-index: $popup-z-index;
     width: 100%;
     max-height: calc(100% - var(--header-height));

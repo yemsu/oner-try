@@ -1,23 +1,26 @@
 <template>
  <div id="app">
     <layout-header />
-     <base-adsense
-      v-if="showSideFixAds"
-      ad-slot="6463699903"
-      type="side-fix"
-      position="left"
-      name="side_fix_left"
-     />
-     <base-adsense
-      v-if="showSideFixAds"
-      ad-slot="4053428480"
-      type="side-fix"
-      position="right"
-      name="side_fix_right"
-     />
-    <div class="container">
-      <error v-if="false"></error>
-      <nuxt v-else />
+    <base-adsense
+    v-if="showSideFixAds"
+    ad-slot="6463699903"
+    type="side-fix"
+    position="left"
+    name="side_fix_left"
+    />
+    <base-adsense
+    v-if="showSideFixAds"
+    ad-slot="4053428480"
+    type="side-fix"
+    position="right"
+    name="side_fix_right"
+    />
+    <error v-if="false"></error>
+    <div v-else class="container">
+      <common-party-list-floating 
+        v-if="showPartyListFloating"
+      />
+      <nuxt />
     </div>
     <common-chat v-if="chatRoom" />
     <element-toast-popup />
@@ -51,7 +54,10 @@ export default {
       isLoading: 'common/getIsLoading',
       isMinimize: 'party/getIsMinimize',
       chatRoom: 'party/getChatRoom',
-    })
+    }),
+    showPartyListFloating() {
+      return !['index', 'party'].includes(this.$route.name)
+    }
   },
   watch: {
     '$route.name'(crr, prev) {

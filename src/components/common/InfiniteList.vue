@@ -1,19 +1,28 @@
 <template>
-  <div class="list-infinite">
-    <div class="text-refer top">
+  <div :class="`list-infinite dir-${direction}`">
+    <div
+      :class="[
+        'text-refer',
+        {top: direction === 'column'}
+      ]"
+    >
       <p v-if="dataList && showLength">총 {{ dataList.length }}개</p>
-      <element-refresh-button @click="refreshData" />
-      <div class="align-right">
-        <span v-if="textNotice">
+      <element-refresh-button
+        :only-icon="direction === 'row'"
+        :is-on-refresh="refreshTrigger"
+        @click="refreshData"
+      />
+      <div v-if="textNotice" class="align-right">
+        <span>
           {{ textNotice }}
         </span>
       </div>
     </div>
-    <template v-if="dataList && dataList.length > 0" >
+    <template v-if="!noDataMessage || (noDataMessage && dataList && dataList.length > 0)" >
       <slot></slot>
     </template>
     <element-no-data
-      v-else-if="dataList && dataList.length === 0"
+      v-else-if="noDataMessage && dataList && dataList.length === 0"
       :message="noDataMessage"
     />
     <common-scroll-observer
@@ -32,6 +41,10 @@ export default {
     dataList: {
       type: [Array, null],
       default: null
+    },
+    direction: {
+      type: String,
+      default: 'column' // column, row
     },
     loadData: {
       type: Function,
@@ -83,4 +96,19 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.list-infinite {
+  &.dir {
+    &-column {
+      
+    }
+    &-row {
+      display: flex;
+      gap: 10px;
+      li {
+        flex-shrink: 0;
+      }
+    }
+  }
+}
+</style>

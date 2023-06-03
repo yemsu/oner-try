@@ -7,29 +7,48 @@
   >
     <span :class="[
       'wrap-rotate',
-      {on: isOnClick}
+      {on: isOnRotate}
     ]">
       <font-awesome-icon
         icon="fa-arrows-rotate"
       />
     </span>
-    새로고침
+    {{ onlyIcon ? '' : '새로고침' }}
   </element-button>
 </template>
 
 <script>
 export default {
+  props: {
+    onlyIcon: {
+      type: Boolean,
+      default: false
+    },
+    isOnRefresh: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
-      isOnClick: false
+      isOnRotate: false
+    }
+  },
+  watch: {
+    isOnRefresh(crr) {
+      if(crr) {
+        this.rotateIcon()
+      }
     }
   },
   methods: {
     onClickButton() {
       this.$emit('click')
-      this.isOnClick = true
+    },
+    rotateIcon() {
+      this.isOnRotate = true
       setTimeout(() => {
-        this.isOnClick = false
+        this.isOnRotate = false
       }, 1000);
     }
   }

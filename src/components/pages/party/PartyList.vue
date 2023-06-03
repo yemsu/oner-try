@@ -2,13 +2,24 @@
   <infinite-list
     v-if="isLogin"
     class="area-chat-room"
+    :direction="addListButton ? 'row' : 'column'"
     :data-list="chatRooms"
     :load-data="loadData"
     :data-type="partyType"
     :parent-refresh-trigger="refreshTrigger"
-    no-data-message="파티가 존재하지 않습니다."
+    :no-data-message="addListButton ? '' : '파티가 존재하지 않습니다.'"
   >
     <ul class="list-column">
+      <li v-if="addListButton">
+        <button
+          class="button-add-list"
+          title="파티 생성하기"
+          @click="$emit('create')"
+        >
+          <span class="icon-plus">+</span>
+          {{ chatRooms && chatRooms.length === 0 ? '파티모집' : '' }}
+        </button>
+      </li>
       <li
         v-for="({
         id,
@@ -17,16 +28,21 @@
         capacity,
         roomType,
         isNeedHelper,
-        host 
+        host
       }, i) in chatRooms"
         :key="`data${i}`"
         class="chat-room"
       >
         <card-list-content
           v-if="members"
-          :required-data="{ id, title, badgeList: badgeList(host, members) }"
+          :size="addListButton ? 'small' : 'medium'"
+          :required-data="{ 
+            id,
+            title,
+            badgeList: addListButton ? null : badgeList(host, members)
+          }"
           tag-name="button"
-          link-title="입장하기"
+          :link-title="`${host}님의 파티 입장하기`"
           :top-info="{
             left: {
               text: `${roomType.name}`,
@@ -57,6 +73,10 @@ export default {
     partyType: {
       type: [String, Number],
       default: '999'
+    },
+    addListButton: {
+      type: Boolean,
+      default: false,
     }
   },
   data() {
@@ -67,6 +87,7 @@ export default {
   computed: {
     ...mapGetters({
       chatRooms: 'party/getChatRooms',
+      chatRoom: 'party/getChatRoom',
       isLogin: 'auth/getIsLogin',
       isMinimize: 'party/getIsMinimize'
     })
@@ -79,10 +100,14 @@ export default {
       }
     },
     chatRoom(crr) {
+      console.log('watch chatRoom, crr')
       // 리스트 페이지에서 방 나갔을 경우 데이터 새로고침
       if(!crr) {
         this.refreshData()
       }
+    },
+    $route() {
+      this.refreshData()
     }
   },
   methods: {
@@ -97,6 +122,7 @@ export default {
     ...mapMutations({
       setChatRooms: 'party/SET_CHAT_ROOMS',
       setChatRoom: 'party/SET_CHAT_ROOM',
+      setIsMinimize: 'party/SET_IS_MINIMIZE',
       setToastMessage: 'toastPopup/SET_MESSAGE',
       setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
     }),
@@ -111,6 +137,10 @@ export default {
     async onClickChatRoom(id, isFull) {
       if(!this.isLogin) {
         this.$router.push({ name: 'auth-login' })
+      }
+      if(id === this.chatRoom?.id) {
+        this.setIsMinimize(false)
+        return
       }
       if(isFull) {
         this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
@@ -186,5 +216,21 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.button-add-list {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 100%;
+  padding: 5px 15px 5px 15px;
+  background-color: var(--lighter-10);
+  border: 1px solid var(--border-light-gray);
+  color: var(--font-dark-gray);
+  border-radius: 5px;
+  line-height: 1;
+  .icon-plus {
+    font-size: var(--font-size-title-S);
+    padding-bottom: 0.25em;
+  }
+}
 </style>

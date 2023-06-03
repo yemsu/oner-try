@@ -21,11 +21,16 @@ export default {
 
 <style lang="scss" scoped>
 .box-no-data {
-  padding: 100px 20px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  max-height: 100%;
+  padding: 0 20px;
   background-color: var(--bg-light-gray);
   font-size: var(--font-size-MS);
   color: var(--font-gray);
-  text-align: center;
   word-break: keep-all;
 }
 </style>
