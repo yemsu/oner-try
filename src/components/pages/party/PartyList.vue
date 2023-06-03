@@ -1,6 +1,5 @@
 <template>
   <infinite-list
-    v-if="isLogin"
     class="area-chat-room"
     :direction="addListButton ? 'row' : 'column'"
     :data-list="chatRooms"
@@ -137,6 +136,7 @@ export default {
     async onClickChatRoom(id, isFull) {
       if(!this.isLogin) {
         this.$router.push({ name: 'auth-login' })
+        return
       }
       if(id === this.chatRoom?.id) {
         this.setIsMinimize(false)
@@ -152,6 +152,14 @@ export default {
       const goToNewChatRoom = await this.handleAlreadyHasParty() 
       if(!goToNewChatRoom) return
       await this.getChatRoom(id)
+      // 이미 아무도 없는 방이라면.
+      if(this.chatRoom.members.length === 0) {
+        this.setChatRoom(null)
+        this.setToastMessage(this.$ALERTS.CHAT.NO_ROOM)
+        this.setToastOn(true)
+        this.refreshData()
+        return
+      }
     },
     async handleAlreadyHasParty() {
       return new Promise(async (resolve) => {

@@ -72,6 +72,8 @@ export default {
   },
   mounted() {    
     setTimeout(async () => {
+      // 파티 리스트에서 chatRoom 데이터에 멤버 존재하지 않으면 바로 chatRoom null로 지정함.
+      if(!this.chatRoom) return
       // 화면에 멤버 추가.
       await this.getChatRoom(this.chatRoom.id)
       this.setIsMinimize(false)

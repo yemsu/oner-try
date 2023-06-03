@@ -40,8 +40,10 @@ export default {
       getUserChatRoom: 'party/GET_USER_CHAT_ROOM',
     }),
     async onClickCreateChat() {
+      console.log('onClickCreateChat', this.isLogin)
       if(!this.isLogin) {
         this.$router.push({ name: 'auth-login' })
+        return
       }
       const userChatRoomId = await this.getUserChatRoom(this.nickname)
       if(userChatRoomId) {
