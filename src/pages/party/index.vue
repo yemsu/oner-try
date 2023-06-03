@@ -28,7 +28,7 @@
           class="btn-create-setting"
           @click="onClickCreateChat"
         >
-          + 방 만들기
+          + 모집하기
         </element-button>
       </div>
       <element-option-bar
