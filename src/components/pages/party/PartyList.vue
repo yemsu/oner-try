@@ -1,6 +1,5 @@
 <template>
   <infinite-list
-    v-if="isLogin"
     class="area-chat-room"
     :direction="addListButton ? 'row' : 'column'"
     :data-list="chatRooms"
