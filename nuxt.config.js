@@ -1,3 +1,4 @@
+import FontAwesome from './src/plugins/fontAwesomeIcon'
 const axios = require('axios')
 const isDevMode = process.env.NODE_ENV === 'development'
 
@@ -64,7 +65,7 @@ export default {
     { src: '~/plugins/vuexPersist', mode: 'client' },
     { src: '~/constants/ALERTS', mode: 'client' },
     { src: '~/plugins/peer', mode: 'client' },
-    { src: '~/plugins/fontAwesomeIcon', mode: 'client' },
+    // { src: '~/plugins/fontAwesomeIcon', mode: 'client' },
     { src: '~/plugins/utils/index', mode: 'client' },
   ],
 
@@ -72,7 +73,14 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ['@nuxtjs/style-resources'],
+  buildModules: [
+    '@nuxtjs/style-resources',
+    ['@nuxtjs/fontawesome', {
+      icons: {
+        solid: FontAwesome.solid
+      }
+    }]
+  ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
