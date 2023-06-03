@@ -11,6 +11,11 @@
     align-items: center;
   }
   &.size {
+    &-xxsmall {
+      padding: 0 3px;
+      font-size: var(--font-size-XXXS);
+      height: 18px;
+    }
     &-xsmall {
       padding: 0 3px;
       font-size: var(--font-size-XXS);

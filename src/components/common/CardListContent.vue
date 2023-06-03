@@ -1,5 +1,11 @@
 <template>
-  <div :class="['card-list-content', { 'no-gap': !bottomInfo && showDeleteButton}]">
+  <div
+    :class="[
+      'card-list-content',
+      { 'no-gap': !bottomInfo && showDeleteButton},
+      `size-${size}`
+    ]"
+  >
     <button
       :is="tagName"
       :to="linkUrl"
@@ -17,7 +23,7 @@
               <element-badge
                 v-if="topInfo.left.badge"
                 type="square-round"
-                size="xsmall"
+                :size="size === 'small' ? 'xxsmall' : 'xsmall'"
               >
                 {{ topInfo.left.badge }}
               </element-badge>
@@ -33,14 +39,14 @@
             </div>
           </div>
         </div>
-        <ul class="list-item-name">
+        <ul v-if="badgeList && badgeList.length > 0" class="list-item-name">
           <li
             v-for="({ text, color }, i) in badgeList"
             :key="`savedItem${i}`"
           >
             <element-badge
               type="round"
-              size="small"
+              :size="size === 'small' ? 'xsmall' : 'small'"
               :color="color"
             >{{ text }}</element-badge>
           </li>
@@ -105,6 +111,10 @@ export default {
     showDeleteButton: {
       type: Boolean,
       default: () => false
+    },
+    size: {
+      type: String,
+      default: 'medium' // small, medium
     }
   },
   data() {
