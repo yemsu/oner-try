@@ -55,6 +55,15 @@ export default {
       }
     }
   },
+  mounted() {
+    setTimeout(() => {
+      if(this.isLogin) {
+        this.startGetItemBuilds()
+      } else {
+        this.$router.push({ name: 'auth-login' })
+      }
+    }, 600);
+  },
   methods: {
     ...mapActions({
       getItemBuilds: 'itemBuild/GET_ITEM_BUILDS',
