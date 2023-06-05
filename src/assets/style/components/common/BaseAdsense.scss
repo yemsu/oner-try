@@ -25,7 +25,7 @@
     &-side-fix {
       @include pc {
         position: fixed;
-        top: calc(var(--header-height) + var(--header-game-menu-height));
+        top: calc(var(--header-height) + var(--header-game-menu-height) + var(--common-party-bar-height));
         z-index: $ad-z-index;
         .side_fix_left,
         .side_fix_right {

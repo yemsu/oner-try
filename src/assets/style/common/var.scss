@@ -267,6 +267,7 @@ $chat-status-colors: (
   --header-game-menu-height: calc(var(--square-btn-medium-line-height) + (var(--top-menu-bar-vtc-pd) * 2));
   --header-site-menu-height: 32px;
   --header-height: calc(var(--header-game-menu-height) + var(--header-site-menu-height));
+  --common-party-bar-height: 61px;
 
   --font-size-title-B: 30px;
   --font-size-title-M: 25px;
