@@ -1,11 +1,34 @@
 <template>
   <div class="main" :style="`background-image: url(${BASE_URL}/images/main-key-visual.webp);`">
+  <!-- <div class="main" :style="``"> -->
     <section class="area-main-text">
       <div class="wrap-text-left">
         <p class="color-point"><em>ONERPG</em></p>
       </div>
       <div class="wrap-text-right">
         <p><em>대개편</em></p>
+      </div>
+      <div
+        v-if="ranking && ranking[0]"
+        class="box-pirate-king"
+      >
+        <h3 class="title">
+          💀해적왕💀
+        </h3>
+        <router-link
+          :to="`/character/result?nickname=${ranking[0].nickName}`"
+          title="캐릭터 자세히 보기"
+        >
+          <item-box
+            :item="{...ranking[0].hero, bounty: ranking[0].bounty}"
+            :wanted-name="ranking[0].nickName"
+            :wanted-paper="true"
+            :show-bounty="false"
+            :is-pirate-king="true"
+            size="big"
+            img-type="square-round"
+          />
+        </router-link>
       </div>
     </section>
     <div class="inner-size-basic">
@@ -222,7 +245,7 @@ export default {
     ...mapGetters({
       // heroes:  'item/getHeroes',
       items:  'item/getItems',
-      // gameUsers: 'character/getGameUsers',
+      ranking: 'character/getRanking',
       isLogin: 'auth/getIsLogin',
       userInfo: 'auth/getUserInfo'
     }),   
@@ -232,12 +255,18 @@ export default {
     // if(this.heroes.length === 0) await this.getHeroes()
     if(this.items.length === 0) await this.getItems()
     this.compositionItems = this.items.filter(item => item.ingredients)
+    await this.getRanking({
+      character: 'all',
+      page: 1,
+      size: 1
+    })
   },
   methods: {
     ...mapActions({
       // getGameUsers: 'character/GET_GAME_USERS',
       // getHeroes: 'item/GET_HEROES'
       getItems: 'item/GET_ITEMS',
+      getRanking: 'character/GET_RANKING',
     }),
   }
 }
