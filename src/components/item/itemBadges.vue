@@ -5,7 +5,7 @@
         v-for="(badge, i) in badgesInfo"
       >
         <p
-          v-if="badge.condition && showBadge(badge.name)"
+          v-if="badge.condition && badge.text && showBadge(badge.name)"
           :class="`badge ${badge.className}`"
           :key="`badge${i}`"
         >
