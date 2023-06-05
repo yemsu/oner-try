@@ -1,5 +1,5 @@
 <template>
-  <div class="main" :style="`background-image: url(${BASE_URL}/images/main-key-visual.png);`">
+  <div class="main" :style="`background-image: url(${BASE_URL}/images/main-key-visual.webp);`">
     <section class="area-main-text">
       <div class="wrap-text-left">
         <p class="color-point"><em>ONERPG</em></p>

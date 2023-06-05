@@ -1,16 +1,16 @@
 $column-num: 3;
 .main {
-  max-width: 1420px;
+  max-width: 1080px;
   margin: 0 auto;
   background-repeat: no-repeat;
   background-position: top center;
-  background-size: contain;
+  background-size: 80%;
   .area-main-text {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    height: clamp(100px, 38vw, 550px);
+    height: clamp(100px, 24vw, 320px);
     // padding: ;
-    font-size: clamp(20px, 6vw, 115px);
+    font-size: clamp(20px, 5vw, 70px);
     > div {
       display: flex;
       align-items: center;
