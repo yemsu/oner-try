@@ -183,12 +183,9 @@ export default {
       return this.visibleDetail && this.size === 'big' ? 'list-main' : 'basic'
     },
     showItemBadges() {
-      const itemBadgeData = this.showBadges.filter((badgeType) => this.item[badgeType] && this.item[badgeType] !== '0')
-
       return !this.onlyImg 
         && (this.showBadges.length !== 0 || this.customBadge) 
         && !this.isNoDataItem 
-        && itemBadgeData.length > 0
     },
     useLink() {
       return this.isComp && this.isLink

@@ -71,7 +71,7 @@
                     :key="`tableItem${i}`"
                     type="list"
                     :item="tableItem"
-                    :showBadges="size === 'small' ? [] : ['howGet']"
+                    :showBadges="size === 'small' ? ['grade'] : ['grade', 'howGet']"
                     :showTooltip="false"
                     :padding="false"
                     :is-link="!hasClickEvent"

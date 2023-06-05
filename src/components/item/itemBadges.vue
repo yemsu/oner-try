@@ -1,17 +1,16 @@
 <template>
-  <div :class="['item-badges', 'badges', {'position-inner': innerPosition}]">
+  <div
+    v-if="badges.length > 0"
+    :class="['item-badges', 'badges', {'position-inner': innerPosition}]"
+  >
     <template v-if="!wantedPaper">
-      <template
-        v-for="(badge, i) in badgesInfo"
+      <p
+        v-for="(badge, i) in badges"
+        :key="`badge${i}`"
+        :class="`badge ${badge.className}`"
       >
-        <p
-          v-if="badge.condition && badge.text && showBadge(badge.name)"
-          :class="`badge ${badge.className}`"
-          :key="`badge${i}`"
-        >
-          {{ badge.text }}
-        </p>
-      </template>
+        {{ badge.text }}
+      </p>
     </template>
     <p v-if="customBadge" class="badge black">
       {{ customBadge }}
@@ -69,6 +68,12 @@ export default {
           break;
       }
     },
+    badges() {
+      const result = this.badgesInfo.filter(badgeInfo => (
+        badgeInfo.condition && badgeInfo.text && this.showBadge(badgeInfo.name)
+      ))
+      return result
+    },
     badgesInfo() {
       const { type, stack, grade, requiredNumber, dropMonster, ingredients } = this.item
       const howGetItemList = {
@@ -79,7 +84,6 @@ export default {
       const howGetKey = ingredients
         ? this.isRecruit ? 'recruit' : 'composition'
         : 'drop-monster'
-
       return [
         {
           name: 'type',
