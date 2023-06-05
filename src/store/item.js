@@ -165,7 +165,7 @@ export const actions = {
         acc.push({ ...data, name: name.split(' +')[0] })
         return acc
       }, [])
-    commit(`GET_ETC_ITEMS_TABLE`, {data: newData})
+    // commit(`GET_ETC_ITEMS_TABLE`, {data: newData})
     return newData
   },
   GET_EQUIPMENTS({ commit }) {
@@ -369,7 +369,6 @@ export const actions = {
         acc.push({ ...data, name: name.split(' +')[0] })
         return acc
       }, [])
-    commit(`GET_POTIONS_TABLE`, {data: newData})
     return newData
   },
 }
