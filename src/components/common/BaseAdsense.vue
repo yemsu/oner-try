@@ -7,6 +7,7 @@
       `layout-${containerSize}`,
       { 'shade': isLocal },
       adStatus,
+      `page-${$route.name}`
     ]"
     
     >
