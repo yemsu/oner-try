@@ -39,6 +39,60 @@
             />
           </div>
         </section> -->
+        <section class="quick-menu column-half">
+          <div class="area-text">
+            <div class="badges center">
+              <element-badge type="square-round" size="large" color="point">6월 4일 v2 Update !</element-badge>
+            </div>
+            <h3 class="title">신규 장비 아이템 추가</h3>
+            <p>
+              신규 장비 아이템과 함께 💎영원 등급이 추가되었어요.
+            </p>
+          </div>
+          <div class="area-contents">
+            <p class="wrap-links">
+              <router-link
+                to="/items/equipment"
+                class="text-link wrap-icon-text"
+              >
+                신규 장비 확인하기
+                <i class="icon-arrow right small border-point"></i>
+              </router-link>
+              <router-link
+                to="/item-build/my/new"
+                class="text-link wrap-icon-text"
+              >
+                빌드 만들어보기
+                <i class="icon-arrow right small border-point"></i>
+              </router-link>
+            </p>
+          </div>
+        </section>
+        <section class="quick-menu column-half">
+          <div class="area-text">
+            <div class="badges center">
+              <element-badge type="square-round" size="large">
+                신규 메뉴
+              </element-badge>
+            </div>
+            <h3 class="title">👻 파티 모집 OPEN !</h3>
+            <p>
+              파티 모집을 생성해 두세요! <br>
+              모집글이 사이트 상단에 고정되어 다른 유저들에게 노출됩니다.
+            </p>
+          </div>
+          <div class="area-contents">
+            <p class="wrap-links">
+              <router-link
+                to="/party"
+                class="text-link wrap-icon-text"
+              >
+                파티 모집하러 가기
+                <i class="icon-arrow right small border-point"></i>
+              </router-link>
+            </p>
+          </div>
+        </section>
         <section class="quick-menu column">
           <div class="area-text">
             <h3 class="title">조합법 검색 👀</h3>

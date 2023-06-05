@@ -258,6 +258,9 @@ caption, .ir-hidden {
       }
     }
   }
+  &.center {
+    justify-content: center;
+  }
 }
 .badge {
   min-width: 1.5em;
