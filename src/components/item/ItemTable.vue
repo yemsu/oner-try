@@ -71,7 +71,7 @@
                     :key="`tableItem${i}`"
                     type="list"
                     :item="tableItem"
-                    :showBadges="size === 'small' ? ['grade'] : ['grade', 'howGet']"
+                    :showBadges="showBadges(item)"
                     :showTooltip="false"
                     :padding="false"
                     :is-link="!hasClickEvent"
@@ -247,6 +247,11 @@ export default {
     },
     getGradeName(gradeEng) {
       return gradesDef[gradeEng]
+    },
+    showBadges(item) {
+      const badges = item.type === 'sailor'
+        ? [] : ['grade']
+      return this.size === 'small' ? [] : [...badges, 'howGet']
     }
   }
 }
