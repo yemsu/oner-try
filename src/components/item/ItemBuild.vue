@@ -40,7 +40,7 @@
             <template v-slot="{ data: { item, i: index } }">
               <item-box
                 :item="item"
-                :showBadges="['howGet', 'stack']"
+                :showBadges="['grade', 'stack']"
                 :is-link="!makingMode"
                 :has-click-event="makingMode"
                 @click="makingMode && $emit('delete', { item, index })"

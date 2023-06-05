@@ -35,8 +35,8 @@ export default {
     ...mapActions({
       getPageView: 'pageView/GET_COMPOSITION',
     }),
-    fnAfterSearch(name) {
-      const { id, type } = this.fullData.find((item) => item.name === name)
+    fnAfterSearch({ id }) {
+      const { type } = this.fullData.find((item) => item.id === id)
       this.$router.push(`/composition/${type}/${id}`)
     },
   }

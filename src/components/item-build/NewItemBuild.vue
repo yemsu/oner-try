@@ -78,7 +78,7 @@
                 :option-menus="itemFilterOptions"
                 :has-click-event="true"
                 :table-min-width="getTableMinWidth(activeTab.type)"
-                @click="(item) => selectItem(item.name)"
+                @click="(item) => selectItem(item.id)"
                 size="small"
               />
             </template>
@@ -250,9 +250,9 @@ export default {
     setSearchBoxFullData() {
       this.searchBoxFullData = this.items.filter((item) => item.type !== 'etcItem')
     },
-    selectItem(itemName) {
-      const item = [...this.items, ...this.colleagues].find((item) => item.name === itemName)
-      if(!canEnhance(item) || this.selectedItem?.name === itemName) {
+    selectItem(itemId) {
+      const item = [...this.items, ...this.colleagues].find((item) => item.id === itemId)
+      if(!canEnhance(item) || this.selectedItem?.id === itemId) {
         this.addItem(null, item)
         return
       }
