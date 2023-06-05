@@ -40,6 +40,7 @@ export const gradeScoresDef = {
   common: 1,
 }
 export const EquipmentGradeScoresDef = {
+  eternal: 5,
   legend: 4,
   epic: 3,
   rare: 2,
