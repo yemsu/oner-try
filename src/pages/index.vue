@@ -8,7 +8,7 @@
       <div class="wrap-text-right">
         <p><em>대개편</em></p>
       </div>
-      <div
+      <!-- <div
         v-if="ranking && ranking[0]"
         class="box-pirate-king"
       >
@@ -29,7 +29,7 @@
             img-type="square-round"
           />
         </router-link>
-      </div>
+      </div> -->
     </section>
     <div class="inner-size-basic">
       <div class="wrap-quick-menu">
@@ -255,11 +255,11 @@ export default {
     // if(this.heroes.length === 0) await this.getHeroes()
     if(this.items.length === 0) await this.getItems()
     this.compositionItems = this.items.filter(item => item.ingredients)
-    await this.getRanking({
-      character: 'all',
-      page: 1,
-      size: 1
-    })
+    // await this.getRanking({
+    //   character: 'all',
+    //   page: 1,
+    //   size: 1
+    // })
   },
   methods: {
     ...mapActions({
