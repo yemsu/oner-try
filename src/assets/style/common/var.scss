@@ -117,6 +117,7 @@ $chat-status-colors: (
   --bg-light-gray: var(--color-gray-95);
   
   // common color
+  --pure-darker-20: hsla(0, 0%, 0%, 20%);
   --darker-10: hsla(var(--point-h), 15%, 30%, 10%);
   --darker-20: hsla(var(--point-h), 15%, 30%, 20%);
   --darker-point-20: hsla(var(--point-h), 42%, 30%, 20%);
@@ -204,6 +205,7 @@ $chat-status-colors: (
   --bg-light-gray: var(--color-gray-20);
     
   // common color
+  --pure-darker-20: hsla(0, 0%, 100%, 20%);
   --darker-10: hsla(var(--point-h), 6%, 85%, 6%);
   --darker-20: hsla(var(--point-h), 6%, 85%, 12%);
   --darker-30: hsla(var(--point-h), 6%, 85%, 18%);
