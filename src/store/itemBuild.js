@@ -48,7 +48,7 @@ export const actions = {
       page: page,
       size: size || 10,
     })
-    // console.log("GET_ITEM_BUILDS", data)
+    console.log("GET_ITEM_BUILDS", data)
     if(!data) {
       alert(ALERTS.ITEM_SETTING.GET_LIST_FAIL)
       return false

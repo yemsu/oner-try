@@ -134,7 +134,10 @@ export default {
       const noBlank = target => target.replace(/ /g, '')
       const value = noBlank(this.inputValue)
       const result = this.matchingData.filter(dataItem =>  {
-        const findMatch = noBlank(dataItem).toLowerCase().includes(value.toLowerCase())
+        const matchData = typeof dataItem === 'string'
+          ? dataItem
+          : dataItem.text
+        const findMatch = noBlank(matchData).toLowerCase().includes(noBlank(value).toLowerCase())
         return findMatch
       })
       return result.slice(0, SLICE_NUM)

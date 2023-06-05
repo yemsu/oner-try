@@ -36,6 +36,10 @@ export default {
       type: String,
       default: () => null
     },
+    size: {
+      type: String,
+      default: 'medium' // small, medium, 
+    },
     innerPosition: {
       type: Boolean,
       default: () => true
