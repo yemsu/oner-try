@@ -4,11 +4,16 @@ $name-space: 5px;
   ::v-deep {
     .item-box-info {
       .img-wanted,
-      .area-img {
+      .area-img,
+      .nick-wanted {
         width: $img-size;
       }
       .area-img {
         margin: 0 auto;
+      }
+      .money {
+        top: calc(15px + #{$img-size});
+        right: calc(#{$img-size} / 20);
       }
     }
   }
@@ -141,6 +146,25 @@ $name-space: 5px;
     .img-wanted {
       max-width: 100%;
     }
+    .nick-wanted {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 5px;
+      color: var(--wanted-brown);
+      font-size: 0.9em;
+      font-weight: $font-weight-700;
+      line-height: 1;
+      text-align: center;
+    }
+    &.pirate-king {
+      box-shadow: 0 0 5px 4px var(--wanted-brown);
+    .item-box-info {
+      .area-img {
+        box-shadow: 0 0 2px 1px #000;
+      }
+    }
+    }
     &.size-medium {
       .img-wanted {
         width: 55px;
@@ -165,8 +189,11 @@ $name-space: 5px;
         }
       }
       .bounty {
+        margin-top: 5px;
         color: var(--wanted-brown);
+        font-size: var(--font-size-MS);
         font-weight: bold;
+        line-height: 1;
         white-space: nowrap;
       }
       .crown {

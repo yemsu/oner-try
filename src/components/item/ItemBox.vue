@@ -6,6 +6,7 @@
       `size-${size}`,
       `type-${type}`,
       {'wanted-paper': wantedPaper},
+      {'pirate-king': isPirateKing},
       {'no-padding': !padding},
     ]">
     <template v-if="item">
@@ -48,11 +49,8 @@
               :target="item.id"
             />
           </div>
-          <p v-if="wantedPaper && showBounty" class="bounty"><span class="text">$ {{ item.bounty || 0 }}</span></p>
-          <template v-if="isPirateKing">
-            <span class="crown">👑</span>
-            <span class="money">💰</span>
-          </template>
+          <p v-if="wantedName" class="nick-wanted">{{ wantedName }}</p>
+          <p v-if="wantedPaper && showBounty" class="bounty"><span class="text">$ {{ item.bounty.toLocaleString() || 0 }}</span></p>
         </div>
       </nuxt-link>
       
@@ -91,6 +89,10 @@ export default {
     item: {
       type: Object,
       default: () => {}
+    },
+    wantedName: {
+      type: String,
+      default: null
     },
     size: {
       type: String,

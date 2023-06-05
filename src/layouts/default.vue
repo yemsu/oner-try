@@ -56,7 +56,7 @@ export default {
       chatRoom: 'party/getChatRoom',
     }),
     showPartyListFloating() {
-      return !['index', 'party'].includes(this.$route.name)
+      return !['party'].includes(this.$route.name)
     }
   },
   watch: {

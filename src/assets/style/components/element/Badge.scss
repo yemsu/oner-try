@@ -85,6 +85,11 @@
       color: #fff;
       letter-spacing: 0;
     }
+    &-point {
+      background-color: $color-point;
+      color: #fff;
+      letter-spacing: 0;
+    }
     &-status {
       @each $key in map-keys($chat-status-colors) {
         $hsl: map-get($chat-status-colors, #{$key});

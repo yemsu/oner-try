@@ -1,11 +1,34 @@
 <template>
-  <div class="main" :style="`background-image: url(${BASE_URL}/images/main-key-visual.png);`">
+  <div class="main" :style="`background-image: url(${BASE_URL}/images/main-key-visual.webp);`">
+  <!-- <div class="main" :style="``"> -->
     <section class="area-main-text">
       <div class="wrap-text-left">
         <p class="color-point"><em>ONERPG</em></p>
       </div>
       <div class="wrap-text-right">
         <p><em>대개편</em></p>
+      </div>
+      <div
+        v-if="ranking && ranking[0]"
+        class="box-pirate-king"
+      >
+        <h3 class="title">
+          💀해적왕💀
+        </h3>
+        <router-link
+          :to="`/character/result?nickname=${ranking[0].nickName}`"
+          title="캐릭터 자세히 보기"
+        >
+          <item-box
+            :item="{...ranking[0].hero, bounty: ranking[0].bounty}"
+            :wanted-name="ranking[0].nickName"
+            :wanted-paper="true"
+            :show-bounty="false"
+            :is-pirate-king="true"
+            size="big"
+            img-type="square-round"
+          />
+        </router-link>
       </div>
     </section>
     <div class="inner-size-basic">
@@ -39,6 +62,60 @@
             />
           </div>
         </section> -->
+        <section class="quick-menu column-half">
+          <div class="area-text">
+            <div class="badges center">
+              <element-badge type="square-round" size="large" color="point">6월 4일 v2 Update !</element-badge>
+            </div>
+            <h3 class="title">신규 장비 아이템 추가</h3>
+            <p>
+              신규 장비 아이템과 함께 💎영원 등급이 추가되었어요.
+            </p>
+          </div>
+          <div class="area-contents">
+            <p class="wrap-links">
+              <router-link
+                to="/items/equipment"
+                class="text-link wrap-icon-text"
+              >
+                신규 장비 확인하기
+                <i class="icon-arrow right small border-point"></i>
+              </router-link>
+              <router-link
+                to="/item-build/my/new"
+                class="text-link wrap-icon-text"
+              >
+                빌드 만들어보기
+                <i class="icon-arrow right small border-point"></i>
+              </router-link>
+            </p>
+          </div>
+        </section>
+        <section class="quick-menu column-half">
+          <div class="area-text">
+            <div class="badges center">
+              <element-badge type="square-round" size="large">
+                신규 메뉴
+              </element-badge>
+            </div>
+            <h3 class="title">👻 파티 모집 OPEN !</h3>
+            <p>
+              파티 모집을 생성해 두세요! <br>
+              모집글이 사이트 상단에 고정되어 다른 유저들에게 노출됩니다.
+            </p>
+          </div>
+          <div class="area-contents">
+            <p class="wrap-links">
+              <router-link
+                to="/party"
+                class="text-link wrap-icon-text"
+              >
+                파티 모집하러 가기
+                <i class="icon-arrow right small border-point"></i>
+              </router-link>
+            </p>
+          </div>
+        </section>
         <section class="quick-menu column">
           <div class="area-text">
             <h3 class="title">조합법 검색 👀</h3>
@@ -168,7 +245,7 @@ export default {
     ...mapGetters({
       // heroes:  'item/getHeroes',
       items:  'item/getItems',
-      // gameUsers: 'character/getGameUsers',
+      ranking: 'character/getRanking',
       isLogin: 'auth/getIsLogin',
       userInfo: 'auth/getUserInfo'
     }),   
@@ -178,12 +255,18 @@ export default {
     // if(this.heroes.length === 0) await this.getHeroes()
     if(this.items.length === 0) await this.getItems()
     this.compositionItems = this.items.filter(item => item.ingredients)
+    await this.getRanking({
+      character: 'all',
+      page: 1,
+      size: 1
+    })
   },
   methods: {
     ...mapActions({
       // getGameUsers: 'character/GET_GAME_USERS',
       // getHeroes: 'item/GET_HEROES'
       getItems: 'item/GET_ITEMS',
+      getRanking: 'character/GET_RANKING',
     }),
   }
 }

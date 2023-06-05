@@ -135,7 +135,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      rankingCrr: 'character/getRankingCrr',
       ranking: 'character/getRanking',
     })
   },
