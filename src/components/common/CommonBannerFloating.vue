@@ -42,5 +42,8 @@ export default {
     margin-top: 5px;
     border-radius: 5px;
   }
+  @include mobile {
+    display: none;
+  }
 }
 </style>
