@@ -72,8 +72,8 @@ $chat-status-colors: (
   --color-white: #{$color-white};
   --color-pure-white: #{$color-white};
   --color-black: #{$color-black};
-  --hsl-white: #{$hsl-white};
-  --hsl-black: #{$hsl-black};
+  --hsl-white: #{$hsl-white},;
+  --hsl-black: #{$hsl-black},;
   // point
   --color-point: #{colorMaker($color-point-hsl)};
   --color-point-pale: #{colorMaker($color-point-hsl, -15%, 10%)};
@@ -175,8 +175,8 @@ $chat-status-colors: (
   --color-white: #{$color-black};
   --color-pure-white: #{$color-pure-black};
   --color-black: #{$color-white};
-  --hsl-white: #{$hsl-black};
-  --hsl-black: #{$hsl-white};
+  --hsl-white: #{$hsl-black},;
+  --hsl-black: #{$hsl-white},;
   // point
   --color-point: #{colorMaker($color-point-hsl, 15%, 18%)};
   --color-point-pale: #{colorMaker($color-point-hsl, -15%, 10%)};
