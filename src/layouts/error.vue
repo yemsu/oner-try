@@ -5,19 +5,19 @@
       pd-top="none"
       :is-main-content="true"
     >
-      <template v-if="error.statusCode === 600">
+      <template v-if="pageError.statusCode === 600">
         <common-main-notice
-          title="점검 중입니다.🧐"
-          :point-text="error.statusCode"
+          title="버그 수정 업데이트 중입니다.🧐"
+          :point-text="pageError.statusCode"
         >
           <!-- 버그 수정 및 새로운 기능 오픈 준비를 위해 점검 중입니다!<br> -->
           약 15분 소요될 예정입니다.
         </common-main-notice>
       </template>
-      <template v-else-if="error.statusCode === 404">
+      <template v-else-if="pageError.statusCode === 404">
         <common-main-notice
           title="존재하지 않는 페이지 입니다.😫"
-          :point-text="error.statusCode"
+          :point-text="pageError.statusCode"
         > 
           url을 확인해 주세요!
         </common-main-notice>
@@ -25,8 +25,8 @@
       <template v-else>
         <common-main-notice
           title="에러가 발생하였습니다.😲"
-          :point-text="error.statusCode"
-          :sub-text="error.message"
+          :point-text="pageError.statusCode"
+          :sub-text="pageError.message"
         >
           새로고침이나 로그인을 다시 시도해봐주시고, <br>문제가 지속되면 해당 화면을 캡쳐하여 개발자에게 문의해주세요!
         </common-main-notice>
@@ -61,12 +61,19 @@ export default {
     })
   },
   props: ['error'],
+  data() {
+    return {
+      pageError: null
+    }
+  },
   created() {
     if(!this.error) {
       const error = new Error()
       error.statusCode = 600
-      this.error = error
+      this.pageError = error
+      return
     }
+    this.pageError = this.error
   },
   mounted() {
   }
