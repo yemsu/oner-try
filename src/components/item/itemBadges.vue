@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="badges.length > 0"
+    v-if="badges.length > 0 || customBadge"
     :class="['item-badges', 'badges', {'position-inner': innerPosition}]"
   >
     <template v-if="!wantedPaper">
@@ -123,6 +123,9 @@ export default {
         },
       ]
     }
+  },
+  mounted() {
+    console.log("customBadge", this.customBadge)
   },
   methods: {
     showBadge(type) {
