@@ -7,7 +7,7 @@
     >
       <template v-if="pageError.statusCode === 600">
         <common-main-notice
-          title="버그 수정 업데이트 중입니다.🧐"
+          title="점검 중입니다.🧐"
           :point-text="pageError.statusCode"
         >
           <!-- 버그 수정 및 새로운 기능 오픈 준비를 위해 점검 중입니다!<br> -->
