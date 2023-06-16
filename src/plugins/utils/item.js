@@ -32,6 +32,22 @@ export const parserStrData = (strData, type = 'object') => { // name: value, nam
 
   return objList
 }
+export const parserStrDataToObj = (strData) => { // name: value, name: value ...
+  if(!strData) return {}
+  if(typeof(strData) !== 'string') {
+    console.error('parserStrDataToObj : 인수 타입이 string이여야 합니다!', strData)
+    return strData
+  }
+  const result = strData.split(',')
+    .reduce((result, strOption) => {
+      const key = strOption.split(': ')[0]
+      const value = strOption.split(': ')[1]
+      result[key] = value
+      return result 
+    }, {})
+    
+  return result
+}
 export const fillDataAndInsertValue = (fullDataList, targetDataList, newDataKey, useDefaultData) => {
   // console.log('fillDataAndInsertValue', fullDataList, targetDataList, newDataKey, useDefaultData)
   const names = objArrKeys(targetDataList)

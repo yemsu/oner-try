@@ -1,4 +1,5 @@
 import { optionDefaultValue, optionOrder, valueByStack } from '@/plugins/utils/item-def'
+import { parserStrDataToObj } from '@/plugins/utils/item'
 export const getCharacterSynergies = (sailors, synergies) => {
   const sailorNames = sailors.filter(sailor => sailor).map(sailor => sailor?.name)
   const characterSynergies = synergies.filter(synergy => {
@@ -20,14 +21,16 @@ export const getCharacterSynergies = (sailors, synergies) => {
   return characterSynergies
 }
 export const getTotalOption = (character, characterSynergies) => {
-  const { equipment, sailor, colleague, ship } = character
+  const { stat, equipment, sailor, colleague, ship } = character
   const allItem = [...equipment, ...sailor, ...colleague, ...ship, ...characterSynergies]
   // console.log('allItem', allItem)
   const allOption = getOptions(allItem)
   // console.log('allOption', allOption)
   const totalOption = Object.keys(optionDefaultValue).reduce((result, key) => {
     const checkOption = allOption[key] || 0
-    return Object.assign(result, {[key]: checkOption + optionDefaultValue[key]})
+    const etcStatObj = parserStrDataToObj(stat?.join(',')) // 게임 내 특정 활동으로 얻을 수 있는 stat
+    const etcStatValue = etcStatObj[key] ? +etcStatObj[key] : 0
+    return Object.assign(result, {[key]: checkOption + optionDefaultValue[key] + etcStatValue})
   }, {})
   // console.log('totalOption', totalOption)      
   // ev는 str 수치를 더한다.
