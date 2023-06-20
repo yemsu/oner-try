@@ -115,8 +115,7 @@ export default {
       this.setIsLoading(true)
       const result = await this.getUserCharacters({ nickName })
       if(!result) {
-        alert('존재하지 않는 유저입니다.')
-        this.$router.push({ name: 'character'})
+        this.handlerNoData()
         return
       }
       if(isRefresh) {
@@ -126,10 +125,18 @@ export default {
       this.setIsLoading(false)
     },
     async getUserData(nickName) {
+      if(['EEL'].includes(nickName)) { // ban, admin user 처리
+        this.handlerNoData()
+        return
+      }
       this.loadData(nickName)
       this.nickname = nickName
       this.sendPageView()
       console.log('userCharacters', nickName, this.userCharacters)
+    },
+    handlerNoData() {
+      alert('존재하지 않는 유저입니다.')
+      this.$router.push({ name: 'character'})
     },
     async sendPageView() {
       // check window session storage
