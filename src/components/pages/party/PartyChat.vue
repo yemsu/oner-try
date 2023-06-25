@@ -36,6 +36,10 @@
         >
           <h2 class="page-title" :title="chatRoom.title">{{ chatRoom.title }}</h2>
         </element-text-editable>
+        <element-refresh-button 
+          :is-on-refresh="refreshTrigger"
+          @click="$emit('refresh')"
+        />
       </div>
     </div>
     <div class="wrap-content">
@@ -207,6 +211,10 @@ export default {
       type: Function,
       require: true
     },
+    refreshTrigger: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -256,6 +264,7 @@ export default {
   methods: {
     ...mapActions({
       putChatRoom: 'party/PUT_CHAT_ROOM',
+      getChatRoom: 'party/GET_CHAT_ROOM',
     }),
     ...mapMutations({
       setToastMessage: 'toastPopup/SET_MESSAGE',
@@ -317,7 +326,7 @@ export default {
     maximizeChat() {
       console.log('maximizeChat')
       this.isMinimize && this.setIsMinimize(false)
-    }
+    },
   }
 }
 </script>
