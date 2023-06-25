@@ -105,7 +105,7 @@
             </span>
             {{ memberNick }}
             <template v-if="!isMinimize">
-              <span
+              <!-- <span
                 v-if="disconnectedMembers.includes(memberPeerId)"
                 title="연결 끊김"
                 class="member-disconnected"
@@ -123,7 +123,7 @@
                 @click="() => reconnectMyPeer(memberNick)"
               >
                 <font-awesome-icon icon="fa-signal" />
-              </element-button>
+              </element-button> -->
               <element-button
                 v-if="memberNick !== chatRoom.host && nickname === chatRoom.host"
                 type="text"
