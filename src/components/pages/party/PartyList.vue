@@ -130,7 +130,7 @@ export default {
       await this.getChatRooms({
         roomTypeId: this.partyType,
         page,
-        size: 15
+        size: 100
       })
     },
     async onClickChatRoom(id, isFull) {
