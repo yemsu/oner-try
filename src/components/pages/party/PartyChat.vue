@@ -288,8 +288,11 @@ export default {
       console.log("enterinput", this.chatRoom.members, this.peer.id)
       if(this.inputValue === '') return
       
+      const findMember = this.chatRoom.members
+        .find(({nickname: _nickname}) => this.peer.id.includes(_nickname))
+      
       this.sendMessage({ 
-        nickname: this.nickname,
+        nickname: this.nickname || findMember.nickname,
         message: this.inputValue
       })
       this.setInputValue('')
