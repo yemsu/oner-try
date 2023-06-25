@@ -111,8 +111,10 @@ export default {
       putChatRoom: 'party/PUT_CHAT_ROOM',
     }),
     createPeer() {
-      if(!this.peerId) this.peerId = this.nickname
-      console.log('createPeer', this.peerId)
+      if(!this.peerId) {
+        // 마지막 글자에 특수문자 존재하는 경우, peerjs invalid id 에러 발생하여 난수로 교체
+        this.peerId = this.nickname.replaceAll(/-|_|\./g, Math.floor(Math.random()*1000))
+      }
       this.peer = new this.$Peer(this.peerId, {
         host: process.env.PEER_SERVER,
         secure: true
