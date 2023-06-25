@@ -91,10 +91,16 @@
       }
       @include mobile {
         width: calc(100vw - 105px);
-        bottom: 0;
+        bottom: 10px;
         left: 0;
         border-radius: 0;
         border-top-right-radius: 10px;
+        .party-chat-top {
+          background-color: var(--bg-light-gray);
+        }
+        .option-buttons {
+          background-color: var(--bg-light-gray);
+        }
       }
     }
   }
