@@ -8,6 +8,8 @@
       :on-click-kick-out="onClickKickOut"
       :on-click-exit="onClickExit"
       :on-edit-title="onEditTitle"
+      :refresh-trigger="refreshTrigger"
+      @refresh="refreshChatroom"
     />
   </common-chat-popup>
 </template>
@@ -37,6 +39,7 @@ export default {
       KICK_OUT_MESSAGE: '%KICK_OUT_MESSAGE%',
       USER_LEAVE_MESSAGE: '%USER_LEAVE_MESSAGE%',
       isMemberKickedOut: false,
+      refreshTrigger: null
     }
   },
   computed: {
@@ -102,6 +105,8 @@ export default {
       setIsMinimize: 'party/SET_IS_MINIMIZE',
       togglePopupIsVisible: 'popup/TOGGLE_IS_VISIBLE',
       setPopupContent: 'popup/SET_CONTENT',
+      setToastMessage: 'toastPopup/SET_MESSAGE',
+      setToastOn: 'toastPopup/SET_IS_TRIGGER_ON',
     }),
     ...mapActions({
       postMember: 'party/POST_MEMBER',
@@ -285,6 +290,10 @@ export default {
     },
     onHostLeave() {
       const newHostName = this.chatRoom.members[0].nickname
+      this.changeHost(newHostName)
+      this.pushChatMessage(null, `👑 ${newHostName}님이 방장이 되셨습니다!`)
+    },
+    changeHost(newHostName) {
       if(newHostName === this.nickname) {
         this.onEditChatRoom({
           host: newHostName
@@ -293,7 +302,6 @@ export default {
       this.changeChatRoomState({
         host: newHostName
       })
-      this.pushChatMessage(null, `👑 ${newHostName}님이 방장이 되셨습니다!`)
     },
     async onDeleteMember(memberNick, chatRoomId) {
       const id = chatRoomId || this.chatRoom?.id
@@ -472,6 +480,19 @@ export default {
       this.destroyPeer()
       this.setChatRoom(null)
     },
+    async refreshChatroom() {
+      // 채팅방 버그 걸렸을 경우 고려하여 새로고침 버튼 추가
+      if(this.refreshTrigger) this.refreshTrigger = false
+      await this.getChatRoom(this.chatRoom.id)
+      if(this.chatRoom.members.length === 1 && this.chatRoom.host !== this.nickname) {
+        this.changeHost(this.nickname)
+      }
+      this.setToastMessage(this.$ALERTS.REFRESH_SUCCESS)
+      this.setToastOn(true)
+      setTimeout(() => {
+        this.refreshTrigger = true
+      }, 500);
+    }
   },
 }
 </script>
