@@ -8,6 +8,7 @@
       :on-click-kick-out="onClickKickOut"
       :on-click-exit="onClickExit"
       :on-edit-title="onEditTitle"
+      :refresh-trigger="refreshTrigger"
       @refresh="refreshChatroom"
     />
   </common-chat-popup>
