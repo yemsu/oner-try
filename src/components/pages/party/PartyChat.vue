@@ -37,6 +37,7 @@
           <h2 class="page-title" :title="chatRoom.title">{{ chatRoom.title }}</h2>
         </element-text-editable>
         <element-refresh-button 
+          v-show="!isMinimize"
           :is-on-refresh="refreshTrigger"
           @click="$emit('refresh')"
         />
@@ -285,14 +286,13 @@ export default {
       this.inputValue = value
     },
     onEnterInput(eventKey) {
-      console.log("enterinput", this.chatRoom.members, this.peer.id)
       if(this.inputValue === '') return
       
-      const findMember = this.chatRoom.members
-        .find(({nickname: _nickname}) => this.peer.id.includes(_nickname))
+      const { nickname } = this.chatRoom.members
+        .find(({nickname: _nickname}) => this.peer.options.label === _nickname)
       
       this.sendMessage({ 
-        nickname: this.nickname || findMember.nickname,
+        nickname,
         message: this.inputValue
       })
       this.setInputValue('')

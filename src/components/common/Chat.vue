@@ -122,7 +122,8 @@ export default {
       }
       this.peer = new this.$Peer(this.peerId, {
         host: process.env.PEER_SERVER,
-        secure: true
+        secure: true,
+        label: this.nickname
       })
       console.log('peer created', this.peer.id, this.peer,)
       this.createBeep()
@@ -208,6 +209,8 @@ export default {
       // }
       connection.on('data', (message) => {
         console.log('message', message)
+        // 강퇴당했을때
+        if(!this.chatRoom) return
         this.onReceiveMsg(this.getMemberNick(peerId), message)
       });
       connection.on('close', () => {

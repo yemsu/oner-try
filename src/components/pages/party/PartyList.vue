@@ -88,6 +88,7 @@ export default {
       chatRooms: 'party/getChatRooms',
       chatRoom: 'party/getChatRoom',
       isLogin: 'auth/getIsLogin',
+      nickname: 'auth/getNickname',
       isMinimize: 'party/getIsMinimize'
     })
   },
