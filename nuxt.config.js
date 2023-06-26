@@ -93,7 +93,7 @@ export default {
   },
   
   sitemap: {
-    hostname: 'https://onertry.fun',
+    hostname: process.env.BASE_URL,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
