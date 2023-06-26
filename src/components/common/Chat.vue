@@ -122,7 +122,8 @@ export default {
       }
       this.peer = new this.$Peer(this.peerId, {
         host: process.env.PEER_SERVER,
-        secure: true
+        secure: true,
+        label: this.nickname
       })
       console.log('peer created', this.peer.id, this.peer,)
       this.createBeep()
