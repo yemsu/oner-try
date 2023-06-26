@@ -37,6 +37,7 @@
           <h2 class="page-title" :title="chatRoom.title">{{ chatRoom.title }}</h2>
         </element-text-editable>
         <element-refresh-button 
+          v-show="!isMinimize"
           :is-on-refresh="refreshTrigger"
           @click="$emit('refresh')"
         />
