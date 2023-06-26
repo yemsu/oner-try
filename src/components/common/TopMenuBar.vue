@@ -21,14 +21,14 @@
       <div v-if="sideMenuList.length > 0" class="area-side-menu">
         <ul class="menu-list-side">
           <li
-            v-for="({ path, menuName }, i) in sideMenuList"
+            v-for="({ path, menuName, strong }, i) in sideMenuList"
             :key="`utilMenu${i}`"
           >
             <element-button
               :link-to="path"
               type="square-round"
             >
-              {{ menuName }}
+              <strong :is="strong ? 'strong' : 'span'">{{ menuName }}</strong>
             </element-button>
           </li>
         </ul>

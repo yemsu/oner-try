@@ -61,8 +61,13 @@ export default {
       ],
       siteSideMenuList: [
         {
+          path: 'https://open.kakao.com/o/sSXWcmPd',
+          menuName: '문의/버그제보💬',
+          strong: true
+        },        
+        {
           path: 'https://m16tool.xyz/Game/ONERPG/Download/Index',
-          menuName: '맵/확장팩 다운로드'
+          menuName: '맵 다운로드'
         }
       ]
     }

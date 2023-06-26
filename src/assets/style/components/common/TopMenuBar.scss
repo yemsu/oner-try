@@ -33,11 +33,24 @@
           display: flex;
           margin-left: auto;
           word-break: keep-all;
+          flex-shrink: 0;
+          .menu-list-side {
+            display: flex;
+          }
           a {
             font-size: 0.9em;
+            strong {
+              color: $color-white;
+              font-weight: $font-weight-500;
+            }
           }
           @include mobile {
-            display: none;
+            li:last-child {
+              display: none;
+            }
+            a {
+              padding-right: 0;
+            }
           }
         }
       }
