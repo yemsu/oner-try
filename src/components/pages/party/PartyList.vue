@@ -110,6 +110,12 @@ export default {
       this.refreshData()
     }
   },
+  mounted() {
+    addEventListener('visibilitychange', this.refreshData)
+  },
+  beforeDestroy() {
+    removeEventListener('visibilitychange', this.refreshData)
+  },
   methods: {
     ...mapActions({
       getChatRooms: 'party/GET_CHAT_ROOMS',
