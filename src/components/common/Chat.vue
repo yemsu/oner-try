@@ -153,7 +153,7 @@ export default {
           // 가끔 새로고침 시 내가 나가지지 않은 채로 members 데이터가 넘어옴
           if(member.nickname === this.nickname) continue
           const connection = this.peer.connect(member.peerId, {
-            label: this.chatRoom.id
+            label: `${this.nickname}/${member.nickname}`
           })
           console.log('와서 멤버들에게 커넥션을 요청한다.', connection.peer)
           this.subscribeMember(connection)
@@ -208,10 +208,11 @@ export default {
       //   console.log('이미 연결된 멤버. 구독은 따로 안한다.', this.connections)
       // }
       connection.on('data', (message) => {
-        console.log('message', message)
+        console.log('message', message, connection)
         // 강퇴당했을때
         if(!this.chatRoom) return
-        this.onReceiveMsg(this.getMemberNick(peerId), message)
+        const senderNickname = connection.label.split('/').find(nickname => nickname !== this.nickname)
+        this.onReceiveMsg(senderNickname, message)
       });
       connection.on('close', () => {
         console.log('멤버와 연결이 끊겼다. 커넥션 리스트를 정리하자', peerId) 
@@ -238,6 +239,9 @@ export default {
       console.log('getMemberNick', peerId)
       const member = this.chatRoom.members.find(({peerId: _peerId}) => _peerId === peerId)
       return member?.nickname
+    },
+    addConnection(connection) {
+      this.connections = [...this.connections, connection]
     },
     onConnectionOpen(peerId) {
       // this.removeDisconnectedMember(peerId)
@@ -451,9 +455,6 @@ export default {
       this.peerId = null
       this.connections = []
       sessionStorage.removeItem(this.ONER_TRY_CHAT_REFRESH)
-    },
-    addConnection(connection) {
-      this.connections = [...this.connections, connection]
     },
     removeConnection(peerId) {
       this.removeDisconnectedMember(peerId)
