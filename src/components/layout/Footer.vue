@@ -15,9 +15,8 @@ footer {
   border-top: 1px solid var(--border-gray);
   font-size: var(--font-size-S);
   text-align: center;
-  color: var(--color-gray-50);
+  color: var(--font-gray);
   a {
-    color: var(--color-gray-40);
     text-decoration: underline;
   }
 }
