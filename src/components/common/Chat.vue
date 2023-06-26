@@ -209,6 +209,8 @@ export default {
       // }
       connection.on('data', (message) => {
         console.log('message', message)
+        // 강퇴당했을때
+        if(!this.chatRoom) return
         this.onReceiveMsg(this.getMemberNick(peerId), message)
       });
       connection.on('close', () => {
