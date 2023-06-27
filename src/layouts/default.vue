@@ -15,7 +15,7 @@
     position="right"
     name="side_fix_right"
     />
-    <error v-if="false"></error>
+    <error v-if="true"></error>
     <div v-else class="container">
       <common-party-list-floating 
         v-if="showPartyListFloating"
