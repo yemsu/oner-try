@@ -442,6 +442,7 @@ export default {
       }
       if(error.type === 'network') {
         console.log("채팅 서버와 연결이 끊겼습니다!\n파티에서 제외됩니다. 재입장 해주세요.")
+        alert("채팅 서버와 연결이 끊겼습니다! 재연결을 시도합니다.")
         console.log("network", this.peer?.destroyed, this.peer?.disconnected)
         // this.onUnload()
         this.recreatePeer()
