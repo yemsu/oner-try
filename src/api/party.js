@@ -34,3 +34,6 @@ export const getUserChatRoom = (siteNick) => {
 export const getMembers = () => {
   return $axios.get(`/members`)
 }
+export const putMember = (member) => {
+  return $axios.put(`/members/${member.nickname}`, member)
+}

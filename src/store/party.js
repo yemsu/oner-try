@@ -4,6 +4,7 @@ import {
   postChatRoom,
   deleteChatRoom,
   postMember,
+  putMember,
   deleteMember,
   deleteChatUser,
   putChatRoom,
@@ -73,6 +74,15 @@ export const mutations = {
     if(!state.chatRoom) return
     state.chatRoom.members = state.chatRoom.members
       .filter(({ nickname }) => nickname !== memberNick)
+  },
+  CHANGE_MEMBER_PEERID(state, { memberNick, peerId }) {
+    state.chatRoom.members = state.chatRoom.members.reduce((result, member) => {
+      if(member.nickname === memberNick) {
+        member.peerId = peerId
+      }
+      return [...result, member]
+    }, [])
+    console.log('CHANGE_MEMBER_PEERID1', state.chatRoom.members)
   },
   CHANGE_CHAT_ROOM(state, obj) {
     state.chatRoom = {
@@ -151,10 +161,19 @@ export const actions = {
     const { result, error } = await postMember(chatRoomId, peerId)
     console.log('POST_MEMBER', result)
     if(error) {
-      console.log('CANNOT POST_MEMBER:', error)
+      console.log('CANNOT POST_MEMBER:', peerId, error)
       return error
     }
     commit('ADD_MEMBER', result)
+    return result 
+  },
+  async PUT_MEMBER({ commit }, member) {
+    const { result, error } = await putMember(member)
+    console.log('PUT_MEMBER', result)
+    if(error) {
+      console.log('CANNOT PUT_MEMBER:', error)
+      return error
+    }
     return result 
   },
   async DELETE_MEMBER({ commit }, { id, siteNick }) {
