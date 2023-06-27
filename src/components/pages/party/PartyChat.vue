@@ -99,70 +99,21 @@
             볼륨 {{ beepVolume }}
           </element-button>
         </div>
-        <ul class="chat-members">
-          <li
-            v-for="{ nickname: memberNick, peerId: memberPeerId } in chatRoom.members"
-            :key="`chat-member-${memberNick}`"
-            :class="{ 'me' : memberNick === nickname }"
-          >
-            <span class="member-emoji">
-              {{ memberNick === chatRoom.host ? '👑' : '😊' }}
-            </span>
-            {{ memberNick }}
-            <template v-if="!isMinimize">
-              <!-- <span
-                v-if="disconnectedMembers.includes(memberPeerId)"
-                title="연결 끊김"
-                class="member-disconnected"
-              >
-                <font-awesome-icon icon="fa-signal" />
-              </span>
-              <element-button
-                v-if="peer && memberNick === nickname"
-                type="text"
-                size="xsmall"
-                :is-no-function="!isMyPeerDisconnected(memberNick)"
-                :bg="peer.disconnected ? 'point' : 'sub'"
-                :title="peer.disconnected ? '연결 끊김': '연결됨'"
-                :class="{'member-disconnected': peer.disconnected}"
-                @click="() => reconnectMyPeer(memberNick)"
-              >
-                <font-awesome-icon icon="fa-signal" />
-              </element-button> -->
-              <element-button
-                v-if="memberNick !== chatRoom.host && nickname === chatRoom.host"
-                type="text"
-                size="xsmall"
-                bg="sub"
-                title="추방"
-                @click="onClickKickOut(memberNick)"
-              >
-                <font-awesome-icon icon="fa-xmark" />
-              </element-button>
-            </template>
-          </li>
-          <template v-if="!isMinimize">
-            <li
-              v-for="(type, i) in emptyList"
-              :key="`blank-list-${i}`"
-              :class="`box-${type}`"
-            >
-              <element-button
-                type="text"
-                size="xsmall"
-                :is-no-function="chatRoom.host !== nickname"
-                @click="onClickNoMemberList(type)"
-              >
-                <font-awesome-icon
-                  :icon="`fa-${type === 'wait' ? 'user' : 'lock'}`"
-                />
-                <span class="ir-hidden">
-                  {{ type === 'wait' ? '멤버 입장 대기 공간' : '제한 인원 공간' }}
-                </span>
-              </element-button>
-            </li>
-          </template>
-        </ul>
+        <div class="area-chat-members">
+          <chat-members
+            :member-list="officialMemberList"
+            members-type="파티원"
+            :hidden-title="true"
+            @click="onClickNoMemberList"
+            @kickout="onClickKickOut"
+          />
+          <chat-members
+            :member-list="spareMemberList"
+            members-type="참여 대기"
+            @click="onClickNoMemberList"
+            @kickOut="onClickKickOut"
+          />
+        </div>
         <div class="option-buttons bottom">
           <element-button
             type="text"
@@ -181,8 +132,12 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import ChatMembers from './ChatMembers.vue'
 
 export default {
+  components: {
+    ChatMembers
+  },
   props: {
     peer: {
       type: Object,
@@ -249,11 +204,6 @@ export default {
       isMinimize: 'party/getIsMinimize'
     }),
     emptyList() {
-      const waitListLength = this.chatRoom.capacity - this.chatRoom?.members.length
-      const blankListLength = 6 - this.chatRoom.capacity
-      const waitList = new Array(waitListLength).fill('wait')
-      const blankList = new Array(blankListLength).fill('blank')
-      return [...waitList, ...blankList]
     },
     isMuted() {
       return this.beep?.isMuted
@@ -261,6 +211,22 @@ export default {
     beepVolume() {
       return this.beep?.volume / this.beep?.volumeGap
     },
+    memberSlotList() {
+      const waitListLength = this.chatRoom.capacity - this.chatRoom?.members.length
+      const blankListLength = 9 - this.chatRoom.capacity
+      const waitList = new Array(waitListLength).fill({type: 'wait'})
+      const blankList = new Array(blankListLength).fill({type: 'blank'})
+
+      return [...this.chatRoom.members, ...waitList, ...blankList]
+    },
+    officialMemberList() {
+      if(this.memberSlotList.length <= 6) return this.memberSlotList
+      return this.memberSlotList.slice(0, 6)
+    },
+    spareMemberList() {
+      if(this.memberSlotList.length <= 6) return []
+      return this.memberSlotList.slice(6)
+    }
   },
   methods: {
     ...mapActions({
@@ -313,7 +279,6 @@ export default {
       const isMinusCapacity = type === 'wait'
       const numChanger = isMinusCapacity ? -1 : 1
       const newChatroom = {
-        id: this.chatRoom.id,
         ...this.chatRoom,
         capacity: this.chatRoom.capacity + numChanger,
         roomTypeId: this.chatRoom.roomType.id,
@@ -325,7 +290,6 @@ export default {
       this.setToastOn(true)
     },
     maximizeChat() {
-      console.log('maximizeChat')
       this.isMinimize && this.setIsMinimize(false)
     },
   }
