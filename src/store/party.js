@@ -37,7 +37,6 @@ export const mutations = {
     state.allMembers = data
   },
   SET_CHAT_ROOMS(state, data) {
-    // console.log("SET_CHAT_RROMS", data)
     state.chatRooms = data
   },
   ADD_CHAT_ROOM(state, data) {
@@ -46,7 +45,13 @@ export const mutations = {
     // console.log('ADD_CHAT_ROOM',  state.chatRooms)
   },
   SET_CHAT_ROOM(state, data) {
-    state.chatRoom = data
+    if(data) {
+      const members = sortingMembers(data.members, data.host)
+      // console.log("SET_CHAT_RROMS", data)
+      state.chatRoom = { ...data, members }
+    } else {
+      state.chatRoom = data
+    }
   },
   SET_MEMBER(state, members) {
     state.chatRoom.members = members
@@ -114,17 +119,8 @@ export const actions = {
       console.error(`CANNOT GET_CHAT_ROOM`, error)
       return false
     } 
-    const members = result.members
-      .filter(({nickname}) => (!checkAdmin(nickname)))
-      .sort((a, b) => {
-        const getIndex = (member) => {
-          return member.nickname === result.host
-            ? 0
-            : member.id
-        }
-        return getIndex(a) - getIndex(b)
-      })
-    commit('SET_CHAT_ROOM', {...result, members})
+    
+    commit('SET_CHAT_ROOM', result)
     return true
   },
   async POST_CHAT_ROOM({ commit }, chatRoom) {
@@ -213,4 +209,17 @@ export const actions = {
     // commit('SET_ROOM_TYPES', result)
     return result
   },
+}
+
+function sortingMembers(members, hostNick) {
+  return members
+    .filter(({nickname}) => (!checkAdmin(nickname)))
+    .sort((a, b) => {
+      const getIndex = (member) => {
+        return member.nickname === hostNick
+          ? 0
+          : member.id
+      }
+      return getIndex(a) - getIndex(b)
+    })
 }
