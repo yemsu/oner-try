@@ -172,12 +172,6 @@ export default {
         this.pushChatMessage(null, `방을 개설하였습니다.`)
       }
     },
-    async reOpen() {
-      const res = await this.putMember({
-        nickname: this.reOpeningMember.nickname,
-        peerId: this.peerId
-      })
-    },  
     pushChatMessage(nickname, message) {
       if(nickname && this.$utils.includesAdminId(nickname + message)) {
         return
