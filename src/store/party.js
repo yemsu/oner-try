@@ -76,12 +76,13 @@ export const mutations = {
       .filter(({ nickname }) => nickname !== memberNick)
   },
   CHANGE_MEMBER_PEERID(state, { memberNick, peerId }) {
-    state.chatRoom.members = state.chatRoom.members.reduce((result, member) => {
-      if(member.nickname === memberNick) {
-        member.peerId = peerId
-      }
-      return [...result, member]
-    }, [])
+    state.chatRoom.members = state.chatRoom.members
+      .reduce((result, member) => {
+        if(member.nickname === memberNick) {
+          member.peerId = peerId
+        }
+        return [...result, member]
+      }, [])
     console.log('CHANGE_MEMBER_PEERID1', state.chatRoom.members)
   },
   CHANGE_CHAT_ROOM(state, obj) {
