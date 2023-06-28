@@ -203,8 +203,6 @@ export default {
       disconnectedMembers: 'party/getDisconnectedMembers',
       isMinimize: 'party/getIsMinimize'
     }),
-    emptyList() {
-    },
     isMuted() {
       return this.beep?.isMuted
     },
