@@ -120,7 +120,9 @@ export default {
     createPeer() {
       if(!this.peerId) {
         // 마지막 글자에 특수문자 존재하는 경우, peerjs invalid id 에러 발생하여 난수로 교체
-        this.peerId = this.nickname.replaceAll(/-|_|\./g, Math.floor(Math.random()*1000))
+        const getRandomNum = (powNum) => Math.floor(Math.random() * (10 ** powNum))
+        const nickNoSpecialCharacter = this.nickname.replaceAll(/-|_|\./g, '')
+        this.peerId = `${nickNoSpecialCharacter}_${getRandomNum(5)}`
       }
       this.peer = new this.$Peer(this.peerId, {
         host: process.env.PEER_SERVER,
@@ -207,9 +209,12 @@ export default {
         return
       }
     },
+    getMemberNickFromLabel(connection) {
+      return connection.label.split('/').find(nickname => nickname !== this.nickname)
+    },
     subscribeMember(connection, isReceiver) {
       const peerId = connection.peer
-      const memberNick = connection.label.split('/').find(nickname => nickname !== this.nickname)
+      const memberNick = this.getMemberNickFromLabel(connection)
       // if(!this.isAlreadyConnected(connection.peer)) { 
         connection.on('open',() => {
           this.changeMemberPeerId({
@@ -254,7 +259,8 @@ export default {
       return member?.nickname
     },
     addConnection(connection) {
-      this.connections = [...this.connections, connection]
+      const removedOldMember = this.connections.filter(({ label }) => label !== connection.label)
+      this.connections = [...removedOldMember, connection]
     },
     onConnectionOpen(peerId, isSender) {
       // this.removeDisconnectedMember(peerId)
@@ -489,24 +495,11 @@ export default {
     },
     async recreatePeer() {
       this.resetChat()
-      this.peerId = `${this.nickname}_${Math.floor(Math.random()*1000)}`
       this.reOpeningMember = this.nickname
-      await this.checkMemberAndDelete()
       this.createPeer()
     },
     getMyMemberObj() {
       return this.chatRoom.members.find(({nickname}) => nickname === this.nickname)
-    },
-    async checkMemberAndDelete() {
-      return new Promise(async (resolve, reject) => {
-        if(this.getMyMemberObj()) {
-          await this.putMember({
-            ...this.getMyMemberObj(),
-            peerId: this.peerId
-          })
-        }
-        resolve(true)
-      })
     },
     goPartyList() {
       this.willLeave = true
