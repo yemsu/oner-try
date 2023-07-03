@@ -1,27 +1,32 @@
 <template>
  <div id="app">
+    <common-top-notice-bar
+      text="📢 23.07.04 화요일 오전 10시에 기능 추가 및 개선을 위한 점검이 있을 예정입니다. (약 20분 소요 예정)<br> 점검 이후 파티 모집 방이 초기화되니 사이트 이용에 참고해주시기 바랍니다. "
+    />
     <layout-header />
-    <base-adsense
-    v-if="showSideFixAds"
-    ad-slot="6463699903"
-    type="side-fix"
-    position="left"
-    name="side_fix_left"
-    />
-    <base-adsense
-    v-if="showSideFixAds"
-    ad-slot="4053428480"
-    type="side-fix"
-    position="right"
-    name="side_fix_right"
-    />
     <error v-if="false"></error>
-    <div v-else class="container">
-      <common-party-list-floating 
+    <template v-else>
+      <common-party-list-floating
         v-if="showPartyListFloating"
       />
-      <nuxt />
-    </div>
+      <div class="container">
+        <base-adsense
+        v-if="showSideFixAds"
+        ad-slot="6463699903"
+        type="side-fix"
+        position="left"
+        name="side_fix_left"
+        />
+        <base-adsense
+        v-if="showSideFixAds"
+        ad-slot="4053428480"
+        type="side-fix"
+        position="right"
+        name="side_fix_right"
+        />
+        <nuxt />
+      </div>
+    </template>
     <common-chat v-if="chatRoom" />
     <element-toast-popup />
     <element-popup />
@@ -126,9 +131,5 @@ export default {
 .container {
   position: relative;
   min-height: 100vh;
-  padding: var(--header-height) 0 100px;
-  @include mobile {
-    padding: var(--header-height) 0 60px;
-  }
 }
 </style>
