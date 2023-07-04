@@ -23,7 +23,7 @@ export default {
     },
     line: {
       type: String,
-      default: 'none'
+      default: 'none' // none, positive, negative, needHelper, allowBeginner
     }
   },
   data() {

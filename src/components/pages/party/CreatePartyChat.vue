@@ -33,12 +33,20 @@
           :can-multi-select="false"
           @onChange="(list) => selectedRoomType = list[0]"
         />
-        <element-input
-          id="needHelper"
-          label="헬퍼 요청"
-          input-type="checkbox"
-          @onUpdateInput="(checked) => isNeedHelper = checked"
-        />
+        <div class="wrap-checks">
+          <element-input
+            id="needHelper"
+            label="헬퍼 요청"
+            input-type="checkbox"
+            @onUpdateInput="(checked) => isNeedHelper = checked"
+          />
+          <element-input
+            id="allowBeginner"
+            label="초보 가능"
+            input-type="checkbox"
+            @onUpdateInput="(checked) => isAllowBeginner = checked"
+          />
+        </div>
       </layout-create-content>
     </template>
   </top-slide-popup>
@@ -70,7 +78,8 @@ export default {
       isFocusTitleInput: false,
       selectedRoomType: null,
       roomTypeOptions: [],
-      isNeedHelper: false
+      isNeedHelper: false,
+      isAllowBeginner: false,
     }
   },
   async created() {
@@ -123,7 +132,8 @@ export default {
         title: this.roomTitle,
         capacity: this.roomCapacity,
         roomTypeId: this.selectedRoomType,
-        isNeedHelper: this.isNeedHelper
+        isNeedHelper: this.isNeedHelper,
+        isAllowBeginner: this.isAllowBeginner
       })
       if(!postChatRoom) {
         alert(this.$ALERTS.CHAT.CREATE_FAIL)
@@ -150,4 +160,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrap-checks {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 </style>
