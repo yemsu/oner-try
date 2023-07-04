@@ -74,6 +74,7 @@ export default {
   },
   methods: {
     clickHandler(e) {
+      if(this.isNoFunction) return
 			this.$emit('click', e)
     }
   }

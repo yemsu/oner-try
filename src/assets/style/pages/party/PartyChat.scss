@@ -87,53 +87,9 @@
     border: 1px solid var(--border-gray);
     border-radius: 5px;
   }
-  .chat-members {
+  .area-chat-members {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
-    font-size: var(--font-size-S);
     background-color: var(--bg-body);
-    > li {
-      display: flex;
-      height: 1.3rem;
-      gap: 5px;
-      align-items: center;
-      &.box-wait {
-        background-color: var(--darker-10);
-        border: 1px solid var(--border-dark-gray);
-        path {
-          fill: var(--darker-20);
-        }
-      }
-      &.box-blank {
-        background-color: var(--bg-light-gray);
-        path {
-          fill: var(--bg-gray);
-        }
-      }
-      &.box-wait,
-      &.box-blank {
-        display: flex;
-        justify-content: center;
-        border-radius: 5px;
-        font-size: var(--font-size-XXS);
-        button {
-          width: 100%;
-          text-align: center;
-        }
-      }
-      .member-disconnected {
-        path {
-          fill: var(--color-point);
-        }
-      }
-    }
-    .me {
-      color: var(--color-point);
-      font-weight: $font-weight-500;
-    }
   }
   .option-buttons {
     display: flex;
@@ -158,9 +114,6 @@
       }
       .wrap-chat-side {
         width: 120px;
-        .chat-members {
-          padding: 6px;
-        }
       }
       .option-buttons {
         > button {
@@ -227,21 +180,10 @@
       border: none;
       border-radius: 0;
     }
-    .chat-members {
+    .area-chat-members {
       grid-column-start: 1;
       grid-column-end: 3;
       grid-row-start: 1;
-      gap: 4px;
-      width: 100%;
-      padding: 4px 6px;
-      font-size: var(--font-size-XS);
-      > li {
-        height: 1rem;
-        gap: 3px;
-        .member-emoji {
-          font-size: 8px;
-        }
-      }
     }
     .option-buttons {
       &.top {
@@ -262,9 +204,6 @@
       .party-chat-top {
         display: flex;
         gap: 5px;
-      }
-      .chat-members {
-        flex-direction: row;
       }
     }
   }

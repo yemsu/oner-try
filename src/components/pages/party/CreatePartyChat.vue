@@ -20,7 +20,7 @@
         />
         <element-select
           id="roomCapacity"
-          :options="[1, 2, 3, 4, 5, 6]"
+          :options="[1, 2, 3, 4, 5, 6, 7, 8, 9]"
           :default-option="roomCapacity"
           label="최대 인원"
           @onChange="onChangeRoomCapacity"

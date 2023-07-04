@@ -100,7 +100,6 @@ export default {
       }
     },
     chatRoom(crr) {
-      console.log('watch chatRoom, crr')
       // 리스트 페이지에서 방 나갔을 경우 데이터 새로고침
       if(!crr) {
         this.refreshData()

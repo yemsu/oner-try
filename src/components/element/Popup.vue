@@ -19,16 +19,9 @@
           확인
         </element-button>
       </common-wrap-buttons>
-      <div class="box-close-button">
-        <element-button
-          type="text"
-          size="large"
-          title="팝업 닫기"
-          @click="toggleIsVisible"
-        >
-          <font-awesome-icon icon="fa-xmark" />
-        </element-button>
-      </div>
+      <element-close-button
+        @click="toggleIsVisible"
+      />
     </section>
   </div>
 </template>
@@ -88,9 +81,5 @@ $padding-padding-mo: 10px;
   position: absolute;
   top: calc((#{$padding-padding-pc} - 5px) / 2);
   right: calc((#{$padding-padding-pc} - 5px) / 2);
-  button {
-    padding: 5px;
-    line-height: 1dvh;
-  }
 }
 </style>
