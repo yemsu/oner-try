@@ -4,7 +4,7 @@ const isDevMode = process.env.NODE_ENV === 'development'
 
 export default {
   env: {
-    APP_TITLE: 'ONER TRY',
+    APP_TITLE: 'DEV | ONER TRY',
     LOCAL_PORT: process.env.LOCAL_PORT,
     BASE_URL: isDevMode ? `http://localhost:${process.env.LOCAL_PORT}` : process.env.BASE_URL,
     API_PATH: process.env.CONT_PATH,
@@ -101,14 +101,14 @@ export default {
     loaders: {
       scss: { sourceMap: false }
     },
-    terser: {
-      // https://github.com/terser/terser#compress-options
-      terserOptions: {
-        compress: {
-          drop_console: true
-        }
-      }
-    }
+    // terser: {
+    //   // https://github.com/terser/terser#compress-options
+    //   terserOptions: {
+    //     compress: {
+    //       drop_console: true
+    //     }
+    //   }
+    // }
   },
 
   generate: {
