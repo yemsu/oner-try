@@ -245,6 +245,7 @@ caption, .ir-hidden {
 // badge
 .badges {
   display: flex;
+  gap: 5px;
   &.badge-gap {
     gap: 5px;
   }
