@@ -20,13 +20,17 @@
                 :class="['character', { 'no-title' :!title}]"
                 :title="topInfo.left.title"
               >{{ topInfo.left.text }}</p>
-              <element-badge
-                v-if="topInfo.left.badge"
-                type="square-round"
-                :size="size === 'small' ? 'xxsmall' : 'xsmall'"
-              >
-                {{ topInfo.left.badge }}
-              </element-badge>
+              <template v-for="(badge, i) in topInfo.left?.badges">
+                <element-badge
+                  v-if="badge.text"
+                  :key="`badge-${i}`"
+                  type="square-round"
+                  :line="badge.line"
+                  :size="size === 'small' ? 'xxsmall' : 'xsmall'"
+                >
+                  {{ badge.text }}
+                </element-badge>
+              </template>
             </div>
             <p
               :title="topInfo.right.title"

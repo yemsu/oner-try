@@ -19,14 +19,22 @@
       {{ newMessageLength }}
     </span>
     <div class="party-chat-top" @click="maximizeChat">
-      <div class="badges">
+      <div class="badges badge-gap">
         <element-badge
           type="square-round"
         >{{ chatRoom.roomType.name }}</element-badge>
-        <element-badge
-          type="square-round"
-          v-if="chatRoom.isNeedHelper"
-        >🐣 헬퍼 요청</element-badge>
+        <template v-if="!isMinimize">
+          <element-badge
+            type="square-round"
+            line="needHelper"
+            v-if="chatRoom.isNeedHelper"
+          >🐣 헬퍼 요청</element-badge>
+          <element-badge
+            type="square-round"
+            line="allowBeginner"
+            v-if="chatRoom.isAllowBeginner"
+          >🌱 초보 가능</element-badge>
+        </template>
       </div>
       <div class="area-page-title">
         <element-text-editable

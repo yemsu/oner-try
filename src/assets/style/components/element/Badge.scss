@@ -43,6 +43,12 @@
     &-negative {
       border-color: var(--color-point-pale);
     }
+    &-needHelper {
+      border-color: hsl(60, 39%, 55%, 0.7);
+    }
+    &-allowBeginner {
+      border-color: hsl(80, 36%, 52%, 0.7);
+    }
   }
   &.type {
     &-square-round {

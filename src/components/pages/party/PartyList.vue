@@ -27,6 +27,7 @@
         capacity,
         roomType,
         isNeedHelper,
+        isAllowBeginner,
         host
       }, i) in chatRooms"
         :key="`data${i}`"
@@ -45,7 +46,16 @@
           :top-info="{
             left: {
               text: `${roomType.name}`,
-              badge: isNeedHelper ? '🐣 헬퍼 요청' : ''
+              badges: [
+                {
+                  text: isNeedHelper ? '🐣 헬퍼 요청' : null,
+                  line: 'needHelper'
+                },
+                {
+                  text: isAllowBeginner ? '🌱 초보 가능' : null,
+                  line: 'allowBeginner'
+                }
+              ]
             },
             right: {
               text: `👨🏾‍🤝‍👨🏼 ${members.length} / ${capacity}`
@@ -138,6 +148,8 @@ export default {
         page,
         size: 100
       })
+    
+    console.log('this.CardListContent', this.chatRooms)
     },
     async onClickChatRoom(id, isFull) {
       if(!this.isLogin) {
