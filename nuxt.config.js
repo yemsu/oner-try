@@ -101,14 +101,13 @@ export default {
     loaders: {
       scss: { sourceMap: false }
     },
-    // terser: {
-    //   // https://github.com/terser/terser#compress-options
-    //   terserOptions: {
-    //     compress: {
-    //       drop_console: true
-    //     }
-    //   }
-    // }
+    terser: {
+      // https://github.com/terser/terser#compress-options
+      terserOptions: {
+        compress: {
+        }
+      }
+    }
   },
 
   generate: {
