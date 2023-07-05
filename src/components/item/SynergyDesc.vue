@@ -9,12 +9,29 @@
         <dt :class="`title color-${classNegaPosi(synergy)}`">
           {{ synergy.name }}
         </dt>
-        <dd>
+        <dd v-if="synergy.option">
           <item-detail-info
             :options="synergy.option"
             :highlightTitle="false"
             :size="size"
           />
+        </dd>
+        <dd v-if="synergy.optionTypes" class="option-types">
+          <template v-for="(optionType) in synergy.optionTypes">
+            <div
+              :key="`optionType-${optionType.title}`"
+              class="option-type"
+            >
+              <span class="title-option-type">
+                {{ optionType.title }}
+              </span>
+              <item-detail-info
+                :options="optionType.option"
+                :highlightTitle="false"
+                :size="size"
+              />
+            </div>
+          </template>
         </dd>
         <dd class="sailors badges badge-gap">
           <!-- <span class="badge black">선원</span> -->
@@ -48,6 +65,7 @@ export default {
   },
   methods: {
     isNegative(synergy) {
+      if(!synergy?.option) return false
       const sampleValue = Object.values(synergy.option[0])[0]
       return sampleValue.includes('-')
     },
@@ -63,6 +81,21 @@ export default {
   dd {
     & + dd {
       margin-top: 6px;
+    }
+    &.option-types {
+      display: flex; 
+      gap: 5px 5px;
+      flex-wrap: wrap;
+      > .option-type {
+        display: flex; 
+        gap: 10px;
+        padding: 5px 8px 5px 6px;
+        border-radius: 5px;
+        background-color: var(--darker-10);
+        .details:nth-child(n+2) {
+          margin-top: 0;
+        }
+      }
     }
   }
 }

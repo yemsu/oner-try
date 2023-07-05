@@ -27,24 +27,42 @@ export const getCharacterCombi = (characterColleagues, colleagues) => {
 
   if(Object.keys(combiCountObj).length === 0 ) return null
 
-  const characterCombiTypeId = Object.keys(combiCountObj).find(combiType => combiCountObj[combiType] >= 2)
+  const combiTypeId = Object.keys(combiCountObj).find(combiType => combiCountObj[combiType] >= 2)
 
-  if(!characterCombiTypeId) return null
+  if(!combiTypeId) return null
 
-  const combiMemberNum = combiCountObj[characterCombiTypeId]
-  const characterCombiType = combiTypes.find(({ id }) => characterCombiTypeId == id)
-  const combiOptions = gradeCombiOptions.find(({ grade }) => (
-    characterCombiType?.grade === grade
-  )).options
-  const sailors = colleagues
-    .filter(({ combi }) => combi == characterCombiTypeId)
-    .map(({ name }) => name)
+  const combiMemberNum = combiCountObj[combiTypeId]
+  const characterCombiType = combiTypes.find(({ id }) => combiTypeId == id)
+  const combiOptions = getCombiOptions(characterCombiType)
 
   return {
     name: `${characterCombiType.name} - 콤비 ${combiMemberNum}세트`,
     option: combiOptions[`combi${combiMemberNum}`],
-    sailors
+    sailors: getCombiColleagues(colleagues, combiTypeId)
   }
+}
+export const getColleagueCombiObj = (combiTypeId, colleagues) => {
+  const combiType = combiTypes.find(({ id }) => combiTypeId == id)
+  const combiOptions = getCombiOptions(combiType)
+  return [{
+    name: combiType.name,
+    optionTypes: [
+      {
+        title: '2세트',
+        option: combiOptions.combi2
+      },
+      {
+        title: '3세트',
+        option: combiOptions.combi3
+      },
+    ],
+    sailors: getCombiColleagues(colleagues, combiTypeId)
+  }]
+}
+const getCombiOptions = (combiType) => {
+  return gradeCombiOptions.find(({ grade }) => (
+    combiType?.grade === grade
+  )).options
 }
 const getUniqueObjList = (items, keyName) => {
   return items.reduce((result, item) => {
@@ -64,6 +82,11 @@ const getObjCountByValue = (items, keyName) => {
     result[value] += 1
     return result  
   }, {})
+}
+const getCombiColleagues = (colleagues, combiTypeId) => {
+  return colleagues
+    .filter(({ combi }) => combi == combiTypeId)
+    .map(({ name }) => name)
 }
 export const getTotalOption = (character, additionalOptions) => {
   const { stat, equipment, sailor, colleague, ship } = character
