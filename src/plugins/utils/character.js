@@ -28,10 +28,13 @@ export const getCharacterCombi = (characterColleagues, colleagues) => {
   if(Object.keys(combiCountObj).length === 0 ) return null
 
   const characterCombiTypeId = Object.keys(combiCountObj).find(combiType => combiCountObj[combiType] >= 2)
+
+  if(!characterCombiTypeId) return null
+
   const combiMemberNum = combiCountObj[characterCombiTypeId]
   const characterCombiType = combiTypes.find(({ id }) => characterCombiTypeId == id)
   const combiOptions = gradeCombiOptions.find(({ grade }) => (
-    characterCombiType.grade === grade
+    characterCombiType?.grade === grade
   )).options
   const sailors = colleagues
     .filter(({ combi }) => combi == characterCombiTypeId)
