@@ -65,20 +65,20 @@
         <section class="quick-menu column-half">
           <div class="area-text">
             <div class="badges center">
-              <element-badge type="square-round" size="large" color="point">6월 4일 v2 Update !</element-badge>
+              <element-badge type="square-round" size="large" color="point">7월 5일 3.0 Update !</element-badge>
             </div>
-            <h3 class="title">신규 장비 아이템 추가</h3>
+            <h3 class="title">신규 동료 추가</h3>
             <p>
-              신규 장비 아이템과 함께 💎영원 등급이 추가되었어요.
+              신규 동료와 함께 💪콤비 효과가 추가되었어요.
             </p>
           </div>
           <div class="area-contents">
             <p class="wrap-links">
               <router-link
-                to="/items/equipment"
+                to="/items/colleague"
                 class="text-link wrap-icon-text"
               >
-                신규 장비 확인하기
+                신규 동료 및 콤비 효과 확인하기
                 <i class="icon-arrow right small border-point"></i>
               </router-link>
               <router-link
@@ -89,6 +89,11 @@
                 <i class="icon-arrow right small border-point"></i>
               </router-link>
             </p>
+          </div>
+          <div class="area-contents">
+            <character-search-box
+              :full-data="gameUsers"
+            />
           </div>
         </section>
         <section class="quick-menu column-half">
@@ -245,13 +250,14 @@ export default {
     ...mapGetters({
       // heroes:  'item/getHeroes',
       items:  'item/getItems',
+      gameUsers: 'character/getGameUsers',
       ranking: 'character/getRanking',
       isLogin: 'auth/getIsLogin',
       userInfo: 'auth/getUserInfo'
     }),   
   },
   async created() {
-    // if(this.gameUsers.length === 0) await this.getGameUsers()  
+    if(this.gameUsers.length === 0) await this.getGameUsers()  
     // if(this.heroes.length === 0) await this.getHeroes()
     if(this.items.length === 0) await this.getItems()
     this.compositionItems = this.items.filter(item => item.ingredients)
@@ -263,7 +269,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      // getGameUsers: 'character/GET_GAME_USERS',
+      getGameUsers: 'character/GET_GAME_USERS',
       // getHeroes: 'item/GET_HEROES'
       getItems: 'item/GET_ITEMS',
       getRanking: 'character/GET_RANKING',
