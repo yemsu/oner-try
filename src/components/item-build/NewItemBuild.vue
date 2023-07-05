@@ -250,7 +250,7 @@ export default {
     setSearchBoxFullData() {
       this.searchBoxFullData = this.items.filter((item) => item.type !== 'etcItem')
     },
-    selectItem(itemId) {
+    selectItem({ id: itemId }) {
       const item = [...this.items, ...this.colleagues].find((item) => item.id === itemId)
       if(!canEnhance(item) || this.selectedItem?.id === itemId) {
         this.addItem(null, item)
@@ -278,6 +278,7 @@ export default {
         selectedItem.stack = this.itemStack
       }
 
+      console.log('this.buildItems()[type]', item, this.selectedItem, selectedItem)
       let blankSlotIndex = 0
       for(const slot of this.buildItems()[type]) {
         if(!slot) break
