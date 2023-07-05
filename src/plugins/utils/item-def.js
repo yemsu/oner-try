@@ -79,19 +79,19 @@ adt: 추가 피해량
 maxD: 최대 피해량
 ct: 피해치명타 확률
 ctD: 치명타 피해량
-피해량 증폭
+powerDmg: 피해량 증폭
 dr: 추가 파괴량,
 maxDr: 최대 파괴량
 dct: 파괴치명타 확률
 ctDr: 치명타 파괴량
-파괴량 증폭
+powerPg: 파괴량 증폭
 cd: 스킬 쿨타임 감소
 mcd: 이동기 쿨타임 감소
 ms: 이동속도
 */
 
 export const optionOrder = [
-  'hp', 'gdr', 'df', 'ev', 'ss', 'adt', 'maxD', 'ct', 'ctD', 'dr', 'maxDr', 'dct', 'ctDr', 'cd', 'mcd', 'ms', 'aas'
+  'hp', 'gdr', 'df', 'ev', 'ss', 'adt', 'maxD', 'ct', 'ctD', 'powerDmg', 'dr', 'maxDr', 'dct', 'ctDr', 'powerPg', 'cd', 'mcd', 'ms', 'aas'
 ]
 
 export const optionDefaultValue = {
@@ -116,6 +116,8 @@ export const optionDefaultValue = {
   ctDr: 0,
   ms: 360,
   aas: 0,
+  powerDmg: 0,
+  powerPg: 0,
 }
 export const equipOnlyOptionsDef = {
   str: '견문색',
@@ -125,6 +127,10 @@ export const equipOnlyOptionsDef = {
 export const colosseumOptions = {
  at: '공격력',
  as: '공격속도'
+}
+export const gameRewardOptionsDef = {
+  powerDmg: '피해량 증폭',
+  powerPg: '파괴량 증폭',
 }
 export const noEquipOptions = {
   hp: '체력',
@@ -152,6 +158,8 @@ export const characterInfos = {
   에피소드숙련도: '에피소드 숙련도',
   위험도: '위험도',
   레일리: '레일리',
+  성장: '성장',
+  버스터콜디펜드: '버스터 콜 디펜드',
 }
 export const skillDamageOptions = {
   qd: 'Q 비례량',
@@ -230,8 +238,9 @@ export const noEquipOptionsMap = new Map(Object.entries(noEquipOptions))
 export const colosseumOptionsMap = new Map(Object.entries(colosseumOptions))
 export const characterInfosMap = new Map(Object.entries(characterInfos))
 export const skillDamageOptionsMap = new Map(Object.entries(skillDamageOptions))
+export const gameRewardOptionsMap = new Map(Object.entries(gameRewardOptionsDef))
 const totalOptions = () => {
-  const totalOptions = new Map([...noEquipOptionsMap, ...colosseumOptionsMap, ...characterInfosMap, ...skillDamageOptionsMap])
+  const totalOptions = new Map([...noEquipOptionsMap, ...colosseumOptionsMap, ...characterInfosMap, ...skillDamageOptionsMap, ...gameRewardOptionsMap])
   for(const [key, value] of equipmentsOnlyOptionsMap) {
     totalOptions.set(key, value)
   }
