@@ -131,5 +131,6 @@ export default {
 .container {
   position: relative;
   min-height: 100vh;
+  padding-bottom: 60px;
 }
 </style>
