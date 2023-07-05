@@ -1,6 +1,6 @@
 import { fillDataAndInsertValue, parserDefaultData, parserStrData, fillDefaultList, findData } from '@/plugins/utils/item'
 import { slotNumbers } from '../plugins/utils/item-def'
-import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
+import { getTotalOption, getCharacterSynergies, getCharacterCombi } from '@/plugins/utils/character'
 import { deepClone } from '@/plugins/utils'
 import { getUserCharacters, getGameUsers, getRanking } from '@/plugins/utils/https'
 
@@ -81,9 +81,15 @@ export const actions = {
           Object.assign(character, { hero, equipment, sailor, colleague , ship, information })
 
           const characterSynergies = getCharacterSynergies(sailor, rootState.item.synergies)
-          const totalOption = getTotalOption(character, characterSynergies)
+          const characterCombi = getCharacterCombi(colleague, rootState.item.colleagues)
+          console.log("characterCombi", characterCombi)
+          const totalOption = getTotalOption(character, [...characterSynergies, characterCombi])
 
-          return Object.assign(character, { totalOption, synergy: characterSynergies })
+          return Object.assign(character, { 
+            totalOption,
+            synergy: characterSynergies,
+            combi: characterCombi
+          })
         })
         
         commit(`SET_USER_CHARACTERS`, sortRank(newData))

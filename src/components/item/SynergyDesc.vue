@@ -43,7 +43,7 @@ export default {
     },
     size: {
       type: String,
-      default: () => 'medium' // small, medium
+      default: () => 'small' // small, medium
     }
   },
   methods: {

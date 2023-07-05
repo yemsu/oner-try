@@ -166,6 +166,39 @@ export const slotNumbers = {
   ship: 1,
   ryuo: 1
 }
+export const combiTypes = [
+  {
+    id: 1,
+    name: '버기 해적단',
+    grade: 1
+  },
+  {
+    id: 2,
+    name: '밀짚모자 대선단',
+    grade: 2
+  },
+  {
+    id: 3,
+    name: '에이스의 의지',
+    grade: 2
+  }
+]
+export const gradeCombiOptions = [
+  {
+    grade: 1,
+    options: {
+      combi2: [{cd: '1'}],
+      combi3: [{ct: '1.5'}, {dct: '1.5'}],
+    }
+  },
+  {
+    grade: 2,
+    options: {
+      combi2: [{cd: '2'}],
+      combi3: [{ct: '2.5'}, {dct: '2.5'}],
+    }
+  }
+]
 export const canEnhance = (item) => {
   if(!item) return false
   const commonCase = ['sailor', 'ship', 'colleague'].includes(item.type)

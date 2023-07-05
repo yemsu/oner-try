@@ -32,36 +32,47 @@ $common-gap: 10px;
       word-break: keep-all;
     }
   }
+
   @include pc {
-    grid-template-columns: 186px 186px 99px 162px 178px 178px;
-    grid-template-rows: 160px 160px 36px auto;
+    grid-template-columns: 135px 135px 135px 135px 99px 178px 178px;
+    grid-template-rows: 160px 160px 98px auto;
     .wrap-title-content {
       &.equipment {
         grid-column-start: 1;
+        grid-column-end: 5;
         grid-row-start: 1;
       }
       &.sailor {
-        grid-column-start: 2;
-        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 2;
+        grid-row-end: 3;
       }
       &.colleague {
         grid-column-start: 3;
         grid-column-end: 5;
-        grid-row-start: 1;
+        grid-row-start: 2
       }
       &.ship {
-        grid-column-start: 3;
-        // grid-column-end: 5;
-        grid-row-start: 2;
+        grid-column-start: 5;
+        grid-row-start: 1;
       }
     }
     .synergy-desc {
-      grid-column-start: 2;
-      grid-column-end: 4;
-      grid-row-start: 4;
+      &.sailor {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 4;
+      }
+      &.colleague {
+        grid-column-start: 3;
+        grid-column-end: 5;
+        // grid-row-start: 3;
+      }
     }
     .details.type-character-info {
-      grid-column-start: 5;
+      grid-column-start: 6;
+      grid-column-end: 7;
       grid-row-start: 1;
     }
     .all-options-main {
@@ -89,16 +100,19 @@ $common-gap: 10px;
     .wrap-title-content {
       &.equipment {
         grid-column-start: 1;
-        grid-column-end: 3;
+        grid-column-end: 4;
+        grid-row-start: 1;
+        .list-item.column-6{
+          grid-template-columns: repeat(3, 1fr);
+        }
       }
       &.sailor {
-        grid-column-start: 3;
+        grid-column-start: 1;
         grid-column-end: 5;
       }
       &.colleague {
         grid-column-start: 1;
-        grid-column-end: 4;
-        grid-row-start: 1;
+        grid-column-end: 5;
       }
       &.ship {
         grid-column-start: 4;
@@ -107,13 +121,20 @@ $common-gap: 10px;
       }
     }
     .synergy-desc {
-      grid-column-start: 3;
-      grid-column-end: 5;
+      &.sailor {
+        grid-column-start: 1;
+        grid-column-end: 5;
+        grid-row-start: 3;
+      }
+      &.colleague {
+        grid-column-start: 1;
+        grid-column-end: 5;
+      }
     }
     .details.type-character-info {
       grid-column-start: 1;
       grid-column-end: 3;
-      grid-row-start: 3;
+      // grid-row-start: 3;
       & + .all-options-main {
         grid-row-start: auto;
         grid-column: auto / span 2;

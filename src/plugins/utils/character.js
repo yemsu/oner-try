@@ -1,4 +1,4 @@
-import { optionDefaultValue, optionOrder, valueByStack } from '@/plugins/utils/item-def'
+import { optionDefaultValue, optionOrder, valueByStack, combiTypes, gradeCombiOptions } from '@/plugins/utils/item-def'
 import { parserStrDataToObj } from '@/plugins/utils/item'
 export const getCharacterSynergies = (sailors, synergies) => {
   const sailorNames = sailors.filter(sailor => sailor).map(sailor => sailor?.name)
@@ -20,9 +20,51 @@ export const getCharacterSynergies = (sailors, synergies) => {
   }
   return characterSynergies
 }
-export const getTotalOption = (character, characterSynergies) => {
+export const getCharacterCombi = (characterColleagues, colleagues) => {
+  // 동료 콤비 효과
+  const uniqueColleagues = getUniqueObjList(characterColleagues, 'name')
+  const combiCountObj = getObjCountByValue(uniqueColleagues, 'combi')
+
+  if(Object.keys(combiCountObj).length === 0 ) return null
+
+  const characterCombiTypeId = Object.keys(combiCountObj).find(combiType => combiCountObj[combiType] >= 2)
+  const combiMemberNum = combiCountObj[characterCombiTypeId]
+  const characterCombiType = combiTypes.find(({ id }) => characterCombiTypeId == id)
+  const combiOptions = gradeCombiOptions.find(({ grade }) => (
+    characterCombiType.grade === grade
+  )).options
+  const sailors = colleagues
+    .filter(({ combi }) => combi == characterCombiTypeId)
+    .map(({ name }) => name)
+
+  return {
+    name: `${characterCombiType.name} - 콤비 ${combiMemberNum}세트`,
+    option: combiOptions[`combi${combiMemberNum}`],
+    sailors
+  }
+}
+const getUniqueObjList = (items, keyName) => {
+  return items.reduce((result, item) => {
+    if(!item) return result
+    return result.find((resultItem) => resultItem[keyName] === item[keyName]) 
+      ? result
+      : [...result, item]
+  }, [])
+}
+const getObjCountByValue = (items, keyName) => {
+  return items.reduce((result, item) => {
+    if(!item || !item[keyName]) return result
+    const value = item[keyName]
+    if(!result[value]) {
+      result[value] = 0
+    }
+    result[value] += 1
+    return result  
+  }, {})
+}
+export const getTotalOption = (character, additionalOptions) => {
   const { stat, equipment, sailor, colleague, ship } = character
-  const allItem = [...equipment, ...sailor, ...colleague, ...ship, ...characterSynergies]
+  const allItem = [...equipment, ...sailor, ...colleague, ...ship, ...additionalOptions]
   // console.log('allItem', allItem)
   const allOption = getOptions(allItem)
   // console.log('allOption', allOption)

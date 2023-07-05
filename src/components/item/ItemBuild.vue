@@ -51,7 +51,14 @@
         </title-content>
       </div>
       <synergy-desc
+        v-if="buildData.synergy.length > 0"
+        class="sailor"
         :synergies="buildData.synergy"
+      />
+      <synergy-desc
+        v-if="buildData.combi"
+        class="colleague"
+        :synergies="[buildData.combi]"
       />
       <item-detail-info
         v-if="buildData.information"
@@ -113,10 +120,10 @@ export default {
     return {
       gridInfos: {
         equipment: {
-          columnNum: '2'
+          columnNum: '6'
         },
         sailor: {
-          columnNum: '2'
+          columnNum: '3'
         },
         colleague: {
           columnNum: '3'
