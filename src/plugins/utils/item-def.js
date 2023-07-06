@@ -196,14 +196,14 @@ export const gradeCombiOptions = [
     grade: 1,
     options: {
       combi2: [{cd: '1'}],
-      combi3: [{ct: '1.5'}, {dct: '1.5'}],
+      combi3: [{cd: '1'}, {ct: '1.5'}, {dct: '1.5'}],
     }
   },
   {
     grade: 2,
     options: {
       combi2: [{cd: '2'}],
-      combi3: [{ct: '2.5'}, {dct: '2.5'}],
+      combi3: [{cd: '2'}, {ct: '2.5'}, {dct: '2.5'}],
     }
   }
 ]
