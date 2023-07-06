@@ -10,8 +10,8 @@
           title="점검 중입니다.🧐"
           :point-text="pageError.statusCode"
         >
-          기능 추가 및 개선을 위해 점검 중입니다!<br>
-          약 20분 소요될 예정입니다.
+          동료 콤비 및 신규 스탯 추가를 위해 점검 중입니다!<br>
+          약 30분 소요될 예정입니다. (10:00 ~ 10:30)
         </common-main-notice>
       </template>
       <template v-else-if="pageError.statusCode === 404">

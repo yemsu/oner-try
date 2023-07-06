@@ -1,10 +1,10 @@
 <template>
  <div id="app">
-    <common-top-notice-bar
+    <!-- <common-top-notice-bar
       text="📢 23.07.06 목요일 오전 10시에 동료 콤비 및 신규 스탯 추가를 위한 점검이 있을 예정입니다. (약 30분 소요 예정)<br> 점검 이후 파티 모집 방이 초기화되니 사이트 이용에 참고해주시기 바랍니다. "
-    />
+    /> -->
     <layout-header />
-    <error v-if="false"></error>
+    <error v-if="true"></error>
     <template v-else>
       <common-party-list-floating
         v-if="showPartyListFloating"
