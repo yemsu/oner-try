@@ -1,6 +1,7 @@
 import { isSameText, deepClone } from '@/plugins/utils'
 import { parserStrData, sortByGrade } from '@/plugins/utils/item'
 import { equipmentGradeTypes, equipmentGradeTypeExceptions, EquipmentGradeScoresDef } from '@/plugins/utils/item-def'
+import { getColleagueCombiObj } from '@/plugins/utils/character'
 import {
   getItems,
   getSailors,
@@ -25,6 +26,7 @@ export const state = () => ({
   ships_table: [],
   heroes: [],
   colleagues: [],
+  colleagues_combi: [],
   synergies: [],
   ryuoes: [],
   potions: [],
@@ -42,6 +44,7 @@ export const getters = {
   getColleagues: (state) => state.colleagues,
   getSynergies: (state) => state.synergies,
   getSailorsSynergy: (state) => state.sailors_synergy,
+  getColleaguesCombi: (state) => state.colleagues_combi,
 }
 
 export const mutations = {
@@ -78,6 +81,9 @@ export const mutations = {
   },
   SET_SAILORS_SYNERGY(state, {data}) {    
     state.sailors_synergy = data
+  },
+  SET_COLLEAGUES_COMBI(state, {data}) {    
+    state.colleagues_combi = data
   },
   SET_RYUOES(state, {data}) {
     state.ryuoes = data
@@ -332,6 +338,20 @@ export const actions = {
     })
     
     commit(`SET_SAILORS_SYNERGY`, {data: sortByGrade(newData)})
+    return newData
+  },
+  async GET_COLLEAGUES_COMBI({ commit, state, dispatch }) {
+    if(state.colleagues.length === 0) await dispatch('GET_COLLEAGUES')
+
+    const newData = state.colleagues.map(colleague => {
+      const synergies = colleague?.combi
+        ? getColleagueCombiObj(colleague.combi*1, state.colleagues)
+        : null
+      
+      return {...colleague, synergies}
+    })
+    console.log('newData', newData)
+    commit(`SET_COLLEAGUES_COMBI`, {data: sortByGrade(newData)})
     return newData
   },
   GET_RYUOES({ commit }) {

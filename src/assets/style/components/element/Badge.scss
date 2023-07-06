@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   word-spacing: -0.1em;
   font-weight: var(--font-weight-B);
   padding: 2px 5px 3px 5px;
@@ -24,6 +25,7 @@
     &-small {
       padding: 0 5px;
       font-size: var(--font-size-XS);
+      font-weight: var(--font-weight-L);
       height: 18px;
     }
     &-medium {

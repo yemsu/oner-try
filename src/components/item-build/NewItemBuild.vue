@@ -98,7 +98,7 @@ import { itemTypeDefs, maxStack, slotNumbers, canEnhance, noEquipOptions, grades
 import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
 import ItemFilterTable from '@/components/item/ItemFilterTable.vue';
 import { getTypeKorName } from '@/plugins/utils/item';
-import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
+import { getTotalOption, getCharacterSynergies, getCharacterCombi } from '@/plugins/utils/character'
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
@@ -179,6 +179,7 @@ export default {
         ship: new Array(1),
         ryuo: new Array(1),
         synergy: [],
+        combi: [],
         totalOption: []
       })
     }
@@ -227,6 +228,7 @@ export default {
         ship,
         ryuo,
         synergy,
+        combi,
         totalOption
       } = this.itemBuild
 
@@ -237,6 +239,7 @@ export default {
         ship,
         ryuo,
         synergy,
+        combi,
         totalOption,
       }
     },
@@ -321,7 +324,7 @@ export default {
       this.buildItemsString = JSON.stringify(this.buildItems())
     },
     setTotalOption() {
-      const totalOption = getTotalOption(this.buildItems(), this.buildItems().synergy)
+      const totalOption = getTotalOption(this.buildItems(), [...this.buildItems().synergy, this.buildItems().combi])
       this.editItemBuildData({
         keyName: 'totalOption',
         data: totalOption
@@ -333,6 +336,13 @@ export default {
         this.editItemBuildData({
           keyName: 'synergy',
           data: synergy
+        })
+      }
+      if(item.type === 'colleague') {
+        const combi = getCharacterCombi(this.buildItems().colleague, this.colleagues)
+        this.editItemBuildData({
+          keyName: 'combi',
+          data: combi
         })
       } 
       this.setTotalOption()

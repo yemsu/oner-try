@@ -139,6 +139,8 @@ export default {
 
 <style lang="scss" scoped>
 .badges.position-inner {
+  flex-wrap: nowrap;
+  gap: 0;
   position: absolute;
   right: 0;
   bottom: 0;
