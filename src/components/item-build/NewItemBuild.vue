@@ -78,7 +78,7 @@
                 :option-menus="itemFilterOptions"
                 :has-click-event="true"
                 :table-min-width="getTableMinWidth(activeTab.type)"
-                @click="(item) => selectItem(item.id)"
+                @click="(item) => selectItem(item)"
                 size="small"
               />
             </template>
@@ -134,7 +134,7 @@ export default {
       equipmentsTable: 'item/getEquipmentsTable',
       sailorsSynergy: 'item/getSailorsSynergy',
       shipsTable: 'item/getShipsTable',
-      colleagues: 'item/getColleagues',
+      colleaguesCombi: 'item/getColleaguesCombi',
       synergies: 'item/getSynergies',
       isLogin: 'auth/getIsLogin',
       itemBuild: 'itemBuild/getItemBuild',
@@ -153,7 +153,7 @@ export default {
     if(this.equipmentsTable.length === 0) await this.getEquipmentsTable()
     if(this.sailorsSynergy.length === 0) await this.getSailorsSynergy()
     if(this.shipsTable.length === 0) await this.getShipsTable()
-    if(this.colleagues.length === 0) await this.getColleagues()
+    if(this.colleaguesCombi.length === 0) await this.getColleaguesCombi()
     if(this.heroes.length === 0) await this.getHeroes()
     if(this.synergies.length === 0) await this.getSynergies()
     const pureHeroes = this.heroes.filter(({name}) => !name.includes('(스킨)'))
@@ -207,7 +207,7 @@ export default {
       getEquipmentsTable: 'item/GET_EQUIPMENTS_TABLE',
       getSailorsSynergy: 'item/GET_SAILORS_SYNERGY',
       getShipsTable: 'item/GET_SHIPS_TABLE',
-      getColleagues: 'item/GET_COLLEAGUES',
+      getColleaguesCombi: 'item/GET_COLLEAGUES_COMBI',
       getSynergies: 'item/GET_SYNERGIES',
       saveItemBuild: 'itemBuild/POST_ITEM_BUILD',
       editItemBuild: 'itemBuild/PUT_ITEM_BUILD',
@@ -254,7 +254,8 @@ export default {
       this.searchBoxFullData = this.items.filter((item) => item.type !== 'etcItem')
     },
     selectItem({ id: itemId }) {
-      const item = [...this.items, ...this.colleagues].find((item) => item.id === itemId)
+      const item = [...this.items, ...this.colleaguesCombi].find((item) => item.id === itemId)
+      console.log('selectItem', item)
       if(!canEnhance(item) || this.selectedItem?.id === itemId) {
         this.addItem(null, item)
         return
@@ -339,7 +340,7 @@ export default {
         })
       }
       if(item.type === 'colleague') {
-        const combi = getCharacterCombi(this.buildItems().colleague, this.colleagues)
+        const combi = getCharacterCombi(this.buildItems().colleague, this.colleaguesCombi)
         this.editItemBuildData({
           keyName: 'combi',
           data: combi
@@ -450,7 +451,7 @@ export default {
         case 'ship':
           return JSON.stringify(this.shipsTable)
         case 'colleague':
-          return JSON.stringify(this.colleagues)
+          return JSON.stringify(this.colleaguesCombi)
       }
     },
     getTableMinWidth(type) {
@@ -458,8 +459,8 @@ export default {
         case 'equipment':
           return '500px'
         case 'sailor':
-          return '650px'
         case 'colleague':
+          return '650px'
         case 'ship':
           return '300px'
       }
@@ -518,12 +519,16 @@ export default {
             {
               title: '동료',
               type: 'item',
-              width: '40%'
+              width: '16%'
             },
             {
               title: '옵션',
               type: 'option',
-              width: '%'
+              width: '30%'
+            },
+            {
+              title: '콤비',
+              type: 'synergy',
             },
           ]
         case 'ship':
