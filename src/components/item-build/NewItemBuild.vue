@@ -78,7 +78,7 @@
                 :option-menus="itemFilterOptions"
                 :has-click-event="true"
                 :table-min-width="getTableMinWidth(activeTab.type)"
-                @click="(item) => selectItem(item.id)"
+                @click="(item) => selectItem(item)"
                 size="small"
               />
             </template>
@@ -255,6 +255,7 @@ export default {
     },
     selectItem({ id: itemId }) {
       const item = [...this.items, ...this.colleagues].find((item) => item.id === itemId)
+      console.log('selectItem', item)
       if(!canEnhance(item) || this.selectedItem?.id === itemId) {
         this.addItem(null, item)
         return
