@@ -28,7 +28,8 @@
                   :line="badge.line"
                   :size="size === 'small' ? 'xxsmall' : 'xsmall'"
                 >
-                  {{ badge.text }}
+                  {{ badge.emoji }}
+                  <template v-if="size !== 'small'">{{ badge.text }}</template>
                 </element-badge>
               </template>
             </div>

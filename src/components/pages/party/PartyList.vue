@@ -48,11 +48,13 @@
               text: `${roomType.name}`,
               badges: [
                 {
-                  text: isNeedHelper ? '🐣 헬퍼 요청' : null,
+                  emoji: '🐣',
+                  text: isNeedHelper ? '헬퍼 요청' : null,
                   line: 'needHelper'
                 },
                 {
-                  text: isAllowBeginner ? '🌱 초보 가능' : null,
+                  emoji: '🌱',
+                  text: isAllowBeginner ? '초보 가능' : null,
                   line: 'allowBeginner'
                 }
               ]
