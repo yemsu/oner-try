@@ -484,10 +484,13 @@ export default {
       if(this.refreshTrigger) this.refreshTrigger = false
       await this.getChatRoom(this.chatRoom.id)
       const hostMember = this.chatRoom.members.find(({ nickname }) => nickname === this.chatRoom.host)
+      const newHostName = this.memberNicks[0]
       if(!hostMember) {
-        this.changeHost(this.memberNicks[0])
+        this.onEditChatRoom({
+          host: newHostName
+        }, false)
         this.sendMessage({
-          message: `${this.CHANGE_HOST_MESSAGE}${this.memberNicks[0]}`
+          message: `${this.CHANGE_HOST_MESSAGE}${newHostName}`
         }, false)
       }
       this.setToastMessage(this.$ALERTS.REFRESH_SUCCESS)
