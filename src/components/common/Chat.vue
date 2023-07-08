@@ -37,7 +37,7 @@ export default {
       ONER_TRY_CHAT_REFRESH: 'ONER_TRY_CHAT_REFRESH',
       TITLE_EDIT_MESSAGE: '%TITLE_EDIT_MESSAGE%',
       KICK_OUT_MESSAGE: '%KICK_OUT_MESSAGE%',
-      MEMBER_CHANGE_PEERID_MESSAGE: '%MEMBER_CHANGE_PEERID_MESSAGE%',
+      CHANGE_HOST_MESSAGE: '%CHANGE_HOST_MESSAGE%',
       isMemberKickedOut: false,
       refreshTrigger: null,
       reOpeningMember: null
@@ -271,6 +271,13 @@ export default {
         this.receiveKickOutMsg(memberName)
         return 
       }
+      if(message.includes(this.CHANGE_HOST_MESSAGE)) {
+        const newHostName = message.split(this.CHANGE_HOST_MESSAGE)[1]
+        this.changeChatRoomState({
+          host: newHostName
+        })
+        return 
+      }
       this.pushChatMessage(memberNick, message)
       this.beepReceiveMessage('jigun')
     },
@@ -476,8 +483,12 @@ export default {
       // 채팅방 버그 걸렸을 경우 고려하여 새로고침 버튼 추가
       if(this.refreshTrigger) this.refreshTrigger = false
       await this.getChatRoom(this.chatRoom.id)
-      if(this.chatRoom.members.length === 1 && this.chatRoom.host !== this.nickname) {
-        this.changeHost(this.nickname)
+      const hostMember = this.chatRoom.members.find(({ nickname }) => nickname === this.chatRoom.host)
+      if(!hostMember) {
+        this.changeHost(this.memberNicks[0])
+        this.sendMessage({
+          message: `${this.CHANGE_HOST_MESSAGE}${this.memberNicks[0]}`
+        }, false)
       }
       this.setToastMessage(this.$ALERTS.REFRESH_SUCCESS)
       this.setToastOn(true)
