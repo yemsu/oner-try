@@ -55,7 +55,7 @@ export const actions = {
     return getUserCharacters(payload)
       .then((data) => {
         if(!data) return false
-        const newData = data.map(character => {
+        const newData = data.map((character, i) => {
           // hero
           const heroData = findData(rootState.item.heroes, 'name', character.heroName)
           const hero = heroData ? deepClone(heroData) : {id: character.heroName}
@@ -84,11 +84,18 @@ export const actions = {
           const characterCombi = getCharacterCombi(colleague, rootState.item.colleagues)
           console.log("characterCombi", characterCombi)
           const totalOption = getTotalOption(character, [...characterSynergies, characterCombi])
-
+          // staff에게만 노출되는 인벤토리
+          const inventory = fillDataAndInsertValue(
+            rootState.item.items,
+            parserStrData(character.inventory.join(',')),
+            'stack',
+            true
+          )
           return Object.assign(character, { 
             totalOption,
             synergy: characterSynergies,
-            combi: characterCombi
+            combi: characterCombi,
+            inventory
           })
         })
         
