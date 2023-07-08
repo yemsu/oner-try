@@ -155,6 +155,7 @@ export default {
         })
       } else {
         this.hereIAm()
+        this.checkNoHost()
       }
 
       if(this.chatRoom.members.length > 0) {      
@@ -186,7 +187,6 @@ export default {
       })
     },
     async hereIAm() {
-
       const { error } = await this.postMember({
         chatRoomId: this.chatRoom.id,
         peerId: this.peerId
@@ -484,22 +484,25 @@ export default {
       // 채팅방 버그 걸렸을 경우 고려하여 새로고침 버튼 추가
       if(this.refreshTrigger) this.refreshTrigger = false
       await this.getChatRoom(this.chatRoom.id)
-      const hostMember = this.chatRoom.members.find(({ nickname }) => nickname === this.chatRoom.host)
-      const newHostName = this.memberNicks[0]
-      if(!hostMember) {
-        this.onEditChatRoom({
-          host: newHostName
-        }, false)
-        this.sendMessage({
-          message: `${this.CHANGE_HOST_MESSAGE}${newHostName}`
-        }, false)
-      }
+      this.checkNoHost()
       this.setToastMessage(this.$ALERTS.REFRESH_SUCCESS)
       this.setToastOn(true)
       setTimeout(() => {
         this.refreshTrigger = true
       }, 500);
-    }
+    },
+    checkNoHost() {
+      const hostMember = this.chatRoom.members
+        .find(({ nickname }) => nickname === this.chatRoom.host)
+      if(hostMember) return
+      const newHostName = this.memberNicks[0]
+      this.onEditChatRoom({
+        host: newHostName
+      }, false)
+      this.sendMessage({
+        message: `${this.CHANGE_HOST_MESSAGE}${newHostName}`
+      }, false)
+    },
   },
 }
 </script>
