@@ -28,11 +28,12 @@
               :key="`user${i}`"
             >
               <td class="rank">
-                <span :class="`rank-title type-${getRankInfo(i).index}`" v-if="i <= 11 && selectedHero === 'all'">
+                <!-- 랭킹 비시즌으로 랭킹 마크 비노출 처리 -->
+                <!-- <span :class="`rank-title type-${getRankInfo(i).index}`" v-if="i <= 11 && selectedHero === 'all'">
                   <span class="skull">☠</span>
                   {{ getRankInfo(i).title }}
-                </span>
-                <span class="number-rank" v-else>{{ i + 1 }}</span>
+                </span> -->
+                <span class="number-rank">{{ i + 1 }}</span>
               </td>
               <td class="thumb-hero">
                 <item-box
