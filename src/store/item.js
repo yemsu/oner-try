@@ -1,5 +1,5 @@
 import { isSameText, deepClone } from '@/plugins/utils'
-import { parserStrData, sortByGrade } from '@/plugins/utils/item'
+import { parserStrData, sortByGrade, parserGradeOption } from '@/plugins/utils/item'
 import { equipmentGradeTypes, equipmentGradeTypeExceptions, EquipmentGradeScoresDef } from '@/plugins/utils/item-def'
 import { getColleagueCombiObj } from '@/plugins/utils/character'
 import {
@@ -106,7 +106,10 @@ export const actions = {
       .then((data) => {
         const newData = data
           .map(dataItem => (
-            Object.assign(dataItem, {option: parserStrData(dataItem.option)})
+            Object.assign(dataItem, {
+              option: parserStrData(dataItem.option),
+              gradeOption: parserGradeOption(dataItem.gradeOption)
+            })
           ))
           .filter(checkNoOptionSailor)
         commit(`SET_ITEMS`, {data: dataTyped(newData), type: 'items'})
@@ -180,10 +183,11 @@ export const actions = {
         const newData = data.map(dataItem => {
           const { option, gradeOption } = dataItem
           const optionObj = {option: parserStrData(option)}
-          // const gradeOptionObj = gradeOption
-          //   ? {gradeOption: parserStrData(gradeOption)}
-          //   : null
-          return Object.assign(dataItem, {...optionObj, gradeOption})
+          const gradeOptionObj = parserGradeOption(gradeOption)
+          return Object.assign(dataItem, {
+            ...optionObj,
+            gradeOption: gradeOptionObj
+          })
         })
         const sortData = newData.sort((a, b) => {
           const gradeScore = data => EquipmentGradeScoresDef[data.grade]

@@ -25,6 +25,11 @@ table {
     .many-text {
       padding: 10px 0 15px;
     }
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
   }
   th, td {
     &.text-center {

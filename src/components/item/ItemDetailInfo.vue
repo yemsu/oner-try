@@ -27,7 +27,14 @@
     </template>
     <div v-if="showGradeOption && item.gradeOption" class="wrap-detail grade-option">
       <dt :class="['title', {'color-point': highlightTitle}]">추가 옵션</dt>
-      <dd>{{ item.gradeOption }}</dd>
+      <div class="grade-options">
+        <dd
+          v-for="(gradeOption, i) in item.gradeOption"
+          :key="`gradeOption${i}`"
+        >
+          {{ gradeOption }}
+        </dd>
+      </div>
     </div>
   </dl>
 </template>

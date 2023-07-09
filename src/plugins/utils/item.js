@@ -116,3 +116,11 @@ export const itemFilterOptions = (itemGradeArr, optionsObj) => {
     optionMenus
   }
 }
+export const parserGradeOption = (gradeOption) => {
+  if(!gradeOption) return null
+  return gradeOption
+    .replace(/(\, \[)|(\,\[)/g, ' [')
+    .replace(/ \[/g, ', [')
+    .replace(/\]/g, '] ')
+    .split(', ')
+}
