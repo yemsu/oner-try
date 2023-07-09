@@ -32,11 +32,6 @@ $name-space: 5px;
       margin-top: 12px;
     }
   }
-  .wrap-info {
-    @include pc {
-      width: 100%;
-    }
-  }
   .item-box-info {
     display: block;
     .area-img {
@@ -215,41 +210,9 @@ $name-space: 5px;
 
 .box-item {
   position: relative;
-  .wrap-info:hover ~ .tooltip {
-    display: block;
-  }
   .area-detail {
     padding: 5px;
     white-space: nowrap;
-  }
-  .tooltip {
-    $tooltip-bg: var(--bg-tooltip-dim);
-    display: none;
-    position: absolute;
-    z-index: 2;
-    top: 5px;
-    right: 0;
-    background-color: $tooltip-bg;
-    text-align: left;
-    transform: translateX(100%);
-    .tooltip-title {
-      font-size: var(--font-size-S);
-    }
-    &:before {
-      display: block;
-      position: absolute;
-      top: 5px;
-      left: 0px;
-      width: 0;
-      height: 0;
-      border-width: 5px 6px 5px 0;
-      border-style: solid;
-      border-color: $tooltip-bg;
-      border-top-color: transparent;
-      border-bottom-color: transparent;
-      transform: translate(-100%, 0);
-      content: '';
-    }
   }
 }
 .wrap-sub-text {
