@@ -33,4 +33,9 @@
       }
     }
   }
+  .inventory {
+    .column-5 {
+      grid-template-columns: repeat(5, 55px);
+    }
+  }
 }
