@@ -4,6 +4,13 @@
   .title {
     word-break: keep-all;
   }
+  dt {
+    flex-shrink: 0;
+  }
+  dd {
+    flex: 1;
+    text-align: left;
+  }
   &.type {
     &-basic {
       > .wrap-detail {

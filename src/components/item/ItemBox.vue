@@ -10,70 +10,74 @@
       {'no-padding': !padding},
     ]">
     <template v-if="item">
-      <nuxt-link
-        class="wrap-info"
-        :to="useLink && linkItemComposition()"
-        :target="linkTarget"
-        :is="linkTagName"
-        :title="linkTitle || (useLink && noTooltip && '클릭하여 조합 보러가기')"
+      <common-tooltip-wrap
+        :link-to="useLink && linkItemComposition()"
+        :link-target="linkTarget"
+        :link-tag-name="linkTagName"
+        :link-title="linkTitle || (useLink && noTooltip && '클릭하여 조합 보러가기')"
+        :no-tooltip-data="noTooltip"
+        :default-visible="visibleDetail"
         @click="$emit('click', item.name)"
       >
-        <div class="item-box-info">
-          <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
-          <div class="area-img">
-            <item-image 
-              :item="item"
-              :img-type="imgType"
-              :isNoDataItem="isNoDataItem"
-              :size="size"
-              :isComp="isComp"
-              :isLink="false"
-            />
-            <item-badges
-              v-if="showItemBadges"
-              :item="item"
-              :wantedPaper="wantedPaper"
-              :showBadges="showBadges"
-              :customBadge="customBadge"
-              :innerPosition="true"
-            />
+        <template v-slot:tooltipButton>
+          <div class="item-box-info">
+            <img v-if="wantedPaper" src="@/assets/images/wanted-text.png" class="img-wanted" alt="WANTED">
+            <div class="area-img">
+              <item-image 
+                :item="item"
+                :img-type="imgType"
+                :isNoDataItem="isNoDataItem"
+                :size="size"
+                :isComp="isComp"
+                :isLink="false"
+              />
+              <item-badges
+                v-if="showItemBadges"
+                :item="item"
+                :wantedPaper="wantedPaper"
+                :showBadges="showBadges"
+                :customBadge="customBadge"
+                :innerPosition="true"
+              />
+            </div>
+            <div
+              v-if="!wantedPaper && showName"
+              class="area-name"
+            >
+              <p class="name"><span class="text">{{ item.name }}</span></p>
+              <bookmark-button
+                v-if="useBookmark"
+                category="item"
+                :target="item.id"
+              />
+            </div>
+            <p v-if="wantedName" class="nick-wanted">{{ wantedName }}</p>
+            <p v-if="wantedPaper && showBounty" class="bounty"><span class="text">$ {{ item.bounty.toLocaleString() || 0 }}</span></p>
           </div>
-          <div
-            v-if="!wantedPaper && showName"
-            class="area-name"
-          >
-            <p class="name"><span class="text">{{ item.name }}</span></p>
-            <bookmark-button
-              v-if="useBookmark"
-              category="item"
-              :target="item.id"
+        </template>
+        <template v-slot:tooltip>
+          <!-- tooltip -->
+          <div class="area-detail">
+            <p v-if="!visibleDetail && !showName" class="tooltip-title">{{ item.name }}</p>
+            <item-detail-info 
+              :colorMode="visibleDetail ? 'black' : 'white'"
+              size="small"
+              :options="item.option"
+              :dropMonster="item.dropMonster"
+              :type="itemDetailInfoType"
+              :item="item"
+              :description="item.description"
+              :show-grade-option="true"
             />
+            <div v-if="!visibleDetail && isComp && isLink" class="wrap-sub-text">
+              <p class="color-neon">
+                <small>클릭하여 조합 보러가기 </small>
+                <i class="icon-arrow right x-small border-neon" />
+              </p>
+            </div>
           </div>
-          <p v-if="wantedName" class="nick-wanted">{{ wantedName }}</p>
-          <p v-if="wantedPaper && showBounty" class="bounty"><span class="text">$ {{ item.bounty.toLocaleString() || 0 }}</span></p>
-        </div>
-      </nuxt-link>
-      
-      <!-- tooltip -->
-      <div v-if="!noTooltip" :class="[{'tooltip': !visibleDetail}, 'area-detail']">
-        <p v-if="!visibleDetail && !showName" class="tooltip-title">{{ item.name }}</p>
-        <item-detail-info 
-          :colorMode="visibleDetail ? 'black' : 'white'"
-          size="small"
-          :options="item.option"
-          :dropMonster="item.dropMonster"
-          :type="itemDetailInfoType"
-          :item="item"
-          :description="item.description"
-          :show-grade-option="true"
-        />
-        <div v-if="!visibleDetail && isComp && isLink" class="wrap-sub-text">
-          <p class="color-neon">
-            <small>클릭하여 조합 보러가기 </small>
-            <i class="icon-arrow right x-small border-neon" />
-          </p>
-        </div>
-      </div>
+        </template>
+      </common-tooltip-wrap>
     </template>
     <item-image v-else :item="item" :size="size" :img-type="imgType" />
   </div>
