@@ -491,6 +491,7 @@ export default {
       }, 500);
     },
     checkNoHost() {
+      if(this.chatRoom.members.length === 0) return
       const hostMember = this.chatRoom.members
         .find(({ nickname }) => nickname === this.chatRoom.host)
       if(hostMember) return
