@@ -160,7 +160,7 @@
                     <dd>{{ gradeOptionItem }}</dd>
                   </div>
                 </dl>
-                <ul v-else-if="data.type === 'gradeOption'">
+                <ul v-else-if="data.type === 'gradeOption'" class="list-grade-option">
                   <li
                     v-for="(gradeOption, i) in item.gradeOption"
                     :key="`gradeOption${i}`"
