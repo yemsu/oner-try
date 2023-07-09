@@ -54,7 +54,6 @@
       }
       @include mobile {
         position: relative;
-        top: var(--header-height);
         .side_fix_left {
           width: 100%;
           min-height: 80px;
