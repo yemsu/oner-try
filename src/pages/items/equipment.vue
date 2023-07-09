@@ -56,7 +56,7 @@ export default {
         },
         {
           title: '추가 옵션',
-          type: 'string',
+          type: 'gradeOption',
           key: 'gradeOption',
           width: '32%'
         },
