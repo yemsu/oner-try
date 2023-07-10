@@ -100,7 +100,8 @@ export const actions = {
     return true
   },
   async PUT_ITEM_BUILD({ commit, rootState, dispatch }, itemBuild) {
-    if(rootState.heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
+    console.log('rootState', rootState)
+    if(rootState.heroes?.length === 0) await dispatch('item/GET_HEROES','', { root: true })
     const res = await putItemBuild(itemBuild)
     if(!res) {
       alert(ALERTS.ITEM_SETTING.EDIT_SAVE_FAIL)
