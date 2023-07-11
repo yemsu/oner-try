@@ -32,6 +32,12 @@ export const gradesDef = {
   magic: '주문',
   dedicated: '전용무기',
 }
+export const requiredIngrStackDef = {
+  common: null,
+  uncommon: 10,
+  rare: 30,
+  unique: 40
+}
 export const sailorGrades = ['special', 'uncommon', 'common']
 export const equipmentGrades = ['eternal', 'legend', 'magic',  'normal', 'dedicated']
 export const gradeScoresDef = {

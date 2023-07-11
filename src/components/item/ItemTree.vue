@@ -3,8 +3,14 @@
     <div class="area-tree" v-show="item.ingredients">
       <div class="text-refer top inner-size-basic">
         <h4 class="title">조합 트리</h4>
-        <p class="text-notice">
-          <strong>* 재료로 사용되는 <span class="text-marking">선원의 강화 요구 수치는 10</span> 입니다.</strong> (강화에 필요한 비브르카드 개수는 조합법에 포함되어 있지 않습니다.)
+        <p v-if="requiredIngrStack(item.grade)" class="text-notice">
+          <strong>
+            * 재료로 사용되는 
+            <span class="text-marking">
+              선원의 강화 요구 수치는 {{ requiredIngrStack(item.grade) }}
+            </span> 입니다.
+          </strong>
+          (강화에 필요한 비브르카드 개수는 조합법에 포함되어 있지 않습니다.)
         </p>
         <div class="align-right">
           <element-button
@@ -67,6 +73,7 @@
 
 <script>
 import ItemTreeDepth from '@/components/item/ItemTreeDepth.vue'
+import { requiredIngrStackDef } from '@/plugins/utils/item-def.js'
 
 export default {
   components: {
@@ -123,6 +130,10 @@ export default {
       const d2Ingredients = item.ingredients.map(itemD1 => itemD1.ingredients)
       const result = [...new Set(d2Ingredients)]
       return !(result.length === 1 && !result[0])
+    },
+    requiredIngrStack(grade) {
+      console.log('grade', grade, requiredIngrStackDef[grade])
+      return requiredIngrStackDef[grade]
     }
   }
 }
