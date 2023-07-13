@@ -174,7 +174,7 @@
                 </span>
                 <!-- string -->
                 <span v-if="data.type === 'string'">
-                  {{ item[data.key] }}
+                  {{ item[data.key] || '-'}}
                 </span>
               </td>
             </template>
