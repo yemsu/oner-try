@@ -70,9 +70,7 @@ export default {
   },
   methods: {
     showTooltip(e) {
-      console.log('showtooltip', window.innerWidth, e.clientX, e.currentTarget)
-
-      this.isOnRight = (window.innerWidth - e.clientX) < 300
+      this.isOnRight = (window.innerWidth - e.clientX) < (window.innerWidth / 3)
       this.isVisibleTooltip = true
     },
     hideTooltip(e) {
