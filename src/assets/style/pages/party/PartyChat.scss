@@ -95,9 +95,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--lighter-10);
-    &.bottom {
-      background-color: var(--color-white);
+    background-color: var(--color-white);
+    &:nth-child(n+2) {
+      border-left: 1px solid var(--border-gray);
     }
     > button {
       flex-grow: 1;
@@ -153,10 +153,10 @@
     .party-chat-top {
       overflow: hidden;
       padding: 6px 6px 0;
-      background-color: var(--lighter-10);
+      background-color: var(--lighter-20);
       border-top-right-radius: 10px;
       border-top-left-radius: 10px;
-      backdrop-filter: blur(3px);
+      backdrop-filter: blur(4px);
       .area-page-title {
         margin-bottom: 0;
         .page-title {
