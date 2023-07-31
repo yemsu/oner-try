@@ -143,7 +143,7 @@ export default {
       const isRefresh = !nickName
       nickName = nickName || this.userNick
       this.setIsLoading(true)
-      const result = await this.getUserCharacters({ nickName })
+      const result = await this.getUserCharacters({ nickName: encodeURIComponent(nickName) })
       if(!result) {
         this.handlerNoData()
         return
