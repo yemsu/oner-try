@@ -10,8 +10,8 @@
           title="점검 중입니다.🧐"
           :point-text="pageError.statusCode"
         >
-          파티모집 장애로 인한 점검 중입니다!<br>
-          15~30분 소요될 예정입니다. (9:00~)
+          점검 중입니다!<br>
+          약 20분 소요될 예정입니다. (9:00~)
         </common-main-notice>
       </template>
       <template v-else-if="pageError.statusCode === 404">
