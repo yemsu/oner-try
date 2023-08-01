@@ -4,7 +4,7 @@
       text="📢 23.07.31 화요일 오전 10시에 점검이 있을 예정입니다. (약 20분 소요 예정)<br> 점검 이후 파티 모집 방이 초기화되니 사이트 이용에 참고해주시기 바랍니다. "
     /> -->
     <layout-header />
-    <error v-if="true"></error>
+    <error v-if="false"></error>
     <template v-else>
       <common-party-list-floating
         v-if="showPartyListFloating"
