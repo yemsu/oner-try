@@ -160,13 +160,21 @@
                     <dd>{{ gradeOptionItem }}</dd>
                   </div>
                 </dl>
+                <ul v-else-if="data.type === 'gradeOption'" class="list-grade-option">
+                  <li
+                    v-for="(gradeOption, i) in item.gradeOption"
+                    :key="`gradeOption${i}`"
+                  >
+                    {{ gradeOption }}
+                  </li>
+                </ul>
                 <!-- string -->
                 <span v-else-if="data.type === 'grade'">
                   {{ getGradeName(item.grade) }}
                 </span>
                 <!-- string -->
                 <span v-if="data.type === 'string'">
-                  {{ item[data.key] }}
+                  {{ item[data.key] || '-'}}
                 </span>
               </td>
             </template>

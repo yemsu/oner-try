@@ -118,10 +118,14 @@ export const actions = {
       return false
     }
 
-    const resultHasMembers = result
+    const newData = result
       .filter(({members}) => members && members.length)
+      .map(chatRoom => ({
+        ...chatRoom,
+        members: chatRoom.members.filter(member => !checkAdmin(member.nickname))
+      }))
 
-    commit('SET_CHAT_ROOMS', resultHasMembers)
+    commit('SET_CHAT_ROOMS', newData)
     return result
   },
   async GET_CHAT_ROOM({ commit }, queryId) {

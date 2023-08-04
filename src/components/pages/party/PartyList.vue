@@ -48,11 +48,13 @@
               text: `${roomType.name}`,
               badges: [
                 {
-                  text: isNeedHelper ? '🐣 헬퍼 요청' : null,
+                  emoji: '🐣',
+                  text: isNeedHelper ? '헬퍼 요청' : null,
                   line: 'needHelper'
                 },
                 {
-                  text: isAllowBeginner ? '🌱 초보 가능' : null,
+                  emoji: '🌱',
+                  text: isAllowBeginner ? '초보 가능' : null,
                   line: 'allowBeginner'
                 }
               ]
@@ -72,6 +74,7 @@
 import CardListContent from '@/components/common/CardListContent.vue'
 import InfiniteList from '@/components/common/InfiniteList.vue';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { checkAdmin } from '@/plugins/utils/index.js'
 
 export default {
   components: {
@@ -160,7 +163,7 @@ export default {
         this.setIsMinimize(false)
         return
       }
-      if(isFull) {
+      if(isFull && !checkAdmin(this.nickname)) {
         this.setToastMessage(this.$ALERTS.CHAT.PARTY_FULL)
         this.setToastOn(true)
         this.refreshData()

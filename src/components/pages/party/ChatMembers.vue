@@ -18,7 +18,12 @@
           <span class="member-emoji">
             {{ memberNick === chatRoom.host ? '👑' : '😊' }}
           </span>
-          {{ memberNick }}
+          <nuxt-link
+            :to="`/character/result?nickname=${memberNick}`"
+            title="캐릭터 보기"
+          >
+            {{ memberNick }}
+          </nuxt-link>
           <template v-if="!isMinimize">
             <!-- <span
               v-if="disconnectedMembers.includes(memberPeerId)"
@@ -174,7 +179,7 @@ export default {
       }
     }
   }
-  .me {
+  .me a {
     color: var(--color-point);
     font-weight: $font-weight-500;
   }

@@ -130,7 +130,7 @@ export default {
   methods: {
     showBadge(type) {
       const showBadge = this.showBadges.includes(type)
-      if(type === 'stack') return canEnhance(this.item) && showBadge
+      if(type === 'stack') return this.item.stack > 0 || canEnhance(this.item) && showBadge
       return showBadge
     }
   }
@@ -139,6 +139,8 @@ export default {
 
 <style lang="scss" scoped>
 .badges.position-inner {
+  flex-wrap: nowrap;
+  gap: 0;
   position: absolute;
   right: 0;
   bottom: 0;

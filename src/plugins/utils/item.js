@@ -13,7 +13,7 @@ export const imgSrc = (type, imageName) => {
   return `${uri}/${type}/${imageName}.png`
 }
 export const getGradeScore = (key) => {
-  return gradeScoresDef[key]
+  return gradeScoresDef[key] || key
 }
 export const sortByGrade = (items) => {
   return items.sort((a, b) => getGradeScore(b.grade) - getGradeScore(a.grade))
@@ -115,4 +115,12 @@ export const itemFilterOptions = (itemGradeArr, optionsObj) => {
     gradeMenus,
     optionMenus
   }
+}
+export const parserGradeOption = (gradeOption) => {
+  if(!gradeOption) return null
+  return gradeOption
+    .replace(/(\, \[)|(\,\[)/g, ' [')
+    .replace(/ \[/g, ', [')
+    .replace(/\]/g, '] ')
+    .split(', ')
 }

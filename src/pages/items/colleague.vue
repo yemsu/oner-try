@@ -5,7 +5,7 @@
       :items="colleagues"
       :option-menus="optionMenus"
       :table-info="tableInfo"
-      table-min-width="600px"
+      table-min-width="800px"
     />
   </section>
 </template>
@@ -28,7 +28,7 @@ export default {
     ItemFilterTable
   },
   async asyncData({ store }) {
-    const colleagues = await store.dispatch('item/GET_COLLEAGUES')
+    const colleagues = await store.dispatch('item/GET_COLLEAGUES_COMBI')
     const { optionMenus } = itemFilterOptions(null, noEquipOptions)
     return {
       colleagues,
@@ -41,17 +41,22 @@ export default {
         {
           title: '동료',
           type: 'item',
-          width: '24%'
+          width: '16%'
         },
         {
           title: '옵션',
           type: 'option',
-          width: '28%'
+          width: '22%'
         },
         {
           title: '획득처',
           type: 'string',
           key: 'dropMonster',
+        },
+        {
+          title: '콤비',
+          type: 'synergy',
+          width: '40%'
         },
       ],
     }

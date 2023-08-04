@@ -37,7 +37,7 @@ export default {
       ONER_TRY_CHAT_REFRESH: 'ONER_TRY_CHAT_REFRESH',
       TITLE_EDIT_MESSAGE: '%TITLE_EDIT_MESSAGE%',
       KICK_OUT_MESSAGE: '%KICK_OUT_MESSAGE%',
-      MEMBER_CHANGE_PEERID_MESSAGE: '%MEMBER_CHANGE_PEERID_MESSAGE%',
+      CHANGE_HOST_MESSAGE: '%CHANGE_HOST_MESSAGE%',
       isMemberKickedOut: false,
       refreshTrigger: null,
       reOpeningMember: null
@@ -155,6 +155,7 @@ export default {
         })
       } else {
         this.hereIAm()
+        this.checkNoHost()
       }
 
       if(this.chatRoom.members.length > 0) {      
@@ -186,7 +187,6 @@ export default {
       })
     },
     async hereIAm() {
-
       const { error } = await this.postMember({
         chatRoomId: this.chatRoom.id,
         peerId: this.peerId
@@ -269,6 +269,13 @@ export default {
       if(message.includes(this.KICK_OUT_MESSAGE)) {
         const memberName = message.split(this.KICK_OUT_MESSAGE)[1]
         this.receiveKickOutMsg(memberName)
+        return 
+      }
+      if(message.includes(this.CHANGE_HOST_MESSAGE)) {
+        const newHostName = message.split(this.CHANGE_HOST_MESSAGE)[1]
+        this.changeChatRoomState({
+          host: newHostName
+        })
         return 
       }
       this.pushChatMessage(memberNick, message)
@@ -409,9 +416,10 @@ export default {
       }
       if(error.type === 'network') {
         console.log("채팅 서버와 연결이 끊겼습니다!\n파티에서 제외됩니다. 재입장 해주세요.")
+        alert("채팅 서버와 연결이 끊겼습니다! \n파티에서 제외됩니다. 재입장 해주세요.")
         console.log("network", this.peer?.destroyed, this.peer?.disconnected)
-        // this.onUnload()
-        this.recreatePeer()
+        this.onUnload()
+        // this.recreatePeer()
         return
       }
       if(error.type === 'peer-unavailable') {
@@ -476,15 +484,26 @@ export default {
       // 채팅방 버그 걸렸을 경우 고려하여 새로고침 버튼 추가
       if(this.refreshTrigger) this.refreshTrigger = false
       await this.getChatRoom(this.chatRoom.id)
-      if(this.chatRoom.members.length === 1 && this.chatRoom.host !== this.nickname) {
-        this.changeHost(this.nickname)
-      }
+      this.checkNoHost()
       this.setToastMessage(this.$ALERTS.REFRESH_SUCCESS)
       this.setToastOn(true)
       setTimeout(() => {
         this.refreshTrigger = true
       }, 500);
-    }
+    },
+    checkNoHost() {
+      if(this.chatRoom.members.length === 0) return
+      const hostMember = this.chatRoom.members
+        .find(({ nickname }) => nickname === this.chatRoom.host)
+      if(hostMember) return
+      const newHostName = this.memberNicks[0]
+      this.onEditChatRoom({
+        host: newHostName
+      }, false)
+      this.sendMessage({
+        message: `${this.CHANGE_HOST_MESSAGE}${newHostName}`
+      }, false)
+    },
   },
 }
 </script>

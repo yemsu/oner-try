@@ -27,7 +27,14 @@
     </template>
     <div v-if="showGradeOption && item.gradeOption" class="wrap-detail grade-option">
       <dt :class="['title', {'color-point': highlightTitle}]">추가 옵션</dt>
-      <dd>{{ item.gradeOption }}</dd>
+      <div class="grade-options">
+        <dd
+          v-for="(gradeOption, i) in item.gradeOption"
+          :key="`gradeOption${i}`"
+        >
+          {{ gradeOption }}
+        </dd>
+      </div>
     </div>
   </dl>
 </template>
@@ -102,9 +109,13 @@ export default {
   methods: {
     getOptionUnit(key) {
       if(this.isCharacterInfo) {
-        return key === '위험도' ? '/LV'
-          : key === '레일리' ? '단계'
-          : '/p'
+        switch(key) {
+          case '위험도': return '/LV'
+          case '레일리': return '단계'
+          case '성장': return '년 후'
+          case '버스터콜디펜드': return ''
+          default: return '/p'
+        }
       }
       const unit = noUnitOptions.includes(key) ? ''
         : key === 'aas' ? '/s'
@@ -134,7 +145,7 @@ export default {
       if(canEnhance(this.item)) return this.getRangeValue(option)
       if(!this.showValueDecimal) return value
 
-      const isIntType = ['위험도', '레일리'].includes(key)
+      const isIntType = ['위험도', '레일리', '성장', '버스터콜디펜드'].includes(key)
       const result = this.isCharacterInfo && !isIntType
         ? value.toFixed(2)
         : value

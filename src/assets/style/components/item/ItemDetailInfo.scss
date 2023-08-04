@@ -4,6 +4,13 @@
   .title {
     word-break: keep-all;
   }
+  dt {
+    flex-shrink: 0;
+  }
+  dd {
+    flex: 1;
+    text-align: left;
+  }
   &.type {
     &-basic {
       > .wrap-detail {
@@ -65,7 +72,7 @@
         }
       }
       @include pc {
-        padding: 10px 15px;
+        padding: 8px 15px;
       }
       @include mobile {
         padding: 10px;

@@ -78,7 +78,7 @@
                 :option-menus="itemFilterOptions"
                 :has-click-event="true"
                 :table-min-width="getTableMinWidth(activeTab.type)"
-                @click="(item) => selectItem(item.id)"
+                @click="(item) => selectItem(item)"
                 size="small"
               />
             </template>
@@ -98,7 +98,7 @@ import { itemTypeDefs, maxStack, slotNumbers, canEnhance, noEquipOptions, grades
 import ItemSearchBox from '@/components/item/ItemSearchBox.vue';
 import ItemFilterTable from '@/components/item/ItemFilterTable.vue';
 import { getTypeKorName } from '@/plugins/utils/item';
-import { getTotalOption, getCharacterSynergies } from '@/plugins/utils/character'
+import { getTotalOption, getCharacterSynergies, getCharacterCombi } from '@/plugins/utils/character'
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
@@ -134,7 +134,7 @@ export default {
       equipmentsTable: 'item/getEquipmentsTable',
       sailorsSynergy: 'item/getSailorsSynergy',
       shipsTable: 'item/getShipsTable',
-      colleagues: 'item/getColleagues',
+      colleaguesCombi: 'item/getColleaguesCombi',
       synergies: 'item/getSynergies',
       isLogin: 'auth/getIsLogin',
       itemBuild: 'itemBuild/getItemBuild',
@@ -153,7 +153,7 @@ export default {
     if(this.equipmentsTable.length === 0) await this.getEquipmentsTable()
     if(this.sailorsSynergy.length === 0) await this.getSailorsSynergy()
     if(this.shipsTable.length === 0) await this.getShipsTable()
-    if(this.colleagues.length === 0) await this.getColleagues()
+    if(this.colleaguesCombi.length === 0) await this.getColleaguesCombi()
     if(this.heroes.length === 0) await this.getHeroes()
     if(this.synergies.length === 0) await this.getSynergies()
     const pureHeroes = this.heroes.filter(({name}) => !name.includes('(스킨)'))
@@ -179,6 +179,7 @@ export default {
         ship: new Array(1),
         ryuo: new Array(1),
         synergy: [],
+        combi: [],
         totalOption: []
       })
     }
@@ -206,7 +207,7 @@ export default {
       getEquipmentsTable: 'item/GET_EQUIPMENTS_TABLE',
       getSailorsSynergy: 'item/GET_SAILORS_SYNERGY',
       getShipsTable: 'item/GET_SHIPS_TABLE',
-      getColleagues: 'item/GET_COLLEAGUES',
+      getColleaguesCombi: 'item/GET_COLLEAGUES_COMBI',
       getSynergies: 'item/GET_SYNERGIES',
       saveItemBuild: 'itemBuild/POST_ITEM_BUILD',
       editItemBuild: 'itemBuild/PUT_ITEM_BUILD',
@@ -227,6 +228,7 @@ export default {
         ship,
         ryuo,
         synergy,
+        combi,
         totalOption
       } = this.itemBuild
 
@@ -237,6 +239,7 @@ export default {
         ship,
         ryuo,
         synergy,
+        combi,
         totalOption,
       }
     },
@@ -250,8 +253,9 @@ export default {
     setSearchBoxFullData() {
       this.searchBoxFullData = this.items.filter((item) => item.type !== 'etcItem')
     },
-    selectItem(itemId) {
-      const item = [...this.items, ...this.colleagues].find((item) => item.id === itemId)
+    selectItem({ id: itemId }) {
+      const item = [...this.items, ...this.colleaguesCombi].find((item) => item.id === itemId)
+      console.log('selectItem', item)
       if(!canEnhance(item) || this.selectedItem?.id === itemId) {
         this.addItem(null, item)
         return
@@ -278,6 +282,7 @@ export default {
         selectedItem.stack = this.itemStack
       }
 
+      console.log('this.buildItems()[type]', item, this.selectedItem, selectedItem)
       let blankSlotIndex = 0
       for(const slot of this.buildItems()[type]) {
         if(!slot) break
@@ -320,7 +325,7 @@ export default {
       this.buildItemsString = JSON.stringify(this.buildItems())
     },
     setTotalOption() {
-      const totalOption = getTotalOption(this.buildItems(), this.buildItems().synergy)
+      const totalOption = getTotalOption(this.buildItems(), [...this.buildItems().synergy, this.buildItems().combi])
       this.editItemBuildData({
         keyName: 'totalOption',
         data: totalOption
@@ -332,6 +337,13 @@ export default {
         this.editItemBuildData({
           keyName: 'synergy',
           data: synergy
+        })
+      }
+      if(item.type === 'colleague') {
+        const combi = getCharacterCombi(this.buildItems().colleague, this.colleaguesCombi)
+        this.editItemBuildData({
+          keyName: 'combi',
+          data: combi
         })
       } 
       this.setTotalOption()
@@ -439,7 +451,7 @@ export default {
         case 'ship':
           return JSON.stringify(this.shipsTable)
         case 'colleague':
-          return JSON.stringify(this.colleagues)
+          return JSON.stringify(this.colleaguesCombi)
       }
     },
     getTableMinWidth(type) {
@@ -447,8 +459,8 @@ export default {
         case 'equipment':
           return '500px'
         case 'sailor':
-          return '650px'
         case 'colleague':
+          return '650px'
         case 'ship':
           return '300px'
       }
@@ -507,12 +519,16 @@ export default {
             {
               title: '동료',
               type: 'item',
-              width: '40%'
+              width: '16%'
             },
             {
               title: '옵션',
               type: 'option',
-              width: '%'
+              width: '30%'
+            },
+            {
+              title: '콤비',
+              type: 'synergy',
             },
           ]
         case 'ship':

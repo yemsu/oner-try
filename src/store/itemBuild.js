@@ -37,11 +37,13 @@ export const actions = {
   async GET_ITEM_BUILDS({ commit, rootState, dispatch }, {character, page, size}) {
     const { item } = rootState
     if(item.items.length === 0) await dispatch('item/GET_ITEMS','', { root: true })
+    if(item.colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
     if(item.synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
     if(item.heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
     const items = rootState.item.items
     const synergies = rootState.item.synergies
     const heroes = rootState.item.heroes
+    const colleagues = rootState.item.colleagues
 
     const data = await getItemBuilds({
       character: character,
@@ -55,24 +57,26 @@ export const actions = {
     }
 
     const newData = data.map(itemBuild => (
-      parseItemBuildData(itemBuild, items, synergies, heroes)
+      parseItemBuildData(itemBuild, items, synergies, heroes, colleagues)
     ))
     commit(`SET_ITEM_BUILDS`, newData)
   },
   async GET_ITEM_BUILD({ commit, rootState, dispatch }, id) {
     const { item } = rootState
     if(item.items.length === 0) await dispatch('item/GET_ITEMS','', { root: true })
+    if(item.colleagues.length === 0) await dispatch('item/GET_COLLEAGUES','', { root: true })
     if(item.synergies.length === 0) await dispatch('item/GET_SYNERGIES','', { root: true })
     if(item.heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
     const items = rootState.item.items
     const synergies = rootState.item.synergies
     const heroes = rootState.item.heroes
+    const colleagues = rootState.item.colleagues
     const data = await getItemBuild(id)
     if(!data) {
       alert(ALERTS.ITEM_SETTING.GET_FAIL)
       return false
     }
-    const newData = parseItemBuildData(data, items, synergies, heroes)
+    const newData = parseItemBuildData(data, items, synergies, heroes, colleagues)
 
     commit('SET_ITEM_BUILD', newData)
     return newData
@@ -96,7 +100,8 @@ export const actions = {
     return true
   },
   async PUT_ITEM_BUILD({ commit, rootState, dispatch }, itemBuild) {
-    if(rootState.heroes.length === 0) await dispatch('item/GET_HEROES','', { root: true })
+    console.log('rootState', rootState)
+    if(rootState.heroes?.length === 0) await dispatch('item/GET_HEROES','', { root: true })
     const res = await putItemBuild(itemBuild)
     if(!res) {
       alert(ALERTS.ITEM_SETTING.EDIT_SAVE_FAIL)

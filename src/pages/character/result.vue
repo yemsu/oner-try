@@ -15,8 +15,8 @@
       <div class="area-page-title underline">
         <h2 class="title badge-text-wrap">
           <i class="skull">☠</i>
-          {{ nickname }}
-          <span v-if="isBanUser(nickname)" class="badge banned size-big type-round">활동정지</span>
+          {{ userNick }}
+          <span v-if="isBanUser(userNick)" class="badge banned size-big type-round">활동정지</span>
         </h2>
         <element-copy-button
           :copy-area="$refs.copyArea"
@@ -43,7 +43,28 @@
               :use-refresh="true"
               @refresh="loadData"
             />
+            
           </section>
+          <layout-content-wrap>
+            <section v-if="isStaff" class="inventory">
+              <div class="area-page-title">
+                <h2 class="title">Inventory</h2>
+              </div>
+              <item-list
+                :items="activeTab.inventory"
+                columnNum="5"
+              >
+                <template v-slot="{ data: { item } }">
+                  <item-box
+                    :item="item"
+                    type="list"
+                    :show-name="false"
+                    :showBadges="['grade', 'stack']"
+                  ></item-box>
+                </template>
+              </item-list>
+            </section>
+          </layout-content-wrap>
         </template>
       </element-v-tab>
     </section>
@@ -53,27 +74,31 @@
 <script>
 import CharacterSearchBox from "@/components/pages/character/SearchBox.vue"
 import ItemBuild from "@/components/item/ItemBuild.vue";
+import CharacterInventory from "@/components/character/Inventory.vue";
 import setMeta from '@/plugins/utils/meta';
 import { checkUpdatePageView, totalPageViewGAData } from '@/plugins/utils/pageView'
 import { postCharacterPageView, getCharacterPageViews, postMergeCharacterView } from '@/plugins/utils/https'
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+import ItemList from '@/components/item/ItemList.vue';
 
 export default {
   name: 'character-result',
   components: {
     CharacterSearchBox,
-    ItemBuild
+    ItemBuild,
+    CharacterInventory,
+    ItemList
   },
   head() {
     return setMeta({
       url: this.$route.fullPath,
-      title: `${this.nickname}의 캐릭터`,
-      description: `${this.nickname}의 캐릭터 정보입니다.`,
+      title: `${this.userNick}의 캐릭터`,
+      description: `${this.userNick}의 캐릭터 정보입니다.`,
     })
   },
   data() {
     return {
-      nickname: '',
+      userNick: '',
     }
   },
   watch: {
@@ -86,8 +111,13 @@ export default {
   computed: {
     ...mapGetters({
       userCharacters: 'character/getUserCharacters',
-      gameUsers: 'character/getGameUsers'
-    })
+      gameUsers: 'character/getGameUsers',
+      nickname: 'auth/getNickname',
+      userInfo: 'auth/getUserInfo',
+    }),
+    isStaff() {
+      return this.userInfo?.role === 'STAFF'
+    }
   },
   async created() {
     if(this.gameUsers.length === 0) await this.$store.dispatch('character/GET_GAME_USERS')
@@ -111,9 +141,9 @@ export default {
     }),
     async loadData(nickName) {
       const isRefresh = !nickName
-      nickName = nickName || this.nickname
+      nickName = nickName || this.userNick
       this.setIsLoading(true)
-      const result = await this.getUserCharacters({ nickName })
+      const result = await this.getUserCharacters({ nickName: encodeURIComponent(nickName) })
       if(!result) {
         this.handlerNoData()
         return
@@ -130,7 +160,7 @@ export default {
         return
       }
       this.loadData(nickName)
-      this.nickname = nickName
+      this.userNick = nickName
       this.sendPageView()
       console.log('userCharacters', nickName, this.userCharacters)
     },
@@ -140,8 +170,8 @@ export default {
     },
     async sendPageView() {
       // check window session storage
-      const namePageView = await checkUpdatePageView('character', this.nickname)
-      namePageView && postCharacterPageView({ name: this.nickname })
+      const namePageView = await checkUpdatePageView('character', this.userNick)
+      namePageView && postCharacterPageView({ name: this.userNick })
     },
     async mergePVData() {
       const { data: DbPageViews } = await getCharacterPageViews()
