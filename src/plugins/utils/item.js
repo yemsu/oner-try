@@ -6,7 +6,7 @@ export const findData = (dataList, key, checkValue) => {
 }
 export const imgSrc = (type, imageName) => {
   if(!type) return ''
-  const isVisibleItemBuild = ['colleague', 'equipment', 'hero', 'potion', 'sailor', 'ship'].includes(type)
+  const isVisibleItemBuild = ['colleague', 'equipment', 'hero', 'potion', 'sailor', 'ship', 'etcItem'].includes(type)
   let uri = isVisibleItemBuild
     ? `${process.env.BASE_URL}/images/items`
     : 'https://oner-image.s3.ap-northeast-2.amazonaws.com'
