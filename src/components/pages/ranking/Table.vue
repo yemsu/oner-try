@@ -9,7 +9,7 @@
       <div v-if="ranking.length > 0" class="wrap-x-scroll">
         <table class="list-ranking">
           <caption>랭킹 순위에 따른 랭크, 영웅, 유저명, 현상금, 선원, 동료 정보 테이블</caption>
-          <thead></thead>
+          <thead>
             <tr>
               <th scope="col">랭크</th>
               <th scope="col">영웅</th>
