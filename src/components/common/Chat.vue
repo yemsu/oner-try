@@ -27,6 +27,7 @@ export default {
     return {
       peer: null,
       peerId: null,
+      helloPeer: null,
       connections: [],
       beep: null,
       willLeave: false, // 나가는 사람 본인인지 체크하는 플래그 - 커넥션 끊겨도 채팅방 업데이트 할 필요 없음
@@ -40,7 +41,7 @@ export default {
       CHANGE_HOST_MESSAGE: '%CHANGE_HOST_MESSAGE%',
       isMemberKickedOut: false,
       refreshTrigger: null,
-      reOpeningMember: null
+      reOpeningMember: null,
     }
   },
   computed: {
@@ -134,13 +135,35 @@ export default {
       this.peer.on('error', this.onError)
       this.peer.on('open', this.onOpen)
       this.peer.on('connection', this.subscribeMember)
-      this.peer.on('disconnected', (peerId) => {
-        console.log('disconnected!', peerId)
-      })
       this.peer.on('close', (peerId) => {
         console.log('peer close!', this.peer, peerId)
       })
       this.refreshChecker += this.nickname
+    },
+    createHelloPeer() {
+      console.log("createHelloPeercreateHelloPeer")
+      const nickname = 'helloPeer'
+      this.helloPeer = new this.$Peer(`helloPeer_${this.peerId}`, {
+        host: process.env.PEER_SERVER,
+        secure: true,
+        label: nickname
+      })
+      this.helloPeer.on('error', this.onError)
+      this.helloPeer.on('open', () => {
+        for(const member of this.chatRoom.members) {
+          console.log('helloPeer 오픈', this.chatRoom.id, this.connections, member.peerId, this.chatRoom.id)
+          const connection = this.helloPeer.connect(member.peerId, {
+            label: `${nickname}/${member.nickname}`
+          })
+          // this.subscribeMember(connection)
+        }
+      })
+      this.helloPeer.on('connection', (connection) => {
+        console.log("heeloPeer open connection", connection)
+      })
+      this.helloPeer.on('close', (peerId) => {
+        console.log('peer close!', this.helloPeer, peerId)
+      })
     },
     createBeep() {
       const savedVolume = localStorage.getItem('ONER_TRY_CHAT_VOLUME') * 1
@@ -171,6 +194,9 @@ export default {
         }
       } else if(!this.reOpeningMember) {
         this.pushChatMessage(null, `방을 개설하였습니다.`)
+        setTimeout(async () => {
+          this.createHelloPeer()
+        }, 1000)
       }
     },
     pushChatMessage(nickname, message) {
@@ -191,15 +217,14 @@ export default {
         chatRoomId: this.chatRoom.id,
         peerId: this.peerId
       })
-      if(error) {
-        this.setPopupContent({
-          title: '파티 멤버 등록에 실패 실패하였습니다.',
-          message: `파티에 재입장 해주세요! :: Error - ${error.msg}`
-        })
-        this.togglePopupIsVisible()
-        this.onUnload()
-        return
-      }
+      this.saveChatRoomIdForRefresh()
+      if(!error) return
+      this.setPopupContent({
+        title: '파티 멤버 등록에 실패 실패하였습니다.',
+        message: `파티에 재입장 해주세요! :: Error - ${error.msg}`
+      })
+      this.togglePopupIsVisible()
+      this.onUnload()
     },
     getMemberNickFromLabel(connection) {
       return connection.label.split('/').find(nickname => nickname !== this.nickname)
@@ -232,6 +257,9 @@ export default {
     },
     getMemberNick(peerId) {
       console.log('------getMemberNick', peerId)
+      if(peerId.includes('helloPeer')) {
+        return 'helloPeer'
+      }
       const member = this.chatRoom.members.find(({peerId: _peerId}) => _peerId === peerId)
       return member?.nickname
     },
@@ -394,11 +422,10 @@ export default {
     saveChatRoomIdForRefresh() {
       sessionStorage.setItem(this.ONER_TRY_CHAT_REFRESH, this.chatRoom.id)
     },
-    onUnload(needSaveRoomId) {
+    onUnload() {
       this.willLeave = true
       this.onDeleteMember(this.nickname)
       this.destroyPeer()
-      needSaveRoomId && this.saveChatRoomIdForRefresh()
       this.setChatRoom(null)
     },
     confirmClose(e) {
@@ -445,12 +472,14 @@ export default {
     },
     destroyPeer() {
       if(this.peer) this.peer.destroy()
+      if(this.helloPeer) this.helloPeer.destroy()
       this.resetChat()
     },
     resetChat() {      
       this.beep = null
       this.peer = null
       this.peerId = null
+      this.helloPeer = null
       this.connections = []
       sessionStorage.removeItem(this.ONER_TRY_CHAT_REFRESH)
     },
