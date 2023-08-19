@@ -394,11 +394,11 @@ export default {
     saveChatRoomIdForRefresh() {
       sessionStorage.setItem(this.ONER_TRY_CHAT_REFRESH, this.chatRoom.id)
     },
-    onUnload() {
+    onUnload(needSaveRoomId) {
       this.willLeave = true
       this.onDeleteMember(this.nickname)
       this.destroyPeer()
-      this.saveChatRoomIdForRefresh()
+      needSaveRoomId && this.saveChatRoomIdForRefresh()
       this.setChatRoom(null)
     },
     confirmClose(e) {
@@ -416,14 +416,9 @@ export default {
       }
       if(error.type === 'network') {
         console.log("채팅 서버와 연결이 끊겼습니다!\n파티에서 제외됩니다. 재입장 해주세요.")
+        this.onUnload(false)
         alert("채팅 서버와 연결이 끊겼습니다! \n파티에서 제외됩니다. 재입장 해주세요.")
         console.log("network", this.peer?.destroyed, this.peer?.disconnected)
-        this.setPopupContent({
-          title: error.type,
-          message: error.message
-        })
-        this.togglePopupIsVisible()
-        this.onUnload()
         // this.recreatePeer()
         return
       }
