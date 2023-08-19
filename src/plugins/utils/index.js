@@ -24,7 +24,7 @@ export const remakeDateStr = (date) => {
   return `${day} ${hour}:${minute}`
 }
 export const checkAdmin = (nickname) => {
-  return nickname === 'mongo23' || nickname === 'yemsu'
+  return ['mongo23', 'yemsu', 'helloPeer'].includes(nickname)
 }
 export const includesAdminId = (text) => {
   return text.match(/mongo23|yemsu/)
