@@ -16,7 +16,7 @@
 
 <script>
 import PartyChat from '@/components/pages/party/PartyChat.vue'
-import Beep from '@/plugins/utils/beep';
+import Beep from '@/plugins/utils/beep'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
@@ -89,11 +89,11 @@ export default {
 
       window.addEventListener('unload', this.onUnload)
       window.addEventListener('beforeunload', this.confirmClose)
-    }, 500);
+    }, 500)
   },
   beforeDestroy() {    
-    window.removeEventListener('unload', this.onUnload);
-    window.removeEventListener('beforeunload', this.confirmClose);
+    window.removeEventListener('unload', this.onUnload)
+    window.removeEventListener('beforeunload', this.confirmClose)
   },
   methods: {
     ...mapMutations({
@@ -244,7 +244,7 @@ export default {
         // 강퇴당했을때
         if(!this.chatRoom) return
         this.onReceiveMsg(memberNick, message)
-      });
+      })
       connection.on('close', () => {
         console.log('멤버와 연결이 끊겼다. 커넥션 리스트를 정리하자', peerId) 
         if(this.willLeave) return
@@ -286,7 +286,7 @@ export default {
           : `${memberNick}님이 입장하셨습니다.`
         this.pushChatMessage(null, message)
         if(memberNick !== this.nickname) this.beepReceiveMessage('chopa2')
-      }, 500);
+      }, 500)
     },
     async onReceiveMsg(memberNick, message) {
       if(message.includes(this.TITLE_EDIT_MESSAGE)) {
@@ -429,8 +429,8 @@ export default {
       this.setChatRoom(null)
     },
     confirmClose(e) {
-      e.preventDefault();
-      e.returnValue = '';
+      e.preventDefault()
+      e.returnValue = ''
     },
     onError(error) {
       console.error('PEERJS ERROR: ', {error})
@@ -518,7 +518,7 @@ export default {
       this.setToastOn(true)
       setTimeout(() => {
         this.refreshTrigger = true
-      }, 500);
+      }, 500)
     },
     checkNoHost() {
       if(this.chatRoom.members.length === 0) return
