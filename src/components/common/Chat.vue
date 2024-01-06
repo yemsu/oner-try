@@ -16,7 +16,7 @@
 
 <script>
 import PartyChat from '@/components/pages/party/PartyChat.vue'
-import Beep from '@/plugins/utils/beep';
+import Beep from '@/plugins/utils/beep'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
@@ -27,6 +27,7 @@ export default {
     return {
       peer: null,
       peerId: null,
+      helloPeer: null,
       connections: [],
       beep: null,
       willLeave: false, // 나가는 사람 본인인지 체크하는 플래그 - 커넥션 끊겨도 채팅방 업데이트 할 필요 없음
@@ -40,7 +41,7 @@ export default {
       CHANGE_HOST_MESSAGE: '%CHANGE_HOST_MESSAGE%',
       isMemberKickedOut: false,
       refreshTrigger: null,
-      reOpeningMember: null
+      reOpeningMember: null,
     }
   },
   computed: {
@@ -88,11 +89,11 @@ export default {
 
       window.addEventListener('unload', this.onUnload)
       window.addEventListener('beforeunload', this.confirmClose)
-    }, 500);
+    }, 500)
   },
   beforeDestroy() {    
-    window.removeEventListener('unload', this.onUnload);
-    window.removeEventListener('beforeunload', this.confirmClose);
+    window.removeEventListener('unload', this.onUnload)
+    window.removeEventListener('beforeunload', this.confirmClose)
   },
   methods: {
     ...mapMutations({
@@ -134,13 +135,35 @@ export default {
       this.peer.on('error', this.onError)
       this.peer.on('open', this.onOpen)
       this.peer.on('connection', this.subscribeMember)
-      this.peer.on('disconnected', (peerId) => {
-        console.log('disconnected!', peerId)
-      })
       this.peer.on('close', (peerId) => {
         console.log('peer close!', this.peer, peerId)
       })
       this.refreshChecker += this.nickname
+    },
+    createHelloPeer() {
+      console.log("createHelloPeercreateHelloPeer")
+      const nickname = 'helloPeer'
+      this.helloPeer = new this.$Peer(`helloPeer_${this.peerId}`, {
+        host: process.env.PEER_SERVER,
+        secure: true,
+        label: nickname
+      })
+      this.helloPeer.on('error', this.onError)
+      this.helloPeer.on('open', () => {
+        for(const member of this.chatRoom.members) {
+          console.log('helloPeer 오픈', this.chatRoom.id, this.connections, member.peerId, this.chatRoom.id)
+          const connection = this.helloPeer.connect(member.peerId, {
+            label: `${nickname}/${member.nickname}`
+          })
+          // this.subscribeMember(connection)
+        }
+      })
+      this.helloPeer.on('connection', (connection) => {
+        console.log("heeloPeer open connection", connection)
+      })
+      this.helloPeer.on('close', (peerId) => {
+        console.log('peer close!', this.helloPeer, peerId)
+      })
     },
     createBeep() {
       const savedVolume = localStorage.getItem('ONER_TRY_CHAT_VOLUME') * 1
@@ -171,6 +194,9 @@ export default {
         }
       } else if(!this.reOpeningMember) {
         this.pushChatMessage(null, `방을 개설하였습니다.`)
+        setTimeout(async () => {
+          this.createHelloPeer()
+        }, 1000)
       }
     },
     pushChatMessage(nickname, message) {
@@ -191,15 +217,14 @@ export default {
         chatRoomId: this.chatRoom.id,
         peerId: this.peerId
       })
-      if(error) {
-        this.setPopupContent({
-          title: '파티 멤버 등록에 실패 실패하였습니다.',
-          message: `파티에 재입장 해주세요! :: Error - ${error.msg}`
-        })
-        this.togglePopupIsVisible()
-        this.onUnload()
-        return
-      }
+      this.saveChatRoomIdForRefresh()
+      if(!error) return
+      this.setPopupContent({
+        title: '파티 멤버 등록에 실패 실패하였습니다.',
+        message: `파티에 재입장 해주세요! :: Error - ${error.msg}`
+      })
+      this.togglePopupIsVisible()
+      this.onUnload()
     },
     getMemberNickFromLabel(connection) {
       return connection.label.split('/').find(nickname => nickname !== this.nickname)
@@ -219,7 +244,7 @@ export default {
         // 강퇴당했을때
         if(!this.chatRoom) return
         this.onReceiveMsg(memberNick, message)
-      });
+      })
       connection.on('close', () => {
         console.log('멤버와 연결이 끊겼다. 커넥션 리스트를 정리하자', peerId) 
         if(this.willLeave) return
@@ -232,6 +257,9 @@ export default {
     },
     getMemberNick(peerId) {
       console.log('------getMemberNick', peerId)
+      if(peerId.includes('helloPeer')) {
+        return 'helloPeer'
+      }
       const member = this.chatRoom.members.find(({peerId: _peerId}) => _peerId === peerId)
       return member?.nickname
     },
@@ -258,7 +286,7 @@ export default {
           : `${memberNick}님이 입장하셨습니다.`
         this.pushChatMessage(null, message)
         if(memberNick !== this.nickname) this.beepReceiveMessage('chopa2')
-      }, 500);
+      }, 500)
     },
     async onReceiveMsg(memberNick, message) {
       if(message.includes(this.TITLE_EDIT_MESSAGE)) {
@@ -398,12 +426,11 @@ export default {
       this.willLeave = true
       this.onDeleteMember(this.nickname)
       this.destroyPeer()
-      this.saveChatRoomIdForRefresh()
       this.setChatRoom(null)
     },
     confirmClose(e) {
-      e.preventDefault();
-      e.returnValue = '';
+      e.preventDefault()
+      e.returnValue = ''
     },
     onError(error) {
       console.error('PEERJS ERROR: ', {error})
@@ -416,9 +443,9 @@ export default {
       }
       if(error.type === 'network') {
         console.log("채팅 서버와 연결이 끊겼습니다!\n파티에서 제외됩니다. 재입장 해주세요.")
+        this.onUnload(false)
         alert("채팅 서버와 연결이 끊겼습니다! \n파티에서 제외됩니다. 재입장 해주세요.")
         console.log("network", this.peer?.destroyed, this.peer?.disconnected)
-        this.onUnload()
         // this.recreatePeer()
         return
       }
@@ -445,12 +472,14 @@ export default {
     },
     destroyPeer() {
       if(this.peer) this.peer.destroy()
+      if(this.helloPeer) this.helloPeer.destroy()
       this.resetChat()
     },
     resetChat() {      
       this.beep = null
       this.peer = null
       this.peerId = null
+      this.helloPeer = null
       this.connections = []
       sessionStorage.removeItem(this.ONER_TRY_CHAT_REFRESH)
     },
@@ -489,7 +518,7 @@ export default {
       this.setToastOn(true)
       setTimeout(() => {
         this.refreshTrigger = true
-      }, 500);
+      }, 500)
     },
     checkNoHost() {
       if(this.chatRoom.members.length === 0) return
