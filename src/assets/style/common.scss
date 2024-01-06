@@ -1,4 +1,4 @@
-@import './common/reset.scss';
+@import "./common/reset.scss";
 
 body {
   background-color: var(--bg-body);
@@ -12,7 +12,9 @@ body {
 small {
   font-size: var(--font-size-XS);
 }
-button, a, input {
+button,
+a,
+input {
   font-family: $font-family;
   letter-spacing: -0.05em;
 }
@@ -35,14 +37,14 @@ i {
 .mrg-top-small {
   margin-top: 10px;
 }
-[class*=inner-size] {
+[class*="inner-size"] {
   position: relative;
   transition: width 0.5s;
   &.inner-size-basic {
-    @include containerSize('basic');
+    @include containerSize("basic");
   }
   &.inner-size-wide {
-    @include containerSize('wide');
+    @include containerSize("wide");
   }
 }
 
@@ -53,7 +55,7 @@ i {
   @media (prefers-color-scheme: dark) {
     background-color: var(--color-gray-40);
   }
-  > [class*=inner] {
+  > [class*="inner"] {
     display: flex;
     > .align-right {
       margin-left: auto;
@@ -62,9 +64,11 @@ i {
 }
 
 // ir
-caption, .ir-hidden {
-  position: absolute;
+caption,
+.ir-hidden {
   overflow: hidden;
+  position: absolute;
+  left: -999em;
   width: 1px;
   height: 1px;
   font-size: 1px;
@@ -101,7 +105,7 @@ caption, .ir-hidden {
     border: 2px solid var(--color-white);
     border-left: none;
     border-bottom: none;
-    content: '';
+    content: "";
     transition: transform 0.3s;
   }
   &.x-small {
@@ -216,7 +220,7 @@ caption, .ir-hidden {
     border-color: transparent;
     border-left-color: inherit;
     transform: translateY(-50%);
-    content: '';
+    content: "";
   }
   &.left {
     transform: rotate(180deg);
@@ -237,7 +241,7 @@ caption, .ir-hidden {
   border-left-color: transparent;
 }
 .wrap-icon-text {
-  [class*=icon-] {
+  [class*="icon-"] {
     margin-left: 5px;
   }
 }
@@ -252,7 +256,7 @@ caption, .ir-hidden {
   }
   &:not(.badge-gap) {
     .badge {
-      &:not([class*=line-]):nth-child(n+2) {
+      &:not([class*="line-"]):nth-child(n + 2) {
         border-left: none;
       }
     }
@@ -328,7 +332,7 @@ div.text-refer {
   &.bottom {
     margin-top: 6px;
   }
-  > [class*=align-] {
+  > [class*="align-"] {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -341,7 +345,7 @@ div.text-refer {
         left: 0;
         color: var(--color-gray-65);
         transform: translate(-50%, 0);
-        content: '|';
+        content: "|";
       }
     }
   }
@@ -353,7 +357,7 @@ div.text-refer {
   }
 }
 
-// content-top 
+// content-top
 .content-top {
   padding: 10px 0;
   background-color: var(--bg-light-gray);
@@ -447,7 +451,7 @@ div.text-refer {
 // positive / netavie
 .color {
   &-positive {
-    color: var(--color-positive)
+    color: var(--color-positive);
   }
   &-negative,
   &-point {
