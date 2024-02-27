@@ -72,11 +72,9 @@ export default {
         entries.forEach(entry => {
           if (entry.intersectionRatio > 0) {
             if(this.isEnd) {
-              console.log('infiniteScroll endData')
+              io.disconnect()
               return
             }
-            console.log('infiniteScroll start')
-            // this.$emit('endScroll')
             this.loadData()
           }
         })
