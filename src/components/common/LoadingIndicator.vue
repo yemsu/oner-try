@@ -80,7 +80,6 @@ $translateX: -12px;
   display: flex;
   gap: 5px;
   margin: 5px;
-  padding: 20px;
   border-radius: 10px;
   span {
     opacity: 0;
