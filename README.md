@@ -3,18 +3,21 @@
 - **8700명의 유저**가 이용한 Warcraft 3 Onepiece RPG 게임 정보 제공 사이트
 - 현재는 게임 운영이 종료되어 [ONER TRY 개발계](https://dev.onertry.xyz/)만 접속 가능합니다.
 
-
-<img src="/public/images/readme/i36g-240314-103622.png" alt="">
-<img src="/public/images/readme/i37g-240314-103705.png" alt="">
+<p>
+  <img src="/public/images/readme/i36g-240314-103622.png" alt="">
+  <img src="/public/images/readme/i37g-240314-103705.png" alt="">
+</p>
 
 ---
 
 ## 💀 기술 스택
 
-<img src="https://img.shields.io/badge/Nuxt-002E3B?style=for-the-badge&logo=nuxtdotjs&logoColor=#00DC82" alt="nuxt">
-<img src="https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D" alt="vue">
-<img src="https://img.shields.io/badge/sass-CC6699?style=for-the-badge&logo=html5&logoColor=white" alt="sass">
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="html">
+<p>
+  <img src="https://img.shields.io/badge/Nuxt-002E3B?style=for-the-badge&logo=nuxtdotjs&logoColor=#00DC82" alt="nuxt">
+  <img src="https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D" alt="vue">
+  <img src="https://img.shields.io/badge/sass-CC6699?style=for-the-badge&logo=html5&logoColor=white" alt="sass">
+  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="html">
+</p>
 
 - Nuxt.js : `v2.15.8`
 - Vue.js : `v2.6.14`
