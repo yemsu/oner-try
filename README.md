@@ -1,3 +1,5 @@
+![](/public/images/readme/i25g-240314-132519.png)
+
 ## 💀 Intro
 
 - <u>**8700명의 유저**</u>가 이용한 Warcraft 3 Onepiece RPG 게임 정보 제공 사이트
