@@ -6,16 +6,16 @@ import {
 
 export const state = () => ({
   composition: [],
-  CompositionSearchRanking: [],
+  compositionSearchRanking: [],
   character: [],
-  CharacterSearchRanking: [],
+  characterSearchRanking: [],
 })
 
 export const getters = {
   getComposition: (state) => state.composition,
-  getCompositionSearchRanking: (state) => state.CompositionSearchRanking,
+  getCompositionSearchRanking: (state) => state.compositionSearchRanking,
   getCharacter: (state) => state.character,
-  getCharacterSearchRanking: (state) => state.CharacterSearchRanking,
+  getCharacterSearchRanking: (state) => state.characterSearchRanking,
 }
 
 export const mutations = {
@@ -23,13 +23,13 @@ export const mutations = {
     state.composition = data
   },
   SET_COMPOSITION_SEARCH_RANKING(state, {data}) {
-    state.CompositionSearchRanking = data
+    state.compositionSearchRanking = data
   },
   SET_CHARACTER(state, {data}) {
     state.character = data
   },
   SET_CHARACTER_SEARCH_RANKING(state, {data}) {
-    state.CharacterSearchRanking = data
+    state.characterSearchRanking = data
   },
 }
 

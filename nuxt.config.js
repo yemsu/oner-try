@@ -112,7 +112,7 @@ export default {
 
   generate: {
     routes: async () => {
-      const { data: { result: items } } = await axios.get('https://onerapi.shop/api/items')
+      const { data: { result: items } } = await axios.get(`${process.env.CONT_PATH}/api/items`)
       const itemRoutes = items.filter((item) => item.ingredients)
         .map((item) => {
           return {

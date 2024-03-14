@@ -68,7 +68,7 @@ export const getCharacterPageViews = () => {
   const day = today.getDate()
   // 어제부터의 데이터 집계
   return getApi(`/characterPageViews`, { params: {
-    startDate: `${year}-${month}-${day}`,
+    startDate: `2022-5-10`,
     length: 10
   } })
 }
