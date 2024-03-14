@@ -39,9 +39,10 @@
 ## 💀 페이지 살펴보기
 
  <h3 id="character" style="padding-top: 30px; margin-top: 0">
-  🔎  캐릭터
-  (<a href="https://dev.onertry.xyz/character/result?nickname=Pinkbean" target="_blank">🔗page</a>)
+  <span style="padding-top: 30px;">🔎  캐릭터</span>
  </h3>
+
+ <a href="https://dev.onertry.xyz/character/result?nickname=Pinkbean" target="_blank">🔗page</a>
 
 ![ONER TRY 캐릭터 상세페이지](/public/images/readme/i50g-240314-095049.png)
 
@@ -49,9 +50,10 @@
 - 장착 아이템의 옵션과 시너지 효과에 따른 <u>**총 스탯**</u> 계산하여 노출
 
 <h3 id="composition" style="padding-top: 30px; margin-top: 0">
-🔎  조합법
-(<a href="https://dev.onertry.xyz/composition/sailor/s94" target="_blank">🔗page</a>)
+<span style="padding-top: 30px;">🔎  조합법</span>
 </h3>
+
+<a href="https://dev.onertry.xyz/composition/sailor/s94" target="_blank">🔗page</a>
 
 ![ONER TRY 조합법 상세페이지](/public/images/readme/i55g-240314-095559.png)
 
@@ -62,9 +64,10 @@
   ![ONER TRY 조합법 아이템 트리 구조](/public/images/readme/i58g-240314-095833.png)
         
  <h3 id="ranking" style="padding-top: 30px; margin-top: 0">
-  🔎  랭킹
-  (<a href="https://dev.onertry.xyz/ranking" target="_blank">🔗page</a>)
+  <span style="padding-top: 30px;">🔎  랭킹</span>
  </h3>
+
+ <a href="https://dev.onertry.xyz/ranking" target="_blank">🔗page</a>
 
 ![ONER TRY 랭킹 페이지](/public/images/readme/i4g-240314-100400.png)
 
@@ -72,18 +75,20 @@
 - Infinite Scroll
     
  <h3 id="items" style="padding-top: 30px; margin-top: 0">
-  🔎  아이템 도감
-  (<a href="https://dev.onertry.xyz/items/sailor" target="_blank">🔗page</a>)
+  <span style="padding-top: 30px;">🔎  아이템 도감</span>
  </h3>
+
+ <a href="https://dev.onertry.xyz/items/sailor" target="_blank">🔗page</a>
 
 ![ONER TRY 아이템 도감 페이지](/public/images/readme/i7g-240314-100706.png)
 
 - 선택한 <u>**필터**</u>에 맞는 아이템 노출 및 해당 옵션 <u>**하이라이트**</u>처리
 
  <h3 id="myBuild" style="padding-top: 30px; margin-top: 0">
-  🔎  MY 빌드
-  (<a href="https://dev.onertry.xyz/item-build/my" target="_blank">🔗page (구글 로그인 후 접근 가능)</a>)
+  <span style="padding-top: 30px;">🔎  MY 빌드</span>
  </h3>
+
+ <a href="https://dev.onertry.xyz/item-build/my" target="_blank">🔗page (구글 로그인 후 접근 가능)</a>
 
 #### MY 빌드 리스트 페이지
 ![ONER TRY MY 빌드 리스트 페이지](/public/images/readme/i9g-240314-100935.png)
@@ -104,9 +109,10 @@
 
 
  <h3 id="myBuild" style="padding-top: 30px; margin-top: 0">
-  🔎  파티모집
-  (<a href="https://dev.onertry.xyz/party" target="_blank">🔗page (구글 로그인 후 채팅방 생성 가능)</a>)
+  <span style="padding-top: 30px;">🔎  파티모집</span>
  </h3>
+
+ <a href="https://dev.onertry.xyz/party" target="_blank">🔗page (구글 로그인 후 채팅방 생성 가능)</a>
 
 
 #### 파티모집 리스트 페이지
