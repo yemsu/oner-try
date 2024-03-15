@@ -30,11 +30,11 @@
 ### 페이지 소개
 
 - <a href="#character">캐릭터</a>: 다른 유저들의 <u>**아이템 빌드와 그에 따른 스탯, 시너지 효과**</u>를 확인할 수 있습니다.
+- <a href="#party">파티모집</a>: 함께 게임할 파티원을 구할 수 있는 메뉴로 <u>**채팅 기능**</u>이 구현되어 있습니다.
+- <a href="#myBuild">MY빌드</a>: <u>**아이템을 조합하고 스탯, 시너지 효과를 확인**</u>하며 나만의 빌드를 만들 수 있습니다.
+- <a href="#items">아이템도감</a>: <u>**등급/능력치별로 필터링**</u>하며 아이템의 자세한 정보들을 확인할 수 있습니다.
 - <a href="#composition">조합법</a>: 조합 아이템의 <u>**총 재료 아이템**</u>과 조합법을 <u>**트리구조**</u>로 한눈에 확인할 수 있습니다.
 - <a href="#ranking">랭킹</a>: 유저들의 랭킹과 아이템 빌드를 캐릭터별로 확인할 수 있습니다.
-- <a href="#items">아이템도감</a>: <u>**등급/능력치별로 필터링**</u>하며 아이템의 자세한 정보들을 확인할 수 있습니다.
-- <a href="#myBuild">MY빌드</a>: <u>**아이템을 조합하고 스탯, 시너지 효과를 확인**</u>하며 나만의 빌드를 만들 수 있습니다.
-- <a href="#party">파티모집</a>: 함께 게임할 파티원을 구할 수 있는 메뉴로 <u>**채팅 기능**</u>이 구현되어 있습니다.
 
 ---
 
@@ -51,66 +51,7 @@
 - 장착 선원, 동료에 따른 <u>**시너지 효과**</u> 계산하여 노출
 - 장착 아이템의 옵션과 시너지 효과에 따른 <u>**총 스탯**</u> 계산하여 노출
 
-<h3 id="composition" style="padding-top: 30px; margin-top: 0">
-<span style="padding-top: 30px;">🔎  조합법</span>
-</h3>
-
-<a href="https://dev.onertry.xyz/composition/sailor/s94" target="_blank">🔗page</a>
-
-![ONER TRY 조합법 상세페이지](/public/images/readme/i55g-240314-095559.png)
-
-- 조합 아이템의 <u>**상위 아이템**</u>노출
-- 로그인 후 <u>**조합법 즐겨 찾기 추가**</u>기능
-- 조합 아이템에 필요한 <u>**총 재료 아이템**</u>노출
-- 조합 재료 <u>**아이템 트리**</u>노출
-  ![ONER TRY 조합법 아이템 트리 구조](/public/images/readme/i58g-240314-095833.png)
-        
- <h3 id="ranking" style="padding-top: 30px; margin-top: 0">
-  <span style="padding-top: 30px;">🔎  랭킹</span>
- </h3>
-
- <a href="https://dev.onertry.xyz/ranking" target="_blank">🔗page</a>
-
-![ONER TRY 랭킹 페이지](/public/images/readme/i4g-240314-100400.png)
-
-- 통합 및 캐릭터별 유저 랭킹
-- Infinite Scroll
-    
- <h3 id="items" style="padding-top: 30px; margin-top: 0">
-  <span style="padding-top: 30px;">🔎  아이템 도감</span>
- </h3>
-
- <a href="https://dev.onertry.xyz/items/sailor" target="_blank">🔗page</a>
-
-![ONER TRY 아이템 도감 페이지](/public/images/readme/i7g-240314-100706.png)
-
-- 선택한 <u>**필터**</u>에 맞는 아이템 노출 및 해당 옵션 <u>**하이라이트**</u>처리
-
- <h3 id="myBuild" style="padding-top: 30px; margin-top: 0">
-  <span style="padding-top: 30px;">🔎  MY 빌드</span>
- </h3>
-
- <a href="https://dev.onertry.xyz/item-build/my" target="_blank">🔗page (구글 로그인 후 접근 가능)</a>
-
-#### MY 빌드 리스트 페이지
-![ONER TRY MY 빌드 리스트 페이지](/public/images/readme/i9g-240314-100935.png)
-- 아이템 빌드 간략하게 노출
-- 빌드 삭제 기능
-
-#### MY 빌드 생성 페이지
-![](/public/images/readme/i13g-240314-101322.png)
-- 캐릭터, 아이템, 아이템 강화 수치 설정하고 <u>**실시간으로 스탯을 확인**</u>하며 나만의 빌드 제작 
-- 캐릭터 페이지의 `ItemBuild` 컴포넌트 확장하여 재사용
-- 아이템도감 페이지의 `ItemTable` 컴포넌트 확장하여 재사용
-
-#### MY 빌드 상세 페이지
-![ONER TRY MY 마이 빌드 상세 페이지](/public/images/readme/i9g-240314-100900.png)
-- 빌드 수정 기능
-- 빌드 이미지로 복사하기 기능 
-- 캐릭터 상세 페이지의 `ItemBuild` 컴포넌트 확장하여 재사용
-
-
- <h3 id="myBuild" style="padding-top: 30px; margin-top: 0">
+ <h3 id="party" style="padding-top: 30px; margin-top: 0">
   <span style="padding-top: 30px;">🔎  파티모집</span>
  </h3>
 
@@ -146,7 +87,65 @@
 - 페이지 이동 마다 파티모집 리스트 <u>**자동 새로고침**</u>
 - 파티모집 생성 기능
 
+#### MY 빌드 리스트 페이지
+![ONER TRY MY 빌드 리스트 페이지](/public/images/readme/i9g-240314-100935.png)
+- 아이템 빌드 간략하게 노출
+- 빌드 삭제 기능
 
+#### MY 빌드 생성 페이지
+![](/public/images/readme/i13g-240314-101322.png)
+- 캐릭터, 아이템, 아이템 강화 수치 설정하고 <u>**실시간으로 스탯을 확인**</u>하며 나만의 빌드 제작 
+- 캐릭터 페이지의 `ItemBuild` 컴포넌트 확장하여 재사용
+- 아이템도감 페이지의 `ItemTable` 컴포넌트 확장하여 재사용
+
+#### MY 빌드 상세 페이지
+![ONER TRY MY 마이 빌드 상세 페이지](/public/images/readme/i9g-240314-100900.png)
+- 빌드 수정 기능
+- 빌드 이미지로 복사하기 기능 
+- 캐릭터 상세 페이지의 `ItemBuild` 컴포넌트 확장하여 재사용
+
+    
+ <h3 id="items" style="padding-top: 30px; margin-top: 0">
+  <span style="padding-top: 30px;">🔎  아이템 도감</span>
+ </h3>
+
+ <a href="https://dev.onertry.xyz/items/sailor" target="_blank">🔗page</a>
+
+![ONER TRY 아이템 도감 페이지](/public/images/readme/i7g-240314-100706.png)
+
+- 선택한 <u>**필터**</u>에 맞는 아이템 노출 및 해당 옵션 <u>**하이라이트**</u>처리
+
+ <h3 id="myBuild" style="padding-top: 30px; margin-top: 0">
+  <span style="padding-top: 30px;">🔎  MY 빌드</span>
+ </h3>
+
+ <a href="https://dev.onertry.xyz/item-build/my" target="_blank">🔗page (구글 로그인 후 접근 가능)</a>
+
+
+<h3 id="composition" style="padding-top: 30px; margin-top: 0">
+<span style="padding-top: 30px;">🔎  조합법</span>
+</h3>
+
+<a href="https://dev.onertry.xyz/composition/sailor/s94" target="_blank">🔗page</a>
+
+![ONER TRY 조합법 상세페이지](/public/images/readme/i55g-240314-095559.png)
+
+- 조합 아이템의 <u>**상위 아이템**</u>노출
+- 로그인 후 <u>**조합법 즐겨 찾기 추가**</u>기능
+- 조합 아이템에 필요한 <u>**총 재료 아이템**</u>노출
+- 조합 재료 <u>**아이템 트리**</u>노출
+  ![ONER TRY 조합법 아이템 트리 구조](/public/images/readme/i58g-240314-095833.png)
+        
+ <h3 id="ranking" style="padding-top: 30px; margin-top: 0">
+  <span style="padding-top: 30px;">🔎  랭킹</span>
+ </h3>
+
+ <a href="https://dev.onertry.xyz/ranking" target="_blank">🔗page</a>
+
+![ONER TRY 랭킹 페이지](/public/images/readme/i4g-240314-100400.png)
+
+- 통합 및 캐릭터별 유저 랭킹
+- Infinite Scroll
 ---
 
 
