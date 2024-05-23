@@ -87,6 +87,13 @@
 - 페이지 이동 마다 파티모집 리스트 <u>**자동 새로고침**</u>
 - 파티모집 생성 기능
 
+
+ <h3 id="myBuild" style="padding-top: 30px; margin-top: 0">
+  <span style="padding-top: 30px;">🔎  MY 빌드</span>
+ </h3>
+
+ <a href="https://dev.onertry.xyz/item-build/my" target="_blank">🔗page (구글 로그인 후 접근 가능)</a>
+
 #### MY 빌드 리스트 페이지
 ![](/public/images/readme/i43g-240315-094349.png)
 - 아이템 빌드 간략하게 노출
@@ -114,12 +121,6 @@
 ![ONER TRY 아이템 도감 페이지](/public/images/readme/i7g-240314-100706.png)
 
 - 선택한 <u>**필터**</u>에 맞는 아이템 노출 및 해당 옵션 <u>**하이라이트**</u>처리
-
- <h3 id="myBuild" style="padding-top: 30px; margin-top: 0">
-  <span style="padding-top: 30px;">🔎  MY 빌드</span>
- </h3>
-
- <a href="https://dev.onertry.xyz/item-build/my" target="_blank">🔗page (구글 로그인 후 접근 가능)</a>
 
 
 <h3 id="composition" style="padding-top: 30px; margin-top: 0">
@@ -151,7 +152,7 @@
 
 ## 💀 SEO
 
-- <u>**SSR**</u>을 위해 페이지 컴포넌트의 `asyncData`훅에서  `Vuex action`을 호출 하여 SSR에 필요한 데이터 리턴
+- <u>**SSR**</u>을 위해 페이지 컴포넌트의 `asyncData`훅에서  `Vuex action`을 호출 하여 SSR에 필요한 데이터 반환
     ```jsx
     async asyncData({ store }) {
       const { item: { colleagues } } = store.state
