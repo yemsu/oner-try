@@ -12,7 +12,7 @@ export const findData = (dataList, key, checkValue) => {
 };
 export const imgSrc = (type, imageName) => {
   if (!type) return "";
-  return `${process.env.BASE_URL}/images/items/${type}/${imageName}.png`;
+  return `/images/items/${type}/${imageName}.png`;
 };
 export const getGradeScore = (key) => {
   return gradeScoresDef[key] || key;
