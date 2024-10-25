@@ -3,7 +3,7 @@
 ## 💀 Intro
 
 - <u>**8700명의 유저**</u>가 이용한 Warcraft 3 Onepiece RPG 게임 정보 제공 사이트
-- 현재는 게임 운영이 종료되어 [ONER TRY 개발계](https://dev.onertry.xyz/)만 접속 가능합니다.
+- 현재는 게임 운영이 종료되어 [ONER TRY 개발계](https://dev-oner-try.netlify.app/)만 접속 가능합니다.
 
 <p>
   <img src="/public/images/readme/i36g-240314-103622.png" alt="">
