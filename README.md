@@ -151,7 +151,7 @@
 
 ## 💀 SEO
 
-- <u>**SSR**</u>을 위해 페이지 컴포넌트의 `asyncData`훅에서  `Vuex action`을 호출 하여 SSR에 필요한 데이터 반환
+- <u>**Prerendering**</u>을 위해 페이지 컴포넌트의 `asyncData`훅에서 데이터 반환
     ```jsx
     async asyncData({ store }) {
       const { item: { colleagues } } = store.state
