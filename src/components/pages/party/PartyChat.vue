@@ -113,7 +113,7 @@
             members-type="파티원"
             :hidden-title="true"
             @click="onClickNoMemberList"
-            @kickout="onClickKickOut"
+            @kickOut="onClickKickOut"
           />
           <chat-members
             :member-list="spareMemberList"
