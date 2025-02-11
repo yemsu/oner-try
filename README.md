@@ -59,7 +59,8 @@
 
 #### 파티 생성 
 
-![onertry-party-1-create](https://github.com/user-attachments/assets/2e5d2f9e-0ab2-4849-bcd4-f89171f86bca)
+![onertry-party-1-create](https://github.com/user-attachments/assets/04f73c84-42df-4b38-95e7-5d009d39a960)
+
 
 1. 채팅방 생성
 	- 사운드 알림 ON/OFF 및 볼륨 조절 가능
